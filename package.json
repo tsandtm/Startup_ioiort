@@ -12,7 +12,8 @@
     "alsatian-version": "alsatian -v",
     "remove-database": "node ./dist/scripts/RemoveDatabase.js",
     "create-database": "node ./dist/scripts/CreateDatabase.js",
-    "create-schema": "node ./dist/scripts/CreateSchema.js"
+    "create-schema": "node ./dist/scripts/CreateSchema.js",
+    "create-database-from-sqlfile": "node ./dist/scripts/CreateDatabaseFromSQLFile.js"
   },
   "keywords": [],
   "author": "",

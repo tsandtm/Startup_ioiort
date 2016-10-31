@@ -1,6 +1,6 @@
 {
     "development": {
-        "database": "testdb",
+        "database": "postgres",
         "username": "duc",
         "password": "123456",
         "config": {
@@ -18,7 +18,7 @@
             "min": 4
         },
         "idleTimeoutMillis": 2000,
-        "schema": "test"
+        "schema": "public"
         
     },
     "test": {
