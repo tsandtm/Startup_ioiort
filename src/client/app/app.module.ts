@@ -6,6 +6,7 @@ import {HttpModule} from '@angular/http';
 
 import {ModalModule} from 'angular2-modal';
 import {BootstrapModalModule} from 'angular2-modal/plugins/bootstrap';
+import {CustomModal} from './products/product-modal/custom-modal.component';
 
 import {routing} from './app.routing.module';
 import {AppComponent} from './app.component';
@@ -21,7 +22,11 @@ import {ProductModalComponent} from './products/product-modal/product-modal.comp
 
 @NgModule({
     imports: [BrowserModule,routing,FormsModule,HttpModule,ModalModule.forRoot(),BootstrapModalModule],
+
+
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService],
+
+
     declarations: [AppComponent,
     BookListComponent,
     BookDetailComponent,
@@ -30,7 +35,15 @@ import {ProductModalComponent} from './products/product-modal/product-modal.comp
     ProductListComponent,
     ProductFilterPipe,
     StarComponent,
-    ProductModalComponent],
-    bootstrap: [AppComponent]
+    ProductModalComponent,
+    CustomModal],
+
+
+    bootstrap: [AppComponent],
+
+
+
+
+    entryComponents: [CustomModal]
 })
 export class AppModule{}
