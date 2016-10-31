@@ -12,12 +12,20 @@ import { ProductListComponent } from './products/product-list/product-list.compo
 import { ProductService } from './products/shared/product.service';
 import { WelcomeComponent } from './home/welcome.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
-import {ProductFilterPipe} from './products/product-filter/product-filter.pipe'
-import {StarComponent} from './shared/star.component'
+import {ProductFilterPipe} from './products/product-filter/product-filter.pipe';
+import {StarComponent} from './shared/star.component';
+
+
+import {NewsListComponent} from './news/newslist/news-list.component';
+import {NewsService} from './news/shared/news.service';
+import {NewsFilter} from './news/newslist/news-list.filter';
+
 
 @NgModule({
     imports: [BrowserModule,routing,FormsModule,HttpModule],
-    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService],
+
+    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,NewsService],
+
     declarations: [AppComponent,
     BookListComponent,
     BookDetailComponent,
@@ -25,7 +33,10 @@ import {StarComponent} from './shared/star.component'
     ProductDetailComponent,
     ProductListComponent,
     ProductFilterPipe,
-    StarComponent],
+    StarComponent,
+    NewsListComponent,
+    NewsFilter],
+
     bootstrap: [AppComponent]
 })
 export class AppModule{}

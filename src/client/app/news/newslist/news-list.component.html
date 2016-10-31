@@ -1,0 +1,36 @@
+<div class="container">
+   <div class='content'>
+       <div class="search">
+           <h4>Tìm kiếm</h4>
+           <input type = 'text' [(ngModel)] ='listFilter' value="Tìm kiếm ở đây..."/>
+           <!--<button class="btn btn-primary" (click) = 'btnTim()'>Tìm</button>-->
+       </div>
+       <div class='row'>
+           <div class="col-md-4" >        
+            </div>
+           <div class="col-md-9" >        
+                <div class="col-md-4" *ngFor='let new of news | newsFilter : listFilter'>
+                    <div class="box">
+                        <div class="box1">
+                            <ul>
+                                <li style="height: 120px"><img [src]='new.imgurl'
+                                        [title]='new.name | uppercase'
+                                        [style.width.px]='imageWidth' 
+                                        [style.height.px]='imageHeight'/>
+                                </li>
+                                <li><h4 style="font-weight:bold">{{new.name}}</h4></li>
+                                <li><h6 style="text-align:right">{{new.datepub}}</h6></li>
+                                <li><h5>{{new.description}}</h5></li>
+                            </ul>
+                        </div>
+                        <div class="box2">                    
+                            <button class="btn btn-primary" (click) = 'btnDelete()' >Xóa</button> <button class="btn btn-primary" (click) = 'btnSave()'>Lưu</button>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+           
+        </div>
+    </div>
+
+</div>

@@ -8,13 +8,18 @@ import { ProductService } from './products/shared/product.service';
 import { WelcomeComponent } from './home/welcome.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 
+import {NewsListComponent} from './news/newslist/news-list.component';
+import {NewsService} from './news/shared/news.service';
+
+
 const appRoutes: Route[] = [
     { path: '', redirectTo: 'welcome', pathMatch: 'full' },
     { path: 'book-list', component: BookListComponent },
     { path: 'book-detail', component: BookDetailComponent },
     { path: 'welcome', component: WelcomeComponent },
     { path: 'products', component: ProductListComponent },
-    { path: 'product/:id', component: ProductDetailComponent}
+    { path: 'product/:id', component: ProductDetailComponent},
+    { path: 'newslist', component: NewsListComponent}
 ]
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
