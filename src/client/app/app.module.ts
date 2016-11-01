@@ -18,7 +18,7 @@ import {StarComponent} from './shared/star.component';
 
 import {NewsListComponent} from './news/newslist/news-list.component';
 import {NewsService} from './news/shared/news.service';
-import {NewsFilter} from './news/newslist/news-list.filter';
+import {NewsFilter} from './news/newslist/news-list-filter.pipe';
 
 
 @NgModule({

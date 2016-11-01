@@ -44,4 +44,9 @@ h3{
     height: 30px;
 
 }
-
+ul{
+    padding:0px 15px;
+}
+ul li{
+    list-style-type: none;
+}

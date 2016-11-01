@@ -3,8 +3,8 @@ import { Http } from '@angular/http';
 import 'rxjs/Rx';   // Load all features
 import { Route, RouterModule} from '@angular/router';
 
-
 import { ProductService } from './products/shared/product.service';
+import { NewsService } from './news/shared/news.service';
 
 @Component({
     selector: 'my-app',

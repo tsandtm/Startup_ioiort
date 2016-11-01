@@ -23,14 +23,13 @@ export class NewsService {
 
     // getNewsSearch(mes: string ): Observable<INews[]> {
     //     return this._http.get(this._newsUrl)
-    //         .map((response: Response) => <INews[]> response.json().find())
-            
+    //         .map((response: Response) => <INews[]> response.json().find())            
     //         .do(data => console.log('All: ' +  JSON.stringify(data)))
     //         .catch(this.handleError);
     // }
 
-    private handleError(error: Response) {
+    private handleError(error: Error): Promise<any> {
         console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
+        return Promise.reject(error.message || error);
     }
 }

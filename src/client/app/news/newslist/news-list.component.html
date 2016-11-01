@@ -1,19 +1,24 @@
 <div class="container">
    <div class='content'>
-       <div class="search">
-           <h4>Tìm kiếm</h4>
-           <input type = 'text' [(ngModel)] ='listFilter' value="Tìm kiếm ở đây..."/>
-           <!--<button class="btn btn-primary" (click) = 'btnTim()'>Tìm</button>-->
-       </div>
+           <div class='row' >
+                <div class='col-md-5'>
+                    <div class="search">
+                        <h4>Tìm kiếm <input type ='text' [(ngModel)] ='listFilter'/></h4>        
+                        <!--<button class="btn btn-primary" (click) = 'btnTim()'>Tìm</button>-->
+                    </div>
+                </div>
+        </div>
+
        <div class='row'>
-           <div class="col-md-4" >        
-            </div>
+           <!--<div class="col-md-4" >        
+            </div>-->
            <div class="col-md-9" >        
                 <div class="col-md-4" *ngFor='let new of news | newsFilter : listFilter'>
                     <div class="box">
                         <div class="box1">
                             <ul>
-                                <li style="height: 120px"><img [src]='new.imgurl'
+                                <li style="height: 120px">
+                                    <img [src]='new.imgurl'
                                         [title]='new.name | uppercase'
                                         [style.width.px]='imageWidth' 
                                         [style.height.px]='imageHeight'/>
@@ -34,3 +39,51 @@
     </div>
 
 </div>
+
+<style>
+h3{
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    color: midnightblue;
+}
+.content {
+    margin:20px 5px;
+}
+
+.box{
+    width: 270px;
+    height: 380px;
+    border: 1px solid black;
+    box-sizing: border-box;
+    padding: 20px 2px;
+    margin: 3px 0px;
+}
+.box1{
+    height: 300px;
+}
+.box2{
+    padding: 0 20px;
+}
+
+.box image{
+    height: 80px;
+}
+.col-md-3{
+    padding: 0px;
+}
+
+.search input[type=text]{
+    margin-bottom: 20px;
+    width: 200px;
+    height: 30px;
+
+}
+ul{
+    padding:0px 15px;
+}
+ul li{
+    list-style-type: none;
+}
+
+</style>
