@@ -1,5 +1,9 @@
 import { Component, OnInit }  from '@angular/core';
 
+import {Overlay, overlayConfigFactory} from 'angular2-modal';
+import { Modal, BSModalContext } from 'angular2-modal/plugins/bootstrap';
+import {ProduceDetailModal,ProduceDetailModalContext} from '../product-detail-modal/product-detail-modal.component';
+
 
 import { Product } from '../shared/product.model';
 import { ProductFilterPipe } from '../product-filter/product-filter.pipe';
@@ -8,7 +12,8 @@ import { ProductService } from '../shared/product.service';
 
 @Component({
     templateUrl: '/products/product-list/product-list.component.html',
-    styleUrls: ['/products/product-list/product-list.component.css']
+    styleUrls: ['/products/product-list/product-list.component.css'],
+    providers: [Modal]
 })
 export class ProductListComponent implements OnInit {
     pageTitle: string = 'Product List';
@@ -20,7 +25,9 @@ export class ProductListComponent implements OnInit {
     products: Product[];
 
 
-    constructor(private _productService: ProductService) {
+    constructor(
+        private _productService: ProductService,
+        private modal: Modal) {
 
     }
 
@@ -39,5 +46,9 @@ export class ProductListComponent implements OnInit {
 
     onRatingClicked(message: string): void {
         this.pageTitle = 'Product List: ' + message;
+    }
+
+    showProductDetailModal(product: Product){
+        this.modal.open(ProduceDetailModal,overlayConfigFactory({product},BSModalContext))
     }
 }
