@@ -19,6 +19,7 @@ import { ProductDetailComponent } from './products/product-detail/product-detail
 import {ProductFilterPipe} from './products/product-filter/product-filter.pipe'
 import {StarComponent} from './shared/star.component'
 import {ProductModalComponent} from './products/product-modal/product-modal.component';
+import {ProduceDetailModal} from './products/product-detail-modal/product-detail-modal.component';
 
 @NgModule({
     imports: [BrowserModule,routing,FormsModule,HttpModule,ModalModule.forRoot(),BootstrapModalModule],
@@ -36,7 +37,8 @@ import {ProductModalComponent} from './products/product-modal/product-modal.comp
     ProductFilterPipe,
     StarComponent,
     ProductModalComponent,
-    CustomModal],
+    CustomModal,
+    ProduceDetailModal],
 
 
     bootstrap: [AppComponent],
@@ -44,6 +46,6 @@ import {ProductModalComponent} from './products/product-modal/product-modal.comp
 
 
 
-    entryComponents: [CustomModal]
+    entryComponents: [CustomModal,ProduceDetailModal]
 })
 export class AppModule{}

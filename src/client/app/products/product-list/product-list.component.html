@@ -1,3 +1,4 @@
+<span defaultOverlayTarget></span>
 <div class='panel panel-primary'>
     <div class='panel-heading'>
         {{pageTitle}}
@@ -44,10 +45,15 @@
                                  [style.width.px]='imageWidth' 
                                  [style.margin.px]='imageMargin'>
                         </td>
-                        <td> <a [routerLink]="['/product',product.productId]">
+                        <!--<td> <a [routerLink]="['/product',product.productId]">
                             {{product.productName}}
                             </a>
+                        </td>-->
+
+                        <td>
+                            <a href="javascript:;" (click)="showProductDetailModal(product)">{{product.productName}}</a>
                         </td>
+                        
                         <td>{{ product.productCode | lowercase }}</td>
                         <td>{{ product.releaseDate }}</td>
                         <td>{{ product.price | currency:'USD':true:'1.2-2' }}</td>
