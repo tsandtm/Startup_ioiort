@@ -22,7 +22,8 @@ export class ProductListComponent implements OnInit {
     showImage: boolean = false;
     listFilter: string = '';
     errorMessage: string;
-    products: Product[];
+    products: Promise<Product[]>;
+    checked: any[] = [];
 
 
     constructor(
@@ -40,8 +41,7 @@ export class ProductListComponent implements OnInit {
         //              .subscribe(
         //                products => this.products = products,
         //                error =>  this.errorMessage = <any>error);
-        this._productService.getProducts()
-                .then(products => this.products = products)
+        this.products = this._productService.getProducts();
     }
 
     onRatingClicked(message: string): void {
@@ -50,5 +50,14 @@ export class ProductListComponent implements OnInit {
 
     showProductDetailModal(product: Product){
         this.modal.open(ProduceDetailModal,overlayConfigFactory({product},BSModalContext))
+    }
+
+    onCheck(product: Product){
+        this.checked.push[product.productId];
+        product.isCheked =true;
+    }
+
+    isChecked(product: Product): boolean{
+        return this.checked.some(id => id === product.productId);
     }
 }

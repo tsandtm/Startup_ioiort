@@ -28,7 +28,8 @@
       'rxjs':                      'npm:',
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
       'angular2-modal': 'npm:angular2-modal/bundles/angular2-modal.umd.js',
-      'angular2-modal/plugins/bootstrap' : 'npm:angular2-modal/bundles/angular2-modal.' + plugin + '.umd.js'
+      'angular2-modal/plugins/bootstrap' : 'npm:angular2-modal/bundles/angular2-modal.' + plugin + '.umd.js',
+      'ng2-pagination': 'npm:ng2-pagination'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -40,6 +41,10 @@
         defaultExtension: 'js'
       },
       'angular-in-memory-web-api': {
+        main: './index.js',
+        defaultExtension: 'js'
+      },
+      'ng2-pagination':{
         main: './index.js',
         defaultExtension: 'js'
       }
