@@ -15,3 +15,13 @@ git pull
 
 git checkout tennhanh
 
+
+----Deleting a remote branch:
+
+git push origin --delete branch
+
+
+----Deleting a local branch:
+
+git branch --delete branch
+
