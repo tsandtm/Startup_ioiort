@@ -15,7 +15,7 @@ const appRoutes: Route[] = [
     { path: 'book-detail', component: BookDetailComponent },
     { path: 'welcome', component: WelcomeComponent },
     { path: 'products', component: ProductListComponent },
-    { path: 'product/:id', component: ProductDetailComponent },
+    // { path: 'product/:id', component: ProductDetailComponent },
     { path: 'test-modal', component: ProductModalComponent }
 ]
 

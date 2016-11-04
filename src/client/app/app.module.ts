@@ -48,7 +48,7 @@ import { ProductFilterPipe } from './products/product-filter/product-filter.pipe
         Ng2PaginationModule],
 
 
-    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, ProductService],
+    providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, ProductService],
 
 
     declarations: [AppComponent,

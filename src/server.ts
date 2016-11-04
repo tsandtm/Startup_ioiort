@@ -23,7 +23,6 @@ app.use('/scripts', angularModule)
 // load các file thư viện khác được khai báo trong systemjs.config.js
 app.use('/scripts', othersLib)
 
-
 // load các file css cho client
 app.use('/css', cssFiles)
 
@@ -32,10 +31,16 @@ app.use(htmlFiles)
 
 
 
+app.get('*',(req,res) => {
+    res.sendFile(path.join(__dirname,'client','index.html'));
+})
+
 // trả về index.html
 app.get('/', (req, res) => {
     res.sendFile('index.html');
 })
+
+
 
 app.listen(config.port);
 console.log('server start on port ' + config.port)

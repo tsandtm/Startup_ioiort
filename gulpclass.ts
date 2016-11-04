@@ -91,6 +91,7 @@ export class Gulpfile {
         gulp.watch('src/client/**/*.css',['move',bs.reload])
         gulp.watch(['src/client/**/*.ts'], ['compile',bs.reload]);
         gulp.watch(['src/api/**/*.ts'], ['compile',bs.reload]);
+        gulp.watch(['src/*.ts'], ['compile',bs.reload]);
 
         done();
     }
