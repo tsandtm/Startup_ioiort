@@ -16,6 +16,9 @@ import { Ng2PaginationModule } from 'ng2-pagination';
 // routing module
 import { routing } from './app.routing.module';
 
+//spinkit component
+import {RotatingPlaneComponent} from 'ng2-spin-kit/app/spinner/rotating-plane.component'
+
 // component
 import { AppComponent } from './app.component';
 import { BookListComponent } from './books/book-list/book-list.component';
@@ -61,7 +64,8 @@ import { ProductFilterPipe } from './products/product-filter/product-filter.pipe
         StarComponent,
         ProductModalComponent,
         CustomModal,
-        ProduceDetailModal],
+        ProduceDetailModal,
+        RotatingPlaneComponent],
 
 
     bootstrap: [AppComponent],
