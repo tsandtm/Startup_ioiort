@@ -1,93 +1,100 @@
-/*
-Created		10/20/2016
-Modified		10/31/2016
-Project		
-Model			
-Company		
-Author		
-Version		
-Database		PostgreSQL 8.1 
-*/
 
 
-/* Create Tables */
 
-
-Create table "DanhMucSite"
+Create table test."Contacts"
 (
-	"IDDanhMucSite" Integer NOT NULL,
-	"DuongDan" Varchar(500),
-	"TenGoi" Varchar(500),
-	"MoTa" Varchar(3000),
-	"SoLuongTinDuyetTim" Integer,
-	"TempateCrawlTieuDe" Varchar(256),
-	"TempateCrawlMoTa" Varchar(256),
-	"TempateCrawlNoiDung" Varchar(256),
-	"TempateCrawlImage" Varchar(256),
-	"LinkRSS" Varchar(256),
- primary key ("IDDanhMucSite")
-) Without Oids;
-
-
-Create table "TinTuc"
-(
-	"IDTinTuc" Bigint NOT NULL,
-	"IDDanhMucSite" Integer NOT NULL,
-	"TieuDe" Varchar(256),
-	"MoTa" Varchar(2000),
-	"NoiDung" Text,
-	"ThoiGianDangTin" Time,
-	"URLNews" Varchar(256),
-	"URLThumbImage" Varchar(256),
-	"URLImage" Varchar(256),
- primary key ("IDTinTuc")
-) Without Oids;
-
-
-Create table "User"
-(
-	"IDUser" Bigint NOT NULL,
-	"Username" Varchar(256),
-	"Facebook" Varchar(256),
-	"PhoneNumber" Varchar(256),
+	"ContactID" Integer NOT NULL,
+	"Token" Varchar(256),
 	"Email" Varchar(256),
- primary key ("IDUser")
+	"TaiKhoan" Varchar(256),
+	"Device" Varchar(256),
+	"PhoneNumber" Varchar(50),
+	"NgayTao" Timestamp,
+	"FaceBook" Varchar(256),
+	"Contact_Tag" Integer[],
+ primary key ("ContactID")
 ) Without Oids;
 
 
-Create table "User_DanhMucSite"
+Create table test."n_App"
 (
-	"IDUser" Bigint NOT NULL,
-	"IDDanhMucSite" Integer NOT NULL,
-	"CreatedDate" Time,
- primary key ("IDUser","IDDanhMucSite")
+	"AppID" Integer NOT NULL,
+	"APIKey" Varchar(256),
+	"AppName" Varchar(256),
+	"IsActive" Boolean,
+	"NgayTao" Timestamp,
+ primary key ("AppID")
 ) Without Oids;
 
 
-Create table "TinDaXem"
+Create table test."n_Notifications"
 (
+	"NotifiID" Integer NOT NULL,
+	"AppID" Integer NOT NULL,
+	"TieuDe" Varchar(256),
+	"NoiDung" Text,
+	"ThoiGianGui" Timestamp,
+	"ThoiHanToiDa" Timestamp,
+	"DoUuTien" Integer,
+	"TrangThaiGoi" Integer,
+	"SoLuong" Integer,
+	"Send_User" Integer[],
+	"Send_Tag" Integer[],
+	"Send_UserDenie" Integer[],
+	"Send_TagDenie" Integer[],
+ primary key ("NotifiID")
 ) Without Oids;
 
 
-Create table "TinDaXoa"
+Create table test."n_Tag"
 (
+	"TagID" Integer NOT NULL,
+	"TagNameDisplay" Varchar(256),
+	"TagNameKey" Varchar(256),
+	"AccountID" Varchar(128),
+	"IsDefault" Boolean,
+ primary key ("TagID")
 ) Without Oids;
 
 
-Create table "TinDaLuu"
+Create table test."n_Contacts_Notifications"
 (
+	"ContactID" Integer NOT NULL,
+	"NotifiID" Integer NOT NULL,
+	"TrangThai" Integer,
+	"ThoiGianCanGoi" Timestamp,
+	"LogLoi" Text,
+	"SoLanGoi" Integer,
+	"ThoiGianDaGoi" Timestamp,
+ primary key ("ContactID","NotifiID")
 ) Without Oids;
 
 
-/* Create Alternate Keys */
+Create table test."AccountID"
+(
+	"AccountID" Varchar(128) NOT NULL,
+ primary key ("AccountID")
+) Without Oids;
+
+
+Create table test."Users_Contacts"
+(
+	"ContactID" Integer NOT NULL,
+	"AccountID" Varchar(128) NOT NULL,
+	"Contact_Tag" Char(20),
+ primary key ("ContactID","AccountID")
+) Without Oids;
 
 
 /* Create Foreign Keys */
 
-Alter table "TinTuc" add  foreign key ("IDDanhMucSite") references "DanhMucSite" ("IDDanhMucSite") on update restrict on delete restrict;
+Alter table test."n_Contacts_Notifications" add  foreign key ("ContactID") references test."Contacts" ("ContactID") on update restrict on delete restrict;
 
-Alter table "User_DanhMucSite" add  foreign key ("IDDanhMucSite") references "DanhMucSite" ("IDDanhMucSite") on update restrict on delete restrict;
+Alter table test."Users_Contacts" add  foreign key ("ContactID") references test."Contacts" ("ContactID") on update restrict on delete restrict;
 
-Alter table "User_DanhMucSite" add  foreign key ("IDUser") references "User" ("IDUser") on update restrict on delete restrict;
+Alter table test."n_Notifications" add  foreign key ("AppID") references test."n_App" ("AppID") on update restrict on delete restrict;
 
+Alter table test."n_Contacts_Notifications" add  foreign key ("NotifiID") references test."n_Notifications" ("NotifiID") on update restrict on delete restrict;
+
+Alter table test."Users_Contacts" add  foreign key ("AccountID") references test."AccountID" ("AccountID") on update restrict on delete restrict;
 
