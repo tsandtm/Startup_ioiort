@@ -19,7 +19,7 @@
 		</div>
 
 		<div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
-
+		<my-spinner [IsRunning]="isRequesting"></my-spinner>
 		<div class='table-responsive'>
 			<table class='table'>
 				<thead>

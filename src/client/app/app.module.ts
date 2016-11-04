@@ -27,6 +27,11 @@ import { StarComponent } from './shared/star.component'
 import { ProductModalComponent } from './products/product-modal/product-modal.component';
 import { ProduceDetailModal } from './products/product-detail-modal/product-detail-modal.component';
 
+
+//shared
+import {SpinnerComponent} from './shared/spinner/spinner.component';
+
+
 // service
 import { ProductService } from './products/shared/product.service';
 
@@ -61,7 +66,8 @@ import { ProductFilterPipe } from './products/product-filter/product-filter.pipe
         StarComponent,
         ProductModalComponent,
         CustomModal,
-        ProduceDetailModal],
+        ProduceDetailModal,
+        SpinnerComponent],
 
 
     bootstrap: [AppComponent],

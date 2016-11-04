@@ -12,7 +12,7 @@ import { ProductService } from '../shared/product.service';
 
 @Component({
     templateUrl: '/products/product-list/product-list.component.html',
-    styleUrls: ['/products/product-list/product-list.component.css'],
+    styleUrls: ['products/product-list/product-list.component.css'],
     providers: [Modal]
 })
 export class ProductListComponent implements OnInit {
@@ -24,12 +24,12 @@ export class ProductListComponent implements OnInit {
     errorMessage: string;
     products: Promise<Product[]>;
     checked: any[] = [];
+    isRequesting: boolean = false;
 
 
     constructor(
         private _productService: ProductService,
         private modal: Modal) {
-
     }
 
     toggleImage(): void {
@@ -37,11 +37,18 @@ export class ProductListComponent implements OnInit {
     }
 
     ngOnInit(): void {
+
+        this.isRequesting = true;
         //    this._productService.getProducts()
         //              .subscribe(
         //                products => this.products = products,
         //                error =>  this.errorMessage = <any>error);
-        this.products = this._productService.getProducts();
+        setTimeout(() => {
+            this.products = this._productService.getProducts()
+                .catch(error => this.errorMessage = error.message);
+            this.isRequesting = false;
+        },3000);
+        
     }
 
     onRatingClicked(message: string): void {
