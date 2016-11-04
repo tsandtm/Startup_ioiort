@@ -1,3 +1,4 @@
+<span defaultOverlayTarget></span>
 <div class="container">
    <div class='content'>
            <div class='row' >
@@ -23,8 +24,8 @@
                                         [style.width.px]='imageWidth' 
                                         [style.height.px]='imageHeight'/>
                                 </li>
-                                <li><h4 style="font-weight:bold">{{new.name}}</h4></li>
-                                <li><h6 style="text-align:right">{{new.datepub}}</h6></li>
+                                <li><a style="font-weight:bold; font-size:15px" (click) = "openCustom(new)">{{new.name}}</a></li>
+                                <li><h6 style="text-align:right;margin-top:10px;">{{new.datepub | date : "dd-MM-y"}}</h6></li>
                                 <li><h5>{{new.description}}</h5></li>
                             </ul>
                         </div>
@@ -40,50 +41,3 @@
 
 </div>
 
-<style>
-h3{
-    text-align: center;
-    font-size: 40px;
-    font-weight: bold;
-    color: midnightblue;
-}
-.content {
-    margin:20px 5px;
-}
-
-.box{
-    width: 270px;
-    height: 380px;
-    border: 1px solid black;
-    box-sizing: border-box;
-    padding: 20px 2px;
-    margin: 3px 0px;
-}
-.box1{
-    height: 300px;
-}
-.box2{
-    padding: 0 20px;
-}
-
-.box image{
-    height: 80px;
-}
-.col-md-3{
-    padding: 0px;
-}
-
-.search input[type=text]{
-    margin-bottom: 20px;
-    width: 200px;
-    height: 30px;
-
-}
-ul{
-    padding:0px 15px;
-}
-ul li{
-    list-style-type: none;
-}
-
-</style>

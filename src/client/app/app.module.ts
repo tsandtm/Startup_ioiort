@@ -20,9 +20,14 @@ import {NewsListComponent} from './news/newslist/news-list.component';
 import {NewsService} from './news/shared/news.service';
 import {NewsFilter} from './news/newslist/news-list-filter.pipe';
 
+import { ModalModule } from 'angular2-modal';
+import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
+import { CustomModal } from './news/news-detail/news-detail.component';
 
 @NgModule({
-    imports: [BrowserModule,routing,FormsModule,HttpModule],
+    imports: [BrowserModule,routing,FormsModule,HttpModule, 
+    ModalModule.forRoot(),
+    BootstrapModalModule],
 
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,NewsService],
 
@@ -35,8 +40,11 @@ import {NewsFilter} from './news/newslist/news-list-filter.pipe';
     ProductFilterPipe,
     StarComponent,
     NewsListComponent,
-    NewsFilter],
+    NewsFilter,
+    CustomModal],
 
+    entryComponents: [ CustomModal ],
+    
     bootstrap: [AppComponent]
 })
 export class AppModule{}

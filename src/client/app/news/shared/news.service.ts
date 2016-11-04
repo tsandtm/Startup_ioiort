@@ -28,6 +28,16 @@ export class NewsService {
     //         .catch(this.handleError);
     // }
 
+     getNew(id: number): Promise<INews> {
+        // return this.getProducts()
+        //     .map((products: Product[]) => products.find(p => p.productId === id))
+        //     .catch(this.handleError);
+        return this.getNews()
+            .then(inew => inew.find(p => p.id === id))
+            .catch(this.handleError);
+    }
+
+
     private handleError(error: Error): Promise<any> {
         console.error(error);
         return Promise.reject(error.message || error);

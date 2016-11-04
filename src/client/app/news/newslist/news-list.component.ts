@@ -1,14 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit,  ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import {NewsService} from '../shared/news.service';
 import {INews} from  '../shared/news.model'
 import {NewsFilter} from './news-list-filter.pipe';
+
+import { Overlay, overlayConfigFactory } from 'angular2-modal';
+import { Modal, BSModalContext } from 'angular2-modal/plugins/bootstrap';
+import { NewsDetailContent, CustomModal } from '../news-detail/news-detail.component';
 
 import path = require('path');
 
 @Component({
     selector: 'newslist',
     templateUrl:'/news/newslist/news-list.component.html',
-    styleUrls: ['/news/newslist/news-list.component.css']
+    styleUrls: ['news/newslist/news-list.component.css'],
+    providers: [Modal]
 })
 export class NewsListComponent implements OnInit{
     pageTitle: string = 'News List';
@@ -18,7 +23,7 @@ export class NewsListComponent implements OnInit{
     listFilter: string = '';
     news: INews[];
 
-    constructor(private _newsService: NewsService) {
+    constructor(private _newsService: NewsService, public modal : Modal) {
 
     }
 
@@ -41,5 +46,10 @@ export class NewsListComponent implements OnInit{
     btnDelete(): void{
         alert("Đã xóa");
     }
+
+     openCustom(news) {
+        return this.modal.open(CustomModal, overlayConfigFactory({ news: news },BSModalContext));
+    }
+  
 
 }
