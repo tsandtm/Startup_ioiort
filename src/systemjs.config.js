@@ -14,7 +14,7 @@
     // map tells the System loader where to look for things
     map: {
       // our app is within the app folder
-      app: 'client',
+      app: 'app',
       // angular bundles
       '@angular/core': 'npm:core/bundles/core.umd.js',
       '@angular/common': 'npm:common/bundles/common.umd.js',
@@ -30,11 +30,15 @@
       'angular2-modal': 'npm:angular2-modal/bundles/angular2-modal.umd.js',
       'angular2-modal/plugins/bootstrap' : 'npm:angular2-modal/bundles/angular2-modal.' + plugin + '.umd.js',
       'ng2-pagination': 'npm:ng2-pagination',
-      'angular2-busy': 'npm:'
+      // danh cho angular2-busy
+      'angular2-busy': 'npm:angular2-busy',
+      'angular2-dynamic-component': 'npm:angular2-dynamic-component',
+      'ts-metadata-helper': 'npm:ts-metadata-helper',
+      'core-js': 'npm:core-js'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
-      'client': {
+      app: {
         main: './main.js',
         defaultExtension: 'js'
       },
@@ -51,6 +55,17 @@
       },
       'angular2-busy':{
         main: './index.js',
+        defaultExtension: 'js'
+      },
+      'angular2-dynamic-component': {
+        main: './index.js',
+        defaultExtension: 'js'
+      },
+      'ts-metadata-helper': {
+        main: './index.js',
+        defaultExtension: 'js'
+      },
+      'core-js': {
         defaultExtension: 'js'
       }
     }

@@ -19,7 +19,9 @@
 		</div>
 
 		<div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+
 		<div [ngBusy]="products"></div>
+		
 		<div class='table-responsive'>
 			<table class='table'>
 				<thead>
