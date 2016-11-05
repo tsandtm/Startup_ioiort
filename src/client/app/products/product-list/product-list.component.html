@@ -19,7 +19,7 @@
 		</div>
 
 		<div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
-		<sk-rotating-plane></sk-rotating-plane>
+		<sk-cube-grid [isRunning]="isRequest"></sk-cube-grid>
 		<div class='table-responsive'>
 			<table class='table'>
 				<thead>

@@ -17,7 +17,7 @@ import { Ng2PaginationModule } from 'ng2-pagination';
 import { routing } from './app.routing.module';
 
 //spinkit component
-import {RotatingPlaneComponent} from 'ng2-spin-kit/app/spinner/rotating-plane.component'
+import {CubeGridComponent} from 'ng2-spin-kit/app/spinners'
 
 // component
 import { AppComponent } from './app.component';
@@ -65,7 +65,7 @@ import { ProductFilterPipe } from './products/product-filter/product-filter.pipe
         ProductModalComponent,
         CustomModal,
         ProduceDetailModal,
-        RotatingPlaneComponent],
+        CubeGridComponent],
 
 
     bootstrap: [AppComponent],

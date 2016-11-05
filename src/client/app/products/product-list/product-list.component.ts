@@ -24,6 +24,7 @@ export class ProductListComponent implements OnInit {
     errorMessage: string;
     products: Promise<Product[]>;
     checked: any[] = [];
+    isRequest: boolean = false;
 
 
     constructor(
@@ -37,11 +38,16 @@ export class ProductListComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.isRequest = true;
         //    this._productService.getProducts()
         //              .subscribe(
         //                products => this.products = products,
         //                error =>  this.errorMessage = <any>error);
         this.products = this._productService.getProducts();
+
+        setTimeout(() => {
+            this.isRequest = false;
+        },3000)
     }
 
     onRatingClicked(message: string): void {
