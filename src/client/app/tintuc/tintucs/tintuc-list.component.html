@@ -1,0 +1,15 @@
+<div class='panel panel-primary' *ngIf='tintucs'>
+	<div class='panel-heading'>
+		{{pageTitle}}
+	</div>
+	<a href='#'>tao moi</a>
+		<div class="container">
+			<div *ngFor="let n of tintucs">
+				<div class="img" >
+					 <a [routerLink]="['/tintucs',n.id]">
+						 <img [src]="n.URLImage">
+					 </a>
+				</div>
+			</div>
+		</div>
+</div>
