@@ -9,7 +9,8 @@ app.use(body_parser.urlencoded({ extended: true }));
 app.use(body_parser.json());
 // import router
 var book_router_1 = require('./routes/book.router');
+var Contact_router_1 = require('./routes/Contact.router');
 // sử dụng các router được định nghĩa từ các modules
-app.use('/api', [(new book_router_1.BookRouter()).getRouter()]);
+app.use('/api', [(new book_router_1.BookRouter()).getRouter(), (new Contact_router_1.ContactRouter()).getRouter()]);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = app;
