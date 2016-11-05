@@ -14,7 +14,7 @@
     // map tells the System loader where to look for things
     map: {
       // our app is within the app folder
-      app: 'app',
+      app: 'client',
       // angular bundles
       '@angular/core': 'npm:core/bundles/core.umd.js',
       '@angular/common': 'npm:common/bundles/common.umd.js',
@@ -29,11 +29,12 @@
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
       'angular2-modal': 'npm:angular2-modal/bundles/angular2-modal.umd.js',
       'angular2-modal/plugins/bootstrap' : 'npm:angular2-modal/bundles/angular2-modal.' + plugin + '.umd.js',
-      'ng2-pagination': 'npm:ng2-pagination'
+      'ng2-pagination': 'npm:ng2-pagination',
+      'angular2-busy': 'npm:'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
-      app: {
+      'client': {
         main: './main.js',
         defaultExtension: 'js'
       },
@@ -45,6 +46,10 @@
         defaultExtension: 'js'
       },
       'ng2-pagination':{
+        main: './index.js',
+        defaultExtension: 'js'
+      },
+      'angular2-busy':{
         main: './index.js',
         defaultExtension: 'js'
       }

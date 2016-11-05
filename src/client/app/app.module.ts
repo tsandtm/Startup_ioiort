@@ -16,6 +16,9 @@ import { Ng2PaginationModule } from 'ng2-pagination';
 // routing module
 import { routing } from './app.routing.module';
 
+//angular2busy 
+import {BusyModule} from 'angular2-busy'
+
 // component
 import { AppComponent } from './app.component';
 import { BookListComponent } from './books/book-list/book-list.component';
@@ -45,7 +48,8 @@ import { ProductFilterPipe } from './products/product-filter/product-filter.pipe
         HttpModule,
         ModalModule.forRoot(),
         BootstrapModalModule,
-        Ng2PaginationModule],
+        Ng2PaginationModule,
+        BusyModule],
 
 
     providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, ProductService],

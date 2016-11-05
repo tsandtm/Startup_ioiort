@@ -41,7 +41,9 @@ export class ProductListComponent implements OnInit {
         //              .subscribe(
         //                products => this.products = products,
         //                error =>  this.errorMessage = <any>error);
-        this.products = this._productService.getProducts();
+        setTimeout(() => {
+            this.products = this._productService.getProducts();
+        },3000)
     }
 
     onRatingClicked(message: string): void {
