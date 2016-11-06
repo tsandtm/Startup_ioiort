@@ -7,6 +7,7 @@ import { ProductListComponent } from './products/product-list/product-list.compo
 import { ProductService } from './products/shared/product.service';
 import { WelcomeComponent } from './home/welcome.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
+import { MenuListComponent } from './menu/menu-list/menu-list.component';
 
 const appRoutes: Route[] = [
     { path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -14,7 +15,8 @@ const appRoutes: Route[] = [
     { path: 'book-detail', component: BookDetailComponent },
     { path: 'welcome', component: WelcomeComponent },
     { path: 'products', component: ProductListComponent },
-    { path: 'product/:id', component: ProductDetailComponent}
+    { path: 'product/:id', component: ProductDetailComponent},
+    { path: 'menu-list', component: MenuListComponent },
 ]
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

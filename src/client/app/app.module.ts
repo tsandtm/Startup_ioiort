@@ -12,8 +12,9 @@ import { ProductListComponent } from './products/product-list/product-list.compo
 import { ProductService } from './products/shared/product.service';
 import { WelcomeComponent } from './home/welcome.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
-import {ProductFilterPipe} from './products/product-filter/product-filter.pipe'
-import {StarComponent} from './shared/star.component'
+import {ProductFilterPipe} from './products/product-filter/product-filter.pipe';
+import {StarComponent} from './shared/star.component';
+import { MenuListComponent } from './menu/menu-list/menu-list.component';
 
 @NgModule({
     imports: [BrowserModule,routing,FormsModule,HttpModule],
@@ -25,6 +26,7 @@ import {StarComponent} from './shared/star.component'
     ProductDetailComponent,
     ProductListComponent,
     ProductFilterPipe,
+    MenuListComponent,
     StarComponent],
     bootstrap: [AppComponent]
 })
