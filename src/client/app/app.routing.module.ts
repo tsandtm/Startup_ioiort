@@ -16,7 +16,7 @@ const appRoutes: Route[] = [
     { path: 'welcome', component: WelcomeComponent },
     { path: 'products', component: ProductListComponent },
     { path: 'product/:id', component: ProductDetailComponent},
-    { path: 'menu-list', component: MenuListComponent },
+    { path: 'menu-list', component: MenuListComponent }
 ]
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
