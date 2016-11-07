@@ -12,8 +12,7 @@ Database		PostgreSQL 8.1
 
 /* Create Tables */
 
-
-Create table "DanhMucSite"
+Create table test."DanhMucSite"
 (
 	"IDDanhMucSite" Integer NOT NULL,
 	"DuongDan" Varchar(500),
@@ -29,7 +28,7 @@ Create table "DanhMucSite"
 ) Without Oids;
 
 
-Create table "TinTuc"
+Create table test."TinTuc"
 (
 	"IDTinTuc" Bigint NOT NULL,
 	"IDDanhMucSite" Integer NOT NULL,
@@ -44,7 +43,7 @@ Create table "TinTuc"
 ) Without Oids;
 
 
-Create table "User"
+Create table test."User"
 (
 	"IDUser" Bigint NOT NULL,
 	"Username" Varchar(256),
@@ -55,7 +54,7 @@ Create table "User"
 ) Without Oids;
 
 
-Create table "User_DanhMucSite"
+Create table test."User_DanhMucSite"
 (
 	"IDUser" Bigint NOT NULL,
 	"IDDanhMucSite" Integer NOT NULL,
@@ -64,17 +63,17 @@ Create table "User_DanhMucSite"
 ) Without Oids;
 
 
-Create table "TinDaXem"
+Create table test."TinDaXem"
 (
 ) Without Oids;
 
 
-Create table "TinDaXoa"
+Create table test."TinDaXoa"
 (
 ) Without Oids;
 
 
-Create table "TinDaLuu"
+Create table test."TinDaLuu"
 (
 ) Without Oids;
 
@@ -84,10 +83,10 @@ Create table "TinDaLuu"
 
 /* Create Foreign Keys */
 
-Alter table "TinTuc" add  foreign key ("IDDanhMucSite") references "DanhMucSite" ("IDDanhMucSite") on update restrict on delete restrict;
+Alter table test."TinTuc" add  foreign key ("IDDanhMucSite") references test."DanhMucSite" ("IDDanhMucSite") on update restrict on delete restrict;
 
-Alter table "User_DanhMucSite" add  foreign key ("IDDanhMucSite") references "DanhMucSite" ("IDDanhMucSite") on update restrict on delete restrict;
+Alter table test."User_DanhMucSite" add  foreign key ("IDDanhMucSite") references test."DanhMucSite" ("IDDanhMucSite") on update restrict on delete restrict;
 
-Alter table "User_DanhMucSite" add  foreign key ("IDUser") references "User" ("IDUser") on update restrict on delete restrict;
+Alter table test."User_DanhMucSite" add  foreign key ("IDUser") references test."User" ("IDUser") on update restrict on delete restrict;
 
 
