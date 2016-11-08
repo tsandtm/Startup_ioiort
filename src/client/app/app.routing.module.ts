@@ -7,14 +7,16 @@ import { ProductListComponent } from './products/product-list/product-list.compo
 import { ProductService } from './products/shared/product.service';
 import { WelcomeComponent } from './home/welcome.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
+import { NotificationListComponent } from './Notifications/Notification-list/Notification-list.component';
 
 const appRoutes: Route[] = [
-    { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+    { path: '', redirectTo: 'Notifications', pathMatch: 'full' },
     { path: 'book-list', component: BookListComponent },
     { path: 'book-detail', component: BookDetailComponent },
     { path: 'welcome', component: WelcomeComponent },
     { path: 'products', component: ProductListComponent },
-    { path: 'product/:id', component: ProductDetailComponent}
+    { path: 'product/:id', component: ProductDetailComponent },
+    { path: 'Notifications', component: NotificationListComponent }
 ]
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

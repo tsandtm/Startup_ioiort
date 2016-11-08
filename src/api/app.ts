@@ -14,11 +14,13 @@ app.use(body_parser.json());
 
 
 // import router
-import {BookRouter} from './routes/book.router';
+import { BookRouter } from './routes/book.router';
+//import Notification router
+import { NotificationRouter } from './routes/Notification.router';
 
 
 
-// sử dụng các router được định nghĩa từ các modules
-app.use('/api', [(new BookRouter()).getRouter()]);
+    // sử dụng các router được định nghĩa từ các modules
+    app.use('/api', [(new BookRouter()).getRouter(), (new NotificationRouter()).getRouter()]);
 
 export default app;

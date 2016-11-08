@@ -1,0 +1,81 @@
+<div class='panel panel-primary'>
+    <div class='panel-heading'>
+        Notification
+    </div>
+
+    <!-- Filter the Products   -->
+    <div class='panel-body'>
+        <div class='row'>
+            <div class='col-md-2'>Tìm kiếm:</div>
+            <div class='col-md-4'>
+                <input type='text' [(ngModel)]='listFilter'/>
+            </div>
+            <button style="float:right" type="button">New Mesenger</button>
+        </div>
+        <div class='row' *ngIf='listFilter'>
+            <div class='col-md-6'>
+                <h3>Filtered by: {{ listFilter }}</h3>
+            </div>
+        </div>
+
+
+
+        <div class='table-responsive'>
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th>Tiêu Đề</th>
+                        <th>Trạng thái</th>
+                        <th>Thời gian gửi</th>
+                        <th>Số lượng User</th>
+                        <th>Thời hạn tối đa</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let item of Notifications | notificationFilter:listFilter'>
+                        <td>
+                            {{ item.TieuDe }}
+                        </td>
+                        <td>
+                            {{ item.TrangThaiGoi }}
+                        </td>
+                        <td>
+                            {{ item.ThoiGianGui }}
+                        </td>
+                        <td>
+                            {{ item.SoLuong }}
+                        </td>
+                        <td>
+                            {{ item.ThoiHanToiDa }}
+                        </td>
+                      
+                    </tr>
+                    <!--<tr *ngFor='let item of Notifications>
+                        <td>
+                            {{ item.NotificationID }}
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>-->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

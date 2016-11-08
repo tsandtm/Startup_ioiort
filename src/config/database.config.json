@@ -1,7 +1,7 @@
 {
     "development": {
-        "database": "testdb",
-        "username": "duc",
+        "database": "appnhatro",
+        "username": "postgres",
         "password": "123456",
         "config": {
             "dialect": "postgres",
