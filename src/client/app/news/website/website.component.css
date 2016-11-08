@@ -1,0 +1,64 @@
+h3{
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    color: midnightblue;
+}
+.content {
+    margin:20px 5px;
+}
+
+.danhmuc{
+    width: 275px;
+    height: 700px;
+    border: 1px solid black;
+    box-sizing: border-box;
+    padding: 20px 2px;
+    margin: 1px 0px;
+}
+.list{
+    margin: 20px;
+}
+.list p{
+    font-size: 15px;
+}
+.them a{
+    padding-left: 10px;
+    font-size: 15px;
+    text-decoration: none
+}
+
+.box{
+    width: 275px;
+    height: 380px;
+    border: 1px solid black;
+    box-sizing: border-box;
+    padding: 20px 2px;
+    margin: 1px 0px;
+}
+.box1{
+    height: 300px;
+}
+.box2{
+    padding: 0 20px;
+}
+ul{
+    padding:0px 15px;
+}
+ul li{
+    list-style-type: none;
+}
+.box image{
+    height: 80px;
+}
+.col-md-3{
+    padding: 0px;
+}
+
+.search input[type=text]{
+    margin-bottom: 20px;
+    width: 200px;
+    height: 30px;
+
+}
+

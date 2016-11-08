@@ -11,27 +11,13 @@ export class NewsService {
     constructor(private _http: Http) { }
 
     getNews(): Promise<INews[]> {
-        // return this._http.get(this._newsUrl)
-        //     .map((response: Response) => <INews[]> response.json())
-        //     .do(data => console.log('All: ' +  JSON.stringify(data)))
-        //     .catch(this.handleError);
          return this._http.get('/api/news')
             .toPromise()
             .then(response => response.json() as INews[])
             .catch(this.handleError);
     }
 
-    // getNewsSearch(mes: string ): Observable<INews[]> {
-    //     return this._http.get(this._newsUrl)
-    //         .map((response: Response) => <INews[]> response.json().find())            
-    //         .do(data => console.log('All: ' +  JSON.stringify(data)))
-    //         .catch(this.handleError);
-    // }
-
      getNew(id: number): Promise<INews> {
-        // return this.getProducts()
-        //     .map((products: Product[]) => products.find(p => p.productId === id))
-        //     .catch(this.handleError);
         return this.getNews()
             .then(inew => inew.find(p => p.id === id))
             .catch(this.handleError);

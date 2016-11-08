@@ -16,9 +16,9 @@ app.use(body_parser.json());
 // import router
 import {BookRouter} from './routes/book.router';
 import {NewsRouter} from './routes/news.router';
-
+import {WebsRouter} from './routes/website.router';
 
 // sử dụng các router được định nghĩa từ các modules
-app.use('/api', [(new BookRouter()).getRouter(),(new NewsRouter()).getRouter()]);
+app.use('/api', [(new BookRouter()).getRouter(),(new NewsRouter()).getRouter(), (new WebsRouter()).getRouter()]);
 
 export default app;

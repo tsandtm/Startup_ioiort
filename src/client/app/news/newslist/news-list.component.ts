@@ -7,6 +7,8 @@ import { Overlay, overlayConfigFactory } from 'angular2-modal';
 import { Modal, BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { NewsDetailContent, CustomModal } from '../news-detail/news-detail.component';
 
+import {WebsListComponent} from '../website/website.component'
+
 import path = require('path');
 
 @Component({

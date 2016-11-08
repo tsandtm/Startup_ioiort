@@ -5,6 +5,7 @@ import { Route, RouterModule} from '@angular/router';
 
 import { ProductService } from './products/shared/product.service';
 import { NewsService } from './news/shared/news.service';
+import { WebsService } from './news/shared/website.service'
 
 @Component({
     selector: 'my-app',

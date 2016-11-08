@@ -24,12 +24,18 @@ import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { CustomModal } from './news/news-detail/news-detail.component';
 
+import {WebsListComponent} from './news/website/website.component'
+import {WebsService} from './news/shared/website.service'
+import {AddModal} from './news/website-add/website-add.component'
+import {WebsFilter} from './news/website-add/website-add-filter.pipe'
+
+
 @NgModule({
     imports: [BrowserModule,routing,FormsModule,HttpModule, 
     ModalModule.forRoot(),
     BootstrapModalModule],
 
-    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,NewsService],
+    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,NewsService,WebsService],
 
     declarations: [AppComponent,
     BookListComponent,
@@ -41,9 +47,12 @@ import { CustomModal } from './news/news-detail/news-detail.component';
     StarComponent,
     NewsListComponent,
     NewsFilter,
-    CustomModal],
+    CustomModal,
+    WebsListComponent,
+    AddModal,
+    WebsFilter],
 
-    entryComponents: [ CustomModal ],
+    entryComponents: [ CustomModal, AddModal ],
     
     bootstrap: [AppComponent]
 })

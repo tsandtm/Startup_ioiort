@@ -56,5 +56,5 @@ export class ListNewsRepo extends RepoBase {
                 return result.rows[0].abc
             })
     }
-
+   
 }

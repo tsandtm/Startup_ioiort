@@ -4,6 +4,7 @@ import { Router, Response, Request } from 'express';
 import path = require('path');
 // import các module tạo table
 import { ListNewsRepo } from '../repositories/news.repo';
+import { ListNews } from '../models/news.model'
 
 let mockNews = require(path.join(__dirname,'..','json','news.json'));
 
@@ -56,6 +57,13 @@ export class NewsRouter {
         //         res.status(500).send(error.message)
         //     })
     }
+
+    // private deleted = (req: Request, res: Response) => {
+    //     this .newsRepo.deleted(id)
+    //     .then( lnw=> {
+
+    //     })
+    // }
     private countNews= (req: Request,res: Response) => {
         this.newsRepo.count(null)
             .then(result => {

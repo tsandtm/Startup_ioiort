@@ -1,0 +1,40 @@
+<div class="modal-lg">
+    <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)='Close()' data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class='row'>
+                    <div class='col-xs-6'>
+                        <h4>Thêm website duyệt tin</h4>
+                        <p> Tìm kiếm <input type ='text' [(ngModel)] ='listFilter'/></p>        
+                        <div class='box1' >
+                            <div *ngFor='let web of context.webs1 | websFilter : listFilter'> 
+                                <p> <img [src]='web.icon'
+                                    [title]='web.name | uppercase'
+                                    [style.width.px]='imageWidth' 
+                                    [style.height.px]='imageHeight'/> {{web.name}} 
+                                
+                                    <button class="btn btn-default" style="float:right">Thêm</button> 
+                                </p>           
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col-xs-6 position'>
+                        <h4>Các website đang được duyệt</h4>
+                        <div class='box2'>
+                            <div *ngFor='let web of context.webs'>
+                                <p> <img [src]='web.icon'
+                                    [title]='web.name | uppercase'
+                                    [style.width.px]='imageWidth' 
+                                    [style.height.px]='imageHeight'/> {{web.name}}
+
+                                    <button class="btn btn-default" style="float:right">Xóa</button>                                      
+                                </p>           
+                            </div>
+                        </div>
+                    </div>          
+                </div>
+            </div>
+    </div>
+</div>
