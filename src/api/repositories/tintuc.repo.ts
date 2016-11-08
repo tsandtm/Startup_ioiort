@@ -19,8 +19,6 @@ export class TinTucRepo extends RepoBase {
         } else {
             pResult = this._pgPool.query(queryText)
         }
-
-
            return pResult.then(result => {
             let TinTucs: TinTuc[] = result.rows.map(r => {
                 let tintuc = new TinTuc();
@@ -44,7 +42,7 @@ export class TinTucRepo extends RepoBase {
             });
     }
     public getOne(option): Promise<TinTuc> {
-        let queryText = 'SELECT * FROM public."TinTuc" WHERE IDTinTuc=id';
+        let queryText = 'SELECT * FROM public."TinTuc" WHERE IDTinTuc=$1';
 
         console.info('Excute: ' + queryText);
 
@@ -63,5 +61,36 @@ export class TinTucRepo extends RepoBase {
                 return tintuc;
             });
     }
+//     public create(option):Promise<TinTuc>{
+//         let queryText='INSERT INTO public."TinTuc" ("IDTinTuc", "IDDanhMucSite", "TieuDe", "MoTa", "NoiDung", "URLNews", "URLThumbImage", "URLImage", "ThoiGianDangTin") VALUES (IDTinTuc=$1,IDDanhMucSite=$2, MoTa=$3, NoiDung=&4, ?, ?, ?, ?, ?);'
+//         return this._pgPool.query(queryText)
+//         .then(result=>{
+//             let tin=new TinTuc();
+//             tin.
+//         })
+// }
 
+
+
+    public delete(id: number): Promise<TinTuc>{
+        let queryText = 'DELETE FROM public."TinTuc" WHERE "IDTinTuc"=$1';
+
+        return this._pgPool.query(queryText,[id])
+                .then(result => {
+                    let tin = new TinTuc();
+                    tin.id = id;
+                    console.log(result.rows[0]);
+                    return tin;
+                }).catch(error => {
+                    console.error('Error: ',error);
+                    return Promise.reject(error);
+                })
+    }
+    // public getDelete(option): Promise<TinTuc>{
+    //     let queryText='DELETE FROM public."TinTuc" WHERE IDTinTuc=id';
+    //     return this._pgPool.query(queryText)
+    //     .then(result=>{})
+    // }
+    // public getDelete(option):Promise<TinTuc>{
+    //     let queryText='SELECT * FROM public."TinTuc" WHERE IDTinTuc=id';
 }

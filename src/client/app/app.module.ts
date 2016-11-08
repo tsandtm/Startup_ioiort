@@ -18,8 +18,8 @@ import {StarComponent} from './shared/star.component'
 import{TinTucListComponent} from './tintuc/tintucs/tintuc-list.component';
 import{TinTucService} from './tintuc/shared/tintuc.service';
 import{TinTucDetailsComponent} from './tintuc/tintucs-details/tintuc-details.component';
-
-
+import{Create} from './tintuc/create/create';
+//import{TestComponent} from './test/test.component';
 @NgModule({
     imports: [BrowserModule,routing,FormsModule,HttpModule],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,TinTucService],
@@ -31,6 +31,7 @@ import{TinTucDetailsComponent} from './tintuc/tintucs-details/tintuc-details.com
     ProductListComponent,
     ProductFilterPipe,
     TinTucListComponent,
+    Create,
     TinTucDetailsComponent,
     StarComponent],
     bootstrap: [AppComponent]

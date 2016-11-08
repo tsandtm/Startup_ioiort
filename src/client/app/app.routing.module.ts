@@ -10,7 +10,8 @@ import { ProductDetailComponent } from './products/product-detail/product-detail
 
 import{TinTucDetailsComponent} from './tintuc/tintucs-details/tintuc-details.component';
 import {TinTucListComponent} from './tintuc/tintucs/tintuc-list.component';
-
+import{Create} from './tintuc/create/create';
+//import{TestComponent} from './test/test.component';
 const appRoutes: Route[] = [
     { path: '', redirectTo: 'welcome', pathMatch: 'full' },
     { path: 'book-list', component: BookListComponent },
@@ -19,7 +20,9 @@ const appRoutes: Route[] = [
     { path: 'products', component: ProductListComponent },
     { path: 'product/:id', component: ProductDetailComponent},
     {path:'tintuc',component:TinTucListComponent},
-    {path:'tintucs/:id',component:TinTucDetailsComponent}
+    {path:'tintucs/:id',component:TinTucDetailsComponent},
+    {path:'create',component:Create},
+   // {path:'test',component:TestComponent}
 ]
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

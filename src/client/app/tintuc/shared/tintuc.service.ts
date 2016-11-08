@@ -31,7 +31,6 @@ export class TinTucService {
             })
             .catch(this.handleError);
     }
-
     private handleError(error: Error): Promise<any> {
         // in a real world app, we may send the server to some remote logging infrastructure
         // instead of just logging it to the console
@@ -39,5 +38,15 @@ export class TinTucService {
         return Promise.reject(error.message || error);
         // return Observable.throw(error.json().error || 'Server error');
 
+    }
+
+    xoaTinTuc(id: number): Promise<TinTuc>{
+        return this._http.delete('/api/tintuc/' + id)
+                .toPromise()
+                .then(res => res.json() as TinTuc)
+                .catch(error => {
+                    console.error('Error: ', error)
+                    return null;
+                })
     }
 }

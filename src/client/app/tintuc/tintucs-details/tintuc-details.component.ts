@@ -26,7 +26,17 @@ export class TinTucDetailsComponent implements OnInit {
             this.getTinTuc(id);
         })
     }
-
+    xoa(){
+        this._tintucService.xoaTinTuc(this.tintuc.id)
+                .then(t => {
+                    if(t){
+                        return this._router.navigateByUrl('/tintuc')
+                    }
+                })
+                .catch(error => {
+                    console.error('Error: ',error);
+                });
+    }
     getTinTuc(id: number) {
         // this._productService.getProduct(id)
         //     .subscribe(
@@ -38,7 +48,6 @@ export class TinTucDetailsComponent implements OnInit {
             console.log(this.tintuc)
         })
  }
-
     onBack(): void {
         this._router.navigate(['tintuc']);
     }
