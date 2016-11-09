@@ -9,7 +9,8 @@ var angularModule = [
     express.static(path.join(__dirname, '..', 'node_modules', '@angular', 'platform-browser-dynamic', 'bundles')),
     express.static(path.join(__dirname, '..', 'node_modules', '@angular', 'http', 'bundles')),
     express.static(path.join(__dirname, '..', 'node_modules', '@angular', 'router', 'bundles')),
-    express.static(path.join(__dirname, '..', 'node_modules', '@angular', 'forms', 'bundles'))
+    express.static(path.join(__dirname, '..', 'node_modules', '@angular', 'forms', 'bundles')),
+    express.static(path.join(__dirname, '..', 'node_modules'))
 ];
 exports.angularModule = angularModule;
 var javaScripts = [

@@ -2,7 +2,7 @@
     "development": {
         "database": "testdb",
         "username": "postgres",
-        "password": "123",
+        "password": "",
         "config": {
             "dialect": "postgres",
             "define": {

@@ -4,6 +4,8 @@ import {LocationStrategy,HashLocationStrategy, PathLocationStrategy} from '@angu
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
+import { ChartsModule } from 'ng2-charts/ng2-charts';
+
 import {routing} from './app.routing.module';
 import {AppComponent} from './app.component';
 import {BookListComponent} from './books/book-list/book-list.component';
@@ -14,9 +16,12 @@ import { WelcomeComponent } from './home/welcome.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import {ProductFilterPipe} from './products/product-filter/product-filter.pipe'
 import {StarComponent} from './shared/star.component'
+import { ContactListComponent } from './Contacts/Contact-list/Contact-list.component';
+//BarChartDemoComponent
+import { BarChartDemoComponent } from './Reports/Report/Report.component';
 
 @NgModule({
-    imports: [BrowserModule,routing,FormsModule,HttpModule],
+    imports: [BrowserModule,routing,FormsModule,HttpModule,ChartsModule],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService],
     declarations: [AppComponent,
     BookListComponent,
@@ -25,7 +30,10 @@ import {StarComponent} from './shared/star.component'
     ProductDetailComponent,
     ProductListComponent,
     ProductFilterPipe,
-    StarComponent],
+    StarComponent,
+    ContactListComponent,
+    BarChartDemoComponent
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule{}

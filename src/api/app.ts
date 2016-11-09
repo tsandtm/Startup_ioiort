@@ -15,10 +15,10 @@ app.use(body_parser.json());
 
 // import router
 import {BookRouter} from './routes/book.router';
-
-
+import { ContactRouter } from './routes/Contact.router';
+import { ReportRouter } from './routes/Report.router';
 
 // sử dụng các router được định nghĩa từ các modules
-app.use('/api', [(new BookRouter()).getRouter()]);
+    app.use('/api', [(new BookRouter()).getRouter(), (new ContactRouter()).getRouter(),(new ReportRouter()).getRouter()]);
 
 export default app;

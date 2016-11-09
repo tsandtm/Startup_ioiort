@@ -1,0 +1,97 @@
+<div class='panel panel-primary'>
+    <div class='panel-heading'>
+        heading
+    </div>
+
+    <!-- Filter the Products   -->
+    <div class='panel-body'>
+        <div class='row'>
+            <div class='col-md-2'>Filter by:</div>
+            <div class='col-md-4'>
+                <input type='text' [(ngModel)]='filter'/>
+            </div>
+        </div>
+        <div class='row' *ngIf='filter'>
+            <div class='col-md-6'>
+                <h3>Filtered by: {{ filter }}</h3>
+            </div>
+        </div>
+
+
+
+        <div class='table-responsive'>
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th>ContactID</th>
+                        <th>Token</th>
+                        <th>Email</th>
+                        <th>Tài khoản</th>
+                        <th>Device</th>
+                        <th>Phone number</th>
+                        <th>Ngày tạo</th>
+                        <th>Facebook</th>
+                        <th>Contact tag</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let item of Contacts'>
+                        <td>
+                            {{ item.ContactID }}
+                        </td>
+                        <td>
+                            {{ item.Token }}
+                        </td>
+                        <td>
+                            {{ item.Email }}
+                        </td>
+                        <td>
+                            {{ item.TaiKhoan }}
+                        </td>
+                        <td>
+                            {{ item.Device }}
+                        </td>
+                        <td>
+                            {{ item.PhoneNumber }}
+                        </td>
+                        <td>
+                            {{ item.NgayTao }}
+                        </td>
+                        <td>
+                            {{ item.FaceBook }}
+                        </td>
+                        <td>
+                            {{ item.Contact_Tag}}
+                        </td>
+                    </tr>
+                    <!--<tr *ngFor='let item of Contacts>
+                        <td>
+                            {{ item.ContactID }}
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>-->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+</div>
