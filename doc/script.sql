@@ -1,6 +1,6 @@
 /*
-Created		10/20/2016
-Modified		10/31/2016
+Created		27-Oct-16
+Modified		28-Oct-16
 Project		
 Model			
 Company		
@@ -13,81 +13,62 @@ Database		PostgreSQL 8.1
 /* Create Tables */
 
 
-Create table "DanhMucSite"
+Create table "account"
 (
-	"IDDanhMucSite" Integer NOT NULL,
-	"DuongDan" Varchar(500),
-	"TenGoi" Varchar(500),
-	"MoTa" Varchar(3000),
-	"SoLuongTinDuyetTim" Integer,
-	"TempateCrawlTieuDe" Varchar(256),
-	"TempateCrawlMoTa" Varchar(256),
-	"TempateCrawlNoiDung" Varchar(256),
-	"TempateCrawlImage" Varchar(256),
-	"LinkRSS" Varchar(256),
- primary key ("IDDanhMucSite")
+	"idaccount" Integer NOT NULL,
+	"username" Text,
+	"passhash" Text,
+	"email" Text,
+	"isactivite" Boolean,
+	"createdate" Date,
+	"updatedate" Date,
+ primary key ("idaccount")
 ) Without Oids;
 
 
-Create table "TinTuc"
+Create table "Login"
 (
-	"IDTinTuc" Bigint NOT NULL,
-	"IDDanhMucSite" Integer NOT NULL,
-	"TieuDe" Varchar(256),
-	"MoTa" Varchar(2000),
-	"NoiDung" Text,
-	"ThoiGianDangTin" Time,
-	"URLNews" Varchar(256),
-	"URLThumbImage" Varchar(256),
-	"URLImage" Varchar(256),
- primary key ("IDTinTuc")
+	"idlogin" Integer NOT NULL,
+	"idaccount" Integer NOT NULL,
+	"ip" Text,
+	"timelogin" Date,
+	"timelogout" Date,
+	"brower" Text,
+ primary key ("idlogin")
 ) Without Oids;
 
 
-Create table "User"
+Create table "ChangePass"
 (
-	"IDUser" Bigint NOT NULL,
-	"Username" Varchar(256),
-	"Facebook" Varchar(256),
-	"PhoneNumber" Varchar(256),
-	"Email" Varchar(256),
- primary key ("IDUser")
+	"idChange" Integer NOT NULL,
+	"idaccount" Integer NOT NULL,
+	"LastPass" Text,
+	"NewPass" Text,
+	"TimeChange" Text,
+	"IP" Text,
+	"Brower" Text,
+ primary key ("idChange")
 ) Without Oids;
 
 
-Create table "User_DanhMucSite"
+Create table "dsbrower"
 (
-	"IDUser" Bigint NOT NULL,
-	"IDDanhMucSite" Integer NOT NULL,
-	"CreatedDate" Time,
- primary key ("IDUser","IDDanhMucSite")
+	"idbrower" Char(1) NOT NULL,
+	"idaccount" Integer NOT NULL,
+	"namebrower" Text,
+	"os" Text,
+	"version" Text,
+	"platform" Text,
+ primary key ("idbrower")
 ) Without Oids;
-
-
-Create table "TinDaXem"
-(
-) Without Oids;
-
-
-Create table "TinDaXoa"
-(
-) Without Oids;
-
-
-Create table "TinDaLuu"
-(
-) Without Oids;
-
-
-/* Create Alternate Keys */
 
 
 /* Create Foreign Keys */
 
-Alter table "TinTuc" add  foreign key ("IDDanhMucSite") references "DanhMucSite" ("IDDanhMucSite") on update restrict on delete restrict;
+Alter table "Login" add  foreign key ("idaccount") references "account" ("idaccount") on update restrict on delete restrict;
 
-Alter table "User_DanhMucSite" add  foreign key ("IDDanhMucSite") references "DanhMucSite" ("IDDanhMucSite") on update restrict on delete restrict;
+Alter table "ChangePass" add  foreign key ("idaccount") references "account" ("idaccount") on update restrict on delete restrict;
 
-Alter table "User_DanhMucSite" add  foreign key ("IDUser") references "User" ("IDUser") on update restrict on delete restrict;
+Alter table "dsbrower" add  foreign key ("idaccount") references "account" ("idaccount") on update restrict on delete restrict;
 
 
