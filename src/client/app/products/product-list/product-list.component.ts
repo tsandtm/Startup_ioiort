@@ -43,11 +43,15 @@ export class ProductListComponent implements OnInit {
         //              .subscribe(
         //                products => this.products = products,
         //                error =>  this.errorMessage = <any>error);
-        this.products = this._productService.getProducts();
+        this.products = this._productService.getProducts()
+                .then(products => {
+                    this.isRequest = false;
+                    return products;
+                });
 
-        setTimeout(() => {
-            this.isRequest = false;
-        },3000)
+        // setTimeout(() => {
+        //     this.isRequest = false;
+        // },3000)
     }
 
     onRatingClicked(message: string): void {

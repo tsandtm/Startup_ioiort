@@ -77,10 +77,6 @@ Create table test."TinDaLuu"
 (
 ) Without Oids;
 
-
-/* Create Alternate Keys */
-
-
 /* Create Foreign Keys */
 
 Alter table test."TinTuc" add  foreign key ("IDDanhMucSite") references test."DanhMucSite" ("IDDanhMucSite") on update restrict on delete restrict;
@@ -88,5 +84,8 @@ Alter table test."TinTuc" add  foreign key ("IDDanhMucSite") references test."Da
 Alter table test."User_DanhMucSite" add  foreign key ("IDDanhMucSite") references test."DanhMucSite" ("IDDanhMucSite") on update restrict on delete restrict;
 
 Alter table test."User_DanhMucSite" add  foreign key ("IDUser") references test."User" ("IDUser") on update restrict on delete restrict;
+
+
+INSERT INTO test.""
 
 

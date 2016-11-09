@@ -19,7 +19,7 @@
 		</div>
 
 		<div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
-		<sk-cube-grid [isRunning]="isRequest"></sk-cube-grid>
+		<!--<sk-cube-grid [isRunning]="isRequest"></sk-cube-grid>-->
 		<div class='table-responsive'>
 			<table class='table'>
 				<thead>
@@ -37,7 +37,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor='let product of products | productFilter:listFilter | async | paginate: {itemsPerPage: 2, currentPage: p}'>
+					<tr>
+						<sk-cube-grid [isRunning]="isRequest"></sk-cube-grid>
+					</tr>
+					<tr *ngFor='let product of products |  async | productFilter:listFilter | paginate: {itemsPerPage: 2, currentPage: p}'>
 						<td>
 							<input type="checkbox" (click)="onCheck(product)" [(ngModel)]="product.isChecked"/>
 							<!--<input type="checkbox"/>-->

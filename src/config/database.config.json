@@ -6,7 +6,11 @@
         "host": "localhost",
         "port": 5432,
         "ssl": false,
-        "schema": "test"
+        "schema": "test",
+        "pool": {
+            "min": 1,
+            "max": 10
+        }
         
     },
     "test": {
@@ -16,6 +20,10 @@
         "host": "localhost",
         "port": 5432,
         "ssl": false,
-        "schema": "test"
+        "schema": "test",
+        "pool": {
+            "min": 1,
+            "max": 10
+        }
     }
 }
