@@ -24,11 +24,13 @@ var BarChartDemoComponent = (function () {
         this.barChartType = 'bar';
         this.barChartLegend = true;
         this.barChartData = [
-            { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-            { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
+            // {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
+            // {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
+            { data: [], label: '' },
+            { data: [28, 48, 40], label: 'Series B' }
         ];
         // Doughnut
-        this.doughnutChartLabels = ['Download Sales', 'In-Store Sales'];
+        this.doughnutChartLabels = [];
         //  ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
         this.doughnutChartData = [350, 450];
         this.doughnutChartType = 'doughnut';
@@ -40,15 +42,35 @@ var BarChartDemoComponent = (function () {
         var _this = this;
         this.reportService.getDevice().then(function (result) {
             _this.Reports = result;
-            _this.barChartLabels = _this.getdevicelabel();
+            _this.barChartLabels = _this.getmonthlabel();
+            _this.barChartData = [{ data: _this.getcountdevice(), label: _this.getnamedevice() },
+                { data: _this.getcountdevice(), label: _this.getnamedevice() }];
+            _this.doughnutChartLabels = _this.getnamedevice();
+            _this.doughnutChartData = _this.getcountdevice();
         });
     };
-    BarChartDemoComponent.prototype.getdevicelabel = function () {
+    BarChartDemoComponent.prototype.getmonthlabel = function () {
         var a = [];
         this.Reports.forEach(function (r) {
-            a.push(r.Device);
+            a.push(r.date);
         });
         return a;
+    };
+    BarChartDemoComponent.prototype.getcountdevice = function () {
+        var a = [];
+        this.Reports.forEach(function (r) {
+            a.push(r.count);
+        });
+        console.log(a);
+        return a;
+    };
+    BarChartDemoComponent.prototype.getnamedevice = function () {
+        var b = [];
+        this.Reports.forEach(function (r) {
+            b.push(r.Device);
+        });
+        console.log(b);
+        return b;
     };
     BarChartDemoComponent.prototype.ngOnInit = function () {
         this.loadGetAll();

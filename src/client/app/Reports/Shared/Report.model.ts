@@ -1,3 +1,6 @@
 export class Report {   
-    Device: string
+    Device: string;
+    date:string;
+    count:number;
+    Contact_Tag: number[];
 }

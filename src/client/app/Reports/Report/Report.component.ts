@@ -25,17 +25,42 @@ export class BarChartDemoComponent {
     loadGetAll() {
         this.reportService.getDevice().then( (result) => {
 				this.Reports = result;
-				this.barChartLabels = this.getdevicelabel();				
+				this.barChartLabels = this.getmonthlabel();		
+        this.barChartData = [{data:this.getcountdevice(),label:this.getnamedevice()},
+        {data:this.getcountdevice(),label:this.getnamedevice()}] 
+        this.doughnutChartLabels = this.getnamedevice();
+        this.doughnutChartData = this.getcountdevice();
 			});
     }
 
-    getdevicelabel(){
+    getmonthlabel(){
       let a:string[]= [];
       this.Reports.forEach(r=>{
-        a.push(r.Device)
+        a.push(r.date)
       })
       return a;
     }
+
+     getcountdevice(){
+      let a:number[]= [];
+      
+      this.Reports.forEach(r=>{
+        a.push(r.count)      
+      })
+      console.log(a);
+      return a;
+    }
+
+      getnamedevice(){
+      let b:string[]= [];
+      
+      this.Reports.forEach(r=>{
+        b.push(r.Device)      
+      })
+      console.log(b);
+      return b;
+    }
+
 
     ngOnInit(): void {
         this.loadGetAll();
@@ -56,7 +81,7 @@ export class BarChartDemoComponent {
   public barChartData:any[] = [
     // {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
     // {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
-     {data: [65, 59, 80], label: 'Series A'},
+     {data: [], label: ''},
     {data: [28, 48, 40], label: 'Series B'}
   ];
 
@@ -91,7 +116,7 @@ export class BarChartDemoComponent {
   }
 
   // Doughnut
-  public doughnutChartLabels:string[] = ['Download Sales','In-Store Sales'];
+  public doughnutChartLabels:string[] = [];
   //  ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
   public doughnutChartData:number[] = [350, 450];
   public doughnutChartType:string = 'doughnut';

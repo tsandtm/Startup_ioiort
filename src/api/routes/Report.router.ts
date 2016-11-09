@@ -21,6 +21,7 @@ export class ReportRouter {
 
         this.router.route('/Report')
             .get(this.getAllReport)
+         
         // .post(this.createAContact)
         // .delete(this.deleteAContact);
 

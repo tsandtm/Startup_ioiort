@@ -1,7 +1,7 @@
 "use strict";
-var Contact = (function () {
-    function Contact() {
+var Report = (function () {
+    function Report() {
     }
-    return Contact;
+    return Report;
 }());
-exports.Contact = Contact;
+exports.Report = Report;

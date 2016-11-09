@@ -3,7 +3,7 @@
   <div style="display: block">
     <canvas baseChart
             [datasets]="barChartData"
-            [labels]="item.Device"
+            [labels]="barChartLabels"
             [options]="barChartOptions"
             [legend]="barChartLegend"
             [chartType]="barChartType"
@@ -15,7 +15,9 @@
 </div>
 <!--</template>-->
 <li *ngFor='let item of Reports'> 
-  {{ item.Device }}                   
+  {{ item.Device }}     
+    {{ item.date }}  
+    {{ item.count }}                  
 </li>
 <div style="display: block">
   <canvas baseChart
