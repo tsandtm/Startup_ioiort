@@ -1,6 +1,7 @@
 import { Component,Directive } from '@angular/core';
 import{ NgClass }from '@angular/common';
 import { ReportService } from '../Shared/Report.service';
+import { ListDevice } from '../Shared/Report.model';
 import { Report } from '../Shared/Report.model';
 // webpack html imports
 @Component({
@@ -11,7 +12,8 @@ import { Report } from '../Shared/Report.model';
 })
 
 export class BarChartDemoComponent {
-   Reports: Report[];
+   listDevice: ListDevice[];
+   Reports:Report[];
     filter: string;
 
     constructor(private reportService: ReportService) {
@@ -24,47 +26,62 @@ export class BarChartDemoComponent {
     // }
     loadGetAll() {
         this.reportService.getDevice().then( (result) => {
-				this.Reports = result;
+				this.listDevice = result;      
 				this.barChartLabels = this.getmonthlabel();		
-        this.barChartData = [{data:this.getcountdevice(),label:this.getnamedevice()},
-        {data:this.getcountdevice(),label:this.getnamedevice()}] 
-        this.doughnutChartLabels = this.getnamedevice();
-        this.doughnutChartData = this.getcountdevice();
-			});
+        this.barChartData = [{data:this.getcountdevice(),label:this.getlistname()}]
+         this.doughnutChartLabels = this.getlistname();
+        this.doughnutChartData = this.getcountdevice();       
+          
+              this.doughnutChartLabels = this.getmonthlabel();
+			});           
     }
 
     getmonthlabel(){
-      let a:string[]= [];
-      this.Reports.forEach(r=>{
-        a.push(r.date)
-      })
+      let a:string[]=[];
+      let flag= "";
+      let i;
+      this.listDevice.forEach(r=>{
+        //  console.log(JSON.stringify(r.date));
+        if(flag != r.date)
+        {
+
+          flag=r.date;
+          a.push(r.date)        
+        }
+      }) 
       return a;
     }
 
-     getcountdevice(){
-      let a:number[]= [];
-      
-      this.Reports.forEach(r=>{
-        a.push(r.count)      
+    getlistname(){
+      let b:Array<Report> = [];
+      let c:string[] = [];
+      this.listDevice.forEach(r=>{
+        b = r.listdevice;
+        b.forEach(result=>{
+          c.push(result.name);
+        })
       })
-      console.log(a);
-      return a;
+      return c;
     }
 
-      getnamedevice(){
-      let b:string[]= [];
-      
-      this.Reports.forEach(r=>{
-        b.push(r.Device)      
+    getcountdevice(){
+      let b:Array<Report> = [];
+      let c:number[] = [];
+      this.listDevice.forEach(r=>{
+        b = r.listdevice;
+         console.log(JSON.stringify(b));     
       })
-      console.log(b);
-      return b;
+      b.forEach(result=>{
+          
+           console.log("cccc"+JSON.stringify(result.count));
+          c.push(result.count);
+        })
+        
+      return c;
     }
-
 
     ngOnInit(): void {
         this.loadGetAll();
-      
     }
 
   public barChartOptions:any = {
@@ -82,7 +99,7 @@ export class BarChartDemoComponent {
     // {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
     // {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
      {data: [], label: ''},
-    {data: [28, 48, 40], label: 'Series B'}
+    {data: [], label: 'Series B'}
   ];
 
   // events
@@ -118,7 +135,7 @@ export class BarChartDemoComponent {
   // Doughnut
   public doughnutChartLabels:string[] = [];
   //  ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
-  public doughnutChartData:number[] = [350, 450];
+  public doughnutChartData:number[] = [];
   public doughnutChartType:string = 'doughnut';
 
   // // events

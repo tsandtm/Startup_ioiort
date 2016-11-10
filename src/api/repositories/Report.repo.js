@@ -6,14 +6,14 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var repositories_base_1 = require('./repositories.base');
 var Report_model_1 = require('../models/Report.model');
+var Report_model_2 = require('../models/Report.model');
 var ReportRepo = (function (_super) {
     __extends(ReportRepo, _super);
     function ReportRepo() {
         _super.call(this);
     }
     ReportRepo.prototype.getList = function (option) {
-        var queryText = 'select distinct "Device",count("Device") as count,date_part(\'month\',"NgayTao") as date from test."Contacts"  where "Device" = \'android\' group by "Device","NgayTao"';
-        var queryText_ios = 'select distinct "Device",count("Device") as count,date_part(\'month\',"NgayTao") as date from test."Contacts"  where "Device" = \'ios\' group by "Device","NgayTao"';
+        var queryText = 'select distinct "Device",count("Device") as count,date_part(\'month\',"NgayTao") as date from test."Contacts" group by "Device","NgayTao" order by date_part(\'month\',"NgayTao")';
         var pResult;
         if (option.Contact_Tag != undefined) {
             pResult = this._pgPool.query(queryText + 'where "Contact_Tag" = ' + "'{" + option.Contact_Tag + "}'");
@@ -23,21 +23,25 @@ var ReportRepo = (function (_super) {
             pResult = this._pgPool.query(queryText);
         }
         return pResult.then(function (result) {
-            var Reports = result.rows.map(function (r) {
-                var contact = new Report_model_1.Report();
-                contact.Device = r.Device;
-                contact.count = r.count;
-                contact.date = r.date;
-                return contact;
+            var name, count;
+            var index = -1;
+            var flag = "";
+            var listDevice = result.rows.map(function (r) {
+                var listDevices = new Report_model_2.ListDevice();
+                var report = new Report_model_1.Report();
+                if (flag != r.date) {
+                    index++;
+                    flag = r.date;
+                    listDevices.date = r.date;
+                    console.log(r.date);
+                }
+                report.name = r.Device;
+                report.count = r.count;
+                listDevices.listdevice[index] = report;
+                console.log(listDevices.listdevice[index]);
+                return listDevices;
             });
-            return Reports;
-            // return this._pgPool.query(queryText_month).then(result => {
-            //     let Reports: Report[] = result.rows.map(r => {                    
-            //         contact.date = r.date;
-            //         return contact;
-            //     });
-            //     return Reports;
-            // })
+            return listDevice;
         })
             .catch(function (err) {
             console.error(err.message);

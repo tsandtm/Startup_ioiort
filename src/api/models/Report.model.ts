@@ -1,6 +1,9 @@
-export class Report {   
-    Device: string;
-    date:string;
+export class Report {          
+    name:string;
     count:number;
-    Contact_Tag: number[];
+}
+
+export class ListDevice{
+    date:string;
+    listdevice:Array<Report> = [];
 }

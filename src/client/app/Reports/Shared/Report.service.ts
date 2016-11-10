@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { Report } from './Report.model';
+import { ListDevice } from './Report.model';
 
 @Injectable()
 export class ReportService {
@@ -10,24 +10,15 @@ export class ReportService {
 
     constructor(private _http: Http) { }
 
-    getContact(): Promise<Report[]> {
-        // return this._http.get('/api/book')
-        //     .map((response: Response) => <Product[]>response.json())
-        //     .do(data => console.log('All: ' + JSON.stringify(data)))
-        //     .catch(this.handleError);
-        return this._http.get('/api/Contact')
-            .toPromise()
-            .then(response => response.json() as Report[])
-            .catch(this.handleError);
-    }
-    getDevice(): Promise<Report[]> {
+  
+    getDevice(): Promise<ListDevice[]> {
         // return this._http.get('/api/book')
         //     .map((response: Response) => <Product[]>response.json())
         //     .do(data => console.log('All: ' + JSON.stringify(data)))
         //     .catch(this.handleError);
         return this._http.get('/api/Report')
             .toPromise()
-            .then(response => response.json() as Report[])
+            .then(response => response.json() as ListDevice[])
             .catch(this.handleError);
     }
     // getProduct(id: number): Promise<Product> {

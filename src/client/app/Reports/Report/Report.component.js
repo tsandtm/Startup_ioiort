@@ -32,7 +32,7 @@ var BarChartDemoComponent = (function () {
         // Doughnut
         this.doughnutChartLabels = [];
         //  ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
-        this.doughnutChartData = [350, 450];
+        this.doughnutChartData = [];
         this.doughnutChartType = 'doughnut';
     }
     // loadGetAll() {
@@ -41,36 +41,51 @@ var BarChartDemoComponent = (function () {
     BarChartDemoComponent.prototype.loadGetAll = function () {
         var _this = this;
         this.reportService.getDevice().then(function (result) {
-            _this.Reports = result;
+            _this.listDevice = result;
             _this.barChartLabels = _this.getmonthlabel();
-            _this.barChartData = [{ data: _this.getcountdevice(), label: _this.getnamedevice() },
-                { data: _this.getcountdevice(), label: _this.getnamedevice() }];
-            _this.doughnutChartLabels = _this.getnamedevice();
+            console.log("hoang" + _this.getmonthlabel());
+            _this.barChartData = [{ data: _this.getcountdevice(), label: _this.getlistname() },
+                { data: _this.getcountdevice(), label: _this.getlistname() }];
+            _this.doughnutChartLabels = _this.getlistname();
             _this.doughnutChartData = _this.getcountdevice();
+            // console.log(JSON.stringify(thang));
+            _this.doughnutChartLabels = _this.getmonthlabel();
         });
     };
     BarChartDemoComponent.prototype.getmonthlabel = function () {
         var a = [];
-        this.Reports.forEach(function (r) {
-            a.push(r.date);
-        });
-        return a;
-    };
-    BarChartDemoComponent.prototype.getcountdevice = function () {
-        var a = [];
-        this.Reports.forEach(function (r) {
-            a.push(r.count);
+        var flag = "";
+        this.listDevice.forEach(function (r) {
+            console.log(r.date);
+            if (flag != r.date) {
+                flag = r.date;
+                a.push(r.date);
+            }
         });
         console.log(a);
         return a;
     };
-    BarChartDemoComponent.prototype.getnamedevice = function () {
+    BarChartDemoComponent.prototype.getlistname = function () {
         var b = [];
-        this.Reports.forEach(function (r) {
-            b.push(r.Device);
+        var c = [];
+        this.listDevice.forEach(function (r) {
+            b = r.listdevice;
+            b.forEach(function (result) {
+                c.push(result.name);
+            });
         });
-        console.log(b);
-        return b;
+        return c;
+    };
+    BarChartDemoComponent.prototype.getcountdevice = function () {
+        var b = [];
+        var c = [];
+        this.listDevice.forEach(function (r) {
+            b = r.listdevice;
+            b.forEach(function (result) {
+                c.push(result.count);
+            });
+        });
+        return c;
     };
     BarChartDemoComponent.prototype.ngOnInit = function () {
         this.loadGetAll();
