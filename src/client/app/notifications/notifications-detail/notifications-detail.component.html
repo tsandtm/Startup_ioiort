@@ -1,34 +1,36 @@
-<div class='panel panel-primary' *ngIf='notifications'>
-    <div class='panel-heading' style='font-size:large'>
-        {{pageTitle + ': ' + notifications.TieuDe }}
+<div *ngIf='notifications'>
+    <div class='panel-heading' style='font-size:large; text-align:center'>
+       <h1>{{pageTitle + ' ' + notifications.TieuDe}}</h1>
     </div>
     <div class='col-md-6'>
          <div class='row'>
             <div class='col-md-3'>TieuDe:</div>
             <div class='col-md-6'>{{notifications.TieuDe}}</div>
-         </div>
+         </div><br/> 
         <div class='row'>
              <div class='col-md-3'>NoiDung:</div>
              <div class='col-md-6'>{{notifications.NoiDung}}</div>
-        </div>
+        </div><br/> 
          <div class='row'>
             <div class='col-md-3'>SoLuong:</div>
             <div class='col-md-6'>{{notifications.SoLuong}}</div>
-        </div>
+        </div><br/>  
         <div class='row'>
             <div class='col-md-3'>ThoiGianGui:</div>
             <div class='col-md-6'>{{notifications.ThoiGianGui}}</div>
-        </div>
+        </div><br/>
         <div class='row'>
             <div class='col-md-3'>DoUuTien:</div>
             <div class='col-md-6'>{{notifications.DoUuTien}}</div>
-        </div>
+        </div><br/> 
         <div class='row'>
             <div class='col-md-3'>ThoiHanToiDa:</div>
         <div class='col-md-6'>{{notifications.ThoiHanToiDa}}</div>
-        </div>
+        </div><br/> 
     </div>  
-</div>         
+</div> 
+<div class='col-md-4'><a><i class="fa fa-external-link fa-6" style="font-size:50px" aria-hidden="true"></i></a></div>
+<br/><br/>        
 <div class='col-md-8'>
     <a class='btn btn-default' (click)='onBack()' style='width:100px'>
     <i class="fa fa-reply" aria-hidden="true"></i> Quay lại

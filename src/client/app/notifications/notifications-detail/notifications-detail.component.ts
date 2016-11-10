@@ -10,7 +10,7 @@ import { NotificationsService } from '../shared/notifications.service';
     templateUrl: '/notifications/notifications-detail/notifications-detail.component.html'
 })
 export class NotificationstDetailComponent implements OnInit {
-    pageTitle: string = 'Notifications Detail';
+    pageTitle: string = '';
     @Input() notifications: Notifications;
     errorMessage: string;
 
