@@ -1,0 +1,16 @@
+
+.cont h1{
+	text-align:center !important; 
+}
+.fa-6 {
+	
+    font-size: 150px ;
+}
+	
+.cus_thumbnail {
+	text-align: center;
+}
+	
+.cus_thumbnail .caption h4 {
+	font-size: 25px !important;
+}

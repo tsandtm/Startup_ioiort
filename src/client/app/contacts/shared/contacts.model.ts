@@ -1,7 +1,5 @@
-import {ModelBase} from './model.base';
-
-
-export class Contacts extends ModelBase {
+export class Contacts{
+    id: number;
     Token: string;
     Email: string;
     TaiKhoan: string;
@@ -10,4 +8,5 @@ export class Contacts extends ModelBase {
     NgayTao: Date;
     FaceBook: string;
     Contact_Tag;
+
 }

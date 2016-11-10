@@ -9,29 +9,37 @@ export class ContactsRepo extends RepoBase {
     }
 
     public getList(option): Promise<Contacts[]> {
-        let queryText = 'select * from test.books';
+        let queryText = 'SELECT * FROM public."Contacts"ORDER BY "ContactID"ASC ';
 
         console.info('Excute: ' + queryText);
         let pResult;
 
         if (option) {
-            pResult = this._pgPool.query(queryText, [option.id, option.name])
+            pResult = this._pgPool.query(queryText, [option.id, option.Token])
         } else {
             pResult = this._pgPool.query(queryText)
         }
 
 
         return pResult.then(result => {
-            let books: Contacts[] = result.rows.map(r => {
-                let book = new Contacts();
-                book.id = r.id;
-                book.name = r.name;
-                return book;
+            let contacts: Contacts[] = result.rows.map(r => {
+                let contact = new Contacts();
+                contact.id = r.ContactID;
+                contact.Token = r.Token;
+                contact.Email = r.Email;
+                contact.TaiKhoan = r.TaiKhoan;
+                contact.Device = r.Device;
+                contact.PhoneNumber = r.PhoneNumber;
+                contact.NgayTao = r.NgayTao;
+                contact.FaceBook = r.FaceBook;
+                contact.Contact_Tag = r.Contact_Tag;
+                return contact;
             });
-            return books;
+            return contacts;
         })
             .catch(err => {
                 console.error(err.message);
                 return null;
             });
-    }
+ }
+}

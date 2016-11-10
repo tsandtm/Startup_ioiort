@@ -1,0 +1,36 @@
+ <div class='row'>
+    <div class='col-md-2'> <input type='text'/></div>
+        <div class='col-md-4'><button>Tìm kiếm</button></div>
+        <div class='col-md-6'>
+           <input type='text'/> 
+           <!--<span><i class="fa fa-calendar" aria-hidden="true"></i></span>-->
+           <button>New Message</button>
+        </div>      
+ </div>
+ <br/><br/>
+<!--<div class='panel panel-primary'>-->
+    <!--<div class='panel-body'>-->
+        <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+        <div class='table-responsive'>
+            <table  class='table' *ngIf='notifications && notifications.length' border="1">
+                <thead>
+                    <tr>
+                        <th>TieuDe</th>
+                        <th>TrangThaiGoi</th>
+                        <th>ThoiGianGui</th>
+                        <th>SoLuong</th> 
+                        <th>ThoiHanToiDa</th>                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let notification of notifications'>                                            
+                        <td><a [routerLink]="['/notification-detail',notification.id]">{{notification.TieuDe | lowercase}}</a></td>
+                        <td>{{notification.TrangThaiGoi}}</td>
+                        <td>{{notification.ThoiGianGui}}</td> 
+                        <td>{{notification.SoLuong}}</td> 
+                        <td>{{notification.ThoiHanToiDa}}</td>                       
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+

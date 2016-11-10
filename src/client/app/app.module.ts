@@ -15,10 +15,14 @@ import { ProductDetailComponent } from './products/product-detail/product-detail
 import {ProductFilterPipe} from './products/product-filter/product-filter.pipe';
 import {StarComponent} from './shared/star.component';
 import { MenuListComponent } from './menu/menu-list/menu-list.component';
-
+import {ContactsListComponent} from './contacts/contacts-list/contacts-list.component';
+import {ContactsService} from './contacts/shared/contacts.service';
+import {NotificationsListComponent} from './notifications/notifications-list/notifications-list.component';
+import {NotificationstDetailComponent} from './notifications/notifications-detail/notifications-detail.component';
+import { NotificationsService } from './notifications/shared/notifications.service';
 @NgModule({
     imports: [BrowserModule,routing,FormsModule,HttpModule],
-    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService],
+    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,ContactsService,NotificationsService],
     declarations: [AppComponent,
     BookListComponent,
     BookDetailComponent,
@@ -27,6 +31,9 @@ import { MenuListComponent } from './menu/menu-list/menu-list.component';
     ProductListComponent,
     ProductFilterPipe,
     MenuListComponent,
+    ContactsListComponent,
+    NotificationsListComponent,
+    NotificationstDetailComponent,
     StarComponent],
     bootstrap: [AppComponent]
 })

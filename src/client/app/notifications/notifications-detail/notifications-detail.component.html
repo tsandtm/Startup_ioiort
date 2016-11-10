@@ -1,0 +1,36 @@
+<div class='panel panel-primary' *ngIf='notifications'>
+    <div class='panel-heading' style='font-size:large'>
+        {{pageTitle + ': ' + notifications.TieuDe }}
+    </div>
+    <div class='col-md-6'>
+         <div class='row'>
+            <div class='col-md-3'>TieuDe:</div>
+            <div class='col-md-6'>{{notifications.TieuDe}}</div>
+         </div>
+        <div class='row'>
+             <div class='col-md-3'>NoiDung:</div>
+             <div class='col-md-6'>{{notifications.NoiDung}}</div>
+        </div>
+         <div class='row'>
+            <div class='col-md-3'>SoLuong:</div>
+            <div class='col-md-6'>{{notifications.SoLuong}}</div>
+        </div>
+        <div class='row'>
+            <div class='col-md-3'>ThoiGianGui:</div>
+            <div class='col-md-6'>{{notifications.ThoiGianGui}}</div>
+        </div>
+        <div class='row'>
+            <div class='col-md-3'>DoUuTien:</div>
+            <div class='col-md-6'>{{notifications.DoUuTien}}</div>
+        </div>
+        <div class='row'>
+            <div class='col-md-3'>ThoiHanToiDa:</div>
+        <div class='col-md-6'>{{notifications.ThoiHanToiDa}}</div>
+        </div>
+    </div>  
+</div>         
+<div class='col-md-8'>
+    <a class='btn btn-default' (click)='onBack()' style='width:100px'>
+    <i class="fa fa-reply" aria-hidden="true"></i> Quay lại
+    </a>
+</div>

@@ -1,37 +1,74 @@
-<table border="1" width="600px" heigh="900px">
-<h3 style="padding-left: 200px">Quản lý Notifications</h3>
-<hr/>
-	<table border="0.5" style="text-align:center">
-		
-		<tbody>
-			<tr>
-				
-				<td>
-					<a href=""><img class="anh" src="assets/images/imghoa/Setting.png" alt="anh"></a><br>
-					<a href="">Setting</a>
-				</td>
-				<td>
-					<a href=""><img class="anh" src="assets/images/imghoa/Contacts.png" alt="anh"></a><br>
-					<a href="">Contacts</a>
-				</td>
-				<td>
-					<a href=""><img class="anh" src="assets/images/imghoa/Reports.png" alt="anh"></a><br>
-					<a href="">Reports</a>
-				</td>
-			</tr>
-			
-			<tr>
-				<br><br>
-				<td>
-					<a href=""><img class="anh" src="assets/images/imghoa/sms.png" alt="anh"></a><br>
-					<a href="">Notifications</a>
-				</td>
-				<td>
-					<a href=""><img class="anh" src="assets/images/imghoa/noti.png" alt="anh"></a><br>
-					<a href="">Campaigns</a>
-				</td>				
-			</tr>
-		</tbody>
-	</table>
-</table>
+<!--<style>
+.cont h1{
+	text-align:center !important;
+      
+}
+.fa-6 {
 	
+    font-size: 150px ;
+}
+	
+.cus_thumbnail {
+	text-align: center;
+}
+	
+.cus_thumbnail .caption h4 {
+	font-size: 25px !important;
+}	
+</style>	-->
+<div class="row">
+	<div class="cont">
+		<h1>Quản lý Notifications</h1>
+	</div>
+	<div class="col-sm-4 col-lg-4 col-md-4">
+		<div class="cus_thumbnail">
+			<span><i class="fa fa-cogs fa-6" ></i></span>
+			<div class="caption">
+				<h4><a href="">
+                            Setting
+                            </a>
+				</h4>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-sm-4 col-lg-4 col-md-4">
+		<div class="cus_thumbnail">
+			<span><i class="fa fa-book fa-6" aria-hidden="true"></i><a></a></span>
+			<div class="caption">
+				<h4><a [routerLink]="['/contact']">Contacts</a>
+				</h4>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-sm-4 col-lg-4 col-md-4">
+		<div class="cus_thumbnail">
+			<span><i class="fa fa-bar-chart fa-6" aria-hidden="true"></i></span>
+			<div class="caption">
+				<h4><a href="#">Reports</a>
+				</h4>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-sm-4 col-lg-4 col-md-4">
+		<div class="cus_thumbnail">
+			<span><i class="fa fa-commenting fa-6" aria-hidden="true"></i></span>
+			<div class="caption">
+				<h4><a [routerLink]="['/notification']">Notifications</a>
+				</h4>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-sm-4 col-lg-4 col-md-4">
+		<div class="cus_thumbnail">
+			<span><i class="fa fa-tasks fa-6" aria-hidden="true"></i></span>
+			<div class="caption">
+				<h4><a href="#">Campaigns</a>
+				</h4>
+			</div>
+		</div>
+	</div>
+</div>
