@@ -21,7 +21,8 @@ export class NotificationsRouter {
     public getRouter(): Router {
 
         this.router.route('/notification')
-            .get(this.getAllNotifications)       
+            .get(this.getAllNotifications)  
+            .get(this.createANotifications)     
         return this.router;
     }
      private getAllNotifications = (req: Request, res: Response) => {
@@ -37,5 +38,11 @@ export class NotificationsRouter {
                 res.status(500).send(error.message)
             })
     }
+     
+
+    private createANotifications = (req, res) => {
+        res.send('created')
+    }
+
     
 }

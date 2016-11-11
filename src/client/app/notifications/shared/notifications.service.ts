@@ -21,6 +21,11 @@ export class NotificationsService {
             .then(notifications => notifications.find(p => p.id === id))
             .catch(this.handleError);
     }
+    createNotifi(id:number):Promise<Notifications>{
+        return this.getList()
+                .then(notifications => notifications.find(p => p.id === id))
+                .catch(this.handleError);
+    }
 
     private handleError(error: Error): Promise<any> {
         console.error(error);
