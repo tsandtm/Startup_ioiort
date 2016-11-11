@@ -3,10 +3,13 @@
  * Adjust as necessary for your application needs.
  */
 (function (global) {
+
+var plugin = 'bootstrap';
+
   System.config({
     paths: {
       // paths serve as alias
-      'npm:':  '/scripts/'
+      'npm:': '/scripts/'
     },
     // map tells the System loader where to look for things
     map: {
@@ -22,8 +25,10 @@
       '@angular/router': 'npm:router.umd.js',
       '@angular/forms': 'npm:forms.umd.js',
       // other libraries
-      'rxjs':                      'npm:',
+      'rxjs': 'npm:',
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
+      'angular2-modal': 'npm:angular2-modal/bundles/angular2-modal.umd.js',
+      'angular2-modal/plugins/bootstrap': 'npm:angular2-modal/bundles/angular2-modal.' + plugin + '.umd.js',
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {

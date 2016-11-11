@@ -1,5 +1,6 @@
 // đây là vùng import tất cả các modules bên ngoài
 import { Router, Response, Request } from 'express';
+import { Contact } from '../models/Contact.model'
 
 import path = require('path');
 // import các module tạo table
@@ -23,15 +24,20 @@ export class ContactRouter {
     public getRouter(): Router {
 
         this.router.route('/Contact')
-            .get(this.getAllContact)
-            // .post(this.createAContact)
-            // .delete(this.deleteAContact);
-        
+            .get(this.getAllContact);
+        this.router.route('/Contact/GetOne')
+            .get(this.getOne);
+        this.router.route('/Contact/Create')
+            .post(this.create);
+        this.router.route('/Contact/Update')
+            .post(this.update);
         return this.router;
     }
 
     private getAllContact = (req: Request, res: Response) => {
-        let option = {Contact_Tag: req.query.Contact_Tag};
+        let option = new Contact();
+        option = req.query;
+
         this.contactRepo.getList(option)
             .then(result => {
                 res.status(200).json(result)
@@ -42,15 +48,54 @@ export class ContactRouter {
             })
     }
 
-    
+    private getOne = (req: Request, res: Response) => {
+        let option = { ContactID: req.query.ContactID };
 
-    // private createAContact = (req, res) => {
-    //     res.send('created')
-    // }
+        this.contactRepo.getOne(option)
+            .then((result) => {
+                res.status(200).json(result);
+            })
+            .catch((error) => {
+                console.error(error.message);
+                res.status(500).send(error.message);
+            })
+    }
 
-    // private deleteAContact = (req, res) => {
-    //     res.send('deleted')
-    // }
+    private create = (req: Request, res: Response) => {
+        let option = new Contact();
+        option = req.body;
+
+        this.contactRepo.create(option)
+            .then((result) => {
+                console.log(result);
+                res.status(200).json(result);
+            })
+            .catch((error) => {
+                console.error(error.message);
+                res.status(500).send(error.message);
+            });
+    }
+
+    private update = (req: Request, res: Response) => {
+        let option = new Contact();
+        option = req.body;
+        console.log('update');
+        console.log(option);
+        console.log(option.Contact_Tag);
+        console.log(option.ContactID);
+
+        this.contactRepo.update(option)
+            .then((result) => {
+                console.log(result);
+                res.status(200).json(result);
+            })
+            .catch((error) => {
+                console.error(error.message);
+                res.status(500).send(error.message);
+            });
+    }
+
+
 
 }
 

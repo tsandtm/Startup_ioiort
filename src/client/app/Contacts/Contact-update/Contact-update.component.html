@@ -1,0 +1,93 @@
+<div *ngIf='contact'>
+    <div class="header">
+        <button type="button" class="close" (click)='onClose()'>&times;</button>
+    </div>
+
+    <div class="row" style="margin-left: 5px;">
+
+        <div class="col-sm-12">
+            <div class="col-sm-8">
+                <div class="row">
+                    <div class='col-sm-4'>
+                        ContactID:
+                    </div>
+                    <div class='col-sm-8'>
+                        {{ contact.ContactID }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class='col-sm-4'>
+                        Token:
+                    </div>
+                    <div class='col-sm-8'>
+                        {{ contact.Token }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class='col-sm-4'>
+                        Email:
+                    </div>
+                    <div class='col-sm-8'>
+                        {{ contact.Email }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class='col-sm-4'>
+                        TaiKhoan:
+                    </div>
+                    <div class='col-sm-8'>
+                        {{ contact.TaiKhoan }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class='col-sm-4'>
+                        Device:
+                    </div>
+                    <div class='col-sm-8'>
+                        {{ contact.Device }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class='col-sm-4'>
+                        PhoneNumber:
+                    </div>
+                    <div class='col-sm-8'>
+                        {{ contact.PhoneNumber }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class='col-sm-4'>
+                        Ngày tạo:
+                    </div>
+                    <div class='col-sm-8'>
+                        {{ contact.NgayTao }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class='col-sm-4'>
+                        Contact_Tag:
+                    </div>
+                    <div class='col-sm-8'>
+                        <input type="text" value="{{ contact.Contact_Tag }}" class="form-control" #valueTag>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4" *ngIf='Tags'>
+                <div *ngFor='let itemTag of Tags'>
+                    <input type="checkbox" value="{{ itemTag.TagID }}" [checked]='ischecked(itemTag.TagID)'/>{{ itemTag.TagNameDisplay }}<br>
+                </div>
+
+            </div>
+            <div class="row" style="margin-top:10px; margin-bottom: 10px">
+                <div class='col-sm-12 text-center'>
+                    <button class="btn btn-success" (click)='changeValueTag(contact.ContactID, valueTag.value)'>
+                        save
+                    </button> &nbsp;&nbsp;
+                    <button class="btn btn-success" (click)='onClose()'>
+                        Back
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

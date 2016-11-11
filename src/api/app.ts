@@ -16,10 +16,15 @@ app.use(body_parser.json());
 // import router
 import { BookRouter } from './routes/book.router';
 import { ContactRouter } from './routes/Contact.router';
+import { TagRouter } from './routes/Tag.router';
 
 
 
     // sử dụng các router được định nghĩa từ các modules
-    app.use('/api', [(new BookRouter()).getRouter(), (new ContactRouter()).getRouter()]);
+    app.use('/api', [
+        (new BookRouter()).getRouter(), 
+        (new ContactRouter()).getRouter(),
+        (new TagRouter().getRouter())
+        ]);
 
 export default app;

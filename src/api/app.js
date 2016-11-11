@@ -10,7 +10,12 @@ app.use(body_parser.json());
 // import router
 var book_router_1 = require('./routes/book.router');
 var Contact_router_1 = require('./routes/Contact.router');
+var Tag_router_1 = require('./routes/Tag.router');
 // sử dụng các router được định nghĩa từ các modules
-app.use('/api', [(new book_router_1.BookRouter()).getRouter(), (new Contact_router_1.ContactRouter()).getRouter()]);
+app.use('/api', [
+    (new book_router_1.BookRouter()).getRouter(),
+    (new Contact_router_1.ContactRouter()).getRouter(),
+    (new Tag_router_1.TagRouter().getRouter())
+]);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = app;
