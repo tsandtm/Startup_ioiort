@@ -30,6 +30,20 @@ export class WebsService {
             .catch(this.handleError);
     }
 
+    //Them website duyet tin
+    updateShow_add(id:number): Promise<IWeb>{
+        return this._http.put('/api/website?id=' + id,{show: true})
+        .toPromise()
+        .then(response => response.json() as IWeb)
+         .catch(this.handleError);
+    }
+    //Xoa website duyet tin
+    updateShow_delete(id:number): Promise<IWeb>{
+        return this._http.put('/api/website?id=' + id,{show: false})
+        .toPromise()
+        .then(response => response.json() as IWeb)
+         .catch(this.handleError);
+    }
 
     private handleError(error: Error): Promise<any> {
         console.error(error);

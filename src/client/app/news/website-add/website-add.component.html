@@ -9,13 +9,13 @@
                         <h4>Thêm website duyệt tin</h4>
                         <p> Tìm kiếm <input type ='text' [(ngModel)] ='listFilter'/></p>        
                         <div class='box1' >
-                            <div *ngFor='let web of context.webs1 | websFilter : listFilter'> 
+                            <div *ngFor='let web of context.webs1 | websFilter : listFilter ; let i = index'> 
                                 <p> <img [src]='web.icon'
                                     [title]='web.name | uppercase'
                                     [style.width.px]='imageWidth' 
                                     [style.height.px]='imageHeight'/> {{web.name}} 
                                 
-                                    <button class="btn btn-default" style="float:right">Thêm</button> 
+                                    <button class="btn btn-default" style="float:right" (click)='addWeb(web.id,i)'>Thêm</button> 
                                 </p>           
                             </div>
                         </div>
@@ -23,13 +23,13 @@
                     <div class='col-xs-6 position'>
                         <h4>Các website đang được duyệt</h4>
                         <div class='box2'>
-                            <div *ngFor='let web of context.webs'>
+                            <div *ngFor='let web of context.webs ; let i = index'>
                                 <p> <img [src]='web.icon'
                                     [title]='web.name | uppercase'
                                     [style.width.px]='imageWidth' 
                                     [style.height.px]='imageHeight'/> {{web.name}}
 
-                                    <button class="btn btn-default" style="float:right">Xóa</button>                                      
+                                    <button class="btn btn-default" style="float:right" (click)='deleteWeb(web.id,i)'>Xóa</button>                                      
                                 </p>           
                             </div>
                         </div>

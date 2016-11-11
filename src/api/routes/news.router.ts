@@ -26,7 +26,8 @@ export class NewsRouter {
     public getRouter(): Router {
 
         this.router.route('/news')
-            .get(this.getAllNews);
+            .get(this.getAllNews)
+            .delete(this.deleteNews);
         
         // this.router.get('/countNews',this.countNews)
 
@@ -44,34 +45,27 @@ export class NewsRouter {
                     console.error(err);
                     return Promise.reject(err);
                 })
-        
-
-        // let object={ id: 1, name: 'book1' };
-
-        // this.bookRepo.getList(null)
-        //     .then(result => {
-        //         res.status(200).json(result)
-        //     })
-        //     .catch(error => {
-        //         console.error(error.message);
-        //         res.status(500).send(error.message)
-        //     })
     }
 
-    // private deleted = (req: Request, res: Response) => {
-    //     this .newsRepo.deleted(id)
-    //     .then( lnw=> {
+    private deleteNews = (req: Request, res: Response) => {
+        this .newsRepo.DeleteNews(req.query.id)
+        .then(result=>{
+            res.status(200).json(result);
+        })
+        .catch(error => {
+            console.error(error.message);
+            res.status(500).send(error.message);
+        })
+    }
 
-    //     })
+    // private countNews= (req: Request,res: Response) => {
+    //     this.newsRepo.count(null)
+    //         .then(result => {
+    //             res.status(200).json(result);
+    //         })
+    //         .catch(error => {
+    //             console.error(error.message);
+    //             res.status(500).send(error.message);
+    //         })
     // }
-    private countNews= (req: Request,res: Response) => {
-        this.newsRepo.count(null)
-            .then(result => {
-                res.status(200).json(result);
-            })
-            .catch(error => {
-                console.error(error.message);
-                res.status(500).send(error.message);
-            })
-    }
 }

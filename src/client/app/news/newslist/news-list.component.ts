@@ -7,7 +7,9 @@ import { Overlay, overlayConfigFactory } from 'angular2-modal';
 import { Modal, BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { NewsDetailContent, CustomModal } from '../news-detail/news-detail.component';
 
-import {WebsListComponent} from '../website/website.component'
+import {WebsListComponent} from '../website/website.component';
+
+import { Router, Params, ActivatedRoute } from '@angular/router';
 
 import path = require('path');
 
@@ -25,7 +27,7 @@ export class NewsListComponent implements OnInit{
     listFilter: string = '';
     news: INews[];
 
-    constructor(private _newsService: NewsService, public modal : Modal) {
+    constructor(private _newsService: NewsService, public modal : Modal,private _router: Router, private _route: ActivatedRoute) {
 
     }
 
@@ -45,8 +47,17 @@ export class NewsListComponent implements OnInit{
         alert("Đã lưu");
     }
 
-    btnDelete(): void{
-        alert("Đã xóa");
+    btnDelete(id:number,index): void{
+        this._newsService.deleteNews(id)
+        .then(t => {
+            if(t){
+                    console.log("Đã xóa");
+                    this.news.splice(index,1)
+                }  
+        })    
+        .catch(errorMessage => {
+            console.error(errorMessage.message)
+        });
     }
 
      openCustom(news) {

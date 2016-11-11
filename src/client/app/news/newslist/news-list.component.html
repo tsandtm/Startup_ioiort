@@ -15,7 +15,7 @@
                <web-list></web-list> 
             </div>
            <div class="col-md-9" >        
-                <div class="col-md-4" *ngFor='let new of news | newsFilter : listFilter'>
+                <div class="col-md-4" *ngFor='let new of news | newsFilter : listFilter; let i = index'>
                     <div class="box">
                         <div class="box1">
                             <ul>
@@ -31,7 +31,7 @@
                             </ul>
                         </div>
                         <div class="box2">                    
-                            <button class="btn btn-primary" (click) = 'btnDelete()' >Xóa</button> <button class="btn btn-primary" (click) = 'btnSave()'>Lưu</button>
+                            <button class="btn btn-primary" (click) = 'btnDelete(new.id,i)' >Xóa</button> <button class="btn btn-primary" (click) = 'btnSave()'>Lưu</button>
                         </div>
                     </div>
                 </div>

@@ -26,8 +26,11 @@ export class WebsRouter {
     public getRouter(): Router {
 
         this.router.route('/website')
-            .get(this.getAllWebs);
-        this.router.get('/getWebs',this.getWebs)
+            .get(this.getAllWebs)
+            .put(this.updateShow);
+        this.router.get('/getWebs',this.getWebs);
+       
+
         // this.router.get('/countNews',this.countNews)
 
 
@@ -45,7 +48,7 @@ export class WebsRouter {
                     return Promise.reject(err);
                 })
     }
-      private getWebs = (req: Request, res: Response) => {
+    private getWebs = (req: Request, res: Response) => {
 
         this .websRepo.getListShow(null)
                 .then(lnw => {
@@ -56,5 +59,17 @@ export class WebsRouter {
                     return Promise.reject(err);
                 })
     }
+
+    private updateShow = (req: Request, res: Response) => {
+
+        this.websRepo.UpdateShow(req.query.id,req.body)
+                .then(result => {
+                    res.status(200).json(result);
+                })
+                .catch(err => {
+                    console.error(err);
+                    return Promise.reject(err);
+                })
+    } 
 
 }

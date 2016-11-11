@@ -6,7 +6,7 @@ import { INews } from './news.model';
 
 @Injectable()
 export class NewsService {
-    private _newsUrl = 'api/json/news.json';
+    // private _newsUrl = 'api/json/news.json';
 
     constructor(private _http: Http) { }
 
@@ -23,6 +23,13 @@ export class NewsService {
             .catch(this.handleError);
     }
 
+    //Xoa tin tuc
+    deleteNews(id:number): Promise<INews>{
+        return this._http.delete('/api/news?id='+id)
+        .toPromise()
+        .then(response => response.json() as INews)
+        .catch(this.handleError);
+    }
 
     private handleError(error: Error): Promise<any> {
         console.error(error);

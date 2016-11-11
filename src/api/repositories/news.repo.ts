@@ -8,7 +8,7 @@ export class ListNewsRepo extends RepoBase {
         super();
     }
      public getList(option): Promise<ListNews[]> {
-        let queryText = 'select * from "news"';
+        let queryText = 'select * from "news" order by datepub asc';
 
         console.info('Excute: ' + queryText);
         let pResult;
@@ -46,15 +46,33 @@ export class ListNewsRepo extends RepoBase {
             });
     }
 
-     public count(option): Promise<number> {
-        let queryText = 'select count(*) as abc from news';
+    //  public count(option): Promise<number> {
+    //     let queryText = 'select count(*) as abc from news';
+
+    //     console.info('Excute: ' + queryText);
+
+    //     return this._pgPool.query(queryText)
+    //         .then(result => {
+    //             return result.rows[0].abc
+    //         })
+    // }
+
+    public DeleteNews(id : number): Promise<ListNews> {
+        let queryText = 'delete from "news" where id=$1';
 
         console.info('Excute: ' + queryText);
 
-        return this._pgPool.query(queryText)
-            .then(result => {
-                return result.rows[0].abc
+        return this._pgPool.query(queryText, [id])
+            .then(result => { 
+                let news = new ListNews();
+                news.id = id;
+                console.log('rows: ' + JSON.stringify(result.rows))
+                return news;
             })
-    }
+            .catch(error => {
+                    console.error('Error: ',error);
+                    return Promise.reject(error);
+                })
+        }
    
 }

@@ -8,7 +8,7 @@ export class ListWebRepo extends RepoBase {
         super();
     }
      public getList(option): Promise<ListWeb[]> {
-        let queryText = 'select * from "danhmuc" where show = false ';
+        let queryText = 'select * from "danhmuc" where show = false order by name asc';
 
         console.info('Excute: ' + queryText);
         let pResult;
@@ -41,7 +41,7 @@ export class ListWebRepo extends RepoBase {
     }
 
     public getListShow(option): Promise<ListWeb[]> {
-            let queryText = 'select * from "danhmuc" where show = true';
+            let queryText = 'select * from "danhmuc" where show = true order by name asc';
 
             console.info('Excute: ' + queryText);
             let pResult;
@@ -72,6 +72,25 @@ export class ListWebRepo extends RepoBase {
                     return null;
                 });
         }
+
+        public UpdateShow(id : number,value): Promise<ListWeb> {
+        let queryText = 'update "danhmuc" set show = $1 where id=$2';
+
+        console.info('Excute: ' + queryText);
+
+        return this._pgPool.query(queryText, [value.show,id])
+            .then(result => { 
+                let webs = new ListWeb();
+                webs.id = id;
+                console.log('rows: ' + JSON.stringify(result.rows))
+                return webs;
+            })
+            .catch(error => {
+                    console.error('Error: ',error);
+                    return Promise.reject(error);
+                })
+        }
+
 
      public count(option): Promise<number> {
         let queryText = 'select count(*) as abc from news';

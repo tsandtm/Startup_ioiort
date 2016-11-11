@@ -2,8 +2,8 @@
     margin: 0px 10px;
 }
 .box1, .box2{
-    width: 90%;
-    height: 350px;
+    width: 80%;
+    height: 310px;
     border: 1px solid gray;
     box-sizing: border-box;
     margin: 1px 0px;
@@ -12,7 +12,7 @@
 }
 
 .box2{
-    height: 400px;
+    height: 370px;
 }
 .position{
     float: right;
