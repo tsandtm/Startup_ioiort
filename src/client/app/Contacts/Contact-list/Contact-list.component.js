@@ -25,21 +25,47 @@ var ContactListComponent = (function () {
         this._route = _route;
         this.filter = '';
         this.checkbox = false;
-        this.loadGetAll();
-        this.getTag();
-        console.log(this.Tags);
     }
     ContactListComponent.prototype.loadGetAll = function () {
         var _this = this;
+        // this.getContacts()
+        //     .then(() => {
+        //         return this.getTag();
+        //     })
+        //     .catch((error) => {
+        //         console.log('error: ' +error);
+        //     });
         this.contactService.getContacts().then(function (result) { return _this.Contacts = result; });
     };
     ContactListComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.getContacts()
+            .then(function () {
+            return _this.getTag();
+        })
+            .then(function () {
+            console.log(_this.Tags);
+        })
+            .catch(function (error) {
+            console.log('error: ' + error);
+        });
     };
     ContactListComponent.prototype.getView = function (ValueContactID) {
         return this.modal.open(Contact_update_component_1.ModalContactUpdate, angular2_modal_1.overlayConfigFactory({ ContactID: ValueContactID }, bootstrap_1.BSModalContext));
     };
     ContactListComponent.prototype.checkAlllist = function () {
         this.checkbox = !this.checkbox;
+    };
+    ContactListComponent.prototype.getContacts = function () {
+        var _this = this;
+        return this.contactService.getContacts()
+            .then(function (response) {
+            _this.Contacts = response;
+            return response;
+        })
+            .catch(function (error) {
+            return error;
+        });
     };
     ContactListComponent.prototype.getTag = function () {
         var _this = this;

@@ -35,7 +35,6 @@ export class ContactListComponent {
     public Tags: Tag[];
 
     constructor(private contactService: ContactService, private tagService: TagService, public modal: Modal, private _router: Router, private _route: ActivatedRoute) {
-
     }
 
     loadGetAll() {
@@ -91,6 +90,16 @@ export class ContactListComponent {
             .catch((error) => {
                 console.log(error)
                 return error;
+            });
+    }
+
+    orderByTag(valueTag: number){
+        this.contactService.orderByTag(valueTag)
+            .then((result) => {
+                this.Contacts = result;
+            })
+            .catch((error) => {
+                console.error(error);
             });
     }
 }

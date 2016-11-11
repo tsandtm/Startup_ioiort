@@ -16,7 +16,6 @@ export class ContactRepo extends RepoBase {
             for (let i = 0; i < option.Contact_Tag.length; i++) {
                 option.Contact_Tag[i] = parseInt(option.Contact_Tag[i].toString(), 10)
             }
-            console.log(option);
             queryText = 'select * from test."Contacts" where "Contact_Tag" = Array[' + option.Contact_Tag + ']';
             // queryText = 'select * from test."Contacts" where "Contact_Tag" = Array[$1]';
             pResult = this._pgPool.query(queryText);
@@ -50,7 +49,6 @@ export class ContactRepo extends RepoBase {
     public getOne(option): Promise<Contact> {
         let queryText = 'select * from test."Contacts" where "ContactID" = $1';
 
-        console.info('Excute: ' + queryText);
 
         return this._pgPool.query(queryText, [option.ContactID])
             .then(result => {
@@ -85,11 +83,40 @@ export class ContactRepo extends RepoBase {
             queryText = 'UPDATE test."Contacts" SET "Contact_Tag" = Array[' + option.Contact_Tag + '] WHERE "ContactID" = ' + option.ContactID;
         }
         else {
-            queryText = 'UPDATE test."Contacts" SET "Contact_Tag" = '+"'{}'" +' WHERE "ContactID" = ' + option.ContactID;
+            queryText = 'UPDATE test."Contacts" SET "Contact_Tag" = ' + "'{}'" + ' WHERE "ContactID" = ' + option.ContactID;
         }
         return this._pgPool.query(queryText)
             .then(result => {
                 return option;
             });
     }
+
+    public orderByTag(option): Promise<Contact[]> {
+        option.Contact_Tag = parseInt(option.Contact_Tag, 10)
+
+        let queryText = 'select * from test."Contacts" order by "Contact_Tag" = Array[' + option.Contact_Tag + '] desc';
+        let pResult = this._pgPool.query(queryText);
+
+        return pResult.then(result => {
+            let Contacts: Contact[] = result.rows.map(r => {
+                let contact = new Contact();
+                contact.ContactID = r.ContactID;
+                contact.Token = r.Token;
+                contact.Email = r.Email;
+                contact.TaiKhoan = r.TaiKhoan;
+                contact.Device = r.Device;
+                contact.PhoneNumber = r.PhoneNumber;
+                contact.NgayTao = r.NgayTao;
+                contact.FaceBook = r.FaceBook;
+                contact.Contact_Tag = r.Contact_Tag;
+                return contact;
+            });
+            return Contacts;
+        })
+            .catch(err => {
+                console.error(err.message);
+                return null;
+            });
+    }
+
 }

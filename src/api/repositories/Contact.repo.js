@@ -88,6 +88,33 @@ var ContactRepo = (function (_super) {
             return option;
         });
     };
+    ContactRepo.prototype.orderByTag = function (option) {
+        // option.Contact_Tag[0] = parseInt(option.Contact_Tag[0].toString(), 10)
+        option.Contact_Tag = parseInt(option.Contact_Tag, 10);
+        console.log(option);
+        var queryText = 'select * from test."Contacts" order by "Contact_Tag" = Array[$1] desc';
+        var pResult = this._pgPool.query(queryText, [option.Contact_Tag]);
+        return pResult.then(function (result) {
+            var Contacts = result.rows.map(function (r) {
+                var contact = new Contact_model_1.Contact();
+                contact.ContactID = r.ContactID;
+                contact.Token = r.Token;
+                contact.Email = r.Email;
+                contact.TaiKhoan = r.TaiKhoan;
+                contact.Device = r.Device;
+                contact.PhoneNumber = r.PhoneNumber;
+                contact.NgayTao = r.NgayTao;
+                contact.FaceBook = r.FaceBook;
+                contact.Contact_Tag = r.Contact_Tag;
+                return contact;
+            });
+            return Contacts;
+        })
+            .catch(function (err) {
+            console.error(err.message);
+            return null;
+        });
+    };
     return ContactRepo;
 }(repositories_base_1.RepoBase));
 exports.ContactRepo = ContactRepo;
