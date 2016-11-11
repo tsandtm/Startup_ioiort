@@ -77,10 +77,16 @@ export class ContactRepo extends RepoBase {
     }
 
     public update(option: Contact): Promise<Contact> {
-        for (let i = 0; i < option.Contact_Tag.length; i++) {
-            option.Contact_Tag[i] = parseInt(option.Contact_Tag[i].toString(), 10)
+        let queryText;
+        if (option.Contact_Tag.length != 0) {
+            for (let i = 0; i < option.Contact_Tag.length; i++) {
+                option.Contact_Tag[i] = parseInt(option.Contact_Tag[i].toString(), 10)
+            }
+            queryText = 'UPDATE test."Contacts" SET "Contact_Tag" = Array[' + option.Contact_Tag + '] WHERE "ContactID" = ' + option.ContactID;
         }
-        let queryText = 'UPDATE test."Contacts" SET "Contact_Tag" = Array[' + option.Contact_Tag + '] WHERE "ContactID" = ' + option.ContactID;
+        else {
+            queryText = 'UPDATE test."Contacts" SET "Contact_Tag" = '+"'{}'" +' WHERE "ContactID" = ' + option.ContactID;
+        }
         return this._pgPool.query(queryText)
             .then(result => {
                 return option;

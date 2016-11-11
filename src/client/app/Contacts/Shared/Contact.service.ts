@@ -29,7 +29,7 @@ export class ContactService {
     updateContact(valueID: number, valueTag: number[]) {
         let params = JSON.stringify({ContactID: valueID, Contact_Tag: valueTag});;
         let headers = new Headers();
-        console.log(params);
+        console.log('params: ' +params);
         headers.append('Content-Type', 'application/json');
         return this._http.post('/api/Contact/Update', params, {
             headers: headers,

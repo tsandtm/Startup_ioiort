@@ -62,7 +62,7 @@ export class ModalContactUpdate implements CloseGuard, ModalComponent<ContactMod
 
     loadGetContact() {
         this.getContact(this.dialog.context.ContactID)
-            .then((result) => {});
+            .then((result) => { });
     }
 
     getTag(): Promise<Tag[]> {
@@ -119,7 +119,6 @@ export class ModalContactUpdate implements CloseGuard, ModalComponent<ContactMod
             error => alert(error),
             () => console.log('finish'));
 
-        console.log(this.Tags);
         this.wrongAnswer = false;
         this.dialog.close();
 
