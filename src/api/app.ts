@@ -16,9 +16,14 @@ app.use(body_parser.json());
 // import router
 import {BookRouter} from './routes/book.router';
 
+import { AppRouter } from './routes/app.router';
+import { NotifiRouter } from './routes/notifi.router';
 
 
 // sử dụng các router được định nghĩa từ các modules
-app.use('/api', [(new BookRouter()).getRouter()]);
+app.use('/api', [(new BookRouter()).getRouter(),
+ (new AppRouter()).getRouter(),
+ (new NotifiRouter()).getRouter()
+ ]);
 
 export default app;

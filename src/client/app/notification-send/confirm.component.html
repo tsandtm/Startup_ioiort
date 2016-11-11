@@ -1,0 +1,45 @@
+    <div class="container" *ngIf='notifi'>
+		<h3>Confirm and Test</h3>
+		<hr/>
+		<div class="container">
+			<div class="col-md-8">
+					<img src="/assets/images/device.png" width="330px" height="600px">
+					<div style="position: absolute;top: 240px;left: 45px;width: 270px;border-top: 1px solid #585858;border-bottom: 1px solid #585858;color: white;">
+						<div style="width: 220px;margin-left: 32px;margin-top: 12px;margin-bottom: 7px;word-wrap: break-word;">
+						<span class="glyphicon glyphicon-envelope"></span>
+							<p style="color:white;display: inline;letter-spacing: 1px;font-size:12px">{{notifi.TieuDe}}</p>
+							<p style="opacity: 0.5;display: inline;letter-spacing: 1px;font-size:11px">now</p>
+							<div style="margin-left: 18px;">
+								<p style="color:white;margin: 0px;font-size:12px;letter-spacing: 1px;">{{notifi.Noidung}}</p>
+								<p style="opacity: 0.5;font-size:11px">slide to view</p>
+								</div>
+							</div>
+					</div>	
+			</div>
+			<div class="col-md-4">
+				<h4>Thông tin</h4>
+				<hr />
+				<div>
+					<p>
+					Số lượng user:100<br/><br/>
+					Ngày gửi:{{notifi.Thoigiangui| date:'dd/MM/yyyy HH:mm:ss' }}<br/><br/>
+					Độ ưu tiên:{{notifi.DoUuTien}}<br/><br/>
+					Thời hạn:{{notifi.ThoiHan| date:'dd/MM/yyyy HH:mm:ss'}}<br/><br/>
+					</p>
+					<form class="form-inline" style="margin-top:180px">
+						<div class="form-group">
+						<p>Test Recipients</p>
+							<input type="text" class="form-control"/>
+							<h6><i>User nhận test</i></h6>
+						</div>
+						<button type="submit" class="btn btn-success">Send</button>
+					</form>
+					<hr />
+				</div>
+				<div style="float:right">
+				<button type="submit" class="btn btn-success" (click)='SaveAsDraft()'>Save As Draft</button>
+				<button type="submit" class="btn btn-success">Finish</button>
+				</div>
+			</div>
+		</div>
+    </div>

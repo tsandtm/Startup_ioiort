@@ -1,8 +1,8 @@
 {
     "development": {
-        "database": "testdb",
+        "database": "Appnhatro",
         "username": "postgres",
-        "password": "123",
+        "password": "postgres",
         "config": {
             "dialect": "postgres",
             "define": {

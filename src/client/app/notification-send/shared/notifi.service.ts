@@ -1,34 +1,43 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response,Request } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { Product } from './product.model';
+
+import { Notifi } from './notifi.model';
 
 @Injectable()
-export class ProductService {
+export class NotifiService {
     private _productUrl = 'api/products/products.json';
 
     constructor(private _http: Http) { }
 
-    getProducts(): Promise<Product[]> {
+    Create(req): Promise<Notifi[]> {
+        return this._http.post('/api/notifi',req)
+            .toPromise()
+            .then(response => response.json() as Notifi[])
+            .catch(this.handleError);
+    }
+    getLastNotifi(): Promise<Notifi> {
+        return this._http.get('/api/notifi')
+            .toPromise()
+            .then(response => response.json() as Notifi)
+            .catch(this.handleError);
+    }
+    getAllNoti(): Promise<Notifi[]> {
         // return this._http.get('/api/book')
         //     .map((response: Response) => <Product[]>response.json())
         //     .do(data => console.log('All: ' + JSON.stringify(data)))
         //     .catch(this.handleError);
-        return this._http.get('/api/book')
+        return this._http.get('/api/notifigetone')
             .toPromise()
-            .then(response => response.json() as Product[])
+            .then(response => response.json() as Notifi[])
             .catch(this.handleError);
     }
 
-    getProduct(id: number): Promise<Product> {
-        // return this.getProducts()
-        //     .map((products: Product[]) => products.find(p => p.productId === id))
-        //     .catch(this.handleError);
-        return this.getProducts()
-            .then(products => products.find(p => p.productId === id))
+    getOne(id): Promise<Notifi> {
+        return this.getAllNoti()
+            .then(products => products.find(p => p.NotifiID === id))
             .catch(this.handleError);
     }
-
     private handleError(error: Error): Promise<any> {
         // in a real world app, we may send the server to some remote logging infrastructure
         // instead of just logging it to the console

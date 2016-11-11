@@ -5,4 +5,3 @@ export class Book extends ModelBase {
     name: string;
     
 }
-

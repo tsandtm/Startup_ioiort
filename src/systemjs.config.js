@@ -23,7 +23,7 @@
       '@angular/forms': 'npm:forms.umd.js',
       // other libraries
       'rxjs':                      'npm:',
-      'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
+      'angular-in-memory-web-api': 'npm:angular-in-memory-web-api'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
