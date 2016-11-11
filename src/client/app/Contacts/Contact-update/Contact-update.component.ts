@@ -36,44 +36,58 @@ export class ModalContactUpdate implements CloseGuard, ModalComponent<ContactMod
     public contact: Contact;
     public postData: string;
     public Tags: Tag[];
+    public fills;
 
-    // ngOnInit(): void {
-    //     this.loadGetContact();
-    // }
+    ngOnInit() {
+        this.loadGetContact();
+        this.getTag().then(() => {
+            for (let i = 0; i < this.Tags.length; i++) {
+                for (let j = 0; j < this.contact.Contact_Tag.length; j++) {
+                    if (this.Tags[i].TagID == this.contact.Contact_Tag[j]) {
+                        this.Tags[i].checked = true;
+                        break;
+                    }
+                }
+            }
+        });
+    }
 
     constructor(public dialog: DialogRef<ContactModalContext>, private contactService: ContactService, private tagService: TagService, private _router: Router) {
         this.context = dialog.context;
-        this.loadGetContact();
-        this.getTag();
+
+
         this.wrongAnswer = true;
         dialog.setCloseGuard(this);
     }
 
     loadGetContact() {
         this.getContact(this.dialog.context.ContactID)
-            .then((result) => {
-                console.log('contact:' + this.contact);
-            });
+            .then((result) => {});
     }
 
-    getTag() {
-        this.tagService.getTags()
+    getTag(): Promise<Tag[]> {
+        return this.tagService.getTags()
             .then((response) => {
                 this.Tags = response;
+                return this.Tags;
             })
             .catch((error) => {
                 console.log(error)
+                return error;
             });
     }
 
-    ischecked(contag: number): boolean {
-        for (let i = 0; i < this.contact.Contact_Tag.length; i++) {
-            if(this.contact.Contact_Tag[i] == contag) {
-                return true;
-            }
-        }
-        return false;
-    }
+    // ischecked(contag: number): boolean {
+
+    //     for (let i = 0; i < this.contact.Contact_Tag.length; i++) {
+    //         if (this.contact.Contact_Tag[i] == contag) {
+    //             console.log(this.Tags);
+    //             return true;
+    //         }
+    //     }
+    //     console.log(this.Tags);
+    //     return false;
+    // }
 
     getContact(ContactID: number): Promise<Contact> {
         return this.contactService.getContact(ContactID)
@@ -87,14 +101,28 @@ export class ModalContactUpdate implements CloseGuard, ModalComponent<ContactMod
             });
     }
 
-    changeValueTag(valueID, valueTag) {
-        this.contactService.updateContact(valueID, parseInt(valueTag, 10))
+    changeValueTag(valueID: number) {
+        let valueTags = new Array();
+
+        for (let i = 0; i < this.Tags.length; i++) {
+            if (this.Tags[i].checked) {
+                console.log(this.Tags[i].TagID);
+                valueTags.push(this.Tags[i].TagID);
+            }
+        }
+
+        console.log('valueTags: ' + valueTags);
+
+        this.contactService.updateContact(valueID, valueTags)
             .subscribe(
             data => this.postData = JSON.stringify(data),
             error => alert(error),
             () => console.log('finish'));
+
+        console.log(this.Tags);
         this.wrongAnswer = false;
         this.dialog.close();
+
     }
 
     onClose() {

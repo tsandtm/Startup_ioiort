@@ -4,4 +4,5 @@ export class Tag {
     TagNameKey: string;
     AccountID: string;
     IsDefault: boolean;
+    checked: boolean = false;
 }

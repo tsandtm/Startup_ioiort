@@ -20,6 +20,7 @@ var ContactListComponent = (function () {
         this.modal = modal;
         this._router = _router;
         this._route = _route;
+        this.checkbox = false;
     }
     ContactListComponent.prototype.loadGetAll = function () {
         var _this = this;
@@ -30,6 +31,9 @@ var ContactListComponent = (function () {
     };
     ContactListComponent.prototype.getView = function (ValueContactID) {
         return this.modal.open(Contact_update_component_1.ModalContactUpdate, angular2_modal_1.overlayConfigFactory({ ContactID: ValueContactID }, bootstrap_1.BSModalContext));
+    };
+    ContactListComponent.prototype.checkAlllist = function () {
+        this.checkbox = !this.checkbox;
     };
     ContactListComponent = __decorate([
         core_1.Component({

@@ -74,9 +74,10 @@
             </div>
             <div class="col-sm-4" *ngIf='Tags'>
                 <div *ngFor='let itemTag of Tags'>
-                    <input type="checkbox" value="{{ itemTag.TagID }}" [checked]='ischecked(itemTag.TagID)'/>{{ itemTag.TagNameDisplay }}<br>
+                    <!--<input type="checkbox" value="{{ itemTag.TagID }}" [checked]='ischecked(itemTag.TagID)' />{{ itemTag.TagNameDisplay }}<br>-->
+                    <!--<input type="checkbox" value="{{ itemTag.TagID }}" [(ngModel)]='itemTag.checked' [checked]='ischecked(itemTag.TagID)'/>{{ itemTag.TagNameDisplay }}<br>-->
+                    <input type="checkbox" value="{{ itemTag.TagID }}" [(ngModel)]='itemTag.checked' [checked]='itemTag.checked'/>{{ itemTag.TagNameDisplay }}<br>                    
                 </div>
-
             </div>
             <div class="row" style="margin-top:10px; margin-bottom: 10px">
                 <div class='col-sm-12 text-center'>
