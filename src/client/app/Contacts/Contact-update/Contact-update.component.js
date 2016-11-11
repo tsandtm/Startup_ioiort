@@ -58,9 +58,7 @@ var ModalContactUpdate = (function () {
     };
     ModalContactUpdate.prototype.loadGetContact = function () {
         this.getContact(this.dialog.context.ContactID)
-            .then(function (result) {
-            // console.log('contact:' + this.contact);
-        });
+            .then(function (result) { });
     };
     ModalContactUpdate.prototype.getTag = function () {
         var _this = this;
@@ -73,9 +71,6 @@ var ModalContactUpdate = (function () {
             console.log(error);
             return error;
         });
-        /*
-
-        */
     };
     // ischecked(contag: number): boolean {
     //     for (let i = 0; i < this.contact.Contact_Tag.length; i++) {
@@ -101,15 +96,16 @@ var ModalContactUpdate = (function () {
     };
     ModalContactUpdate.prototype.changeValueTag = function (valueID) {
         var _this = this;
-        var valueTags;
+        var valueTags = new Array();
         for (var i = 0; i < this.Tags.length; i++) {
-            if (this.Tags[i].checked == true) {
+            if (this.Tags[i].checked) {
+                console.log(this.Tags[i].TagID);
                 valueTags.push(this.Tags[i].TagID);
             }
         }
+        console.log('valueTags: ' + valueTags);
         this.contactService.updateContact(valueID, valueTags)
             .subscribe(function (data) { return _this.postData = JSON.stringify(data); }, function (error) { return alert(error); }, function () { return console.log('finish'); });
-        console.log(this.Tags);
         this.wrongAnswer = false;
         this.dialog.close();
     };

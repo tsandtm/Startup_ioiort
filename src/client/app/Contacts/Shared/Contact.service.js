@@ -33,11 +33,8 @@ var ContactService = (function () {
         var params = JSON.stringify({ ContactID: valueID, Contact_Tag: valueTag });
         ;
         var headers = new http_1.Headers();
-        console.log(params);
+        console.log('params: ' + params);
         headers.append('Content-Type', 'application/json');
-        // return this._http.post('/api/Contact/Update', params, {
-        //     headers: headers
-        // })
         return this._http.post('/api/Contact/Update', params, {
             headers: headers,
             body: params

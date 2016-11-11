@@ -73,10 +73,16 @@ var ContactRepo = (function (_super) {
         });
     };
     ContactRepo.prototype.update = function (option) {
-        for (var i = 0; i < option.Contact_Tag.length; i++) {
-            option.Contact_Tag[i] = parseInt(option.Contact_Tag[i].toString(), 10);
+        var queryText;
+        if (option.Contact_Tag.length != 0) {
+            for (var i = 0; i < option.Contact_Tag.length; i++) {
+                option.Contact_Tag[i] = parseInt(option.Contact_Tag[i].toString(), 10);
+            }
+            queryText = 'UPDATE test."Contacts" SET "Contact_Tag" = Array[' + option.Contact_Tag + '] WHERE "ContactID" = ' + option.ContactID;
         }
-        var queryText = 'UPDATE test."Contacts" SET "Contact_Tag" = Array[' + option.Contact_Tag + '] WHERE "ContactID" = ' + option.ContactID;
+        else {
+            queryText = 'UPDATE test."Contacts" SET "Contact_Tag" = ' + "'{}'" + ' WHERE "ContactID" = ' + option.ContactID;
+        }
         return this._pgPool.query(queryText)
             .then(function (result) {
             return option;

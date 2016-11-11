@@ -19,6 +19,12 @@
                 <h3>Filtered by: {{ filter }}</h3>
             </div>
         </div>
+        <div class="row" *ngIf='Tags' style="margin-left: 10px;">
+            Tag: 
+            <a style="cursor:pointer; text-decoration: underline; margin-left: 10px;" *ngFor='let itemTag of Tags'>
+                {{ itemTag.TagNameDisplay }}
+            </a>
+        </div>
 
 
 
@@ -28,7 +34,7 @@
                     <tr>
                         <th>
                             <input type="checkbox" (click)='checkAlllist()' />
-                            </th>
+                        </th>
                         <th>ContactID</th>
                         <th>Token</th>
                         <th>Email</th>
@@ -37,11 +43,11 @@
                         <th>Phone number</th>
                         <th>Ngày tạo</th>
                         <th>Facebook</th>
-                        <th>Contact tag</th>
+                        <th>Tag</th>
                     </tr>
                 </thead>
                 <tbody id='listcheckall'>
-                    <tr *ngFor='let item of Contacts'>
+                    <tr *ngFor='let item of Contacts | ContactFilter: filter'>
                         <td>
                             <input type="checkbox" class="checkbox-item" [checked]="checkbox" />
                         </td>
@@ -80,17 +86,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    function checkAlllist(idList, obj){
-        var c = new Array();
-        c = $(idList + " input.checkbox-item");
-
-        for (var i = 0; i < c.length; i++) {
-
-            if (c[i].type == 'checkbox' && c[i].className == "checkbox-item") {
-                c[i].checked = obj.checked;
-            }
-        }
-    }
-</script>

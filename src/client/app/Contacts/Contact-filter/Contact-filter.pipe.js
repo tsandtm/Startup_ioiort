@@ -14,8 +14,8 @@ var ContactFilterPipe = (function () {
     }
     ContactFilterPipe.prototype.transform = function (value, args) {
         var filter = args[0] ? args[0].toLocaleLowerCase() : null;
-        return filter ? value.filter(function (product) {
-            return product.Email.toLocaleLowerCase().indexOf(filter) !== -1;
+        return filter ? value.filter(function (contact) {
+            return contact.TaiKhoan.toLocaleLowerCase().indexOf(filter) !== -1;
         }) : value;
     };
     ContactFilterPipe = __decorate([
