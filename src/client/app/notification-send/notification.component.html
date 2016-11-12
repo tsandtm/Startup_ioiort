@@ -115,13 +115,20 @@
 					</div>
 					<div class="form-group">
 						<select #Hour class="form-control" (change)='hour = Hour.value'>
-							<option *ngFor='let item of loophour'[value]="item">{{item}}</option>
+							<option *ngFor='let item of loophour'
+							[value]="item"
+							[selected]="item==12"
+							>{{item}}
+							</option>
 						</select>
 						<h6><i>(*) Giờ</i></h6>
 					</div>
 					<div class="form-group">
 						<select #Minute class="form-control" (change)='minute = Minute.value'>
-							<option *ngFor='let item of loopminute'[value]="item">{{item}}</option>
+							<option *ngFor='let item of loopminute'
+							[value]="item">
+							{{item}}
+							</option>
 						</select>
 						<h6><i>(*) Phút</i></h6>
 					</div>
@@ -141,11 +148,29 @@
 							<option value="2">2</option>
 							<option value="3">3</option>
 							<option value="4">4</option>
+							<template [ngIf]="thoiHanDV=='Day'">
+								<option *ngFor='let item of loopdayTH'
+								[value]="item">
+								{{item}}
+								</option>
+							</template>
+							<template [ngIf]="thoiHanDV=='Hour'">
+								<option *ngFor='let item of loophourTH'
+								[value]="item">
+								{{item}}
+								</option>
+							</template>
+							<template [ngIf]="thoiHanDV=='Minute'">
+								<option *ngFor='let item of loopminuteTH'
+								[value]="item">
+								{{item}}
+								</option>
+							</template>
 						</select>
 						<h6><i>Thời hạn tối đa</i></h6>
 					</div>
 					<div class="form-group">
-						<select #ThoiHanDV class="form-control" (change)='thoiHanDV = ThoiHanDV.value'>
+						<select #ThoiHanDV class="form-control" (change)='thoiHanDV = ThoiHanDV.value;'>
 							<option value="Week">Week</option>
 							<option value="Day">Day</option>
 							<option value="Hour">Hour</option>

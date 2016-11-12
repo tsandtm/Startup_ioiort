@@ -67,10 +67,13 @@ export class NotifiSendComponent implements OnInit{
             //2=Draft
     Soluong:number;
     date:Date;
-    hour:number=1;
-    minute:number=1;
+    hour:number=12;
+    minute:number=0;
     loophour:number[];
     loopminute:number[];
+    loopdayTH:number[];
+    loophourTH:number[];
+    loopminuteTH:number[];
     public pageTitle: string = 'Notification';
     constructor(private appService: AppService,
     private notifiservice:NotifiService,
@@ -180,6 +183,14 @@ export class NotifiSendComponent implements OnInit{
         if(this.thoiHanDV=="Day"){
             this.date.setDate(this.date.getDate()+parseInt(this.thoiHannum.toString()));
         }
+        if(this.thoiHanDV=="Hour"){
+            this.date.setDate(this.date.getDate());
+            this.date.setHours(this.date.getHours()+parseInt(this.thoiHannum.toString()));
+        }
+        if(this.thoiHanDV=="Minute"){
+            this.date.setDate(this.date.getDate());
+            this.date.setMinutes(this.date.getMinutes()+parseInt(this.thoiHannum.toString()));
+        }
         if(this.notifi==null){
             this.notifiID=1;
         }
@@ -206,8 +217,6 @@ export class NotifiSendComponent implements OnInit{
         DeniedTag:this.listIDTagDenied,
         DeniedUser:this.listIDContactDenied};
         this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
-        //console.log("Created");
-        //this._router.navigate(['confirm',this.notifi.NotifiID]);
     }
 
 
@@ -220,6 +229,9 @@ export class NotifiSendComponent implements OnInit{
         this.getTag();
         this.getContact();
         this.loophour=this.loop(1,24);
-        this.loopminute=this.loop(1,60);
+        this.loopminute=this.loop(0,60);
+        this.loophourTH=this.loop(5,24);
+        this.loopminuteTH=this.loop(5,60);
+        this.loopdayTH=this.loop(5,28);
     }
 }

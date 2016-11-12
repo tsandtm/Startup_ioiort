@@ -33,7 +33,10 @@ export class ConfirmComponent implements OnInit {
     }
     getSL(id:number){
         this.notifiservice.getSL(id)
-        .then(sl=>this.sl=sl)
+        .then(sl=>{
+            console.log(JSON.stringify(sl))
+            this.sl=sl
+        })
     }
     SaveAsDraft(): void {
         this._router.navigate(['welcome']);
