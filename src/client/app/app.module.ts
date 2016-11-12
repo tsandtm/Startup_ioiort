@@ -4,7 +4,15 @@ import {LocationStrategy,HashLocationStrategy, PathLocationStrategy} from '@angu
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
+
+import { Ng2PaginationModule } from 'ng2-pagination';
+
+
+import { ModalModule } from 'angular2-modal';
+import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
+
 import {routing} from './app.routing.module';
+
 import {AppComponent} from './app.component';
 import {BookListComponent} from './books/book-list/book-list.component';
 import {BookDetailComponent} from './books/book-detail/book-detail.component';
@@ -21,7 +29,7 @@ import {NotificationsListComponent} from './notifications/notifications-list/not
 import {NotificationstDetailComponent} from './notifications/notifications-detail/notifications-detail.component';
 import { NotificationsService } from './notifications/shared/notifications.service';
 @NgModule({
-    imports: [BrowserModule,routing,FormsModule,HttpModule],
+    imports: [BrowserModule,routing,FormsModule,HttpModule, Ng2PaginationModule],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,ContactsService,NotificationsService],
     declarations: [AppComponent,
     BookListComponent,

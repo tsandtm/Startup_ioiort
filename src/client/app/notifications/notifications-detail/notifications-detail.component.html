@@ -1,8 +1,21 @@
 <div *ngIf='notifications'>
-    <div class='panel-heading' style='font-size:large; text-align:center'>
+    <!--<div class='panel-heading' style='font-size:large; text-align:center'>
        <h1>{{pageTitle + ' ' + notifications.TieuDe}}</h1>
-    </div>
-    <div class="col-md-6"><img src="/assets/images/iphone.png" width="500px" height="500px"/></div>
+    </div>-->
+    <div class="col-md-6">
+        <img src="/assets/images/iphone.png" width="500px" height="500px"/>
+        <div style="position: absolute;top: 240px;left: 45px;width: 270px;color: white;">
+						<div style="width: 220px;margin-left: 130px;margin-top: -26px;word-wrap: break-word;">
+						<span class="glyphicon glyphicon-envelope"></span>
+							<p style="color:white;display: inline;letter-spacing: 1px;font-size:12px">{{notifications.TieuDe}}</p><br/>
+							<p style="opacity: 0.5;display: inline;letter-spacing: 1px;font-size:11px">{{notifications.ThoiGianGui}}</p>
+							<div >
+								<p style="color:white;margin: 0px;font-size:12px;letter-spacing: 1px;">{{notifications.NoiDung}}</p>
+								<!--<p style="opacity: 0.5;font-size:11px">slide to view</p>-->
+								</div>
+							</div>
+					</div>
+        </div>
     <div class='col-md-6'>
          <div class='row'>
             <div class='col-md-3'>Tiêu đề:</div>

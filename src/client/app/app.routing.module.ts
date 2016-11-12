@@ -12,10 +12,10 @@ import {ContactsListComponent} from './contacts/contacts-list/contacts-list.comp
 import {NotificationsListComponent} from './notifications/notifications-list/notifications-list.component';
 import {NotificationstDetailComponent} from './notifications/notifications-detail/notifications-detail.component';
 const appRoutes: Route[] = [
-    { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+    { path: '', redirectTo: 'notification', pathMatch: 'full' },
     { path: 'book-list', component: BookListComponent },
     { path: 'book-detail', component: BookDetailComponent },
-   //{ path: 'welcome', component: WelcomeComponent },
+    { path: 'welcome', component: WelcomeComponent },
    // { path: 'products', component: ProductListComponent },
    // { path: 'product/:id', component: ProductDetailComponent},
     { path: 'menu-list', component: MenuListComponent },
