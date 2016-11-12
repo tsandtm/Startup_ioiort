@@ -11,6 +11,7 @@ var ReportRouter = (function () {
             _this.reportRepo.getList(option)
                 .then(function (result) {
                 res.status(200).json(result);
+                console.log(result);
             })
                 .catch(function (error) {
                 console.error(error.message);

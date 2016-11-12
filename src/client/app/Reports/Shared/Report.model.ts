@@ -7,3 +7,4 @@ export class ListDevice{
     date:string;
     listdevice:Array<Report> = [];
 }
+

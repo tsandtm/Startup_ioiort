@@ -1,15 +1,15 @@
 import { RepoBase } from './repositories.base';
 import { Contact } from '../models/Contact.model'
 import { Pool, QueryResult } from 'pg';
-import { Report } from '../models/Report.model'
 import { ListDevice } from '../models/Report.model'
+import { Report } from '../models/Report.model'
 export class ReportRepo extends RepoBase {
 
     constructor() {
         super();
     }
 
-    public getList(option): Promise<Report[]> {
+    public getList(option): Promise<ListDevice[]> {
         let queryText = 'select distinct "Device",count("Device") as count,date_part(\'month\',"NgayTao") as date from test."Contacts" group by "Device","NgayTao" order by date_part(\'month\',"NgayTao")';
         let pResult;
         if (option.Contact_Tag != undefined) {
@@ -22,25 +22,33 @@ export class ReportRepo extends RepoBase {
         return pResult.then(result => {
             let index = -1;
             let flag = "";
-        
-            let listDevice: ListDevice[] = result.rows.map(r => {
-                let listDevices = new ListDevice();
-                let report = new Report();
+            let group ="";
+            let listDevices = new Array<ListDevice>();
+
+            let report;
+            let listDevice: ListDevice[] = result.rows.map(r => {                
+                report = new Report();                           
                 if (flag != r.date) {
-                    index++;
-                    flag = r.date;
-                    listDevices.date = r.date;
-                    console.log(r.date);
+                    index++; 
+                   
+                    let xx = new ListDevice();
+                    listDevices.push(xx);
+                    listDevices[index].date = r.date;
+                   
+
+                    flag = r.date;                 
+                
                 }
-                listDevices.date = flag;
+                
                 report.name = r.Device;
-                report.count = r.count;                
-                listDevices.listdevice[index] = report;
-                console.log(listDevices.listdevice[index]);     
-                return listDevices;        
+                report.count = r.count;
+                listDevices[index].listdevice.push(report);
+                // listDevices.listdevice.push(report);               
+                // listDevices.listdevice[index] = list;
+                // console.log(listDevices);
+                // return listDevices;
             });
-            console.log(listDevice);            
-            return listDevice;         
+            return listDevices;
         })
             .catch(err => {
                 console.error(err.message);

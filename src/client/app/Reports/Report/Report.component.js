@@ -27,7 +27,7 @@ var BarChartDemoComponent = (function () {
             // {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
             // {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
             { data: [], label: '' },
-            { data: [28, 48, 40], label: 'Series B' }
+            { data: [], label: 'Series B' }
         ];
         // Doughnut
         this.doughnutChartLabels = [];
@@ -43,26 +43,23 @@ var BarChartDemoComponent = (function () {
         this.reportService.getDevice().then(function (result) {
             _this.listDevice = result;
             _this.barChartLabels = _this.getmonthlabel();
-            console.log("hoang" + _this.getmonthlabel());
-            _this.barChartData = [{ data: _this.getcountdevice(), label: _this.getlistname() },
-                { data: _this.getcountdevice(), label: _this.getlistname() }];
+            _this.barChartData = [{ data: _this.getcountdevice(), label: _this.getlistname() }];
             _this.doughnutChartLabels = _this.getlistname();
             _this.doughnutChartData = _this.getcountdevice();
-            // console.log(JSON.stringify(thang));
             _this.doughnutChartLabels = _this.getmonthlabel();
         });
     };
     BarChartDemoComponent.prototype.getmonthlabel = function () {
         var a = [];
         var flag = "";
+        var i;
         this.listDevice.forEach(function (r) {
-            console.log(r.date);
+            //  console.log(JSON.stringify(r.date));
             if (flag != r.date) {
                 flag = r.date;
                 a.push(r.date);
             }
         });
-        console.log(a);
         return a;
     };
     BarChartDemoComponent.prototype.getlistname = function () {
@@ -81,9 +78,11 @@ var BarChartDemoComponent = (function () {
         var c = [];
         this.listDevice.forEach(function (r) {
             b = r.listdevice;
-            b.forEach(function (result) {
-                c.push(result.count);
-            });
+            console.log(JSON.stringify(b));
+        });
+        b.forEach(function (result) {
+            console.log("cccc" + JSON.stringify(result.count));
+            c.push(result.count);
         });
         return c;
     };

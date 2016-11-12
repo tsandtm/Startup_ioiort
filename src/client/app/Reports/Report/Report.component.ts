@@ -1,117 +1,136 @@
-import { Component,Directive } from '@angular/core';
-import{ NgClass }from '@angular/common';
+import { Component, Directive } from '@angular/core';
+import { NgClass } from '@angular/common';
 import { ReportService } from '../Shared/Report.service';
 import { ListDevice } from '../Shared/Report.model';
 import { Report } from '../Shared/Report.model';
 // webpack html imports
 @Component({
   selector: 'Report',
-  templateUrl: '/Reports/Report/Report.component.html',  
+  templateUrl: '/Reports/Report/Report.component.html',
   styleUrls: ['/assets/shop-homepage.css'],
-   providers: [ReportService],
+  providers: [ReportService],
 })
 
 export class BarChartDemoComponent {
-   listDevice: ListDevice[];
-   Reports:Report[];
-    filter: string;
+  listDevice: ListDevice[];
+  Reports: Report[];
+  filter: string;
+  datasets = [];
+  constructor(private reportService: ReportService) {
 
-    constructor(private reportService: ReportService) {
-        
-    }
+  }
 
-    // loadGetAll() {
-    //     // this.reportService.getDevice().then( (result) => this.Reports = result);
-    
-    // }
-    loadGetAll() {
-        this.reportService.getDevice().then( (result) => {
-				this.listDevice = result;      
-				this.barChartLabels = this.getmonthlabel();		
-        this.barChartData = [{data:this.getcountdevice(),label:this.getlistname()}]
-         this.doughnutChartLabels = this.getlistname();
-        this.doughnutChartData = this.getcountdevice();       
-          
-              this.doughnutChartLabels = this.getmonthlabel();
-			});           
-    }
+  // loadGetAll() {
+  //     // this.reportService.getDevice().then( (result) => this.Reports = result);
 
-    getmonthlabel(){
-      let a:string[]=[];
-      let flag= "";
-      let i;
-      this.listDevice.forEach(r=>{
-        //  console.log(JSON.stringify(r.date));
-        if(flag != r.date)
-        {
+  // }
+  loadGetAll() {
+    this.reportService.getDevice().then((result) => {
+      this.listDevice = result;
 
-          flag=r.date;
-          a.push(r.date)        
+      this.barChartLabels = this.getmonthlabel();
+      this.createDataSets();
+      this.barChartData = this.datasets;
+      //  this.doughnutChartLabels = this.getlistname();
+      this.doughnutChartData = this.getcountdevice();
+      this.doughnutChartLabels = this.getmonthlabel();
+    });
+  }
+
+  private createDataSets() {
+    this.listDevice.forEach(ld => {
+      ld.listdevice.forEach(d => {
+        let index = this.checkIfLabelExists(d.name);
+        if (index === -1) {
+          this.datasets.push({ data: [d.count], label: d.name });
+        } else {
+          this.datasets[index].data.push(d.count);
         }
-      }) 
-      return a;
-    }
-
-    getlistname(){
-      let b:Array<Report> = [];
-      let c:string[] = [];
-      this.listDevice.forEach(r=>{
-        b = r.listdevice;
-        b.forEach(result=>{
-          c.push(result.name);
-        })
       })
-      return c;
-    }
+    })
+  }
+  checkIfLabelExists(label): number {
+    if (this.datasets.length === 0)
+      return -1;
+    return this.datasets.findIndex(d => d.label === label);
+  }
+  // private datasets = [
+  //   {
+  //     data: this.getcountdevice(),
+  //     label: this.getlistname()
+  //   }
+  // ];
+  getmonthlabel() {
+    let a: string[] = [];
+    this.listDevice.forEach(r => {
+      //  console.log(JSON.stringify(r.date));
+      a.push(r.date)
 
-    getcountdevice(){
-      let b:Array<Report> = [];
-      let c:number[] = [];
-      this.listDevice.forEach(r=>{
-        b = r.listdevice;
-         console.log(JSON.stringify(b));     
+    })
+    return a;
+  }
+
+ 
+  getlistname() {
+    let b: Array<Report> = [];
+    let c: string[] = [];
+    this.listDevice.forEach(r => {
+      b = r.listdevice;
+      b.forEach(result => {
+        c.push(result.name);
       })
-      b.forEach(result=>{
-          
-           console.log("cccc"+JSON.stringify(result.count));
-          c.push(result.count);
-        })
-        
-      return c;
-    }
+    })
+    console.log(c);
+    return c;
+  }
 
-    ngOnInit(): void {
-        this.loadGetAll();
-    }
+  getcountdevice() {
+    let b: Array<Report> = [];
+    let c: number[] = [];
+    this.listDevice.forEach(r => {
+      b = r.listdevice;
+      console.log(JSON.stringify(b));
+    })
+    b.forEach(result => {
+      console.log("cccc" + JSON.stringify(result.count));
+      c.push(result.count);
+    })
+    console.log(c)
+    return c;
+  }
 
-  public barChartOptions:any = {
+  ngOnInit(): void {
+    this.loadGetAll();
+  }
+
+  public barChartOptions: any = {
     scaleShowVerticalLines: false,
     responsive: true
   };
 
   // public barChartLabels:string[] = this.getdevicelabel();
-  public barChartLabels:string[] = [];
+  public barChartLabels: string[] = [];
   //  ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-  public barChartType:string = 'bar';
-  public barChartLegend:boolean = true;
+  public barChartType: string = 'bar';
+  public barChartLegend: boolean = true;
 
-  public barChartData:any[] = [
+  public barChartData: any[] = [
     // {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
     // {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
-     {data: [], label: ''},
-    {data: [], label: 'Series B'}
+    { data: [], label: '' },
+    { data: [], label: '' }
   ];
 
   // events
-  public chartClicked(e:any):void {
+  public chartClicked(e: any): void {
     console.log(e);
   }
 
-  public chartHovered(e:any):void {
+  public chartHovered(e: any): void {
     console.log(e);
   }
 
-  public randomize():void {
+  public randomize(): void {
     // Only Change 3 values
     let data = [
       Math.round(Math.random() * 100),
@@ -133,10 +152,10 @@ export class BarChartDemoComponent {
   }
 
   // Doughnut
-  public doughnutChartLabels:string[] = [];
+  public doughnutChartLabels: string[] = [];
   //  ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
-  public doughnutChartData:number[] = [];
-  public doughnutChartType:string = 'doughnut';
+  public doughnutChartData: number[] = [];
+  public doughnutChartType: string = 'doughnut';
 
   // // events
   // public chartClicked(e:any):void {

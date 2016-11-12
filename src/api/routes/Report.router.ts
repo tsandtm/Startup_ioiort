@@ -31,9 +31,12 @@ export class ReportRouter {
     private getAllReport = (req: Request, res: Response) => {
         let option = { Contact_Tag: req.query.Contact_Tag };
 
+        
+
         this.reportRepo.getList(option)
             .then(result => {
                 res.status(200).json(result)
+                console.log(result);
             })
             .catch(error => {
                 console.error(error.message);

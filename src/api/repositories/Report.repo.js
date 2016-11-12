@@ -6,7 +6,6 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var repositories_base_1 = require('./repositories.base');
 var Report_model_1 = require('../models/Report.model');
-var Report_model_2 = require('../models/Report.model');
 var ReportRepo = (function (_super) {
     __extends(ReportRepo, _super);
     function ReportRepo() {
@@ -23,22 +22,26 @@ var ReportRepo = (function (_super) {
             pResult = this._pgPool.query(queryText);
         }
         return pResult.then(function (result) {
-            var name, count;
             var index = -1;
             var flag = "";
+            var group = "";
+            var listDevices = new Array();
+            var report;
             var listDevice = result.rows.map(function (r) {
-                var listDevices = new Report_model_2.ListDevice();
-                var report = new Report_model_1.Report();
+                report = new Report_model_1.Report();
                 if (flag != r.date) {
                     index++;
-                    flag = r.date;
-                    listDevices.date = r.date;
                     console.log(r.date);
+                    listDevices[index].date = r.date;
+                    console.log(listDevices);
+                    flag = r.date;
                 }
                 report.name = r.Device;
                 report.count = r.count;
-                listDevices.listdevice[index] = report;
-                console.log(listDevices.listdevice[index]);
+                listDevices[index].listdevice.push(report);
+                // listDevices.listdevice.push(report);               
+                // listDevices.listdevice[index] = list;
+                // console.log(listDevices);
                 return listDevices;
             });
             return listDevice;
