@@ -37,32 +37,34 @@ export class ModalContactUpdate implements CloseGuard, ModalComponent<ContactMod
     public postData: string;
     public Tags: Tag[];
     public fills;
-
+    public TagUpdate: Tag[];
+    public TagCheckUpdate: Tag[];
+ 
     ngOnInit() {
-        this.loadGetContact();
-        this.getTag().then(() => {
-            for (let i = 0; i < this.Tags.length; i++) {
-                for (let j = 0; j < this.contact.Contact_Tag.length; j++) {
-                    if (this.Tags[i].TagID == this.contact.Contact_Tag[j]) {
-                        this.Tags[i].checked = true;
-                        break;
+        this.getContact(this.dialog.context.ContactID)
+            .then(() => {
+                return this.getTag();
+            })
+            .then(() => {
+                for (let i = 0; i < this.Tags.length; i++) {
+                    for (let j = 0; j < this.contact.Contact_Tag.length; j++) {
+                        if (this.Tags[i].TagID == this.contact.Contact_Tag[j]) {
+                            this.Tags[i].checked = true;
+                            this.Tags[i].hidden = true;
+                            break;
+                        }
                     }
                 }
-            }
-        });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     constructor(public dialog: DialogRef<ContactModalContext>, private contactService: ContactService, private tagService: TagService, private _router: Router) {
         this.context = dialog.context;
-
-
         this.wrongAnswer = true;
         dialog.setCloseGuard(this);
-    }
-
-    loadGetContact() {
-        this.getContact(this.dialog.context.ContactID)
-            .then((result) => { });
     }
 
     getTag(): Promise<Tag[]> {
@@ -77,18 +79,6 @@ export class ModalContactUpdate implements CloseGuard, ModalComponent<ContactMod
             });
     }
 
-    // ischecked(contag: number): boolean {
-
-    //     for (let i = 0; i < this.contact.Contact_Tag.length; i++) {
-    //         if (this.contact.Contact_Tag[i] == contag) {
-    //             console.log(this.Tags);
-    //             return true;
-    //         }
-    //     }
-    //     console.log(this.Tags);
-    //     return false;
-    // }
-
     getContact(ContactID: number): Promise<Contact> {
         return this.contactService.getContact(ContactID)
             .then((response) => {
@@ -101,7 +91,17 @@ export class ModalContactUpdate implements CloseGuard, ModalComponent<ContactMod
             });
     }
 
-    changeValueTag(valueID: number) {
+    removeTag(valueTagID: number) {
+        for (let i = 0; i < this.Tags.length; i++) {
+            if(valueTagID == this.Tags[i].TagID) {
+                this.Tags[i].checked = false;
+                this.Tags[i].hidden = false;
+            }
+        }
+        console.log(this.Tags);
+    }
+
+    Save(valueID: number) {
         let valueTags = new Array();
 
         for (let i = 0; i < this.Tags.length; i++) {

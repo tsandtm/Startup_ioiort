@@ -5,4 +5,5 @@ export class Tag {
     AccountID: string;
     IsDefault: boolean;
     checked: boolean = false;
+    hidden: boolean = false;
 }
