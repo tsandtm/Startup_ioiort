@@ -2,7 +2,7 @@ import { Component,OnInit,Input } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Appkey } from './shared/app.model';
-import { Notifi } from './shared/notifi.model';
+import { Notifi,SLSend } from './shared/notifi.model';
 import { AppService } from './shared/app.service';
 import { NotifiService } from './shared/notifi.service';
 @Component({
@@ -11,6 +11,7 @@ import { NotifiService } from './shared/notifi.service';
 })
 export class ConfirmComponent implements OnInit {
     @Input() notifi:Notifi;
+    @Input() sl:SLSend;
     constructor(private appService: AppService,
     private notifiservice:NotifiService,
     private _router: Router,
@@ -22,12 +23,17 @@ export class ConfirmComponent implements OnInit {
             console.log(params["id"])
             let id = +params["id"];
             this.getNotifi(id);
+            this.getSL(id);
         })
     }
 
     getNotifi(id: number) {
         this.notifiservice.getOne(id)
             .then(notifi => this.notifi = notifi)
+    }
+    getSL(id:number){
+        this.notifiservice.getSL(id)
+        .then(sl=>this.sl=sl)
     }
     SaveAsDraft(): void {
         this._router.navigate(['welcome']);

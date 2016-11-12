@@ -1,5 +1,5 @@
 import { RepoBase } from './repositories.base';
-import { Notifi } from '../models/notifi.model'
+import { Notifi,SLSend } from '../models/notifi.model'
 import { Pool, QueryResult } from 'pg';
 
 export class NotifiRepo extends RepoBase {
@@ -97,6 +97,30 @@ export class NotifiRepo extends RepoBase {
                 console.error(err.message);
                 return null;
             });
+    }
+
+    public getSL(option):Promise<SLSend[]>{
+        let queryText = 'SELECT "NotifiID",COUNT(*) FROM test."Contacts" A,test."n_Notifications" B WHERE Array[A."ContactID"] @> B."Send_User" OR A."Contact_Tag" && B."Send_Tag" Group by "NotifiID"';
+
+        console.info('Excute: ' + queryText);
+        let pResult;
+        if (option.NotifiID == undefined) {
+            pResult = this._pgPool.query(queryText)
+        }
+        return pResult.then(result => {
+            let slsends: SLSend[] = result.rows.map(r => {
+                let slsend = new SLSend();
+                slsend.NotifiID = r.NotifiID;
+                slsend.count = r.count;
+                return slsend;
+            });
+            return slsends;
+        })
+            .catch(err => {
+                console.error(err.message);
+                return null;
+            });
+
     }
 
     public getOneNoti(option): Promise<Notifi> {

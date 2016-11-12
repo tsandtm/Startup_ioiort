@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response,Request } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { Notifi } from './notifi.model';
+import { Notifi,SLSend } from './notifi.model';
 
 @Injectable()
 export class NotifiService {
@@ -23,10 +23,6 @@ export class NotifiService {
             .catch(this.handleError);
     }
     getAllNoti(): Promise<Notifi[]> {
-        // return this._http.get('/api/book')
-        //     .map((response: Response) => <Product[]>response.json())
-        //     .do(data => console.log('All: ' + JSON.stringify(data)))
-        //     .catch(this.handleError);
         return this._http.get('/api/notifigetone')
             .toPromise()
             .then(response => response.json() as Notifi[])
@@ -36,6 +32,17 @@ export class NotifiService {
     getOne(id): Promise<Notifi> {
         return this.getAllNoti()
             .then(products => products.find(p => p.NotifiID === id))
+            .catch(this.handleError);
+    }
+    getAllSL():Promise<SLSend[]>{
+        return this._http.get('/api/sl')
+            .toPromise()
+            .then(response => response.json() as SLSend[])
+            .catch(this.handleError);
+    }
+    getSL(id): Promise<SLSend> {
+        return this.getAllSL()
+            .then(slsend => slsend.find(p => p.NotifiID === id))
             .catch(this.handleError);
     }
     private handleError(error: Error): Promise<any> {

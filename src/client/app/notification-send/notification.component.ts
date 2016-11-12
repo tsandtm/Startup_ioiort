@@ -1,26 +1,53 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,OnInit,Input } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Appkey } from './shared/app.model';
 import { Notifi } from './shared/notifi.model';
+import { Tag } from './shared/tag.model';
+import { Contact } from './shared/Contact.model';
 import { AppService } from './shared/app.service';
 import { NotifiService } from './shared/notifi.service';
-//import {RlTagInputModule} from 'angular2-tag-input';
+import { ContactService } from './shared/contact.service';
+import { TagService } from './shared/tag.service';
 @Component({
     templateUrl: '/notification-send/notification.component.html',
-    providers: [AppService,NotifiService]
+    providers: [AppService,NotifiService,ContactService,TagService]
 })
 export class NotifiSendComponent implements OnInit{
-  public tags = ['Car', 'Bus', 'Train'];
-  public autocompleteTags = [];
-  public autocompleteItems = [
-    'Banana',
-    'Orange',
-    'Apple',
-    'Pear',
-    'Grape',
-    'Potato',
-    'Peach'
-  ];
+    optionsTag = {
+        placeholder: "+ Tag",
+        secondaryPlaceholder: "Tag",
+    }
+    optionsContact = {
+        placeholder: "+ Contact",
+        secondaryPlaceholder: "Contact",
+    }
+    optionsTagDenied = {
+        placeholder: "+ Tag Denied",
+        secondaryPlaceholder: "Tag Denied",
+    }
+    optionsContactDenied = {
+        placeholder: "+ Contact Denied",
+        secondaryPlaceholder: "Contact Denied",
+    }
+    //Tag
+    ACTag = [];
+    ACTagItem = [];
+    listIDTag=[];
+    Tag:Tag[];
+    //Contact    
+    ACContact = [];
+    ACContactItem = [];
+    listIDContact=[];
+    Contact:Contact[];
+    //TagDenied
+    ACTagDenied = [];
+    ACTagDeniedItem = [];
+    listIDTagDenied=[];
+    //ContactDenied
+    ACContactDenied = [];
+    ACContactDeniedItem = [];
+    listIDContactDenied=[];
+    //----//
     sendnow: boolean = true;
     sendlater: boolean = false;
     Apps: Appkey[];
@@ -39,10 +66,6 @@ export class NotifiSendComponent implements OnInit{
             //1=Complete
             //2=Draft
     Soluong:number;
-    sendtag:number[]=[1];
-    senduser:number[]=[1,2];
-    deniedtag:number[];
-    denieduser:number[];
     date:Date;
     hour:number=1;
     minute:number=1;
@@ -51,9 +74,60 @@ export class NotifiSendComponent implements OnInit{
     public pageTitle: string = 'Notification';
     constructor(private appService: AppService,
     private notifiservice:NotifiService,
+    private tagservice:TagService,
+    private contactservice:ContactService,
     private _router: Router,
     private _route: ActivatedRoute) {
 
+    }
+    public TagAdded(item:string) {
+        var pos=item.indexOf('.');
+        var num=item.slice(0,pos);
+        this.listIDTag.push(parseInt(num));
+    }
+    public TagRemoved(item:string) {
+        var pos=item.indexOf('.');
+        var num=item.slice(0,pos);
+        this.delPos(this.listIDTag,parseInt(num));
+    }
+    public ContactAdded(item:string) {
+        var pos=item.indexOf('.');
+        var num=item.slice(0,pos);
+        this.listIDContact.push(parseInt(num));
+    }
+    public ContactRemoved(item:string) {
+        var pos=item.indexOf('.');
+        var num=item.slice(0,pos);
+        this.delPos(this.listIDContact,parseInt(num));
+    }
+    // public TagDeniedAdded(item:string) {
+    //     var pos=item.indexOf('.');
+    //     var num=item.slice(0,pos);
+    //     this.listIDTag.push(parseInt(num));
+    // }
+    // public TagDeniedRemoved(item:string) {
+    //     var pos=item.indexOf('.');
+    //     var num=item.slice(0,pos);
+    //     this.delPos(this.listIDTag,parseInt(num));
+    // }
+    // public ContactDeniedAdded(item:string) {
+    //     var pos=item.indexOf('.');
+    //     var num=item.slice(0,pos);
+    //     this.listIDContact.push(parseInt(num));
+    //     console.log(this.listIDContact.toString());
+    // }
+    // public ContactDeniedRemoved(item:string) {
+    //     var pos=item.indexOf('.');
+    //     var num=item.slice(0,pos);
+    //     this.delPos(this.listIDContact,parseInt(num));
+    //     console.log(this.listIDContact.toString());
+    // }
+    delPos(ar:Array<number>,key:number){
+        for(var i=0;i<=ar.length;i++){
+            if(ar[i]==key){
+                ar.splice(i,1);
+            }
+        }
     }
     loop(min,max){
         var input=[];
@@ -62,15 +136,25 @@ export class NotifiSendComponent implements OnInit{
         }
         return input;
     }
-    ngOnInit(): void {
-        this.loadGetAll();
-        this.getNotifi();
-        this.loophour=this.loop(1,24);
-        this.loopminute=this.loop(1,60);
-    }
     getNotifi() {
         this.notifiservice.getLastNotifi()
             .then(notifi => this.notifi = notifi)
+    }
+    getTag(){
+        this.tagservice.getAllTag().then(tag=>{
+            this.Tag=tag;
+            this.Tag.forEach(element => {
+            this.ACTagItem.push(element.TagID+'.'+element.TagNameDisplay)
+        });
+    });
+    }
+    getContact(){
+        this.contactservice.getAllContact().then(contact=>{
+            this.Contact=contact;
+            this.Contact.forEach(element=>{
+                this.ACContactItem.push(element.ContactID+'.'+element.TaiKhoan)
+            });
+        });
     }
     
     sendnowclick(): void {
@@ -117,10 +201,10 @@ export class NotifiSendComponent implements OnInit{
         Soluong:1,
         Thoigiangui:this.Thoigiangui,
         ThoiHan:this.ThoiHan,
-        SendTag:this.sendtag,
-        SendUser:this.senduser,
-        DeniedTag:this.deniedtag,
-        DeniedUser:this.denieduser};
+        SendTag:this.listIDTag,
+        SendUser:this.listIDContact,
+        DeniedTag:this.listIDTagDenied,
+        DeniedUser:this.listIDContactDenied};
         this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
         //console.log("Created");
         //this._router.navigate(['confirm',this.notifi.NotifiID]);
@@ -129,5 +213,13 @@ export class NotifiSendComponent implements OnInit{
 
     loadGetAll() {
         this.appService.getApp().then( (result) => this.Apps = result);
+    }
+    ngOnInit(): void {
+        this.loadGetAll();
+        this.getNotifi();
+        this.getTag();
+        this.getContact();
+        this.loophour=this.loop(1,24);
+        this.loopminute=this.loop(1,60);
     }
 }

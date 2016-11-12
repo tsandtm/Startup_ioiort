@@ -14,24 +14,53 @@
 						<h6><i>Chọn server thực hiện gửi</i></h6>
 					</div>
 					<p>(*) To:<p>
-	<rl-tag-input
-    [addOnBlur]="false"
-    [autocomplete]="true"
-    [autocompleteItems]="autocompleteItems"
-    [(ngModel)]="autocompleteTags"
-    placeholder="Name a fruit">
-  </rl-tag-input>
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Tag">
+						<tag-input name="tag"
+						[ngModel]="ACTag"
+						[placeholder]="optionsTag.placeholder"
+						[secondaryPlaceholder]="optionsTag.secondaryPlaceholder"
+						[onlyFromAutocomplete]="true"
+						[autocompleteItems]="ACTagItem"
+						[autocomplete]="true"
+						[showDropdownIfEmpty]="true"
+           				(onAdd)="TagAdded($event)"
+           				(onRemove)="TagRemoved($event)">
+						</tag-input>
+					</div>
+					<div class="form-group">
+						<tag-input name="contact"
+						[placeholder]="optionsContact.placeholder"
+						[secondaryPlaceholder]="optionsContact.secondaryPlaceholder"
+						[ngModel]="ACContact"
+						[onlyFromAutocomplete]="true"
+						[autocompleteItems]="ACContactItem"
+						[autocomplete]="true"
+						[showDropdownIfEmpty]="true"
+           				(onAdd)="ContactAdded($event)"
+           				(onRemove)="ContactRemoved($event)">
+						</tag-input>
 					</div>  
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Contact">
+						<tag-input name="tagdenied"
+						[placeholder]="optionsTagDenied.placeholder"
+						[secondaryPlaceholder]="optionsTagDenied.secondaryPlaceholder"
+						[ngModel]="ACTagDenied"
+						[onlyFromAutocomplete]="true"
+						[autocompleteItems]="ACTagItem"
+						[autocomplete]="true"
+						[showDropdownIfEmpty]="true">
+						</tag-input>
 					</div>  
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Tag denied">
-					</div>  
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Contact denied">
+						<tag-input name="contactdenied"
+						[placeholder]="optionsContactDenied.placeholder"
+						[secondaryPlaceholder]="optionsContactDenied.secondaryPlaceholder"
+						[ngModel]="ACContactDenied"
+						[onlyFromAutocomplete]="true"
+						[autocompleteItems]="ACContactItem"
+						[autocomplete]="true"
+						[showDropdownIfEmpty]="true">
+						</tag-input>
 					</div>  
 			</div>
 			<div class="col-md-4">

@@ -14,4 +14,7 @@ export class Notifi {
     DeniedUser:number[];
     DeniedTag:number[];
 }
-
+export class SLSend{
+    NotifiID:number;
+    count:number;
+}

@@ -10,16 +10,19 @@ import {BookDetailComponent} from './books/book-detail/book-detail.component';
 import { ProductListComponent } from './products/product-list/product-list.component';
 import { ProductService } from './products/shared/product.service';
 import { NotifiService } from './notification-send/shared/notifi.service';
+import { TagService } from './notification-send/shared/tag.service';
+import { ContactService } from './notification-send/shared/contact.service';
 import { WelcomeComponent } from './home/welcome.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import {ProductFilterPipe} from './products/product-filter/product-filter.pipe'
 import {StarComponent} from './shared/star.component'
 import { NotifiSendComponent } from './notification-send/notification.component';
 import { ConfirmComponent } from './notification-send/confirm.component';
-import {RlTagInputModule} from 'angular2-tag-input';
+//import {RlTagInputModule} from 'angular2-tag-input';
+import { TagInputModule } from 'ng2-tag-input';
 @NgModule({
-    imports: [BrowserModule,routing,FormsModule,HttpModule,RlTagInputModule],
-    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,NotifiService],
+    imports: [BrowserModule,routing,FormsModule,HttpModule,TagInputModule],
+    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,NotifiService,TagService,ContactService],
     declarations: [AppComponent,
     NotifiSendComponent,
     BookListComponent,

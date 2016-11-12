@@ -29,6 +29,9 @@ export class NotifiRouter {
         this.router.route("/notifigetone")
         .get(this.getAllNoti);
 
+        this.router.route("/sl")
+        .get(this.getSL);
+
         return this.router;
     }
 
@@ -56,6 +59,16 @@ export class NotifiRouter {
 
     private getLastNoti = (req: Request, res: Response) => {
         this.notifiRepo.getLastNoti()
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            });
+    }
+    private getSL = (req: Request, res: Response) => {
+        this.notifiRepo.getSL(req.body)
             .then(result => {
                 res.status(200).json(result)
             })

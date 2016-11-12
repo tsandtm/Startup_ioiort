@@ -18,12 +18,16 @@ import {BookRouter} from './routes/book.router';
 
 import { AppRouter } from './routes/app.router';
 import { NotifiRouter } from './routes/notifi.router';
+import { TagRouter } from './routes/tag.router';
+import { ContactRouter } from './routes/Contact.router';
 
 
 // sử dụng các router được định nghĩa từ các modules
 app.use('/api', [(new BookRouter()).getRouter(),
  (new AppRouter()).getRouter(),
- (new NotifiRouter()).getRouter()
+ (new NotifiRouter()).getRouter(),
+ (new TagRouter()).getRouter(),
+ (new ContactRouter()).getRouter()
  ]);
 
 export default app;
