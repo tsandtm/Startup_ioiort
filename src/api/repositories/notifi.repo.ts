@@ -1,5 +1,5 @@
 import { RepoBase } from './repositories.base';
-import { Notifi,SLSend } from '../models/notifi.model'
+import { Notifi,SLSend,SentUser,UpdateData,InsertUser } from '../models/notifi.model'
 import { Pool, QueryResult } from 'pg';
 
 export class NotifiRepo extends RepoBase {
@@ -27,6 +27,28 @@ export class NotifiRepo extends RepoBase {
         option.DeniedUser,
         option.DeniedTag,
         ])
+            .then(result => {
+                return null;
+            });
+    }
+    public Insert(option): Promise<InsertUser> {
+        let queryText = 'INSERT INTO test."n_Contacts_Notifications"("ContactID", "NotifiID") VALUES ($1, $2);';
+
+        console.info('Excute: ' + queryText);
+
+        return this._pgPool.query(queryText, [option.ContactID,
+        option.NotifiID,
+        ])
+            .then(result => {
+                return null;
+            });
+    }
+    public Update(option): Promise<UpdateData> {
+        let queryText = 'UPDATE test."n_Notifications" SET "TrangThaiGoi"=$1 WHERE "NotifiID"=$2;';
+
+        console.info('Excute: ' + queryText);
+
+        return this._pgPool.query(queryText, [option.Trangthai,option.NotifiID])
             .then(result => {
                 return null;
             });
@@ -121,6 +143,32 @@ export class NotifiRepo extends RepoBase {
                 return null;
             });
 
+    }
+    public getSentUser(option):Promise<SentUser[]>{
+        let queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook" FROM test."Contacts" A,test."n_Notifications" B WHERE Array[A."ContactID"] @> B."Send_User" OR A."Contact_Tag" && B."Send_Tag"';
+
+        console.info('Excute: ' + queryText);
+        let pResult;
+        if (option.NotifiID == undefined) {
+            pResult = this._pgPool.query(queryText)
+        }
+        return pResult.then(result => {
+            let sents: SentUser[] = result.rows.map(r => {
+                let sent = new SentUser();
+                sent.NotifiID=r.NotifiID;
+                sent.ContactID = r.ContactID;
+                sent.TaiKhoan = r.TaiKhoan;
+                sent.Device = r.Device;
+                sent.Email = r.Email;
+                sent.FaceBook = r.FaceBook;
+                return sent;
+            });
+            return sents;
+        })
+            .catch(err => {
+                console.error(err.message);
+                return null;
+            });
     }
 
     public getOneNoti(option): Promise<Notifi> {

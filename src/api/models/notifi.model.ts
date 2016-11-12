@@ -18,3 +18,24 @@ export class SLSend{
     NotifiID:number;
     count:number;
 }
+export class SentUser{
+    NotifiID:number;
+    ContactID: number;
+    TaiKhoan: string;
+    Device: string;
+    Email: string;
+    FaceBook: string;
+}
+export class UpdateData{
+    NotifiID:number;
+    Trangthai:number;
+}
+export class InsertUser{
+    NotifiID:number;
+    ContactID: number;
+    TrangThai:number;
+    ThoiGianCanGoi:string;
+    LogLoi:string;
+    SoLanGoi:number;
+    ThoiGianDaGoi:string;
+}

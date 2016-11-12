@@ -27,11 +27,16 @@ export class NotifiRouter {
             .post(this.Create)
         // .delete(this.deleteAContact);
         this.router.route("/notifigetone")
-        .get(this.getAllNoti);
+        .get(this.getAllNoti)
+        .post(this.Update);
 
         this.router.route("/sl")
         .get(this.getSL);
 
+        this.router.route("/sentuser")
+        .get(this.getSentUser)
+        .post(this.Insert)
+        
         return this.router;
     }
 
@@ -45,7 +50,27 @@ export class NotifiRouter {
                 res.status(500).send(error.message)
             });
     }
-
+    
+    private Update = (req: Request, res: Response) => {
+        this.notifiRepo.Update(req.body)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            });
+    }
+    private Insert = (req: Request, res: Response) => {
+        this.notifiRepo.Insert(req.body)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            });
+    }
     private getAllNoti = (req: Request, res: Response) => {
         this.notifiRepo.getAllNoti(req.body)
             .then(result => {
@@ -69,6 +94,16 @@ export class NotifiRouter {
     }
     private getSL = (req: Request, res: Response) => {
         this.notifiRepo.getSL(req.body)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            });
+    }
+    private getSentUser = (req: Request, res: Response) => {
+        this.notifiRepo.getSentUser(req.body)
             .then(result => {
                 res.status(200).json(result)
             })

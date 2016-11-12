@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response,Request } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { Notifi,SLSend } from './notifi.model';
+import { Notifi,SLSend,SentUser,UpdateData,InsertUser } from './notifi.model';
 
 @Injectable()
 export class NotifiService {
@@ -14,6 +14,18 @@ export class NotifiService {
         return this._http.post('/api/notifi',req)
             .toPromise()
             .then(response => response.json() as Notifi[])
+            .catch(this.handleError);
+    }
+    Update(req):Promise<UpdateData>{
+        return this._http.post('/api/notifigetone',req)
+            .toPromise()
+            .then(response => response.json() as UpdateData)
+            .catch(this.handleError);
+    }
+    Insert(req): Promise<InsertUser> {
+        return this._http.post('/api/sentuser',req)
+            .toPromise()
+            .then(response => response.json() as InsertUser)
             .catch(this.handleError);
     }
     getLastNotifi(): Promise<Notifi> {
@@ -43,6 +55,17 @@ export class NotifiService {
     getSL(id): Promise<SLSend> {
         return this.getAllSL()
             .then(slsend => slsend.find(p => p.NotifiID === id))
+            .catch(this.handleError);
+    }
+    getSend():Promise<SentUser[]>{
+        return this._http.get('/api/sentuser')
+            .toPromise()
+            .then(response => response.json() as SentUser[])
+            .catch(this.handleError);
+    }
+    getSendUser(id):Promise<SentUser[]>{
+        return this.getSend()
+            .then(slsend => slsend.filter(p => p.NotifiID === id))
             .catch(this.handleError);
     }
     private handleError(error: Error): Promise<any> {

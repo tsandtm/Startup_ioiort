@@ -1,4 +1,4 @@
-    <div class="container" *ngIf='notifi && sl'>
+    <div class="container" *ngIf='notifi && sl && sentUser'>
 		<h3>Confirm and Test</h3>
 		<hr/>
 		<div class="container">
@@ -21,7 +21,8 @@
 				<hr />
 				<div>
 					Số lượng user:{{sl.count}}
-					<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+          				<span class="glyphicon glyphicon-list"></span></button>
 						<!-- Modal -->
 						<div id="myModal" class="modal fade" role="dialog">
 						<div class="modal-dialog">
@@ -30,10 +31,29 @@
 							<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title">Modal Header</h4>
+								<h4 class="modal-title">List Sent User</h4>
 							</div>
 							<div class="modal-body">
-								<p>Some text in the modal.</p>
+								<table class="table">
+									<thead>
+									<tr>
+										<th>ContactID</th>
+										<th>Tài Khoản</th>
+										<th>Device</th>
+										<th>Email</th>
+										<th>FaceBook</th>
+									</tr>
+									</thead>
+									<tbody>
+									<tr *ngFor='let item of sentUser'>
+										<td>{{item.ContactID}}</td>
+										<td>{{item.TaiKhoan}}</td>
+										<td>{{item.Device}}</td>
+										<td>{{item.Email}}</td>
+										<td>{{item.FaceBook}}</td>
+									</tr>
+									</tbody>
+								</table>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -42,9 +62,9 @@
 
 						</div>
 						</div>
-					<p>
+					<p><br/>
 					Ngày gửi:{{notifi.Thoigiangui| date:'dd/MM/yyyy HH:mm:ss' }}<br/><br/>
-					Độ ưu tiên:{{notifi.DoUuTien}}<br/><br/>
+					Độ ưu tiên:{{Douutien}}<br/><br/>
 					Thời hạn:{{notifi.ThoiHan| date:'dd/MM/yyyy HH:mm:ss'}}<br/><br/>
 					</p>
 					<form class="form-inline" style="margin-top:180px">
@@ -59,7 +79,7 @@
 				</div>
 				<div style="float:right">
 				<button type="submit" class="btn btn-success" (click)='SaveAsDraft()'>Save As Draft</button>
-				<button type="submit" class="btn btn-success">Finish</button>
+				<button type="submit" class="btn btn-success" (click)='Finish()'>Finish</button>
 				</div>
 			</div>
 		</div>
