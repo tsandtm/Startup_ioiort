@@ -1,0 +1,37 @@
+<div class='panel panel-primary' >
+    <div class='panel-heading' style='font-size:large'>
+        {{pageTitle + ': ' + user.UserName }}
+    </div>
+    <div class='panel-body'>
+        <div class='row'>
+            <div class='col-md-6'>
+                <div class='row'>
+                    <div class='col-md-3'>IDUser:</div>
+                    <div class='col-md-6'>{{ user.IDUser }}</div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-3'>UserName:</div>
+                    <div class='col-md-6'>{{ user.UserName }}</div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-3'>Facebook:</div>
+                    <div class='col-md-6'>{{ user.Facebook }}</div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-3'>Phone:</div>
+                    <div class='col-md-6'>{{ user.PhoneNumber }}</div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-3'>Email:</div>
+                    <div class='col-md-6'>{{user.Email}}</div>
+                </div>                
+            </div>
+        </div>
+    </div>
+
+    <div class='panel-footer'>
+        <a class='btn btn-default' (click)='onBack()' style='width:80px'>
+            <i class='glyphicon glyphicon-chevron-left'></i> Back
+        </a>
+    </div>
+</div>

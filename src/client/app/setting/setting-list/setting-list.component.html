@@ -1,0 +1,56 @@
+<div class='panel panel-primary'>
+    <div class='panel-heading'>
+        {{pageTitle}}
+    </div>
+
+    <!-- Filter the Products   -->
+    <div class='panel-body'>
+        <div class='row'>
+            <div class='col-md-2'>Filter by:</div>
+            <div class='col-md-4'>
+                <input type='text' [(ngModel)]='listFilter' />
+            </div>
+        </div>
+        <div class='row' *ngIf='listFilter'>
+            <div class='col-md-6'>
+                <h3>Filtered by: {{listFilter}} </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-md-6'>
+                <a class="btn btn-primary" [routerLink]="['/create']">Thêm mới</a>
+            </div>            
+        </div>
+        <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+
+        <div class='table-responsive'>
+            <table class="table" *ngIf='setting && setting.length'>
+                <thead>
+                    <tr>
+                        <th>App Id</th>
+                        <th>Api key</th>
+                        <th>App name</th>
+                        <th>Trạng thái</th>   
+                        <th>Ngày tạo</th>                     
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let set of setting '> 
+                        <td>{{ set.appid }}                          
+                        </td>
+                        <td>{{ set.apikey }}</td>
+                        <td>{{ set.appname }}</td>      
+                        <td>{{ set.trangthai }}</td>
+                        <td>{{ set.ngaytao }}</td>                  
+                        <td>
+                            <a [routerLink]="['/detail', set.servername]">Chi tiết</a>
+                            <a [routerLink]="['/edit',set.servername]">Sửa</a>
+                            <a (click)='Delete(set)'>Xóa</a>
+                        </td>
+                    </tr>    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -16,6 +16,7 @@ export class BookRepo extends RepoBase {
 
         if (option) {
             pResult = this._pgPool.query(queryText, [option.id, option.name])
+            console.log(option.id);
         } else {
             pResult = this._pgPool.query(queryText)
         }
