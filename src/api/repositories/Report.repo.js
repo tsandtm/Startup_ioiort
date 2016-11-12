@@ -6,6 +6,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var repositories_base_1 = require('./repositories.base');
 var Report_model_1 = require('../models/Report.model');
+var Report_model_2 = require('../models/Report.model');
 var ReportRepo = (function (_super) {
     __extends(ReportRepo, _super);
     function ReportRepo() {
@@ -28,12 +29,12 @@ var ReportRepo = (function (_super) {
             var listDevices = new Array();
             var report;
             var listDevice = result.rows.map(function (r) {
-                report = new Report_model_1.Report();
+                report = new Report_model_2.Report();
                 if (flag != r.date) {
                     index++;
-                    console.log(r.date);
+                    var xx = new Report_model_1.ListDevice();
+                    listDevices.push(xx);
                     listDevices[index].date = r.date;
-                    console.log(listDevices);
                     flag = r.date;
                 }
                 report.name = r.Device;
@@ -42,9 +43,9 @@ var ReportRepo = (function (_super) {
                 // listDevices.listdevice.push(report);               
                 // listDevices.listdevice[index] = list;
                 // console.log(listDevices);
-                return listDevices;
+                // return listDevices;
             });
-            return listDevice;
+            return listDevices;
         })
             .catch(function (err) {
             console.error(err.message);

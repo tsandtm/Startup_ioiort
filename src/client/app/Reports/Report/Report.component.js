@@ -14,6 +14,9 @@ var Report_service_1 = require('../Shared/Report.service');
 var BarChartDemoComponent = (function () {
     function BarChartDemoComponent(reportService) {
         this.reportService = reportService;
+        this.datasets = [];
+        this.b = [];
+        this.c = [];
         this.barChartOptions = {
             scaleShowVerticalLines: false,
             responsive: true
@@ -26,8 +29,7 @@ var BarChartDemoComponent = (function () {
         this.barChartData = [
             // {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
             // {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
-            { data: [], label: '' },
-            { data: [], label: 'Series B' }
+            { data: [], label: '' }
         ];
         // Doughnut
         this.doughnutChartLabels = [];
@@ -43,22 +45,53 @@ var BarChartDemoComponent = (function () {
         this.reportService.getDevice().then(function (result) {
             _this.listDevice = result;
             _this.barChartLabels = _this.getmonthlabel();
-            _this.barChartData = [{ data: _this.getcountdevice(), label: _this.getlistname() }];
-            _this.doughnutChartLabels = _this.getlistname();
-            _this.doughnutChartData = _this.getcountdevice();
-            _this.doughnutChartLabels = _this.getmonthlabel();
+            _this.createDataSets();
+            _this.barChartData = _this.datasets;
+            _this.createLabelsDoughnut();
+            console.log(_this.b + "abc" + _this.c);
+            _this.doughnutChartData = _this.c;
+            _this.doughnutChartLabels = _this.b;
         });
+    };
+    BarChartDemoComponent.prototype.createDataSets = function () {
+        var _this = this;
+        this.listDevice.forEach(function (ld) {
+            ld.listdevice.forEach(function (d) {
+                var index = _this.checkIfLabelExists(d.name);
+                if (index === -1) {
+                    _this.datasets.push({ data: [d.count], label: d.name });
+                }
+                else {
+                    _this.datasets[index].data.push(d.count);
+                }
+            });
+        });
+    };
+    BarChartDemoComponent.prototype.createLabelsDoughnut = function () {
+        var _this = this;
+        this.listDevice.forEach(function (ld) {
+            ld.listdevice.forEach(function (d) {
+                var index = _this.checkIfLabelExists(d.name);
+                if (index === -1) {
+                    //   this.datasets.push({ data: [d.count], label: d.name });
+                    // } else {
+                    //   this.datasets[index].data.push(d.count);
+                    _this.b.push(d.name);
+                    _this.c.push(d.count);
+                }
+            });
+        });
+    };
+    BarChartDemoComponent.prototype.checkIfLabelExists = function (label) {
+        if (this.datasets.length === 0)
+            return -1;
+        return this.datasets.findIndex(function (d) { return d.label === label; });
     };
     BarChartDemoComponent.prototype.getmonthlabel = function () {
         var a = [];
-        var flag = "";
-        var i;
         this.listDevice.forEach(function (r) {
             //  console.log(JSON.stringify(r.date));
-            if (flag != r.date) {
-                flag = r.date;
-                a.push(r.date);
-            }
+            a.push(r.date);
         });
         return a;
     };
@@ -71,19 +104,7 @@ var BarChartDemoComponent = (function () {
                 c.push(result.name);
             });
         });
-        return c;
-    };
-    BarChartDemoComponent.prototype.getcountdevice = function () {
-        var b = [];
-        var c = [];
-        this.listDevice.forEach(function (r) {
-            b = r.listdevice;
-            console.log(JSON.stringify(b));
-        });
-        b.forEach(function (result) {
-            console.log("cccc" + JSON.stringify(result.count));
-            c.push(result.count);
-        });
+        console.log(c);
         return c;
     };
     BarChartDemoComponent.prototype.ngOnInit = function () {

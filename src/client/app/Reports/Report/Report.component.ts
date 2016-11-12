@@ -31,9 +31,9 @@ export class BarChartDemoComponent {
       this.barChartLabels = this.getmonthlabel();
       this.createDataSets();
       this.barChartData = this.datasets;
-      //  this.doughnutChartLabels = this.getlistname();
-      this.doughnutChartData = this.getcountdevice();
-      this.doughnutChartLabels = this.getmonthlabel();
+      console.log(JSON.stringify(this.getdatadonoughnut()))
+      this.doughnutChartData = this.getdatadonoughnut();
+      this.doughnutChartLabels = this.getlabeldonoughnut();
     });
   }
 
@@ -49,55 +49,38 @@ export class BarChartDemoComponent {
       })
     })
   }
+
+
   checkIfLabelExists(label): number {
     if (this.datasets.length === 0)
       return -1;
     return this.datasets.findIndex(d => d.label === label);
   }
-  // private datasets = [
-  //   {
-  //     data: this.getcountdevice(),
-  //     label: this.getlistname()
-  //   }
-  // ];
+
   getmonthlabel() {
     let a: string[] = [];
     this.listDevice.forEach(r => {
       //  console.log(JSON.stringify(r.date));
       a.push(r.date)
-
     })
     return a;
   }
 
- 
-  getlistname() {
-    let b: Array<Report> = [];
-    let c: string[] = [];
-    this.listDevice.forEach(r => {
-      b = r.listdevice;
-      b.forEach(result => {
-        c.push(result.name);
-      })
+  getlabeldonoughnut() {
+    let a: string[] = [];
+    this.datasets.forEach(r => {
+      a.push(r.label)
     })
-    console.log(c);
-    return c;
+    return a;
+  }
+  getdatadonoughnut() {
+    let a: number[] = [];
+    this.datasets.forEach(r => {
+      a.push(r.data)
+    })
+    return a;
   }
 
-  getcountdevice() {
-    let b: Array<Report> = [];
-    let c: number[] = [];
-    this.listDevice.forEach(r => {
-      b = r.listdevice;
-      console.log(JSON.stringify(b));
-    })
-    b.forEach(result => {
-      console.log("cccc" + JSON.stringify(result.count));
-      c.push(result.count);
-    })
-    console.log(c)
-    return c;
-  }
 
   ngOnInit(): void {
     this.loadGetAll();
@@ -117,7 +100,6 @@ export class BarChartDemoComponent {
   public barChartData: any[] = [
     // {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
     // {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
-    { data: [], label: '' },
     { data: [], label: '' }
   ];
 
