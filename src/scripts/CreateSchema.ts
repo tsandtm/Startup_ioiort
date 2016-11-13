@@ -5,7 +5,7 @@ let env = process.env.NODE_ENV || 'development';
 let config = require(path.join(__dirname,'..','config','database.config.json'))[env];
 
 
-var connectString = ('postgres://' + config.username + ':' + config.password + '@' + config.host + '/' + config.database);
+var connectString = ('postgres://' + config.username + ':' + config.password + '@' + config.host + '/postgres');
 pg.connect(connectString, (err,client,done) => {
     if(err){
         console.error(err.message)
@@ -16,11 +16,9 @@ pg.connect(connectString, (err,client,done) => {
     client.query('CREATE SCHEMA IF NOT EXISTS ' + config.schema)
         .then(() => {
             console.log('Created schema ' + config.schema)
-            client.end();
         })
         .catch(err => {
             console.error(err.message);
             done(err);
-            client.end();
         })
 })

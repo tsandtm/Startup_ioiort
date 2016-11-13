@@ -1,0 +1,58 @@
+<div *ngIf='notifications'>
+    <!--<div class='panel-heading' style='font-size:large; text-align:center'>
+       <h1>{{pageTitle + ' ' + notifications.TieuDe}}</h1>
+    </div>-->
+    <div class="col-md-6">
+        <img src="/assets/images/pushssh.png" width="300px" height="auto"/>
+        <div style="position: absolute;top: 240px;left: 45px;width: 270px;color: white;">
+						<div style="width: 220px;margin-left: 10px;margin-top: -26px;word-wrap: break-word;">
+						<span class="glyphicon glyphicon-envelope"></span>
+							<p style="color:white;display: inline;letter-spacing: 1px;font-size:12px">{{notifications.TieuDe}}</p><br/>
+							<p style="opacity: 0.5;display: inline;letter-spacing: 1px;font-size:11px">{{notifications.ThoiGianGui}}</p>
+							<div >
+								<p style="color:white;margin: 0px;font-size:12px;letter-spacing: 1px;">{{notifications.NoiDung}}</p>
+								<!--<p style="opacity: 0.5;font-size:11px">slide to view</p>-->
+								</div>
+							</div>
+					</div>
+        </div>
+    <div class='col-md-6'>
+         <div class='row'>
+            <div class='col-md-3'>Tiêu đề:</div>
+            <div class='col-md-6'>{{notifications.TieuDe}}</div>
+             <a><i class="fa fa-external-link fa-6" style="font-size:30px" aria-hidden="true"></i></a>
+         </div><br/> 
+        <div class='row'>
+             <div class='col-md-3'>Nội dung:</div>
+             <div class='col-md-6'>{{notifications.NoiDung}}</div>
+        </div><br/> 
+         <div class='row'>
+            <div class='col-md-3'>Số Lượng:</div>
+            <div class='col-md-6'>{{notifications.SoLuong}}</div>
+        </div><br/>  
+        <div class='row'>
+            <div class='col-md-3'>Thời gian gửi:</div>
+            <div class='col-md-6'>{{notifications.ThoiGianGui}}</div>
+        </div><br/>
+        <div class='row'>
+            <div class='col-md-3'>Độ ưu tiên:</div>
+            <div class='col-md-6'>{{notifications.DoUuTien}}</div>
+        </div><br/> 
+        <div class='row'>
+            <div class='col-md-3'>Thời hạn tối đa:</div>
+        <div class='col-md-6'>{{notifications.ThoiHanToiDa}}</div>
+        </div><br/> 
+        <!--<a class='btn btn-default' (click)='onBack()' style='width:100px'>
+         <i class="fa fa-reply" aria-hidden="true"></i> Quay lại
+    </a>-->
+    </div>  
+</div> 
+<!--<div class='col-md-4'>
+    <a><i class="fa fa-external-link fa-6" style="font-size:50px" aria-hidden="true"></i></a>
+    </div>-->
+<br/><br/>        
+<div class='col-md-8'style="margin-left:900px">
+    <a class='btn btn-default' (click)='onBack()' style='width:100px'>
+    <i class="fa fa-reply" aria-hidden="true"></i> Quay lại
+    </a>
+</div>

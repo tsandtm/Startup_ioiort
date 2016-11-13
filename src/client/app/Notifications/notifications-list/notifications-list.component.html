@@ -1,0 +1,73 @@
+<div class='panel panel-primary'>
+    <div class='panel-heading'>
+        Notification
+    </div>
+
+    <!-- Filter the Products   -->
+    <div class='panel-body'>
+        <div class='row'>
+            <div class='col-md-2'>Tìm kiếm:</div>
+            <div class='col-md-4'>
+                <input type='text' [(ngModel)]='listFilter'/>
+            </div>           
+            <input type="date"> <i class="fa fa-calendar" aria-hidden="true"></i>             
+            <button style="float:right; margin-right:10px" type="button">New Mesenger</button>
+        </div>
+        <div class='row' *ngIf='listFilter'>
+            <div class='col-md-6'>
+                <h3>Filtered by: {{ listFilter }}</h3>
+            </div>
+        </div>
+
+
+
+        <div class='table-responsive'>
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th>Tiêu Đề</th>
+                        <th>Trạng thái</th>
+                        <th>Thời gian gửi</th>
+                        <th>Số lượng User</th>
+                        <th>Thời hạn tối đa</th>
+                        <th>Tùy chỉnh<th>
+                    </tr>
+                </thead>
+                <tbody>
+            <tr *ngFor='let notification of notifications | paginate: {itemsPerPage: 5, currentPage: p} | notificationFilter:listFilter'>
+                <td>{{notification.TieuDe | lowercase}}</td>
+                <td>{{notification.TrangThaiGoi}}</td>
+                <td>{{notification.ThoiGianGui | date:"dd/MM/yyyy"}}</td>
+                <td>{{notification.SoLuong}}</td>
+                <td>{{notification.ThoiHanToiDa | date:"dd/MM/yyyy"}}</td>
+                <td *ngIf='notification.TrangThaiGoi == 1'>
+                    <a [routerLink]="['/notification-detail',notification.id]"><button><i class="fa fa-eye" aria-hidden="true"></i></button></a></td>
+                <td *ngIf='notification.TrangThaiGoi == 2'>
+                    <a [routerLink]="['/notification-detailedit',notification.id]"><button><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a></td>
+            </tr>
+        </tbody>
+            </table>
+            <pagination-template #pagination="paginationApi" (pageChange)="p = $event">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li [class.disabled]="pagination.isFirstPage()">
+                            <a aria-label="Previous" (click)="pagination.previous()" href="javascript:;" *ngIf="!pagination.isFirstPage()">
+                                <span>&laquo;</span>
+                            </a>
+                        </li>
+                        <li *ngFor="let page of pagination.pages" [class.active]="pagination.getCurrent() == page.value">
+                            <a (click)="pagination.setCurrent(page.value)" href="javascript:;">
+                                {{page.label}}
+                            </a>
+                         </li>
+                         <li [class.disabled]="pagination.isLastPage()" *ngIf="pagination.directionLinks">
+                             <a aria-label="Next" href="javascript:;" (click)="pagination.next()" *ngIf="!pagination.isLastPage()">
+                                 <span>&raquo;</span>
+                             </a>
+                         </li>
+                    </ul>
+                 </nav>
+            </pagination-template>
+        </div>
+    </div>
+</div>
