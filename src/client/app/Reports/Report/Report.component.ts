@@ -171,7 +171,7 @@ export class BarChartDemoComponent {
       .then(() => {
         for (let i = 0; i < this.ArrayReport.length; i++) {
           if (flag != this.ArrayReport[i].name) {
-            this.c[i] = Math.floor((parseInt(this.ArrayReport[i].count.toString()) / this.testto) * 100)+"   " + "thiết bị "+this.ArrayReport[i].name;         
+            this.c[i] = Math.floor((parseInt(this.ArrayReport[i].count.toString()) / this.testto) * 100)+"%   " + "thiết bị "+this.ArrayReport[i].name;         
           }
         }
       });
