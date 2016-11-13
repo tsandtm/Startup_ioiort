@@ -122,7 +122,30 @@ export class NotifiRepo extends RepoBase {
     }
 
     public getSL(option):Promise<SLSend[]>{
-        let queryText = 'SELECT "NotifiID",COUNT(*) FROM test."Contacts" A,test."n_Notifications" B WHERE Array[A."ContactID"] @> B."Send_User" OR A."Contact_Tag" && B."Send_Tag" Group by "NotifiID"';
+        let queryText = 'SELECT "NotifiID",COUNT(*) FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_User" OR A."Contact_Tag" && B."Send_Tag") AND (Array[A."ContactID"] && B."Send_UserDenie" OR A."Contact_Tag" && B."Send_TagDenie") = false GROUP BY "NotifiID"';
+
+        console.info('Excute: ' + queryText);
+        let pResult;
+        if (option.NotifiID == undefined) {
+            pResult = this._pgPool.query(queryText)
+        }
+        return pResult.then(result => {
+            let slsends: SLSend[] = result.rows.map(r => {
+                let slsend = new SLSend();
+                slsend.NotifiID = r.NotifiID;
+                slsend.count = r.count;
+                return slsend;
+            });
+            return slsends;
+        })
+            .catch(err => {
+                console.error(err.message);
+                return null;
+            });
+
+    }
+    public getSLDenied(option):Promise<SLSend[]>{
+        let queryText = 'SELECT "NotifiID",COUNT(*) FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserDenie" OR A."Contact_Tag" && B."Send_TagDenie") = false GROUP BY "NotifiID"';
 
         console.info('Excute: ' + queryText);
         let pResult;
@@ -145,7 +168,33 @@ export class NotifiRepo extends RepoBase {
 
     }
     public getSentUser(option):Promise<SentUser[]>{
-        let queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook" FROM test."Contacts" A,test."n_Notifications" B WHERE Array[A."ContactID"] @> B."Send_User" OR A."Contact_Tag" && B."Send_Tag"';
+        let queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook" FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_User" OR A."Contact_Tag" && B."Send_Tag") AND (Array[A."ContactID"] && B."Send_UserDenie" OR A."Contact_Tag" && B."Send_TagDenie") = false';
+
+        console.info('Excute: ' + queryText);
+        let pResult;
+        if (option.NotifiID == undefined) {
+            pResult = this._pgPool.query(queryText)
+        }
+        return pResult.then(result => {
+            let sents: SentUser[] = result.rows.map(r => {
+                let sent = new SentUser();
+                sent.NotifiID=r.NotifiID;
+                sent.ContactID = r.ContactID;
+                sent.TaiKhoan = r.TaiKhoan;
+                sent.Device = r.Device;
+                sent.Email = r.Email;
+                sent.FaceBook = r.FaceBook;
+                return sent;
+            });
+            return sents;
+        })
+            .catch(err => {
+                console.error(err.message);
+                return null;
+            });
+    }
+    public getSentUserDenied(option):Promise<SentUser[]>{
+        let queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook" FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserDenie" OR A."Contact_Tag" && B."Send_TagDenie") = false';
 
         console.info('Excute: ' + queryText);
         let pResult;

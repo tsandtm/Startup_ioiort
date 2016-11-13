@@ -27,14 +27,21 @@ export class ConfirmComponent implements OnInit {
     ngOnInit() {
         this._route.params.forEach((params: Params) => {
             let id = +params["id"];
-            this.getNotifi(id);
-            this.getSL(id);
-            this.getSentUser(id);
+            this.getNotifi(id).then(result=>{
+            if(this.notifi.SendTag.length==0 && this.notifi.SendUser.length==0){
+                this.getSLDenied(id);
+                this.getSentUserDenied(id);
+            }
+            else{
+                this.getSL(id);
+                this.getSentUser(id);
+            }
+            });
         })
     }
 
-    getNotifi(id: number) {
-        this.notifiservice.getOne(id)
+    getNotifi(id: number):Promise<void> {
+        return this.notifiservice.getOne(id)
             .then(notifi => {
                 this.notifi = notifi;
                 if(this.notifi.DoUuTien==1){
@@ -52,6 +59,17 @@ export class ConfirmComponent implements OnInit {
     }
     getSL(id:number){
         this.notifiservice.getSL(id)
+        .then(sl=>{
+            this.sl=sl
+        })
+    }
+    getSentUserDenied(id: number) {
+        this.notifiservice.getSendUserDenied(id)
+            .then(sent => {
+            this.sentUser = sent})
+    }
+    getSLDenied(id:number){
+        this.notifiservice.getSLDenied(id)
         .then(sl=>{
             this.sl=sl
         })

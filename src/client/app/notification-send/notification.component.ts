@@ -103,28 +103,26 @@ export class NotifiSendComponent implements OnInit{
         var num=item.slice(0,pos);
         this.delPos(this.listIDContact,parseInt(num));
     }
-    // public TagDeniedAdded(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.listIDTag.push(parseInt(num));
-    // }
-    // public TagDeniedRemoved(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.delPos(this.listIDTag,parseInt(num));
-    // }
-    // public ContactDeniedAdded(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.listIDContact.push(parseInt(num));
-    //     console.log(this.listIDContact.toString());
-    // }
-    // public ContactDeniedRemoved(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.delPos(this.listIDContact,parseInt(num));
-    //     console.log(this.listIDContact.toString());
-    // }
+    public TagDeniedAdded(item:string) {
+        var pos=item.indexOf('.');
+        var num=item.slice(0,pos);
+        this.listIDTagDenied.push(parseInt(num));
+    }
+    public TagDeniedRemoved(item:string) {
+        var pos=item.indexOf('.');
+        var num=item.slice(0,pos);
+        this.delPos(this.listIDTagDenied,parseInt(num));
+    }
+    public ContactDeniedAdded(item:string) {
+        var pos=item.indexOf('.');
+        var num=item.slice(0,pos);
+        this.listIDContactDenied.push(parseInt(num));
+    }
+    public ContactDeniedRemoved(item:string) {
+        var pos=item.indexOf('.');
+        var num=item.slice(0,pos);
+        this.delPos(this.listIDContactDenied,parseInt(num));
+    }
     delPos(ar:Array<number>,key:number){
         for(var i=0;i<=ar.length;i++){
             if(ar[i]==key){
