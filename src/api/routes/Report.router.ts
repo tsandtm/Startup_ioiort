@@ -21,7 +21,8 @@ export class ReportRouter {
 
         this.router.route('/Report')
             .get(this.getAllReport)
-         
+        this.router.route('/ReportDevice')
+            .get(this.getAllforDougnut)
         // .post(this.createAContact)
         // .delete(this.deleteAContact);
 
@@ -29,9 +30,25 @@ export class ReportRouter {
     }
 
     private getAllReport = (req: Request, res: Response) => {
-        let option = { Contact_Tag: req.query.Contact_Tag };
+        let my: string = req.query.Date;
+        let option;
+        if (my != null) {
+            let arraymy = my.split(";");
+            console.log('end split');
+            let month: string;
+            let year: string;
+            if (arraymy.length == 1) {
+                year = arraymy[0];
+            } else {
+                month = arraymy[0];
+                year = arraymy[1];
+            }
+            option = { month: month, year: year };
+        } else {
+            option = {};
+        }
 
-        
+        console.log(option);
 
         this.reportRepo.getList(option)
             .then(result => {
@@ -43,9 +60,17 @@ export class ReportRouter {
                 res.status(500).send(error.message)
             })
     }
-
-
-
+    private getAllforDougnut = (req: Request, res: Response) => {
+        this.reportRepo.getAlldougnut()
+            .then(result => {
+                res.status(200).json(result)
+                console.log(result);
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            })
+    }
 
     // private createAContact = (req, res) => {
     //     res.send('created')

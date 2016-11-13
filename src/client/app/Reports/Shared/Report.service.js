@@ -25,6 +25,19 @@ var ReportService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
+    //co tham so
+    ReportService.prototype.getDevicebydate = function (month) {
+        return this._http.get('/api/Report?Date=' + month)
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    ReportService.prototype.getAllDeviceforDougnut = function () {
+        return this._http.get('/api/ReportDevice')
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
     // getProduct(id: number): Promise<Product> {
     //     // return this.getProducts()
     //     //     .map((products: Product[]) => products.find(p => p.productId === id))

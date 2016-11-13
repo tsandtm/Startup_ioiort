@@ -19,6 +19,7 @@ const appRoutes: Route[] = [
     { path: 'products', component: ProductListComponent },
     { path: 'product/:id', component: ProductDetailComponent},
     { path: 'Contacts', component: ContactListComponent },
+    { path: 'Reports', component: BarChartDemoComponent },
     { path: 'Reports', component: BarChartDemoComponent }
 ]
 

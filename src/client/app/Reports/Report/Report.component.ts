@@ -16,6 +16,7 @@ export class BarChartDemoComponent {
   Reports: Report[];
   filter: string;
   datasets = [];
+  ArrayReport: Report[];
   constructor(private reportService: ReportService) {
 
   }
@@ -27,13 +28,20 @@ export class BarChartDemoComponent {
   loadGetAll() {
     this.reportService.getDevice().then((result) => {
       this.listDevice = result;
-
       this.barChartLabels = this.getmonthlabel();
       this.createDataSets();
       this.barChartData = this.datasets;
-      console.log(JSON.stringify(this.getdatadonoughnut()))
+
+    });
+  }
+  loadgetdougnut() {
+    this.reportService.getAllDeviceforDougnut().then((result) => {
+      this.Reports = result;
+      this.createDataSets();
       this.doughnutChartData = this.getdatadonoughnut();
       this.doughnutChartLabels = this.getlabeldonoughnut();
+      this.gettotal();
+      this.getpercent();
     });
   }
 
@@ -57,6 +65,52 @@ export class BarChartDemoComponent {
     return this.datasets.findIndex(d => d.label === label);
   }
 
+  getdatabymonth(id: number) {
+    let date = new Date();
+    let month = date.getMonth();
+    let year = date.getFullYear();
+    let my: string = month + ";" + year;
+    console.log(month);
+    console.log(year);
+    console.log(my);
+
+    if (id == 1) {
+      month = date.getMonth();
+      year = date.getFullYear();
+      my = month + ";" + year;
+      console.log(my);
+      this.reportService.getDevicebydate(my).then((result) => {
+        this.listDevice = result;
+        this.barChartLabels = this.getmonthlabel();
+        this.createDataSets();
+        this.barChartData = this.datasets;
+      }).catch((error) => {
+        console.log("error");
+      });
+    }
+    else if (id == 2) {
+      month = date.getMonth() +1;
+      year = date.getFullYear();
+      my = month + ";" + year;
+      console.log(my);
+      this.reportService.getDevicebydate(my).then((result) => {
+        this.listDevice = result;
+        this.barChartLabels = this.getmonthlabel();
+        this.createDataSets();
+        this.barChartData = this.datasets;
+      }).catch((error) => {
+        console.log("error");
+      });
+    } else {
+      this.reportService.getDevice().then((result) => {
+        this.listDevice = result;
+        this.barChartLabels = this.getmonthlabel();
+        this.createDataSets();
+        this.barChartData = this.datasets;
+      });
+    }
+  }
+
   getmonthlabel() {
     let a: string[] = [];
     this.listDevice.forEach(r => {
@@ -68,22 +122,63 @@ export class BarChartDemoComponent {
 
   getlabeldonoughnut() {
     let a: string[] = [];
-    this.datasets.forEach(r => {
-      a.push(r.label)
+    this.Reports.forEach(r => {
+      a.push(r.name)
     })
     return a;
   }
   getdatadonoughnut() {
     let a: number[] = [];
-    this.datasets.forEach(r => {
-      a.push(r.data)
+    this.Reports.forEach(r => {
+      a.push(r.count)
     })
     return a;
   }
 
 
+  loadAllDeviceforDougnut(): Promise<Report[]> {
+    return this.reportService.getAllDeviceforDougnut()
+      .then((response) => {
+        this.ArrayReport = response;
+        return this.ArrayReport;
+      })
+      .catch((error) => {
+        console.log(error)
+        return error;
+      });
+  }
+
+  testto: number = 0;
+  a: number[] = [];
+  b:string[] = [];
+  c=[];
+  gettotal() {
+
+    console.log('gettotal: ');
+
+    // let tong: number;
+    this.loadAllDeviceforDougnut()
+      .then(() => {
+        for (let i = 0; i < this.ArrayReport.length; i++) {
+          this.testto += parseInt(this.ArrayReport[i].count.toString());
+        }
+      });
+  }
+  getpercent() {
+    let index;
+    let flag = "";
+    this.loadAllDeviceforDougnut()
+      .then(() => {
+        for (let i = 0; i < this.ArrayReport.length; i++) {
+          if (flag != this.ArrayReport[i].name) {
+            this.c[i] = Math.floor((parseInt(this.ArrayReport[i].count.toString()) / this.testto) * 100)+"   " + "thiết bị "+this.ArrayReport[i].name;         
+          }
+        }
+      });
+  }
   ngOnInit(): void {
     this.loadGetAll();
+    this.loadgetdougnut();
   }
 
   public barChartOptions: any = {

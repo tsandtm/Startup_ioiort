@@ -7,8 +7,38 @@ var ReportRouter = (function () {
     function ReportRouter() {
         var _this = this;
         this.getAllReport = function (req, res) {
-            var option = { Contact_Tag: req.query.Contact_Tag };
+            var my = req.query.Date;
+            var option;
+            if (my != null) {
+                var arraymy = my.split(";");
+                console.log('end split');
+                var month = void 0;
+                var year = void 0;
+                if (arraymy.length == 1) {
+                    year = arraymy[0];
+                }
+                else {
+                    month = arraymy[0];
+                    year = arraymy[1];
+                }
+                option = { month: month, year: year };
+            }
+            else {
+                option = {};
+            }
+            console.log(option);
             _this.reportRepo.getList(option)
+                .then(function (result) {
+                res.status(200).json(result);
+                console.log(result);
+            })
+                .catch(function (error) {
+                console.error(error.message);
+                res.status(500).send(error.message);
+            });
+        };
+        this.getAllforDougnut = function (req, res) {
+            _this.reportRepo.getAlldougnut()
                 .then(function (result) {
                 res.status(200).json(result);
                 console.log(result);
@@ -24,6 +54,8 @@ var ReportRouter = (function () {
     ReportRouter.prototype.getRouter = function () {
         this.router.route('/Report')
             .get(this.getAllReport);
+        this.router.route('/ReportDevice')
+            .get(this.getAllforDougnut);
         // .post(this.createAContact)
         // .delete(this.deleteAContact);
         return this.router;

@@ -15,6 +15,8 @@ var BarChartDemoComponent = (function () {
     function BarChartDemoComponent(reportService) {
         this.reportService = reportService;
         this.datasets = [];
+        this.testto = 0;
+        this.a = [];
         this.b = [];
         this.c = [];
         this.barChartOptions = {
@@ -47,10 +49,17 @@ var BarChartDemoComponent = (function () {
             _this.barChartLabels = _this.getmonthlabel();
             _this.createDataSets();
             _this.barChartData = _this.datasets;
-            _this.createLabelsDoughnut();
-            console.log(_this.b + "abc" + _this.c);
-            _this.doughnutChartData = _this.c;
-            _this.doughnutChartLabels = _this.b;
+        });
+    };
+    BarChartDemoComponent.prototype.loadgetdougnut = function () {
+        var _this = this;
+        this.reportService.getAllDeviceforDougnut().then(function (result) {
+            _this.Reports = result;
+            _this.createDataSets();
+            _this.doughnutChartData = _this.getdatadonoughnut();
+            _this.doughnutChartLabels = _this.getlabeldonoughnut();
+            _this.gettotal();
+            _this.getpercent();
         });
     };
     BarChartDemoComponent.prototype.createDataSets = function () {
@@ -67,25 +76,56 @@ var BarChartDemoComponent = (function () {
             });
         });
     };
-    BarChartDemoComponent.prototype.createLabelsDoughnut = function () {
-        var _this = this;
-        this.listDevice.forEach(function (ld) {
-            ld.listdevice.forEach(function (d) {
-                var index = _this.checkIfLabelExists(d.name);
-                if (index === -1) {
-                    //   this.datasets.push({ data: [d.count], label: d.name });
-                    // } else {
-                    //   this.datasets[index].data.push(d.count);
-                    _this.b.push(d.name);
-                    _this.c.push(d.count);
-                }
-            });
-        });
-    };
     BarChartDemoComponent.prototype.checkIfLabelExists = function (label) {
         if (this.datasets.length === 0)
             return -1;
         return this.datasets.findIndex(function (d) { return d.label === label; });
+    };
+    BarChartDemoComponent.prototype.getdatabymonth = function (id) {
+        var _this = this;
+        var date = new Date();
+        var month = date.getMonth();
+        var year = date.getFullYear();
+        var my = month + ";" + year;
+        console.log(month);
+        console.log(year);
+        console.log(my);
+        if (id == 1) {
+            month = date.getMonth() - 3;
+            year = date.getFullYear();
+            my = month + ";" + year;
+            console.log(my);
+            this.reportService.getDevicebydate(my).then(function (result) {
+                _this.listDevice = result;
+                _this.barChartLabels = _this.getmonthlabel();
+                _this.createDataSets();
+                _this.barChartData = _this.datasets;
+            }).catch(function (error) {
+                console.log("error");
+            });
+        }
+        else if (id == 2) {
+            month = date.getMonth() - 2;
+            year = date.getFullYear();
+            my = month + ";" + year;
+            console.log(my);
+            this.reportService.getDevicebydate(my).then(function (result) {
+                _this.listDevice = result;
+                _this.barChartLabels = _this.getmonthlabel();
+                _this.createDataSets();
+                _this.barChartData = _this.datasets;
+            }).catch(function (error) {
+                console.log("error");
+            });
+        }
+        else {
+            this.reportService.getDevice().then(function (result) {
+                _this.listDevice = result;
+                _this.barChartLabels = _this.getmonthlabel();
+                _this.createDataSets();
+                _this.barChartData = _this.datasets;
+            });
+        }
     };
     BarChartDemoComponent.prototype.getmonthlabel = function () {
         var a = [];
@@ -95,20 +135,59 @@ var BarChartDemoComponent = (function () {
         });
         return a;
     };
-    BarChartDemoComponent.prototype.getlistname = function () {
-        var b = [];
-        var c = [];
-        this.listDevice.forEach(function (r) {
-            b = r.listdevice;
-            b.forEach(function (result) {
-                c.push(result.name);
-            });
+    BarChartDemoComponent.prototype.getlabeldonoughnut = function () {
+        var a = [];
+        this.Reports.forEach(function (r) {
+            a.push(r.name);
         });
-        console.log(c);
-        return c;
+        return a;
+    };
+    BarChartDemoComponent.prototype.getdatadonoughnut = function () {
+        var a = [];
+        this.Reports.forEach(function (r) {
+            a.push(r.count);
+        });
+        return a;
+    };
+    BarChartDemoComponent.prototype.loadAllDeviceforDougnut = function () {
+        var _this = this;
+        return this.reportService.getAllDeviceforDougnut()
+            .then(function (response) {
+            _this.ArrayReport = response;
+            return _this.ArrayReport;
+        })
+            .catch(function (error) {
+            console.log(error);
+            return error;
+        });
+    };
+    BarChartDemoComponent.prototype.gettotal = function () {
+        var _this = this;
+        console.log('gettotal: ');
+        // let tong: number;
+        this.loadAllDeviceforDougnut()
+            .then(function () {
+            for (var i = 0; i < _this.ArrayReport.length; i++) {
+                _this.testto += parseInt(_this.ArrayReport[i].count.toString());
+            }
+        });
+    };
+    BarChartDemoComponent.prototype.getpercent = function () {
+        var _this = this;
+        var index;
+        var flag = "";
+        this.loadAllDeviceforDougnut()
+            .then(function () {
+            for (var i = 0; i < _this.ArrayReport.length; i++) {
+                if (flag != _this.ArrayReport[i].name) {
+                    _this.c[i] = Math.floor((parseInt(_this.ArrayReport[i].count.toString()) / _this.testto) * 100) + "   " + "thiết bị " + _this.ArrayReport[i].name + "html.raw(<br\/>)";
+                }
+            }
+        });
     };
     BarChartDemoComponent.prototype.ngOnInit = function () {
         this.loadGetAll();
+        this.loadgetdougnut();
     };
     // events
     BarChartDemoComponent.prototype.chartClicked = function (e) {

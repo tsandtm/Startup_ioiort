@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-
+import { Report } from './Report.model';
 import { ListDevice } from './Report.model';
 
 @Injectable()
@@ -19,6 +19,21 @@ export class ReportService {
         return this._http.get('/api/Report')
             .toPromise()
             .then(response => response.json() as ListDevice[])
+            .catch(this.handleError);
+    }
+
+    //co tham so
+    getDevicebydate(month: string): Promise<ListDevice[]> {
+        return this._http.get('/api/Report?Date='+month)
+            .toPromise()
+            .then(response => response.json() as ListDevice[])
+            .catch(this.handleError);
+    }
+
+    getAllDeviceforDougnut(): Promise<Report[]> {
+        return this._http.get('/api/ReportDevice')
+            .toPromise()
+            .then(response => response.json() as Report[])
             .catch(this.handleError);
     }
     // getProduct(id: number): Promise<Product> {

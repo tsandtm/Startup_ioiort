@@ -1,5 +1,9 @@
 <!--<template ngFor #item [ngForOf]="Reports" #i="index" >-->
 <div>
+  
+  <input type="button" (click)='getdatabymonth(1)' value="Tháng trước">
+  <input type="button" (click)='getdatabymonth(2)' value="Tháng này">
+  <input type="button" (click)='getdatabymonth(3)' value="Năm này">
   <div style="display: block">
     <canvas baseChart
             [datasets]="barChartData"
@@ -8,17 +12,11 @@
             [legend]="barChartLegend"
             [chartType]="barChartType"
             (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)"></canvas>  
-
+            (chartClick)="chartClicked($event)"></canvas>
   </div>
-  <button (click)="randomize()">Update</button>
 </div>
 <!--</template>-->
-<li *ngFor='let item of Reports'> 
-  {{ item.Device }}     
-    {{ item.date }}  
-    {{ item.count }}                  
-</li>
+
 <div style="display: block">
   <canvas baseChart
               [data]="doughnutChartData"
@@ -26,4 +24,6 @@
               [chartType]="doughnutChartType"
               (chartHover)="chartHovered($event)"
               (chartClick)="chartClicked($event)"></canvas>
+              <h2>{{c}}</h2>
+              <h2>{{testto}} Tổng thiết bị</h2>
 </div>
