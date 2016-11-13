@@ -31,10 +31,12 @@ export class NotifiRouter {
         .post(this.Update);
 
         this.router.route("/sl")
-        .get(this.getSL);
+        .get(this.getSL)
+        .post(this.getSLsend)
 
         this.router.route("/sldenied")
-        .get(this.getSLDenied);
+        .get(this.getSLDenied)
+        .post(this.getSLsenddenied)
 
         this.router.route("/sentuser")
         .get(this.getSentUser)
@@ -42,6 +44,9 @@ export class NotifiRouter {
         
         this.router.route("/sentuserdenied")
         .get(this.getSentUserDenied);
+
+        
+
 
         return this.router;
     }
@@ -110,6 +115,26 @@ export class NotifiRouter {
     }
     private getSLDenied = (req: Request, res: Response) => {
         this.notifiRepo.getSLDenied(req.body)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            });
+    }
+    private getSLsend = (req: Request, res: Response) => {
+        this.notifiRepo.getslsend(req.body)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            });
+    }
+    private getSLsenddenied = (req: Request, res: Response) => {
+        this.notifiRepo.getslsenddenied(req.body)
             .then(result => {
                 res.status(200).json(result)
             })

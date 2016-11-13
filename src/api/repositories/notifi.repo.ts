@@ -167,6 +167,38 @@ export class NotifiRepo extends RepoBase {
             });
 
     }
+    public getslsend(option): Promise<number> {
+        let queryText = 'SELECT COUNT(*) FROM test."Contacts" A WHERE (Array[A."ContactID"] && $1 OR A."Contact_Tag" && $2) AND (Array[A."ContactID"] && $3 OR A."Contact_Tag" && $4) = false';
+
+        console.info('Excute: ' + queryText);
+
+        return this._pgPool.query(queryText,[option.contact,option.tag,option.contactdenied,option.tagdenied])
+            .then(result => {
+                let slsend:number;
+                slsend = result.rows[0].count;
+                return slsend;
+            })
+            .catch(err => {
+                console.error(err.message);
+                return null;
+            });
+    }
+    public getslsenddenied(option): Promise<number> {
+        let queryText = 'SELECT COUNT(*) FROM test."Contacts" A WHERE (Array[A."ContactID"] && $1 OR A."Contact_Tag" && $2) = false';
+
+        console.info('Excute: ' + queryText);
+
+        return this._pgPool.query(queryText,[option.contactdenied,option.tagdenied])
+            .then(result => {
+                let slsend:number;
+                slsend = result.rows[0].count;
+                return slsend;
+            })
+            .catch(err => {
+                console.error(err.message);
+                return null;
+            });
+    }
     public getSentUser(option):Promise<SentUser[]>{
         let queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook" FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_User" OR A."Contact_Tag" && B."Send_Tag") AND (Array[A."ContactID"] && B."Send_UserDenie" OR A."Contact_Tag" && B."Send_TagDenie") = false';
 

@@ -201,25 +201,54 @@ export class NotifiSendComponent implements OnInit{
         else{
             this.ThoiHan=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString(); 
         }
-        this.notifi={AppID:this.AppID,
-        NotifiID:this.notifiID,
-        TieuDe:this.tieude,
-        Noidung:this.Noidung,
-        DoUuTien:this.doUuTien,
-        Trangthai:this.Trangthai,
-        Soluong:1,
-        Thoigiangui:this.Thoigiangui,
-        ThoiHan:this.ThoiHan,
-        SendTag:this.listIDTag,
-        SendUser:this.listIDContact,
-        DeniedTag:this.listIDTagDenied,
-        DeniedUser:this.listIDContactDenied};
-        this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
+        if(this.listIDTag.length==0 && this.listIDContact.length==0)
+        {
+            this.getslsenddenied({contactdenied:this.listIDContactDenied,tagdenied:this.listIDTagDenied}).then(result=>{
+                this.notifi={AppID:this.AppID,
+                NotifiID:this.notifiID,
+                TieuDe:this.tieude,
+                Noidung:this.Noidung,
+                DoUuTien:this.doUuTien,
+                Trangthai:this.Trangthai,
+                Soluong:result,
+                Thoigiangui:this.Thoigiangui,
+                ThoiHan:this.ThoiHan,
+                SendTag:this.listIDTag,
+                SendUser:this.listIDContact,
+                DeniedTag:this.listIDTagDenied,
+                DeniedUser:this.listIDContactDenied};
+                this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
+            })
+        }
+        else{
+            this.getslsend({contact:this.listIDContact,tag:this.listIDTag,contactdenied:this.listIDContactDenied,tagdenied:this.listIDTagDenied}).then(result=>{
+                this.notifi={AppID:this.AppID,
+                NotifiID:this.notifiID,
+                TieuDe:this.tieude,
+                Noidung:this.Noidung,
+                DoUuTien:this.doUuTien,
+                Trangthai:this.Trangthai,
+                Soluong:this.Soluong,
+                Thoigiangui:this.Thoigiangui,
+                ThoiHan:this.ThoiHan,
+                SendTag:this.listIDTag,
+                SendUser:this.listIDContact,
+                DeniedTag:this.listIDTagDenied,
+                DeniedUser:this.listIDContactDenied};
+                this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
+            })
+        }
     }
 
 
     loadGetAll() {
         this.appService.getApp().then( (result) => this.Apps = result);
+    }
+    getslsend(req):Promise<number>{
+        return this.notifiservice.getslsend(req).then(result=>this.Soluong=result);
+    }
+    getslsenddenied(req):Promise<number>{
+        return this.notifiservice.getsldenied(req).then(result=>this.Soluong=result);
     }
     ngOnInit(): void {
         this.loadGetAll();
