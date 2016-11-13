@@ -20,6 +20,7 @@ import { NotifiSendComponent } from './notification-send/notification.component'
 import { ConfirmComponent } from './notification-send/confirm.component';
 //import {RlTagInputModule} from 'angular2-tag-input';
 import { TagInputModule } from 'ng2-tag-input';
+import * as io from 'socket.io-client';
 @NgModule({
     imports: [BrowserModule,routing,FormsModule,HttpModule,TagInputModule],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,NotifiService,TagService,ContactService],

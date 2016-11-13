@@ -1,25 +1,29 @@
-import { Component,OnInit,Input } from '@angular/core';
+import { Component,OnInit,Input,OnDestroy } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Appkey } from './shared/app.model';
 import { Notifi,SLSend,SentUser,UpdateData,InsertUser } from './shared/notifi.model';
 import { AppService } from './shared/app.service';
 import { NotifiService } from './shared/notifi.service';
+import { PushService } from './shared/pushservice.service';
 @Component({
     templateUrl: '/notification-send/confirm.component.html',
-    providers: [AppService,NotifiService]
+    providers: [AppService,NotifiService,PushService]
 })
 export class ConfirmComponent implements OnInit {
     @Input() notifi:Notifi;
     @Input() sl:SLSend;
     @Input() sentUser:SentUser[];
     @Input() updatedata:UpdateData;
+    appkey:Appkey;
     insertUser:InsertUser;
     Douutien:string;
     date:Date;
     now:Date;
+    token:string;
     constructor(private appService: AppService,
     private notifiservice:NotifiService,
+    private pushservice:PushService,
     private _router: Router,
     private _route: ActivatedRoute) {
 
@@ -36,8 +40,12 @@ export class ConfirmComponent implements OnInit {
                 this.getSL(id);
                 this.getSentUser(id);
             }
+                this.getAppkey(this.notifi.AppID);
             });
         })
+    }
+    Push(){
+        this.pushservice.sendMessage(this.appkey.APIKey,this.token,this.notifi.TieuDe,this.notifi.Noidung);
     }
 
     getNotifi(id: number):Promise<void> {
@@ -73,6 +81,9 @@ export class ConfirmComponent implements OnInit {
         .then(sl=>{
             this.sl=sl
         })
+    }
+    getAppkey(id:number){
+        this.appService.getAppkey(id).then(key=>this.appkey=key);
     }
     Update(status:number){
         this._route.params.forEach((params: Params) => {

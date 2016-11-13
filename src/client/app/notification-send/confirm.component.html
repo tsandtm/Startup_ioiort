@@ -70,10 +70,10 @@
 					<form class="form-inline" style="margin-top:180px">
 						<div class="form-group">
 						<p>Test Recipients</p>
-							<input type="text" class="form-control"/>
+							<input name="token" [(ngModel)]="token" type="text" class="form-control"/>
 							<h6><i>User nhận test</i></h6>
 						</div>
-						<button type="submit" class="btn btn-success">Send</button>
+						<button type="submit" class="btn btn-success" (click)='Push()'>Send</button>
 					</form>
 					<hr />
 				</div>
