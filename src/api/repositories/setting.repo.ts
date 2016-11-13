@@ -70,7 +70,7 @@ export class SettingRepo extends RepoBase {
         option.apikey,
         option.appname,
         option.ngaytao,
-        option.isactive,
+        option.trangthai,
         option.appid,
         ])
             .then(result => {

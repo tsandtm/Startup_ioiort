@@ -9,9 +9,6 @@ import { SettingService } from '../shared/setting.service';
 })
 export class SettingEditComponent {
     pageTitle: string = 'Setting Edit';
-    servername: string;
-    apikey: string;
-    trangthai: boolean;
     setting: Setting;
     constructor(
         private settingservice:SettingService,
@@ -33,8 +30,7 @@ export class SettingEditComponent {
     }
     Edit(): void{
         if(this.setting.trangthai==undefined)
-            this.setting.trangthai=false;
-        
+            this.setting.trangthai=false;        
         this.settingservice.Edit(this.setting).then(result=>this._router.navigate(['setting-list']));
     }
     Back(): void {

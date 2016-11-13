@@ -23,7 +23,6 @@ export class TagDetailComponent {
             console.log(params["id"]+'aaaa');
             let id = +params["id"];
             this.getTag(id);
-            console.log(this.tag.tagid+this.tag.tagnamedisplay);
         })
     }
 
