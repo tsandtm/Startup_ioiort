@@ -1,6 +1,6 @@
 {
     "development": {
-        "database": "n_Notification",
+        "database": "Notification",
         "username": "postgres",
         "password": "123456",
         "config": {

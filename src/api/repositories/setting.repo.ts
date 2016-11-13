@@ -8,13 +8,13 @@ export class SettingRepo extends RepoBase {
     }
 
     public getList(option): Promise<Setting[]> {
-        let queryText = 'select * from "n_app"';
+        let queryText = 'select * from "n_App"';
 
         console.info('Excute: ' + queryText);
         let pResult;   
 
         if (option.appid != undefined) {
-            pResult = this._pgPool.query(queryText + ' where "appid" = ' + option.appid)
+            pResult = this._pgPool.query(queryText + ' where "AppID" = ' + option.appid)
         } else {
             pResult = this._pgPool.query(queryText)
         }
@@ -22,12 +22,12 @@ export class SettingRepo extends RepoBase {
         return pResult.then(result => {
             let sets: Setting[] = result.rows.map(r => {
                 let set = new Setting();
-                set.appid = r.appid;
-                console.log(r.appid);
-                set.apikey = r.apikey;
-                set.appname = r.appname;
-                set.ngaytao = r.ngaytao;
-                set.trangthai = r.isactive;
+                set.appid = r.AppID;
+                console.log(r.AppID);
+                set.apikey = r.APIKey;
+                set.appname = r.AppName;
+                set.ngaytao = r.NgayTao;
+                set.trangthai = r.IsActive;
                 return set;
             });
             return sets;
@@ -38,7 +38,7 @@ export class SettingRepo extends RepoBase {
         });
     }
     public Detail(option): Promise<Setting> {
-        let queryText = 'select * from "n_app" where appid = $1';
+        let queryText = 'select * from n_App where AppID = $1';
         console.info('Excute: ' + queryText + option.id);        
         return this._pgPool.query(queryText, [option.id])
             .then(result => {
@@ -46,15 +46,15 @@ export class SettingRepo extends RepoBase {
             });
     }
     public Create(option): Promise<Setting> {
-        let queryText = 'INSERT INTO "n_app" values($1,$2,$3,$4,$5)';
+        let queryText = 'INSERT INTO "n_App" values($1,$2,$3,$4,$5)';
 
-        console.info('Excute: ' + queryText);
+        console.log('Excute: ' + option.isactive);
 
         return this._pgPool.query(queryText, [
         option.appid,
         option.apikey,
         option.appname,
-        option.isactive,
+        option.trangthai,
         option.ngaytao,                    
         ])
             .then(result => {
@@ -62,7 +62,7 @@ export class SettingRepo extends RepoBase {
             });
     }
     public Edit(option): Promise<Setting> {
-        let queryText = 'UPDATE "n_app" SET apikey = $1, appname = $2 , ngaytao =$3 , isactive = $4 WHERE appid = $5';
+        let queryText = 'UPDATE "n_App" SET "APIKey" = $1, "AppName" = $2 , "NgayTao" =$3 , "IsActive" = $4 where "AppID" = $5';
 
         console.info('Excute: ' + queryText);
 
@@ -78,7 +78,7 @@ export class SettingRepo extends RepoBase {
             });
     }
     public Delete(option): Promise<Setting> {
-        let queryText = 'DELETE FROM n_app WHERE appid = $1';
+        let queryText = 'DELETE FROM "n_App" where "AppID" = $1';
         console.info('Excute: ' + queryText);
         return this._pgPool.query(queryText, [option.appid])
             .then(result => {

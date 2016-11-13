@@ -8,12 +8,12 @@ export class TagRepo extends RepoBase {
     }
 
     public getList(option): Promise<Tag[]> {
-        let queryText = 'select * from "n_tag" ';
+        let queryText = 'select * from "n_Tag" ';
 
         console.info('Excute: ' + queryText);
         let pResult;
         if (option.tagid != undefined) {
-            pResult = this._pgPool.query(queryText + ' where "tagid" = ' + option.tagid)
+            pResult = this._pgPool.query(queryText + ' where "TagID" = ' + option.tagid)
             console.info(queryText + ' where "tagid" = ' + option.tagid);
         } else {
             pResult = this._pgPool.query(queryText)
@@ -22,12 +22,12 @@ export class TagRepo extends RepoBase {
         return pResult.then(result => {
             let tags: Tag[] = result.rows.map(r => {
                 let tag = new Tag();
-                tag.tagid = r.tagid;
-                console.log(r.appid+r.tagnamedisplay+r.tagnamekey+r.accountid+r.isdefault);
-                tag.tagnamedisplay = r.tagnamedisplay;
-                tag.tagnamekey = r.tagnamekey;
-                tag.accountid = r.accountid;
-                tag.isdefault = r.isdefault;
+                tag.tagid = r.TagID;
+                console.log(r.TagID+r.TagNameDisplay+r.TagNameKey+r.AccountID+r.IsDefault);
+                tag.tagnamedisplay = r.TagNameDisplay;
+                tag.tagnamekey = r.TagNameKey;
+                tag.accountid = r.AccountID;
+                tag.isdefault = r.IsDefault;
                 return tag;
             });
             return tags;
@@ -38,7 +38,7 @@ export class TagRepo extends RepoBase {
         });
     }
     public Create(option): Promise<Tag> {
-        let queryText = 'INSERT INTO "n_tag" values($1,$2,$3,$4,$5)';
+        let queryText = 'INSERT INTO "n_Tag" values($1,$2,$3,$4,$5)';
 
         console.info('Excute: ' + queryText);
 
@@ -53,7 +53,7 @@ export class TagRepo extends RepoBase {
             });
     }
     public Edit(option): Promise<Tag> {
-        let queryText = 'UPDATE "n_tag" SET tagnamedisplay = $1, tagnamekey = $2 , accountid = $3 , isdefault = $4 WHERE tagid = $5';
+        let queryText = 'UPDATE "n_Tag" SET "TagNameDisplay" = $1, "TagNameKey" = $2 , "AccountID" = $3 , "IsDefault" = $4 WHERE "TagID" = $5';
 
         console.info('Excute: ' + queryText);
 
@@ -69,7 +69,7 @@ export class TagRepo extends RepoBase {
             });
     }
     public Delete(option): Promise<Tag> {
-        let queryText = 'DELETE FROM n_tag WHERE tagid = $1';
+        let queryText = 'DELETE FROM "n_Tag" WHERE "TagID" = $1';
         console.info('Excute: ' + queryText);
         return this._pgPool.query(queryText, [option.tagid])
             .then(result => {
