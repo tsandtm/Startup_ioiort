@@ -19,15 +19,23 @@ export class SettingEditComponent {
         private _route: ActivatedRoute) {
             console.log(this._route.snapshot.params['id']);
     }
+    ngOnInit():void{
+        this._route.params.forEach((params: Params) => {
+            console.log(params["id"]+'aaaa');
+            let id = +params["id"];
+            this.getSetting(id);
+        })
+    }
+    getSetting(id: number) {
+        this.settingservice.getOne(id)
+            .then(setting => this.setting = setting)
+        
+    }
     Edit(): void{
-        // if(this.trangthai==undefined)
-        //     this.trangthai=false;
-        // this.setting={
-        //     servername: this.servername,
-        //     apikey: this.apikey,
-        //     trangthai: this.trangthai
-        // }
-        this.settingservice.Create(this.setting).then(result=>this._router.navigate(['setting-list']));
+        if(this.setting.trangthai==undefined)
+            this.setting.trangthai=false;
+        
+        this.settingservice.Edit(this.setting).then(result=>this._router.navigate(['setting-list']));
     }
     Back(): void {
         this._router.navigate(['setting-list']);

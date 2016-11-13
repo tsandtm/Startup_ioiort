@@ -9,10 +9,12 @@ import { SettingService } from '../shared/setting.service';
 })
 export class SettingCreateComponent {
     pageTitle: string = 'Setting Create';
-    servername: string;
+    appname: string;
     apikey: string;
     trangthai: boolean;
     setting: Setting;
+    ngaytao: Date;
+    appid:number
     constructor(
         private settingservice:SettingService,
         private _router: Router,
@@ -20,13 +22,15 @@ export class SettingCreateComponent {
 
     }
     Create(): void{
-        // if(this.trangthai==undefined)
-        //     this.trangthai=false;
-        // this.setting={
-        //     servername: this.servername,
-        //     apikey: this.apikey,
-        //     trangthai: this.trangthai
-        // }
+        if(this.trangthai==undefined)
+            this.trangthai=false;
+        this.setting={
+            appid: this.appid,
+            apikey: this.apikey,
+            trangthai: this.trangthai,
+            ngaytao:this.ngaytao,
+            appname: this.appname,
+        }
         this.settingservice.Create(this.setting).then(result=>this._router.navigate(['setting-list']));
     }
     Back(): void {

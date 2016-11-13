@@ -1,4 +1,4 @@
-<div class='panel panel-primary' >
+<div class='panel panel-primary' *ngIf='setting'>
     <div class='panel-heading' style='font-size:large'>
         {{pageTitle}}
     </div>
@@ -7,16 +7,24 @@
         <div class='row'>
             <div class='col-md-6'>
                 <div class='row'>
-                    <div class='col-md-3'>Server name:</div>
-                    <div class='col-md-6'>{{ setting.servername }}</div>
+                    <div class='col-md-3'>App ID:</div>
+                    <div class='col-md-6'>{{ setting.appid }}</div>
                 </div>
                 <div class='row'>
                     <div class='col-md-3'>Api key:</div>
                     <div class='col-md-6'>{{ setting.apikey }}</div>
                 </div>
                 <div class='row'>
+                    <div class='col-md-3'>App name:</div>
+                    <div class='col-md-6'>{{ setting.appname }}</div>
+                </div>
+                <div class='row'>
                     <div class='col-md-3'>Trạng thái:</div>
                     <div class='col-md-6'>{{ setting.trangthai }}</div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-3'>Ngày tạo:</div>
+                    <div class='col-md-6'>{{ setting.ngaytao }}</div>
                 </div>
             </div>
         </div>

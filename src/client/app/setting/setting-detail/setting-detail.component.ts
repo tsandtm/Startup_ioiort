@@ -18,8 +18,16 @@ export class SettingDetailComponent {
             console.log(this._route.snapshot.params['id']);
     }
     ngOnInit():void{
-        this.settingservice.Detail(this._route.snapshot.params['id'])
-                .then(setting => this.setting = setting)
+        this._route.params.forEach((params: Params) => {
+            console.log(params["id"]+'aaaa');
+            let id = +params["id"];
+            this.getSetting(id);
+        })
+    }
+    getSetting(id: number) {
+        this.settingservice.getOne(id)
+            .then(setting => this.setting = setting)
+        
     }
 
     Back(): void {

@@ -13,9 +13,8 @@ export class SettingRepo extends RepoBase {
         console.info('Excute: ' + queryText);
         let pResult;   
 
-        if (option.IDUser != undefined) {
-            pResult = this._pgPool.query(queryText + ' where "iduser" = ' + option.IDUser)
-            console.info('Excute: ' + queryText + ' where "iduser" = ' + option.IDUser);
+        if (option.appid != undefined) {
+            pResult = this._pgPool.query(queryText + ' where "appid" = ' + option.appid)
         } else {
             pResult = this._pgPool.query(queryText)
         }
@@ -47,36 +46,41 @@ export class SettingRepo extends RepoBase {
             });
     }
     public Create(option): Promise<Setting> {
-        let queryText = 'INSERT INTO "api" values($1,$2,$3)';
+        let queryText = 'INSERT INTO "n_app" values($1,$2,$3,$4,$5)';
 
         console.info('Excute: ' + queryText);
 
-        return this._pgPool.query(queryText, [option.servername,
+        return this._pgPool.query(queryText, [
+        option.appid,
         option.apikey,
-        option.trangthai,
+        option.appname,
+        option.isactive,
+        option.ngaytao,                    
         ])
             .then(result => {
                 return null;
             });
     }
     public Edit(option): Promise<Setting> {
-        let queryText = 'UPDATE "api" SET apikey = "$1", trangthai = "$2"  WHERE servername = "$3"';
+        let queryText = 'UPDATE "n_app" SET apikey = $1, appname = $2 , ngaytao =$3 , isactive = $4 WHERE appid = $5';
 
         console.info('Excute: ' + queryText);
 
         return this._pgPool.query(queryText, [
         option.apikey,
-        option.trangthai,
-        option.servername,
+        option.appname,
+        option.ngaytao,
+        option.isactive,
+        option.appid,
         ])
             .then(result => {
                 return null;
             });
     }
     public Delete(option): Promise<Setting> {
-        let queryText = 'DELETE FROM api WHERE servername = $1';
+        let queryText = 'DELETE FROM n_app WHERE appid = $1';
         console.info('Excute: ' + queryText);
-        return this._pgPool.query(queryText, [option.servername])
+        return this._pgPool.query(queryText, [option.appid])
             .then(result => {
                 return null;
             });

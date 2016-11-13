@@ -44,9 +44,9 @@
                         <td>{{ set.trangthai }}</td>
                         <td>{{ set.ngaytao }}</td>                  
                         <td>
-                            <a [routerLink]="['/detail', set.servername]">Chi tiết</a>
-                            <a [routerLink]="['/edit',set.servername]">Sửa</a>
-                            <a (click)='Delete(set)'>Xóa</a>
+                            <a class="btn" [routerLink]="['/setting-detail', set.appid]">Chi tiết</a>
+                            <a class="btn" [routerLink]="['/setting-edit',set.appid]">Sửa</a>
+                            <a class="btn" [routerLink]="['/setting-delete',set.appid]">Xóa</a>
                         </td>
                     </tr>    
                 </tbody>

@@ -27,16 +27,21 @@ export class SettingService{
             .then(response => response.json() as Setting[])
             .catch(this.handleError);
     }
+    Edit(req): Promise<Setting[]> {
+        return this._http.post('/api/settingedit',req)
+            .toPromise()
+            .then(response => response.json() as Setting[])
+            .catch(this.handleError);
+    }
     Delete(req): Promise<Setting[]> {
         return this._http.post('/api/settingdelete',req)
             .toPromise()
             .then(response => response.json() as Setting[])
             .catch(this.handleError);
     }
-    Detail(req): Promise<Setting> {
-       return this._http.post('/api/settingdetail',req)
-            .toPromise()
-            .then(response => response.json() as Setting)
+    getOne(id): Promise<Setting> {
+        return this.getAllSetting()
+            .then(products => products.find(p => p.appid === id))
             .catch(this.handleError);
     }
     private handleError(error: Error): Promise<any> {
