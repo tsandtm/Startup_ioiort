@@ -1,0 +1,46 @@
+<div class='panel panel-primary' *ngIf='tintuc'>
+    <div class='panel-heading' style='font-size:large'>
+        {{pageTitle}}
+    </div>
+
+    <div class='panel-body'>
+        <div class='row'>
+            <div class='col-md-6'>
+                <div class='row'>
+                    <div class='col-md-3'>Mã:</div>
+                    <div class='col-md-6'>{{tintuc.IDDanhMucSite}}</div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-3'>Tiêu đề:</div>
+                    <div class='col-md-6'>{{tintuc.TieuDe}}</div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-3'>Mô tả:</div>
+                    <div class='col-md-6'>{{tintuc.MoTa}}</div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-3'>Nội dung:</div>
+                    <div class='col-md-6'>{{tintuc.NoiDung}}</div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-3'>Thời gian đăng:</div>
+                    <div class='col-md-6'>{{tintuc.ThoiGianDangTin}}</div>
+                </div>
+            </div>
+
+            <div class='col-md-6'>
+                <img class='center-block img-responsive' 
+                     [style.width.px]='200' 
+                     [style.margin.px]='2' 
+                     [src]='tintuc.URLImage'
+                     [title]='tintuc.IDDanhMucSite'>
+            </div>
+        </div>
+    </div>
+
+    <div class='panel-footer'>
+        <a class='btn btn-default' (click)='onBack()' style='width:80px'>
+            <i class='glyphicon glyphicon-chevron-left'></i> Trở về
+        </a>
+    </div>
+</div>
