@@ -1,6 +1,6 @@
 <div class='panel panel-primary'>
     <div class='panel-heading'>
-        {{pageTitle}}
+        Quản lý API key
     </div>
 
     <!-- Filter the Products   -->
@@ -36,9 +36,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor='let set of setting '> 
-                        <td>{{ set.appid }}                          
-                        </td>
+                    <tr *ngFor='let set of setting | settingFilter:listFilter'> 
+                        <td>{{ set.appid }}</td>
                         <td>{{ set.apikey }}</td>
                         <td>{{ set.appname }}</td>      
                         <td>{{ set.trangthai }}</td>

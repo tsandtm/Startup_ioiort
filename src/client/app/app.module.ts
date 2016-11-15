@@ -29,6 +29,7 @@ import { TagCreateComponent } from './tag/tag-create/tag-create.component';
 import { TagEditComponent } from './tag/tag-edit/tag-edit.component';
 import { TagDetailComponent } from './tag/tag-detail/tag-detail.component';
 import { TagDeleteComponent } from './tag/tag-delete/tag-delete.component';
+import { SettingFilterPipe } from './setting/setting-filter/setting-filter.pipe';
 
 @NgModule({
     imports: [BrowserModule,routing,FormsModule,HttpModule],
@@ -45,6 +46,7 @@ import { TagDeleteComponent } from './tag/tag-delete/tag-delete.component';
     SettingEditComponent,
     SettingDeleteComponent,
     SettingDetailComponent,
+    SettingFilterPipe,
     UserDetailComponent,
     BookListComponent,
     BookDetailComponent,

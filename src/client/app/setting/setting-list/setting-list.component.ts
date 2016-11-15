@@ -8,7 +8,7 @@ import { SettingService } from '../shared/setting.service';
 })
 export class SettingListComponent {
     pageTitle: string = 'Setting List';
-    
+    listFilter: string;
     setting: Setting[];
      static $inject = [
             '$confirm'
