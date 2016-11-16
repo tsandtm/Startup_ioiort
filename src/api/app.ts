@@ -17,6 +17,7 @@ app.use(body_parser.json());
 import {BookRouter} from './routes/book.router';
 import {ContactsRouter} from './routes/contacts.router';
 import {NotificationsRouter} from './routes/notifications.router';
+import {YeucaubanRouter} from './routes/yeucauban.router';
 
 
 
@@ -24,4 +25,5 @@ import {NotificationsRouter} from './routes/notifications.router';
 app.use('/api', [(new BookRouter()).getRouter()]);
 app.use('/api',[(new ContactsRouter()).getRouter()]);
 app.use('/api',[(new NotificationsRouter()).getRouter()]);
+app.use('/api',[(new YeucaubanRouter()).getRouter()]);
 export default app;
