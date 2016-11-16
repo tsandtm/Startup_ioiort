@@ -8,3 +8,9 @@ export class ListDevice{
     listdevice:Array<Report> = [];
 }
 
+export class Percent {          
+    name:string;
+    count:number;
+    percent:number;
+}
+
