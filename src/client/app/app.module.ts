@@ -14,46 +14,66 @@ import { WelcomeComponent } from './home/welcome.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import { ProductFilterPipe } from './products/product-filter/product-filter.pipe'
 import { StarComponent} from './shared/star.component';
+
 import { UsersService } from './users/shared/user.service';
 import { UserListComponent } from './users/user-list/user-list.component';
 import { UserDetailComponent }  from './users/user-detail/user-detail.component';
+
 import { SettingListComponent } from './setting/setting-list/setting-list.component';
 import { SettingService } from './setting/shared/setting.service';
 import { SettingCreateComponent } from './setting/setting-create/setting-create.component';
 import { SettingEditComponent } from './setting/setting-edit/setting-edit.component';
 import { SettingDeleteComponent } from './setting/setting-delete/setting-delete.component';
 import { SettingDetailComponent } from './setting/setting-detail/setting-detail.component';
+import { SettingFilterPipe } from './setting/setting-filter/setting-filter.pipe';
+
 import { TagListComponent } from './tag/tag-list/tag-list.component';
 import { TagService } from './tag/shared/tag.service';
 import { TagCreateComponent } from './tag/tag-create/tag-create.component';
 import { TagEditComponent } from './tag/tag-edit/tag-edit.component';
 import { TagDetailComponent } from './tag/tag-detail/tag-detail.component';
 import { TagDeleteComponent } from './tag/tag-delete/tag-delete.component';
-import { SettingFilterPipe } from './setting/setting-filter/setting-filter.pipe';
+import { TagFilterPipe } from './tag/tag-filter/tag-filter.pipe';
+
+import { ContactsListComponent } from './contacts/contacts-list/contacts-list.component';
+import { ContactFilterPipe } from './contacts/contacts-filter/contacts-filter.pipe';
+import { ContactService } from './contacts/shared/contact.service';
 
 @NgModule({
     imports: [BrowserModule,routing,FormsModule,HttpModule],
-    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,UsersService,SettingService,TagService],
+    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,UsersService,SettingService,TagService,ContactService],
     declarations: [AppComponent,
+
+    ContactsListComponent,
+    ContactFilterPipe,
+
     UserListComponent,
+    UserDetailComponent,
+
     TagListComponent, 
     TagCreateComponent, 
     TagEditComponent,  
     TagDetailComponent,
     TagDeleteComponent,
+    TagFilterPipe,
+
     SettingListComponent,
     SettingCreateComponent,
     SettingEditComponent,
     SettingDeleteComponent,
     SettingDetailComponent,
     SettingFilterPipe,
-    UserDetailComponent,
+
+    
     BookListComponent,
     BookDetailComponent,
+
     WelcomeComponent,
+
     ProductDetailComponent,
     ProductListComponent,
     ProductFilterPipe,
+
     StarComponent],
     bootstrap: [AppComponent]
 })

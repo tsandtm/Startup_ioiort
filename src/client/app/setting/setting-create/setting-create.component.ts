@@ -5,7 +5,8 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { SettingService } from '../shared/setting.service';
 
 @Component({
-    templateUrl:'/setting/setting-create/setting-create.component.html'
+    templateUrl:'/setting/setting-create/setting-create.component.html',
+    styleUrls: ['/setting/setting-create/setting-create.component.css']
 })
 export class SettingCreateComponent {
     pageTitle: string = 'Setting Create';
@@ -13,7 +14,7 @@ export class SettingCreateComponent {
     apikey: string;
     trangthai: boolean;
     setting: Setting;
-    ngaytao: Date;
+    ngaytao: string;
     appid:number
     constructor(
         private settingservice:SettingService,
@@ -24,6 +25,7 @@ export class SettingCreateComponent {
     Create(): void{
         if(this.trangthai==undefined)
             this.trangthai=false;
+        this.ngaytao = new Date().toLocaleDateString();
         this.setting={
             appid: this.appid,
             apikey: this.apikey,

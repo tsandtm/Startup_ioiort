@@ -3,5 +3,5 @@ export class Setting {
 	apikey: string;
     appname: string;
 	trangthai: boolean;
-    ngaytao: Date;
+    ngaytao: string;
 }

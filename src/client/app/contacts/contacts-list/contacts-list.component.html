@@ -1,0 +1,172 @@
+ <div class='panel panel-primary'>
+    <div class='panel-heading'>
+        Contacts
+    </div>
+
+    <!-- Filter the Products   -->
+    <div class='panel-body'>
+        <div class='row'>
+            <div style="float:left;width:75%">
+                <div class='col-md-2' style="line-height:37px">Tìm kiếm:</div>
+                <div class='col-md-8'>
+                    <input type='text' class="form-control" [(ngModel)]='listFilter' />
+                </div>
+            </div>
+            <div style="float:right;margin-right:8px;width:15%">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#myModal2" >Xóa tag</button>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#myModal1" >Gắn tag</button>
+            </div>
+        </div>
+        <div class='row' *ngIf='alert'>
+            <div class='col-md-6'>
+                <h4 style="color:red">{{ alert }} </h4>
+            </div>
+        </div>
+        <div class='row' style="margin-top:10px" style="float:left">
+            <div style="line-height:37px;float:left;margin-left:15px;margin-right:5px">Tag: </div>
+            <div style="float:left">
+                <div *ngFor='let tag of tags 'style="float:left;line-height:37px"> 
+                    <a style="margin-right:10px">{{ tag.tagid }}</a>
+                </div>
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span></button> 
+            </div>
+        </div>
+        <div class="row">
+                      
+        </div>
+        <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+        <script>
+            $("#all").click(function () {
+                checked = $(this).prop("checked");
+                $(":checkbox[name=Ids]").prop("checked", checked);
+            });
+        </script>
+        <div class='table-responsive'>
+            <table class="table" >
+                <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" id="all" (click)='toggle()' checked [(ngModel)]="all" *ngIf="all==true"/>
+                            <input type="checkbox" id="all" (click)='toggle()' [(ngModel)]="all" *ngIf="all==false"/>
+                        </th>
+                        <th>Nickname</th>
+                        <th>Email</th>
+                        <th>Điện thoại</th>
+                        <th>Tag</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let contact of contacts | contactFilter:listFilter'> 
+                        <td>
+                            <input *ngIf="contact.isactive" type="checkbox"  [(ngModel)]="contact.isactive" checked />
+                            <input *ngIf="!contact.isactive" type="checkbox"  [(ngModel)]="contact.isactive" />
+                        </td>
+                        <td>{{ contact.TaiKhoan }}</td>
+                        <td>{{ contact.Email }}</td>
+                        <td>{{ contact.PhoneNumber }}</td>      
+                        <td><div *ngFor='let tag of contact.Contact_Tag' style="float:left"><a style="margin-right:10px">{{ tag }}</a></div></td>               
+                    </tr>    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Thêm Tag</h4>
+      </div>
+      <div class="modal-body">
+     
+            <form>
+                <div class="form-group">
+                    <label class="">Tag ID:</label>
+                    <input type="text" class="form-control" name="tagid" [(ngModel)]="tagid" placeholder="Tag ID">
+                </div>  
+                
+                <div class="form-group">
+                    <label class="">Tag name display:</label>
+                    <input type="text" class="form-control" name="tagnamedisplay" [(ngModel)]="tagnamedisplay" placeholder="Tag name display">
+                </div>  
+                <div class="form-group">
+                    <label class="">Tag name key:</label>
+                    <input type="text" class="form-control" name="tagnamekey" [(ngModel)]="tagnamekey" placeholder="Tag name key">
+                </div>  
+                <div class="form-group">
+                    <label class="">AccountID:</label>
+                    <input type="text" class="form-control" name="accountid" [(ngModel)]="accountid" placeholder="AccountID">
+                </div> 
+                <div class="form-group">
+                    <label class="">Trạng thái:</label>
+                    <input type="checkbox" name="isdefault" [(ngModel)]="isdefault" checked>
+                </div>  
+            </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" style="margin-right:10px" class="btn btn-success btn-lg" (click)='Create()' data-dismiss="modal">Create</button>
+        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal" >Back</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="myModal1" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Gắn Tag</h4>
+      </div>
+      <div class="modal-body">
+     
+            <form>
+                <div class="form-group">
+                    <label class="">Tag ID:</label>
+                    <select class="selectpicker form-control" name="tagupdate" [(ngModel)]="tagupdate">
+                        <option *ngFor="let tag of tags">{{ tag.tagid }}</option>
+                    </select>
+                </div>
+            </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" style="margin-right:10px" class="btn btn-success btn-lg" (click)='Update()' data-dismiss="modal">Update</button>
+        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal" >Back</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="myModal2" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Xóa Tag</h4>
+      </div>
+      <div class="modal-body">
+     
+            <form>
+                <div class="form-group">
+                    <label class="">Tag ID:</label>
+                    <select class="selectpicker form-control" name="tagupdate" [(ngModel)]="tagupdate">
+                        <option *ngFor="let tag of tags">{{ tag.tagid }}</option>
+                    </select>
+                </div>
+            </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" style="margin-right:10px" class="btn btn-success btn-lg" (click)='Delete()' data-dismiss="modal">Delete</button>
+        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal" >Back</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Http, Response,Request  } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { Contact } from '../../contacts/shared/contact.model'
-import { Tag } from './tag.model';
+import { Tag } from '../../tag/shared/tag.model';
+import { Contact } from './Contact.model';
 
 @Injectable()
-export class TagService{
-
+export class ContactService{
+    
     constructor(private _http: Http) { }
-
     getAllTag(): Promise<Tag[]> {
         // return this._http.get('/api/book')
         //     .map((response: Response) => <Product[]>response.json())
@@ -32,33 +31,27 @@ export class TagService{
             
     }
     
-    Create(req): Promise<Tag[]> {
-        return this._http.post('/api/tag',req)
-            .toPromise()
-            .then(response => response.json() as Tag[])
-            .catch(this.handleError);
-    }
-    Delete(req): Promise<Tag[]> {
-        return this._http.post('/api/tagdelete',req)
-            .toPromise()
-            .then(response => response.json() as Tag[])
-            .catch(this.handleError);
-    }
-    Update(req): Promise<Contact[]> {
-        return this._http.post('/api/contactupdate',req)
+    Create(req): Promise<Contact[]> {
+        return this._http.post('/api/contact',req)
             .toPromise()
             .then(response => response.json() as Contact[])
             .catch(this.handleError);
     }
-    Edit(req): Promise<Tag[]> {
-        return this._http.post('/api/tagedit',req)
+    Delete(req): Promise<Contact[]> {
+        return this._http.post('/api/contactdelete',req)
             .toPromise()
-            .then(response => response.json() as Tag[])
+            .then(response => response.json() as Contact[])
             .catch(this.handleError);
     }
-    getOne(id): Promise<Tag> {
-        return this.getAllTag()
-            .then(products => products.find(p => p.tagid === id))
+    Edit(req): Promise<Contact[]> {
+        return this._http.post('/api/contactedit',req)
+            .toPromise()
+            .then(response => response.json() as Contact[])
+            .catch(this.handleError);
+    }
+    getOne(id): Promise<Contact> {
+        return this.getAllContact()
+            .then(contact => contact.find(p => p.ContactID === id))
             .catch(this.handleError);
     }
     private handleError(error: Error): Promise<any> {

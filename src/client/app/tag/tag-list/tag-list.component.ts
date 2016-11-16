@@ -8,11 +8,8 @@ import { TagService } from '../shared/tag.service';
 })
 export class TagListComponent {
     pageTitle: string = 'Setting List';
-    
+    tagFilter:string;
     tags: Tag[];
-     static $inject = [
-            '$confirm'
-        ];
     constructor(
         // private $confirm: AngularConfirm.IConfirmModalFactory,
         private _route: ActivatedRoute,private _router: Router,
