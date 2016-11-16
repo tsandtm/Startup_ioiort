@@ -1,0 +1,55 @@
+<div class='row'>
+    <div class='col-md-2'> <input type='text' /></div>
+    <div class='col-md-4'><button>Tìm kiếm</button></div>
+    <div class='col-md-6'>
+        <input type='text' />
+        <!--<span><i class="fa fa-calendar" aria-hidden="true"></i></span>-->
+        <!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">New Message</button>-->
+        <button>New Message</button>
+    </div>
+</div>
+<br/><br/>
+<div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+<div class='table-responsive'>
+    <table class='table' *ngIf='notifications && notifications.length' border="1">
+        <thead>
+            <tr>
+                <th>Tiêu đề</th>
+                <th>TrangThaiGoi</th>
+                <th>ThoiGianGui</th>
+                <th>SoLuong</th>
+                <th>ThoiHanToiDa</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor='let notification of notifications | paginate: {itemsPerPage: 4, currentPage: p}'>
+                <td><a [routerLink]="['/notification-detail',notification.id]">{{notification.TieuDe | lowercase}}</a></td>
+                <td>{{notification.TrangThaiGoi}}</td>
+                <td>{{notification.ThoiGianGui}}</td>
+                <td>{{notification.SoLuong}}</td>
+                <td>{{notification.ThoiHanToiDa}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <pagination-template #pagination="paginationApi" (pageChange)="p = $event">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li [class.disabled]="pagination.isFirstPage()">
+                    <a aria-label="Previous" (click)="pagination.previous()" href="javascript:;" *ngIf="!pagination.isFirstPage()">
+                        <span>&laquo;</span>
+                    </a>
+                </li>
+                <li *ngFor="let page of pagination.pages" [class.active]="pagination.getCurrent() == page.value">
+                    <a (click)="pagination.setCurrent(page.value)" href="javascript:;">
+                                {{page.label}}
+                            </a>
+                </li>
+                <li [class.disabled]="pagination.isLastPage()" *ngIf="pagination.directionLinks">
+                    <a aria-label="Next" href="javascript:;" (click)="pagination.next()" *ngIf="!pagination.isLastPage()">
+                        <span>&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </pagination-template>
+</div>
