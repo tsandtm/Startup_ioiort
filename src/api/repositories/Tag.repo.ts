@@ -19,7 +19,6 @@ export class TagRepo extends RepoBase {
                 let tag = new Tag();
                 tag.TagID = r.TagID;
                 tag.TagNameDisplay = r.TagNameDisplay;
-                tag.TagNameKey = r.TagNameKey;
                 tag.AccountID = r.AccountID;
                 tag.IsDefault = r.IsDefault;
                 return tag;

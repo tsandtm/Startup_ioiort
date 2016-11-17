@@ -1,0 +1,70 @@
+[
+  {
+    "ContactID": 2,
+    "Token": "b",
+    "Email": "b",
+    "TaiKhoan": "b",
+    "Device": "b",
+    "PhoneNumber": "b",
+    "NgayTao": "2020-02-11T17:00:00.000Z",
+    "FaceBook": "b",
+    "Contact_Tag": [
+      2
+    ]
+  },
+  {
+    "ContactID": 3,
+    "Token": "b",
+    "Email": "b",
+    "TaiKhoan": "b",
+    "Device": "b",
+    "PhoneNumber": "b",
+    "NgayTao": "2020-02-11T17:00:00.000Z",
+    "FaceBook": "b",
+    "Contact_Tag": [
+      3
+    ]
+  },
+  {
+    "ContactID": 4,
+    "Token": "b",
+    "Email": "b",
+    "TaiKhoan": "b",
+    "Device": "b",
+    "PhoneNumber": "b",
+    "NgayTao": "2020-02-11T17:00:00.000Z",
+    "FaceBook": "b",
+    "Contact_Tag": [
+      1,
+      2
+    ]
+  },
+  {
+    "ContactID": 5,
+    "Token": "b",
+    "Email": "b",
+    "TaiKhoan": "b",
+    "Device": "b",
+    "PhoneNumber": "b",
+    "NgayTao": "2020-02-11T17:00:00.000Z",
+    "FaceBook": "b",
+    "Contact_Tag": [
+      2,
+      3
+    ]
+  },
+  {
+    "ContactID": 1,
+    "Token": "a",
+    "Email": "a",
+    "TaiKhoan": "a",
+    "Device": "a",
+    "PhoneNumber": "a",
+    "NgayTao": "2020-02-11T17:00:00.000Z",
+    "FaceBook": "a",
+    "Contact_Tag": [
+      1,
+      2
+    ]
+  }
+]

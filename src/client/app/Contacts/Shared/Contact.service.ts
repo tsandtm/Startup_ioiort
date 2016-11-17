@@ -26,8 +26,8 @@ export class ContactService {
             .catch(this.handleError);
     }
 
-    updateContact(valueID: number, valueTag: number[]) {
-        let params = JSON.stringify({ContactID: valueID, Contact_Tag: valueTag});
+    updateContact(valueID: number, valueTagID: number[], valueTagName: string[]) {
+        let params = JSON.stringify({ContactID: valueID, Contact_TagID: valueTagID, Contact_TagName: valueTagName});
         let headers = new Headers();
         console.log('params: ' +params);
         headers.append('Content-Type', 'application/json');
@@ -38,8 +38,8 @@ export class ContactService {
         .map(res => res.json());
     }
 
-    orderByTag(valueTag: number): Promise<Contact[]> {
-        return this._http.get('/api/Contact/orderByTag?Contact_Tag='+valueTag)
+    orderByTag(valueTagID: number): Promise<Contact[]> {
+        return this._http.get('/api/Contact/orderByTag?Contact_TagID='+valueTagID)
             .toPromise()
             .then(response => response.json() as Contact[])
             .catch(this.handleError);

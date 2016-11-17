@@ -67,6 +67,8 @@ export class ContactRouter {
         let option = new Contact();
         option = req.body;
 
+        console.log(option);
+
         this.contactRepo.create(option)
             .then((result) => {
                 res.status(200).json(result);
@@ -93,7 +95,7 @@ export class ContactRouter {
 
     private orderByTag = (req: Request, res: Response) => {
         let option = new Contact();
-        option.Contact_Tag = req.query.Contact_Tag;
+        option.Contact_TagID = req.query.Contact_TagID;
 
         this.contactRepo.orderByTag(option)
             .then((result) => {

@@ -44,21 +44,24 @@ var ModalContactUpdate = (function () {
     }
     ModalContactUpdate.prototype.ngOnInit = function () {
         var _this = this;
-        this.loadGetContact();
-        this.getTag().then(function () {
+        this.getContact(this.dialog.context.ContactID)
+            .then(function () {
+            return _this.getTag();
+        })
+            .then(function () {
             for (var i = 0; i < _this.Tags.length; i++) {
                 for (var j = 0; j < _this.contact.Contact_Tag.length; j++) {
                     if (_this.Tags[i].TagID == _this.contact.Contact_Tag[j]) {
                         _this.Tags[i].checked = true;
+                        _this.Tags[i].hidden = true;
                         break;
                     }
                 }
             }
+        })
+            .catch(function (error) {
+            console.error(error);
         });
-    };
-    ModalContactUpdate.prototype.loadGetContact = function () {
-        this.getContact(this.dialog.context.ContactID)
-            .then(function (result) { });
     };
     ModalContactUpdate.prototype.getTag = function () {
         var _this = this;
@@ -72,16 +75,6 @@ var ModalContactUpdate = (function () {
             return error;
         });
     };
-    // ischecked(contag: number): boolean {
-    //     for (let i = 0; i < this.contact.Contact_Tag.length; i++) {
-    //         if (this.contact.Contact_Tag[i] == contag) {
-    //             console.log(this.Tags);
-    //             return true;
-    //         }
-    //     }
-    //     console.log(this.Tags);
-    //     return false;
-    // }
     ModalContactUpdate.prototype.getContact = function (ContactID) {
         var _this = this;
         return this.contactService.getContact(ContactID)
@@ -94,7 +87,16 @@ var ModalContactUpdate = (function () {
             return error;
         });
     };
-    ModalContactUpdate.prototype.changeValueTag = function (valueID) {
+    ModalContactUpdate.prototype.removeTag = function (valueTagID) {
+        for (var i = 0; i < this.Tags.length; i++) {
+            if (valueTagID == this.Tags[i].TagID) {
+                this.Tags[i].checked = false;
+                this.Tags[i].hidden = false;
+            }
+        }
+        console.log(this.Tags);
+    };
+    ModalContactUpdate.prototype.Save = function (valueID) {
         var _this = this;
         var valueTags = new Array();
         for (var i = 0; i < this.Tags.length; i++) {

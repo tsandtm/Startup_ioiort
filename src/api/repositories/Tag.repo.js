@@ -20,7 +20,6 @@ var TagRepo = (function (_super) {
                 var tag = new Tag_model_1.Tag();
                 tag.TagID = r.TagID;
                 tag.TagNameDisplay = r.TagNameDisplay;
-                tag.TagNameKey = r.TagNameKey;
                 tag.AccountID = r.AccountID;
                 tag.IsDefault = r.IsDefault;
                 return tag;

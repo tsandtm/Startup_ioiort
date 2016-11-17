@@ -35,7 +35,6 @@ var ContactRouter = (function () {
             option = req.body;
             _this.contactRepo.create(option)
                 .then(function (result) {
-                console.log(result);
                 res.status(200).json(result);
             })
                 .catch(function (error) {
@@ -46,13 +45,8 @@ var ContactRouter = (function () {
         this.update = function (req, res) {
             var option = new Contact_model_1.Contact();
             option = req.body;
-            console.log('update');
-            console.log(option);
-            console.log(option.Contact_Tag);
-            console.log(option.ContactID);
             _this.contactRepo.update(option)
                 .then(function (result) {
-                console.log(result);
                 res.status(200).json(result);
             })
                 .catch(function (error) {
@@ -62,11 +56,9 @@ var ContactRouter = (function () {
         };
         this.orderByTag = function (req, res) {
             var option = new Contact_model_1.Contact();
-            option.Contact_Tag = req.query.Contag_Tag;
-            console.log(option);
+            option.Contact_TagID = req.query.Contact_TagID;
             _this.contactRepo.orderByTag(option)
                 .then(function (result) {
-                console.log(result);
                 res.status(200).json(result);
             })
                 .catch(function (error) {

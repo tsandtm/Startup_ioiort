@@ -47,8 +47,8 @@ export class ModalContactUpdate implements CloseGuard, ModalComponent<ContactMod
             })
             .then(() => {
                 for (let i = 0; i < this.Tags.length; i++) {
-                    for (let j = 0; j < this.contact.Contact_Tag.length; j++) {
-                        if (this.Tags[i].TagID == this.contact.Contact_Tag[j]) {
+                    for (let j = 0; j < this.contact.Contact_TagID.length; j++) {
+                        if (this.Tags[i].TagID == this.contact.Contact_TagID[j]) {
                             this.Tags[i].checked = true;
                             this.Tags[i].hidden = true;
                             break;
@@ -102,18 +102,18 @@ export class ModalContactUpdate implements CloseGuard, ModalComponent<ContactMod
     }
 
     Save(valueID: number) {
-        let valueTags = new Array();
-
+        let valueTagID = new Array();
+        let valueTagName = new Array();
+ 
         for (let i = 0; i < this.Tags.length; i++) {
             if (this.Tags[i].checked) {
-                console.log(this.Tags[i].TagID);
-                valueTags.push(this.Tags[i].TagID);
+                valueTagID.push(this.Tags[i].TagID);
+                valueTagName.push(this.Tags[i].TagNameDisplay);
             }
         }
 
-        console.log('valueTags: ' + valueTags);
 
-        this.contactService.updateContact(valueID, valueTags)
+        this.contactService.updateContact(valueID, valueTagID, valueTagName)
             .subscribe(
             data => this.postData = JSON.stringify(data),
             error => alert(error),

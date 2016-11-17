@@ -31,7 +31,6 @@ var ContactService = (function () {
     };
     ContactService.prototype.updateContact = function (valueID, valueTag) {
         var params = JSON.stringify({ ContactID: valueID, Contact_Tag: valueTag });
-        ;
         var headers = new http_1.Headers();
         console.log('params: ' + params);
         headers.append('Content-Type', 'application/json');
@@ -40,6 +39,12 @@ var ContactService = (function () {
             body: params
         })
             .map(function (res) { return res.json(); });
+    };
+    ContactService.prototype.orderByTag = function (valueTag) {
+        return this._http.get('/api/Contact/orderByTag?Contact_Tag=' + valueTag)
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
     };
     ContactService.prototype.handleError = function (error) {
         // in a real world app, we may send the server to some remote logging infrastructure

@@ -79,6 +79,16 @@ var ContactListComponent = (function () {
             return error;
         });
     };
+    ContactListComponent.prototype.orderByTag = function (valueTag) {
+        var _this = this;
+        this.contactService.orderByTag(valueTag)
+            .then(function (result) {
+            _this.Contacts = result;
+        })
+            .catch(function (error) {
+            console.error(error);
+        });
+    };
     ContactListComponent = __decorate([
         core_1.Component({
             selector: 'Contact-list',
