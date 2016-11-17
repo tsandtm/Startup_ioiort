@@ -11,7 +11,7 @@ import { ProductService } from './products/shared/product.service';
     templateUrl: 'app.component.html'
 })
 export class AppComponent {
-    pageTitle: string = 'Acme Product Management';
+   // pageTitle: string = 'Acme Product Management';
 }
 
 

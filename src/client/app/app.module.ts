@@ -6,7 +6,15 @@ import {HttpModule} from '@angular/http';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 
+import { Ng2PaginationModule } from 'ng2-pagination';
+
+
+import { ModalModule } from 'angular2-modal';
+import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
+import {NotificationsModalContext} from './notifications/notifications-modal/notifications-modal.component';
+
 import {routing} from './app.routing.module';
+
 import {AppComponent} from './app.component';
 import {BookListComponent} from './books/book-list/book-list.component';
 import {BookDetailComponent} from './books/book-detail/book-detail.component';
@@ -14,15 +22,20 @@ import { ProductListComponent } from './products/product-list/product-list.compo
 import { ProductService } from './products/shared/product.service';
 import { WelcomeComponent } from './home/welcome.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
-import {ProductFilterPipe} from './products/product-filter/product-filter.pipe'
-import {StarComponent} from './shared/star.component'
-import { ContactListComponent } from './Contacts/Contact-list/Contact-list.component';
-//BarChartDemoComponent
 import { BarChartDemoComponent } from './Reports/Report/Report.component';
-
+import {ProductFilterPipe} from './products/product-filter/product-filter.pipe';
+import {StarComponent} from './shared/star.component';
+import { MenuListComponent } from './menu/menu-list/menu-list.component';
+import {ContactsListComponent} from './contacts/contacts-list/contacts-list.component';
+import {ContactsService} from './contacts/shared/contacts.service';
+import {NotificationsListComponent} from './notifications/notifications-list/notifications-list.component';
+import {NotificationstDetailComponent} from './notifications/notifications-detail/notifications-detail.component';
+import { NotificationsService } from './notifications/shared/notifications.service';
+import {YeucaubanListComponent} from './yeucauban/yeucauban-list/yeucauban-list.component';
+import { YeucaubanService } from './yeucauban/shared/yeucauban.service';
 @NgModule({
-    imports: [BrowserModule,routing,FormsModule,HttpModule,ChartsModule],
-    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService],
+    imports: [BrowserModule,routing,FormsModule,HttpModule, Ng2PaginationModule,ChartsModule],
+    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,ContactsService,NotificationsService,YeucaubanService ],
     declarations: [AppComponent,
     BookListComponent,
     BookDetailComponent,
@@ -31,9 +44,13 @@ import { BarChartDemoComponent } from './Reports/Report/Report.component';
     ProductListComponent,
     ProductFilterPipe,
     StarComponent,
-    ContactListComponent,
-    BarChartDemoComponent
-    ],
+    BarChartDemoComponent,
+    MenuListComponent,
+    ContactsListComponent,
+    NotificationsListComponent,
+    NotificationstDetailComponent,
+    YeucaubanListComponent,
+    StarComponent],
     bootstrap: [AppComponent]
 })
 export class AppModule{}
