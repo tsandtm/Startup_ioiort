@@ -1,0 +1,190 @@
+
+<h2><strong>{{pageTitle}}</strong></h2>
+<div class="container">
+	<form>
+		<h3><strong>Who</strong></h3>
+		<hr />
+		<div class="container">
+			<div class="col-md-8">
+					<div class="form-group">
+						<p>(*) From:<p>
+						<select #AppName class="form-control" (change)='AppID = AppName.value'>
+                    		<option *ngFor='let item of Apps'[value]="item.AppID">{{item.AppName}}</option>
+						</select>
+						<h6><i>Chọn server thực hiện gửi</i></h6>
+					</div>
+					<p>(*) To:<p>
+					<div class="form-group">
+						<tag-input name="tag"
+						[ngModel]="ACTag"
+						[placeholder]="optionsTag.placeholder"
+						[secondaryPlaceholder]="optionsTag.secondaryPlaceholder"
+						[onlyFromAutocomplete]="true"
+						[autocompleteItems]="ACTagItem"
+						[autocomplete]="true"
+						[showDropdownIfEmpty]="true"
+           				(onAdd)="TagAdded($event)"
+           				(onRemove)="TagRemoved($event)">
+						</tag-input>
+					</div>
+					<div class="form-group">
+						<tag-input name="contact"
+						[placeholder]="optionsContact.placeholder"
+						[secondaryPlaceholder]="optionsContact.secondaryPlaceholder"
+						[ngModel]="ACContact"
+						[onlyFromAutocomplete]="true"
+						[autocompleteItems]="ACContactItem"
+						[autocomplete]="true"
+						[showDropdownIfEmpty]="true"
+           				(onAdd)="ContactAdded($event)"
+           				(onRemove)="ContactRemoved($event)">
+						</tag-input>
+					</div>  
+					<div class="form-group">
+						<tag-input name="tagdenied"
+						[placeholder]="optionsTagDenied.placeholder"
+						[secondaryPlaceholder]="optionsTagDenied.secondaryPlaceholder"
+						[ngModel]="ACTagDenied"
+						[onlyFromAutocomplete]="true"
+						[autocompleteItems]="ACTagItem"
+						[autocomplete]="true"
+						[showDropdownIfEmpty]="true"
+           				(onAdd)="TagDeniedAdded($event)"
+           				(onRemove)="TagDeniedRemoved($event)">
+						</tag-input>
+					</div>  
+					<div class="form-group">
+						<tag-input name="contactdenied"
+						[placeholder]="optionsContactDenied.placeholder"
+						[secondaryPlaceholder]="optionsContactDenied.secondaryPlaceholder"
+						[ngModel]="ACContactDenied"
+						[onlyFromAutocomplete]="true"
+						[autocompleteItems]="ACContactItem"
+						[autocomplete]="true"
+						[showDropdownIfEmpty]="true"
+           				(onAdd)="ContactDeniedAdded($event)"
+           				(onRemove)="ContactDeniedRemoved($event)">
+						</tag-input>
+					</div>  
+			</div>
+			<div class="col-md-4">
+				<section>
+					<div class="panel panel-info">
+					    <div class="panel-heading">Hướng dẫn</div>
+					    <div class="panel-body"></div>
+					</div>
+				</section>
+			</div>
+		</div>
+		<h3><strong>What</strong></h3>
+		<hr />
+		<div class="container">
+			<div class="col-md-8">
+					<p>(*) Message Title:<p>
+					<div class="form-group">
+						<input type="text" class="form-control" name="tieude" [(ngModel)]="tieude">
+						<h6><i>Tiêu đề gửi,sẽ hiển thị trên người dùng</i></h6>
+					</div>
+					<p>(*) Message Body:<p>  
+					<div class="form-group">
+						<textarea class="form-control" rows="6" name="noidung" [(ngModel)]="Noidung"></textarea>
+						<h6><i>Nội dung gửi,sẽ hiển thị trên người dùng</i></h6>
+					</div>
+			</div>
+			<div class="col-md-4">
+				<section>
+					<div class="panel panel-info">
+					    <div class="panel-heading">Hướng dẫn</div>
+					    <div class="panel-body"></div>
+					</div>
+				</section>
+			</div>
+		</div>
+		<h3><strong>When</strong></h3>
+		<hr />
+		<div class="container">
+			<div class="col-md-8">
+				<div class="form-group">
+					<label class="radio-inline">
+						<input type="radio" (click)='sendnowclick()'[checked]="sendnow">Send Now
+					</label>
+					<label class="radio-inline">
+						<input type="radio" (click)='sendlaterclick()'[checked]="sendlater">Send Later
+					</label>
+				</div>
+				<div class="form-inline" *ngIf='sendlater'>
+					<div class="form-group">
+						<input type="date" class="form-control" name="date" [(ngModel)]="date">
+						<h6><i>(*) Ngày</i></h6>
+					</div>
+					<div class="form-group">
+						<select #Hour class="form-control" (change)='hour = Hour.value'>
+							<option *ngFor='let item of loophour'
+							[value]="item"
+							[selected]="item==12"
+							>{{item}}
+							</option>
+						</select>
+						<h6><i>(*) Giờ</i></h6>
+					</div>
+					<div class="form-group">
+						<select #Minute class="form-control" (change)='minute = Minute.value'>
+							<option *ngFor='let item of loopminute'
+							[value]="item">
+							{{item}}
+							</option>
+						</select>
+						<h6><i>(*) Phút</i></h6>
+					</div>
+				</div>
+				<hr />
+				<div class="form-inline">
+					<div class="form-group">
+						<select #DoUuTien class="form-control" (change)='doUuTien = DoUuTien.value'>
+							<option value="1">Normal</option>
+							<option value="2">High</option>
+						</select>
+						<h6><i>Độ ưu tiên</i></h6>
+					 </div>
+					<div class="form-group">
+						<select #ThoiHannum class="form-control" (change)='thoiHannum = ThoiHannum.value'>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<template [ngIf]="thoiHanDV=='Day'">
+								<option *ngFor='let item of loopdayTH'
+								[value]="item">
+								{{item}}
+								</option>
+							</template>
+							<template [ngIf]="thoiHanDV=='Hour'">
+								<option *ngFor='let item of loophourTH'
+								[value]="item">
+								{{item}}
+								</option>
+							</template>
+							<template [ngIf]="thoiHanDV=='Minute'">
+								<option *ngFor='let item of loopminuteTH'
+								[value]="item">
+								{{item}}
+								</option>
+							</template>
+						</select>
+						<h6><i>Thời hạn tối đa</i></h6>
+					</div>
+					<div class="form-group">
+						<select #ThoiHanDV class="form-control" (change)='thoiHanDV = ThoiHanDV.value;'>
+							<option value="Week">Week</option>
+							<option value="Day">Day</option>
+							<option value="Hour">Hour</option>
+							<option value="Minute">Minute</option>
+						</select>
+						<h6><i>...</i></h6>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button type="button" style="float:right" class="btn btn-success btn-lg" (click)='Create()'>Next>></button>
+	</form>       
+</div>

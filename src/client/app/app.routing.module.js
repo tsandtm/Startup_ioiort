@@ -18,5 +18,6 @@ var appRoutes = [
     { path: 'Contacts', component: Contact_list_component_1.ContactListComponent },
     { path: 'Reports', component: Report_component_1.BarChartDemoComponent },
     { path: 'Reports', component: Report_component_1.BarChartDemoComponent }
+    { path: 'product/:id', component: product_detail_component_1.ProductDetailComponent }
 ];
 exports.routing = router_1.RouterModule.forRoot(appRoutes);

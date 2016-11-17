@@ -25,10 +25,14 @@
       // other libraries
       'rxjs':                      'npm:',
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
+
       'ng2-charts' : 'npm:ng2-charts',
       'angular2-modal': 'npm:angular2-modal/bundles/angular2-modal.umd.js',
       'angular2-modal/plugins/bootstrap': 'npm:angular2-modal/bundles/angular2-modal.' + plugin + '.umd.js',
       'ng2-pagination': 'npm:ng2-pagination'
+      'angular2-tag-input' : 'npm:angular2-tag-input/dist/angular2-tag-input.bundle.js',
+      'ng2-tag-input':'npm:ng2-tag-input/dist/ng2-tag-input.bundle.js',
+      'socket.io-client': "npm:socket.io-client/socket.io.js"
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -46,6 +50,16 @@
       'ng2-pagination':{
          main: './index.js',
          defaultExtension: 'js'
+      'angular2-tag-input':{
+        // main: './dist/index.js',
+        defaultExtension: 'js'
+      },
+      'ng2-tag-input':{
+        defaultExtension: 'js'
+      },
+      'socket.io-client':{
+        defaultExtension: 'js'
+      }
     }
   }
   });

@@ -6,6 +6,7 @@ import { BookDetailComponent } from './books/book-detail/book-detail.component';
 import { ProductListComponent } from './products/product-list/product-list.component';
 import { ProductService } from './products/shared/product.service';
 import { WelcomeComponent } from './home/welcome.component';
+import { NotifiSendComponent } from './notification-send/notification.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import { BarChartDemoComponent } from './Reports/Report/Report.component';
 import { MenuListComponent } from './menu/menu-list/menu-list.component';
@@ -13,6 +14,8 @@ import {ContactsListComponent} from './contacts/contacts-list/contacts-list.comp
 import {NotificationsListComponent} from './notifications/notifications-list/notifications-list.component';
 import {NotificationstDetailComponent} from './notifications/notifications-detail/notifications-detail.component';
 import {YeucaubanListComponent} from './yeucauban/yeucauban-list/yeucauban-list.component';
+import { ConfirmComponent } from './notification-send/confirm.component';
+
 const appRoutes: Route[] = [
     { path: '', redirectTo: 'notification', pathMatch: 'full' },
     { path: 'book-list', component: BookListComponent },
@@ -26,6 +29,8 @@ const appRoutes: Route[] = [
     { path: 'notification', component: NotificationsListComponent },
     { path: 'notification-detail/:id', component: NotificationstDetailComponent },
     { path: 'yeucauban', component: YeucaubanListComponent },
+    { path: 'notifi-send', component: NotifiSendComponent },
+    { path: 'confirm/:id', component: ConfirmComponent },
 ]
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
