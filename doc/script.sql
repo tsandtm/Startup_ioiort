@@ -11,7 +11,8 @@ Create table test."Contacts"
 	"PhoneNumber" Varchar(50),
 	"NgayTao" Timestamp,
 	"FaceBook" Varchar(256),
-	"Contact_Tag" Integer[],
+	"Contact_TagID" Integer[],
+	"Contact_TagName" Text[],
  primary key ("ContactID")
 ) Without Oids;
 
@@ -38,10 +39,14 @@ Create table test."n_Notifications"
 	"DoUuTien" Integer,
 	"TrangThaiGoi" Integer,
 	"SoLuong" Integer,
-	"Send_User" Integer[],
-	"Send_Tag" Integer[],
-	"Send_UserDenie" Integer[],
-	"Send_TagDenie" Integer[],
+	"Send_UserID" Integer[],
+	"Send_UserName" Text[],
+	"Send_TagID" Integer[],
+	"Send_TagName" Text[],
+	"Send_UserDenieID" Integer[],
+	"Send_UserDenieName" Text[],
+	"Send_TagDenieID" Integer[],
+	"Send_TagDenieName" Text[],
  primary key ("NotifiID")
 ) Without Oids;
 
@@ -50,7 +55,6 @@ Create table test."n_Tag"
 (
 	"TagID" Integer NOT NULL,
 	"TagNameDisplay" Varchar(256),
-	"TagNameKey" Varchar(256),
 	"AccountID" Varchar(128),
 	"IsDefault" Boolean,
  primary key ("TagID")
@@ -99,15 +103,18 @@ Alter table test."n_Contacts_Notifications" add  foreign key ("NotifiID") refere
 Alter table test."Users_Contacts" add  foreign key ("AccountID") references test."AccountID" ("AccountID") on update restrict on delete restrict;
 
 INSERT INTO test."Contacts"(
-	"ContactID", "Token", "Email", "TaiKhoan", "Device", "PhoneNumber", "NgayTao", "FaceBook", "Contact_Tag")
-	VALUES (1, 'a', 'a', 'a', 'a', 'a', '12/2/2020', 'a', '{1}'),
-     		(2, 'b', 'b', 'b', 'b', 'b', '12/2/2020', 'b', '{2}'),
-			(3, 'b', 'b', 'b', 'b', 'b', '12/2/2020', 'b', '{3}'),
-			(4, 'b', 'b', 'b', 'b', 'b', '12/2/2020', 'b', '{1,2}'),
-			(5, 'b', 'b', 'b', 'b', 'b', '12/2/2020', 'b', '{2,3}');
+	"ContactID", "Token", "Email", "TaiKhoan", "Device", "PhoneNumber", "NgayTao", "FaceBook", "Contact_TagID", "Contact_TagName")
+	VALUES  (1, 'a', 'a', 'a', 'a', 'a', '12/12/2016', 'a', '{1}', '{default}'),
+			(2, 'b', 'a', 'a', 'a', 'a', '12/12/2016', 'a', '{2}', '{denine}'),
+			(3, 'c', 'a', 'a', 'a', 'a', '12/12/2016', 'a', '{3}', '{block}'),
+			(4, 'd', 'a', 'a', 'a', 'a', '12/12/2016', 'a', '{1,2}', '{default,denine}'),
+			(5, 'e', 'a', 'a', 'a', 'a', '12/12/2016', 'a', '{2,3}', '{denine,block}'),
+			(6, 'f', 'a', 'a', 'a', 'a', '12/12/2016', 'a', '{1,2,3}', '{default,denine,block}');
+
 -- 2 table khac nhau nho ngan cach bang dau ;
+
 INSERT INTO test."n_Tag"(
-	"TagID", "TagNameDisplay", "TagNameKey", "AccountID", "IsDefault")
-	VALUES (1, 'default', 'a', 1, true),
-    		(2, 'app', 'a', 1, false),
-			(3, 'module', 'a', 1, true)
+	"TagID", "TagNameDisplay", "AccountID", "IsDefault")
+	VALUES  (1, 'default', 1, true),
+    		(2, 'denine', 2, false),
+            (3, 'block', 1, true);

@@ -12,6 +12,9 @@ import {routing} from './app.routing.module';
 import {AppComponent} from './app.component';
 import {BookListComponent} from './books/book-list/book-list.component';
 import {BookDetailComponent} from './books/book-detail/book-detail.component';
+
+// modal module
+
 import { ProductListComponent } from './products/product-list/product-list.component';
 import { ProductService } from './products/shared/product.service';
 import { NotifiService } from './notification-send/shared/notifi.service';
@@ -35,10 +38,27 @@ import { ConfirmComponent } from './notification-send/confirm.component';
 //import {RlTagInputModule} from 'angular2-tag-input';
 import { TagInputModule } from 'ng2-tag-input';
 import * as io from 'socket.io-client';
+import { ContactListComponent } from './Contacts/Contact-list/Contact-list.component';
+import { ContactFilterPipe } from './Contacts/Contact-filter/Contact-filter.pipe';
+import { ContactDetailComponent } from './Contacts/Contact-detail/Contact-detail.component';
+// Trùng tên contactService  với thánh Võ
+import { ContactService } from './Contacts/shared/Contact.service';
+import { ModalContactUpdate } from './Contacts/Contact-update/Contact-update.component';
 @NgModule({
-    imports: [BrowserModule,routing,FormsModule,HttpModule, Ng2PaginationModule,ChartsModule,TagInputModule],
+    imports: [
+        BrowserModule,
+        routing,
+        FormsModule,
+        HttpModule, 
+        Ng2PaginationModule,
+        ChartsModule,
+        TagInputModule,
+        ModalModule.forRoot(),
+        BootstrapModalModule
+        ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,ContactsService,NotificationsService,YeucaubanService,ContactService,NotifiService,TagService ],
-    declarations: [AppComponent,
+    declarations: [
+    AppComponent,
     NotifiSendComponent,
     BookListComponent,
     BookDetailComponent,
@@ -53,7 +73,14 @@ import * as io from 'socket.io-client';
     NotificationstDetailComponent,
     YeucaubanListComponent,
     StarComponent,
-    ConfirmComponent],
-    bootstrap: [AppComponent]
+    ConfirmComponent,
+    ContactListComponent,
+    ContactDetailComponent,
+    ContactFilterPipe,
+    ModalContactUpdate
+    ],
+    bootstrap: [AppComponent],
+    entryComponents: [ModalContactUpdate]
+
 })
-export class AppModule{}
+export class AppModule { }

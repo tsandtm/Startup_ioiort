@@ -3,4 +3,6 @@ export class Tag {
     TagNameDisplay: string;
     AccountID: string;
     IsDefault: boolean;
+    checked: boolean = false;
+    hidden: boolean = false;
 }

@@ -7,5 +7,6 @@ export class Contact {
     PhoneNumber: string;
     NgayTao: string;
     FaceBook: string;
-    Contact_Tag: number[];
+    Contact_TagID: number[];
+    Contact_TagName: string[];
 }

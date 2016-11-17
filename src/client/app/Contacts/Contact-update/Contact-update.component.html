@@ -1,0 +1,56 @@
+<div *ngIf='contact'>
+    <div class="header">
+        <button type="button" class="close" (click)='onClose()'>&times;</button>
+        <div class="col-sm-12" style="padding:0 0 0 5px; border-bottom:3px solid #eee">Thêm tag
+
+        </div>
+    </div>
+
+    <div class="body">
+        <div class="row">
+            <div class="col-sm-12" style="margin: 10px 0 0 5px">
+                <div class="col-sm-5" *ngIf='Tags && Tags.length'>
+                    <div *ngFor='let itemTag of Tags'>
+                        <div *ngIf='!itemTag.hidden'>
+                            <input type="checkbox" value="{{ itemTag.TagID }}" [(ngModel)]='itemTag.checked' [checked]='itemTag.checked' />                            {{ itemTag.TagNameDisplay }}<br>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="table table-bordered" style="border: 2px solid black">
+                        <tbody>
+
+                            <div class="col-sm-12" *ngFor='let itemTag of Tags'>
+                                <div *ngIf='itemTag.checked'>
+                                    <td>
+                                    <div class="col-sm-5" *ngIf='itemTag.checked'>
+                                        <p>
+                                            {{ itemTag.TagNameDisplay }}
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-7" *ngIf='itemTag.checked'>
+                                        <span><i class="fa fa-trash-o" aria-hidden="true" (click)='removeTag(itemTag.TagID)'></i></span>
+                                    </div>
+                                </td>
+                                </div>
+                                
+                            </div>
+
+                        </tbody>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px; margin-bottom: 10px">
+                    <div class='col-sm-12 text-center'>
+                        <button class="btn btn-success" (click)='Save(contact.ContactID)'>
+                        save
+                    </button> &nbsp;&nbsp;
+                        <button class="btn btn-success" (click)='onClose()'>
+                        Back
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
