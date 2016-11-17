@@ -5,7 +5,6 @@ import path = require('path');
 // import các module tạo table
 import { ContactRepo } from '../repositories/Contact.repo';
 
-
 export class ContactRouter {
 
     private router: Router;

@@ -12,6 +12,7 @@ export class ContactRepo extends RepoBase {
         let queryText = 'select * from test."Contacts"';
         let pResult;
 
+        console.info('Excute: ' + queryText);
         if (option.Contact_Tag != undefined) {
             pResult = this._pgPool.query(queryText + 'where "Contact_Tag" = ' + "'{" + option.Contact_Tag + "}'")
 
@@ -43,5 +44,35 @@ export class ContactRepo extends RepoBase {
             });
     }
 
-   
+    public getOne(option): Promise<Contact> {
+        let queryText = 'select * from test.Contacts where "Contact_Tag" = $1';
+
+        console.info('Excute: ' + queryText);
+
+        return this._pgPool.query(queryText, [option.Contact_Tag])
+            .then(result => {
+                let contact = new Contact();
+                contact.ContactID = result.rows[0].ContactID;
+                contact.Token = result.rows[0].Token;
+                contact.Email = result.rows[0].Email;
+                contact.TaiKhoan = result.rows[0].TaiKhoan;
+                contact.Device = result.rows[0].Device;
+                contact.PhoneNumber = result.rows[0].PhoneNumber;
+                contact.NgayTao = result.rows[0].NgayTao;
+                contact.FaceBook = result.rows[0].FaceBook;
+                contact.Contact_Tag = result.rows[0].Contact_Tag;
+                return contact;
+            });
+    }
+
+    // public count(option): Promise<number> {
+    //     let queryText = 'select count(*) as abc from test.books';
+
+    //     console.info('Excute: ' + queryText);
+
+    //     return this._pgPool.query(queryText)
+    //         .then(result => {
+    //             return result.rows[0].abc
+    //         })
+    // }
 }
