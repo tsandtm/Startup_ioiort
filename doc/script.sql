@@ -98,3 +98,16 @@ Alter table test."n_Contacts_Notifications" add  foreign key ("NotifiID") refere
 
 Alter table test."Users_Contacts" add  foreign key ("AccountID") references test."AccountID" ("AccountID") on update restrict on delete restrict;
 
+INSERT INTO test."Contacts"(
+	"ContactID", "Token", "Email", "TaiKhoan", "Device", "PhoneNumber", "NgayTao", "FaceBook", "Contact_Tag")
+	VALUES (1, 'a', 'a', 'a', 'a', 'a', '12/2/2020', 'a', '{1}'),
+     		(2, 'b', 'b', 'b', 'b', 'b', '12/2/2020', 'b', '{2}'),
+			(3, 'b', 'b', 'b', 'b', 'b', '12/2/2020', 'b', '{3}'),
+			(4, 'b', 'b', 'b', 'b', 'b', '12/2/2020', 'b', '{1,2}'),
+			(5, 'b', 'b', 'b', 'b', 'b', '12/2/2020', 'b', '{2,3}');
+-- 2 table khac nhau nho ngan cach bang dau ;
+INSERT INTO test."n_Tag"(
+	"TagID", "TagNameDisplay", "TagNameKey", "AccountID", "IsDefault")
+	VALUES (1, 'default', 'a', 1, true),
+    		(2, 'app', 'a', 1, false),
+			(3, 'module', 'a', 1, true)

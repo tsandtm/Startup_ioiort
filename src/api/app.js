@@ -7,11 +7,16 @@ var app = express();
 // sử dụng các middleware
 app.use(body_parser.urlencoded({ extended: true }));
 app.use(body_parser.json());
-// import router
 var book_router_1 = require('./routes/book.router');
-var Contact_router_1 = require('./routes/Contact.router');
 var Report_router_1 = require('./routes/Report.router');
+var contacts_router_1 = require('./routes/contacts.router');
+var notifications_router_1 = require('./routes/notifications.router');
+var yeucauban_router_1 = require('./routes/yeucauban.router');
 // sử dụng các router được định nghĩa từ các modules
-app.use('/api', [(new book_router_1.BookRouter()).getRouter(), (new Contact_router_1.ContactRouter()).getRouter(), (new Report_router_1.ReportRouter()).getRouter()]);
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = app;
+app.use('/api', [(new book_router_1.BookRouter()).getRouter()]);
+app.use('/api', [(new contacts_router_1.ContactsRouter()).getRouter()]);
+app.use('/api', [(new notifications_router_1.NotificationsRouter()).getRouter()]);
+app.use('/api', [(new yeucauban_router_1.YeucaubanRouter()).getRouter()]);
+app.use('/api', [(new Report_router_1.ReportRouter()).getRouter()]);
+exports.__esModule = true;
+exports["default"] = app;

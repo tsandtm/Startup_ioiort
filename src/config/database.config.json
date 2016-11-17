@@ -1,8 +1,8 @@
 {
     "development": {
-        "database": "testdb2",
+        "database": "testdb",
         "username": "postgres",
-        "password": "200494",
+        "password": "",
         "config": {
             "dialect": "postgres",
             "define": {
@@ -20,7 +20,7 @@
             "min": 4
         },
         "idleTimeoutMillis": 2000,
-        "schema": "public"
+        "schema": "test"
         
     },
     "test": {
