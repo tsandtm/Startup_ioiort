@@ -8,19 +8,10 @@ export class ContactRepo extends RepoBase {
         super();
     }
 
-    public getList(option): Promise<Contact[]> {
-        let queryText = 'select * from test."Contacts"';
+    public getList(option: Contact): Promise<Contact[]> {
+        let queryText = 'select * from test."Contacts" ORDER BY "ContactID" ASC';
         let pResult;
-
-        console.info('Excute: ' + queryText);
-        if (option.Contact_Tag != undefined) {
-            pResult = this._pgPool.query(queryText + 'where "Contact_Tag" = ' + "'{" + option.Contact_Tag + "}'")
-
-            console.info(option.Contact_Tag)
-        } else {
-            pResult = this._pgPool.query(queryText)
-        }
-
+        pResult = this._pgPool.query(queryText)
 
         return pResult.then(result => {
             let Contacts: Contact[] = result.rows.map(r => {
@@ -33,7 +24,8 @@ export class ContactRepo extends RepoBase {
                 contact.PhoneNumber = r.PhoneNumber;
                 contact.NgayTao = r.NgayTao;
                 contact.FaceBook = r.FaceBook;
-                contact.Contact_Tag = r.Contact_Tag;
+                contact.Contact_TagID = r.Contact_TagID;
+                contact.Contact_TagName = r.Contact_TagName;
                 return contact;
             });
             return Contacts;
@@ -45,11 +37,9 @@ export class ContactRepo extends RepoBase {
     }
 
     public getOne(option): Promise<Contact> {
-        let queryText = 'select * from test.Contacts where "Contact_Tag" = $1';
+        let queryText = 'select * from test."Contacts" where "ContactID" = $1';
 
-        console.info('Excute: ' + queryText);
-
-        return this._pgPool.query(queryText, [option.Contact_Tag])
+        return this._pgPool.query(queryText, [option.ContactID])
             .then(result => {
                 let contact = new Contact();
                 contact.ContactID = result.rows[0].ContactID;
@@ -60,19 +50,64 @@ export class ContactRepo extends RepoBase {
                 contact.PhoneNumber = result.rows[0].PhoneNumber;
                 contact.NgayTao = result.rows[0].NgayTao;
                 contact.FaceBook = result.rows[0].FaceBook;
-                contact.Contact_Tag = result.rows[0].Contact_Tag;
+                contact.Contact_TagID = result.rows[0].Contact_Tag;
+                contact.Contact_TagName = result.rows[0].Contact_TagName;
                 return contact;
             });
     }
 
-    // public count(option): Promise<number> {
-    //     let queryText = 'select count(*) as abc from test.books';
+    public create(option): Promise<Contact> {
+        let queryText = 'INSERT INTO test."Contacts" ("ContactID", "Token", "Email", "TaiKhoan", "Device", "PhoneNumber", "NgayTao", "FaceBook", "Contact_TagID", "Contact_TagName") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)';
+        return this._pgPool.query(queryText, [option.ContactID, option.Token, option.Email, option.TaiKhoan, option.Device, option.PhoneNumber, option.NgayTao, option.FaceBook, option.Contact_TagID, option.Contact_TagName])
+            .then(result => {
+                return option;
+            });
+    }
 
-    //     console.info('Excute: ' + queryText);
+    public update(option: Contact): Promise<Contact> {
+        let queryText;
+        console.log(option.Contact_TagID);
+        if (option.Contact_TagID.length != 0) {
+            for (let i = 0; i < option.Contact_TagID.length; i++) {
+                option.Contact_TagID[i] = parseInt(option.Contact_TagID[i].toString(), 10)
+            }
+            queryText = 'UPDATE test."Contacts" SET "Contact_TagID" = \'{ ' + option.Contact_TagID + ' }\', "Contact_TagName" = \'{ ' + option.Contact_TagName + ' }\' WHERE "ContactID" = ' + option.ContactID;
+        }
+        else {
+            queryText = 'UPDATE test."Contacts" SET "Contact_TagID" = \'{}\', "Contact_TagName" = \'{}\'  WHERE "ContactID" = ' + option.ContactID;
+        }
+        return this._pgPool.query(queryText)
+            .then(result => {
+                return option;
+            });
+    }
 
-    //     return this._pgPool.query(queryText)
-    //         .then(result => {
-    //             return result.rows[0].abc
-    //         })
-    // }
+    public orderByTag(option): Promise<Contact[]> {
+        option.Contact_TagID = parseInt(option.Contact_TagID, 10)
+        let queryText = 'select * from test."Contacts" order by "Contact_TagID" = \'{ ' + option.Contact_TagID + ' }\' desc';
+        let pResult = this._pgPool.query(queryText);
+
+        return pResult.then(result => {
+            let Contacts: Contact[] = result.rows.map(r => {
+                let contact = new Contact();
+                contact.ContactID = r.ContactID;
+                contact.Token = r.Token;
+                contact.Email = r.Email;
+                contact.TaiKhoan = r.TaiKhoan;
+                contact.Device = r.Device;
+                contact.PhoneNumber = r.PhoneNumber;
+                contact.NgayTao = r.NgayTao;
+                contact.FaceBook = r.FaceBook;
+                contact.Contact_TagID = r.Contact_TagID;
+                contact.Contact_TagName = r.Contact_TagName;
+                return contact;
+            });
+            return Contacts;
+        })
+            .catch(err => {
+                console.error(err.message);
+                return null;
+            });
+    }
+
 }

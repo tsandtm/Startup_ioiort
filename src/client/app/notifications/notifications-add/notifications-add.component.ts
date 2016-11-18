@@ -1,5 +1,4 @@
 import { Component,OnInit}  from '@angular/core';
-
 import { Notifications } from '../shared/notifications.model';
 import { NotificationsService } from '../shared/notifications.service';
 
