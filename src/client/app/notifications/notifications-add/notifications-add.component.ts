@@ -1,6 +1,4 @@
 import { Component,OnInit}  from '@angular/core';
-import { DialogRef, ModalComponent, CloseGuard } from 'angular-modal';
-import { BSModalContext } from 'angular-modal/plugins/bootstrap';
 
 import { Notifications } from '../shared/notifications.model';
 import { NotificationsService } from '../shared/notifications.service';

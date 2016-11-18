@@ -18,7 +18,7 @@ export class ContactRouter {
 
     public getRouter(): Router {
 
-        this.router.route('/Contact')
+        this.router.route('/Contactnotifi')
             .get(this.getAllContact)
         // .post(this.createAContact)
         // .delete(this.deleteAContact);
