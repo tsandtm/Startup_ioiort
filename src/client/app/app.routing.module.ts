@@ -17,7 +17,7 @@ import {YeucaubanListComponent} from './yeucauban/yeucauban-list/yeucauban-list.
 import { ConfirmComponent } from './notification-send/confirm.component';
 import { ContactListComponent } from './Contacts/Contact-list/Contact-list.component';
 import { ContactDetailComponent } from './Contacts/Contact-detail/Contact-detail.component';
-
+import {NotificationstDetailEditComponent} from './notifications/notifications-detailedit/notifications-detailedit.component';
 const appRoutes: Route[] = [
     { path: '', redirectTo: 'notification', pathMatch: 'full' },
     { path: 'book-list', component: BookListComponent },
@@ -37,7 +37,11 @@ const appRoutes: Route[] = [
     { path: 'products', component: ProductListComponent },
     { path: 'product/:id', component: ProductDetailComponent },
     { path: 'Contacts', component: ContactListComponent },
-    { path: 'Contacts/:ContactID', component: ContactDetailComponent}
+    { path: 'Contacts/:ContactID', component: ContactDetailComponent},
+   // { path: 'products', component: ProductListComponent },
+   // { path: 'product/:id', component: ProductDetailComponent},
+    { path: 'notification-detailedit/:id', component: NotificationstDetailEditComponent },
+
 ]
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

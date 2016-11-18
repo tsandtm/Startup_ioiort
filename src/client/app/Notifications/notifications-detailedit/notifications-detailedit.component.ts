@@ -8,15 +8,19 @@ import { AppService } from './shared/app.service';
 import { NotifiService } from './shared/notifi.service';
 import { ContactService } from './shared/contact.service';
 import { TagService } from './shared/tag.service';
+import { NotificationsService } from '../shared/notifications.service';
+import { Notifications } from '../shared/notifications.model';
 @Component({
-    templateUrl: '/notification-send/notification.component.html',
+    templateUrl: 'notifications/notifications-detailedit/notifications-detailedit.component.html',
     providers: [AppService,NotifiService,ContactService,TagService]
 })
-export class NotifiSendComponent implements OnInit{
+export class NotificationstDetailEditComponent implements OnInit{
+    @Input() notifications: Notifications;
     optionsTag = {
         placeholder: "+ Tag",
         secondaryPlaceholder: "Tag",
     }
+    
     optionsContact = {
         placeholder: "+ Contact",
         secondaryPlaceholder: "Contact",
@@ -75,7 +79,10 @@ export class NotifiSendComponent implements OnInit{
     loophourTH:number[];
     loopminuteTH:number[];
     public pageTitle: string = 'Notification';
-    constructor(private appService: AppService,
+    
+    constructor(
+    private _notificationsService: NotificationsService,
+    private appService: AppService,
     private notifiservice:NotifiService,
     private tagservice:TagService,
     private contactservice:ContactService,
@@ -103,28 +110,6 @@ export class NotifiSendComponent implements OnInit{
         var num=item.slice(0,pos);
         this.delPos(this.listIDContact,parseInt(num));
     }
-<<<<<<< HEAD
-    public TagDeniedAdded(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        this.listIDTagDenied.push(parseInt(num));
-    }
-    public TagDeniedRemoved(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        this.delPos(this.listIDTagDenied,parseInt(num));
-    }
-    public ContactDeniedAdded(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        this.listIDContactDenied.push(parseInt(num));
-    }
-    public ContactDeniedRemoved(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        this.delPos(this.listIDContactDenied,parseInt(num));
-    }
-=======
     // public TagDeniedAdded(item:string) {
     //     var pos=item.indexOf('.');
     //     var num=item.slice(0,pos);
@@ -147,7 +132,6 @@ export class NotifiSendComponent implements OnInit{
     //     this.delPos(this.listIDContact,parseInt(num));
     //     console.log(this.listIDContact.toString());
     // }
->>>>>>> bao-f-notifi-qlnotifi
     delPos(ar:Array<number>,key:number){
         for(var i=0;i<=ar.length;i++){
             if(ar[i]==key){
@@ -226,45 +210,6 @@ export class NotifiSendComponent implements OnInit{
         else{
             this.ThoiHan=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString(); 
         }
-<<<<<<< HEAD
-        if(this.listIDTag.length==0 && this.listIDContact.length==0)
-        {
-            this.getslsenddenied({contactdenied:this.listIDContactDenied,tagdenied:this.listIDTagDenied}).then(result=>{
-                this.notifi={AppID:this.AppID,
-                NotifiID:this.notifiID,
-                TieuDe:this.tieude,
-                Noidung:this.Noidung,
-                DoUuTien:this.doUuTien,
-                Trangthai:this.Trangthai,
-                Soluong:result,
-                Thoigiangui:this.Thoigiangui,
-                ThoiHan:this.ThoiHan,
-                SendTag:this.listIDTag,
-                SendUser:this.listIDContact,
-                DeniedTag:this.listIDTagDenied,
-                DeniedUser:this.listIDContactDenied};
-                this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
-            })
-        }
-        else{
-            this.getslsend({contact:this.listIDContact,tag:this.listIDTag,contactdenied:this.listIDContactDenied,tagdenied:this.listIDTagDenied}).then(result=>{
-                this.notifi={AppID:this.AppID,
-                NotifiID:this.notifiID,
-                TieuDe:this.tieude,
-                Noidung:this.Noidung,
-                DoUuTien:this.doUuTien,
-                Trangthai:this.Trangthai,
-                Soluong:this.Soluong,
-                Thoigiangui:this.Thoigiangui,
-                ThoiHan:this.ThoiHan,
-                SendTag:this.listIDTag,
-                SendUser:this.listIDContact,
-                DeniedTag:this.listIDTagDenied,
-                DeniedUser:this.listIDContactDenied};
-                this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
-            })
-        }
-=======
         this.notifi={AppID:this.AppID,
         NotifiID:this.notifiID,
         TieuDe:this.tieude,
@@ -279,22 +224,12 @@ export class NotifiSendComponent implements OnInit{
         DeniedTag:this.listIDTagDenied,
         DeniedUser:this.listIDContactDenied};
         this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
->>>>>>> bao-f-notifi-qlnotifi
     }
 
 
     loadGetAll() {
         this.appService.getApp().then( (result) => this.Apps = result);
     }
-<<<<<<< HEAD
-    getslsend(req):Promise<number>{
-        return this.notifiservice.getslsend(req).then(result=>this.Soluong=result);
-    }
-    getslsenddenied(req):Promise<number>{
-        return this.notifiservice.getsldenied(req).then(result=>this.Soluong=result);
-    }
-=======
->>>>>>> bao-f-notifi-qlnotifi
     ngOnInit(): void {
         this.loadGetAll();
         this.getNotifi();
@@ -305,5 +240,16 @@ export class NotifiSendComponent implements OnInit{
         this.loophourTH=this.loop(5,24);
         this.loopminuteTH=this.loop(5,60);
         this.loopdayTH=this.loop(5,28);
+        this._route.params.forEach((params: Params) => {
+            console.log(params["id"])
+            let id = +params["id"];
+            this.getNotifications(id);
+        })
     }
+    getNotifications(id: number) {
+        
+        this._notificationsService.getNotifications(id)
+            .then(notifications => this.notifications = notifications)
+    }
+
 }

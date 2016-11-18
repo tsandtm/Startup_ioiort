@@ -3,6 +3,7 @@
         "database": "testdb",
         "username": "postgres",
         "password": "",
+        
         "config": {
             "dialect": "postgres",
             "define": {
@@ -20,7 +21,7 @@
             "min": 4
         },
         "idleTimeoutMillis": 2000,
-        "schema": "test"
+        "schema": "public"
         
     },
     "test": {

@@ -2,32 +2,29 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { Appkey } from './app.model';
+import { Contact } from './Contact.model';
 
 @Injectable()
-export class AppService {
+export class ContactService {
     private _productUrl = 'api/products/products.json';
 
     constructor(private _http: Http) { }
 
-    getApp(): Promise<Appkey[]> {
+    getAllContact(): Promise<Contact[]> {
         // return this._http.get('/api/book')
         //     .map((response: Response) => <Product[]>response.json())
         //     .do(data => console.log('All: ' + JSON.stringify(data)))
         //     .catch(this.handleError);
-        return this._http.get('/api/app')
+        return this._http.get('/api/Contact')
             .toPromise()
-            .then(response => response.json() as Appkey[])
+            .then(response => response.json() as Contact[])
             .catch(this.handleError);
     }
-    getAppkey(id): Promise<Appkey> {
-        return this.getApp()
-            .then(slsend => slsend.find(p => p.AppID === id))
-            .catch(this.handleError);
-    }
-
 
     // getProduct(id: number): Promise<Product> {
+    //     // return this.getProducts()
+    //     //     .map((products: Product[]) => products.find(p => p.productId === id))
+    //     //     .catch(this.handleError);
     //     return this.getProducts()
     //         .then(products => products.find(p => p.productId === id))
     //         .catch(this.handleError);

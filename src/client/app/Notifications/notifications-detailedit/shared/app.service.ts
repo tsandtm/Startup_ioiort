@@ -20,12 +20,6 @@ export class AppService {
             .then(response => response.json() as Appkey[])
             .catch(this.handleError);
     }
-    getAppkey(id): Promise<Appkey> {
-        return this.getApp()
-            .then(slsend => slsend.find(p => p.AppID === id))
-            .catch(this.handleError);
-    }
-
 
     // getProduct(id: number): Promise<Product> {
     //     return this.getProducts()

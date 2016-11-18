@@ -90,6 +90,8 @@ Create table test."Users_Contacts"
 ) Without Oids;
 
 
+Alter table test."n_Contacts_Notifications" add  foreign key ("ContactID") references test."Contacts" ("ContactID") on update restrict on delete restrict;
+
 /* Create Foreign Keys */
 
 Alter table test."n_Contacts_Notifications" add  foreign key ("ContactID") references test."Contacts" ("ContactID") on update restrict on delete restrict;
@@ -118,3 +120,4 @@ INSERT INTO test."n_Tag"(
 	VALUES  (1, 'default', 1, true),
     		(2, 'denine', 2, false),
             (3, 'block', 1, true);
+
