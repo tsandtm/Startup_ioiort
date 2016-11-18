@@ -10,9 +10,10 @@ export class SettingListComponent {
     pageTitle: string = 'Setting List';
     listFilter: string;
     setting: Setting[];
-     static $inject = [
-            '$confirm'
-        ];
+    pager: any = {};
+    itempages: Setting[];
+
+    // paged items
     constructor(
         // private $confirm: AngularConfirm.IConfirmModalFactory,
         private _route: ActivatedRoute,private _router: Router,
@@ -21,8 +22,19 @@ export class SettingListComponent {
     }
 
     ngOnInit(): void {
-        this._SettingService.getAllSetting()
-                .then(setting => this.setting = setting)
+        this._SettingService.getAllSetting().then(setting => this.setting = setting).then(result=>this.setPage(1)); 
+    }
+    setPage(page: number): void {
+        if(this.setting!=undefined)
+        {
+            if (page < 1 || page > this.pager.totalPages) {
+                return;
+            }
+            this.pager = this._SettingService.getPager(this.setting.length, page);
+            // get current page of items
+            this.itempages = this.setting.slice(this.pager.startIndex, this.pager.endIndex + 1);
+        }
+        
     }
     Delete(s: Setting): void{
         // console.log(s.servername);

@@ -8,16 +8,8 @@ import { routing } from './app.routing.module';
 import { AppComponent } from './app.component';
 import { BookListComponent } from './books/book-list/book-list.component';
 import { BookDetailComponent } from './books/book-detail/book-detail.component';
-import { ProductListComponent } from './products/product-list/product-list.component';
-import { ProductService } from './products/shared/product.service';
 import { WelcomeComponent } from './home/welcome.component';
-import { ProductDetailComponent } from './products/product-detail/product-detail.component';
-import { ProductFilterPipe } from './products/product-filter/product-filter.pipe'
 import { StarComponent} from './shared/star.component';
-
-import { UsersService } from './users/shared/user.service';
-import { UserListComponent } from './users/user-list/user-list.component';
-import { UserDetailComponent }  from './users/user-detail/user-detail.component';
 
 import { SettingListComponent } from './setting/setting-list/setting-list.component';
 import { SettingService } from './setting/shared/setting.service';
@@ -38,24 +30,12 @@ import { TagFilterPipe } from './tag/tag-filter/tag-filter.pipe';
 import { ContactsListComponent } from './contacts/contacts-list/contacts-list.component';
 import { ContactFilterPipe } from './contacts/contacts-filter/contacts-filter.pipe';
 import { ContactService } from './contacts/shared/contact.service';
+import { ContactsCreateComponent } from './contacts/contacts-create/contacts-create.component';
 
 @NgModule({
     imports: [BrowserModule,routing,FormsModule,HttpModule],
-    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,UsersService,SettingService,TagService,ContactService],
+    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},SettingService,TagService,ContactService],
     declarations: [AppComponent,
-
-    ContactsListComponent,
-    ContactFilterPipe,
-
-    UserListComponent,
-    UserDetailComponent,
-
-    TagListComponent, 
-    TagCreateComponent, 
-    TagEditComponent,  
-    TagDetailComponent,
-    TagDeleteComponent,
-    TagFilterPipe,
 
     SettingListComponent,
     SettingCreateComponent,
@@ -63,16 +43,12 @@ import { ContactService } from './contacts/shared/contact.service';
     SettingDeleteComponent,
     SettingDetailComponent,
     SettingFilterPipe,
-
     
     BookListComponent,
     BookDetailComponent,
 
     WelcomeComponent,
 
-    ProductDetailComponent,
-    ProductListComponent,
-    ProductFilterPipe,
 
     StarComponent],
     bootstrap: [AppComponent]
