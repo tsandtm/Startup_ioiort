@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Contact } from './Contact.model';
 
 @Injectable()
-export class ContactService {
+export class ContactNotifiService {
     private _productUrl = 'api/products/products.json';
 
     constructor(private _http: Http) { }

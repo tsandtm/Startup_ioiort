@@ -6,11 +6,11 @@ import { Tag } from './shared/tag.model';
 import { Contact } from './shared/Contact.model';
 import { AppService } from './shared/app.service';
 import { NotifiService } from './shared/notifi.service';
-import { ContactService } from './shared/contact.service';
+import { ContactNotifiService } from './shared/contact.service';
 import { TagService } from './shared/tag.service';
 @Component({
     templateUrl: '/notification-send/notification.component.html',
-    providers: [AppService,NotifiService,ContactService,TagService]
+    providers: [AppService,NotifiService,ContactNotifiService,TagService]
 })
 export class NotifiSendComponent implements OnInit{
     optionsTag = {
@@ -78,7 +78,7 @@ export class NotifiSendComponent implements OnInit{
     constructor(private appService: AppService,
     private notifiservice:NotifiService,
     private tagservice:TagService,
-    private contactservice:ContactService,
+    private contactservice:ContactNotifiService,
     private _router: Router,
     private _route: ActivatedRoute) {
 
