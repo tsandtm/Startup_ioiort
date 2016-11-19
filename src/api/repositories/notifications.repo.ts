@@ -9,7 +9,11 @@ export class NotificationsRepo extends RepoBase {
     }
 
     public getList(option): Promise<Notifications[]> {
+<<<<<<< HEAD
         let queryText = 'SELECT * FROM public."n_Notifications"ORDER BY "NotifiID"ASC  ';
+=======
+        let queryText = 'SELECT * FROM test."n_Notifications" ORDER BY "NotifiID"ASC  ';
+>>>>>>> bao-f-notifi-qlnotifi
 
         console.info('Excute: ' + queryText);
         let pResult;

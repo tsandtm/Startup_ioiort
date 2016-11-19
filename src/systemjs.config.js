@@ -25,9 +25,7 @@
       // other libraries
       'rxjs': 'npm:',
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
-
-      'ng2-charts': 'npm:ng2-charts',
-      'ng2-charts' : 'npm:ng2-charts',
+      'ng2-charts':  'npm:ng2-charts',
       'angular2-modal': 'npm:angular2-modal/bundles/angular2-modal.umd.js',
       'angular2-modal/plugins/bootstrap': 'npm:angular2-modal/bundles/angular2-modal.' + plugin + '.umd.js',
       'ng2-pagination': 'npm:ng2-pagination',

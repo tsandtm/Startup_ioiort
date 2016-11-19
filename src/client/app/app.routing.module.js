@@ -5,8 +5,9 @@ var book_detail_component_1 = require('./books/book-detail/book-detail.component
 var product_list_component_1 = require('./products/product-list/product-list.component');
 var welcome_component_1 = require('./home/welcome.component');
 var product_detail_component_1 = require('./products/product-detail/product-detail.component');
+
 var Contact_list_component_1 = require('./Contacts/Contact-list/Contact-list.component');
-<<<<<<< HEAD
+
 //BarChartDemoComponent
 var Report_component_1 = require('./Reports/Report/Report.component');
 =======
@@ -20,7 +21,7 @@ var appRoutes = [
     { path: 'products', component: product_list_component_1.ProductListComponent },
     { path: 'product/:id', component: product_detail_component_1.ProductDetailComponent },
     { path: 'Contacts', component: Contact_list_component_1.ContactListComponent },
-<<<<<<< HEAD
+
     { path: 'Reports', component: Report_component_1.BarChartDemoComponent },
     { path: 'Reports', component: Report_component_1.BarChartDemoComponent }
     { path: 'product/:id', component: product_detail_component_1.ProductDetailComponent }

@@ -26,6 +26,7 @@ export class AppService {
             .catch(this.handleError);
     }
 
+
     // getProduct(id: number): Promise<Product> {
     //     return this.getProducts()
     //         .then(products => products.find(p => p.productId === id))

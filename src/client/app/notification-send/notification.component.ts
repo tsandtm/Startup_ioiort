@@ -103,6 +103,7 @@ export class NotifiSendComponent implements OnInit{
         var num=item.slice(0,pos);
         this.delPos(this.listIDContact,parseInt(num));
     }
+<<<<<<< HEAD
     public TagDeniedAdded(item:string) {
         var pos=item.indexOf('.');
         var num=item.slice(0,pos);
@@ -123,6 +124,30 @@ export class NotifiSendComponent implements OnInit{
         var num=item.slice(0,pos);
         this.delPos(this.listIDContactDenied,parseInt(num));
     }
+=======
+    // public TagDeniedAdded(item:string) {
+    //     var pos=item.indexOf('.');
+    //     var num=item.slice(0,pos);
+    //     this.listIDTag.push(parseInt(num));
+    // }
+    // public TagDeniedRemoved(item:string) {
+    //     var pos=item.indexOf('.');
+    //     var num=item.slice(0,pos);
+    //     this.delPos(this.listIDTag,parseInt(num));
+    // }
+    // public ContactDeniedAdded(item:string) {
+    //     var pos=item.indexOf('.');
+    //     var num=item.slice(0,pos);
+    //     this.listIDContact.push(parseInt(num));
+    //     console.log(this.listIDContact.toString());
+    // }
+    // public ContactDeniedRemoved(item:string) {
+    //     var pos=item.indexOf('.');
+    //     var num=item.slice(0,pos);
+    //     this.delPos(this.listIDContact,parseInt(num));
+    //     console.log(this.listIDContact.toString());
+    // }
+>>>>>>> bao-f-notifi-qlnotifi
     delPos(ar:Array<number>,key:number){
         for(var i=0;i<=ar.length;i++){
             if(ar[i]==key){
@@ -201,6 +226,7 @@ export class NotifiSendComponent implements OnInit{
         else{
             this.ThoiHan=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString(); 
         }
+<<<<<<< HEAD
         if(this.listIDTag.length==0 && this.listIDContact.length==0)
         {
             this.getslsenddenied({contactdenied:this.listIDContactDenied,tagdenied:this.listIDTagDenied}).then(result=>{
@@ -238,18 +264,37 @@ export class NotifiSendComponent implements OnInit{
                 this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
             })
         }
+=======
+        this.notifi={AppID:this.AppID,
+        NotifiID:this.notifiID,
+        TieuDe:this.tieude,
+        Noidung:this.Noidung,
+        DoUuTien:this.doUuTien,
+        Trangthai:this.Trangthai,
+        Soluong:1,
+        Thoigiangui:this.Thoigiangui,
+        ThoiHan:this.ThoiHan,
+        SendTag:this.listIDTag,
+        SendUser:this.listIDContact,
+        DeniedTag:this.listIDTagDenied,
+        DeniedUser:this.listIDContactDenied};
+        this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
+>>>>>>> bao-f-notifi-qlnotifi
     }
 
 
     loadGetAll() {
         this.appService.getApp().then( (result) => this.Apps = result);
     }
+<<<<<<< HEAD
     getslsend(req):Promise<number>{
         return this.notifiservice.getslsend(req).then(result=>this.Soluong=result);
     }
     getslsenddenied(req):Promise<number>{
         return this.notifiservice.getsldenied(req).then(result=>this.Soluong=result);
     }
+=======
+>>>>>>> bao-f-notifi-qlnotifi
     ngOnInit(): void {
         this.loadGetAll();
         this.getNotifi();
