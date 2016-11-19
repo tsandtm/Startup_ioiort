@@ -1,20 +1,33 @@
 ﻿<div class="panel panel-primary">
     <div class="panel-heading">
-        {{pageTitle}}
+        <h2 style="text-align:center">Quản lý Notfication</h2>
     </div>
-    <div class="panel-body"  >
+    <div class="panel-body"  style="margin:0 auto;">
         <div class="row" >
-            <img src="/assets/images/logo.jpg" 
-                 class="img-responsive center-block"
-                 style="max-height:300px;padding-bottom:50px"/>
+            <div class="col-md-4" style="height:400px;">
+                <a [routerLink]="['/setting-list']">
+                    <img src="../assets/images/settings.png" style="height:350px">
+                    <div style="text-align:center">Setting</div>
+                </a>
+            </div>
+            <div class="col-md-4" style="height:400px">
+                <img src="../assets/images/contacts.png" style="height:350px">
+                <div style="text-align:center">Contacts</div>
+            </div>
+            <div class="col-md-4" style="height:400px"> 
+                <img src="../assets/images/reports.png" style="height:340px">
+                <div style="text-align:center">Reports</div>
+            </div>
         </div>
-        <div class="row"  >
-            <div class="text-center">Developed by:</div>
-            <h3 class="text-center">Deborah Kurata</h3>
-
-            <div class="text-center">@deborahkurata</div>
-            <div class="text-center">
-                <a href="http://www.bit.ly/DeborahKsBlog">www.bit.ly/DeborahKsBlog</a>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4" style="height:400px">
+                <img src="../assets/images/notifications.png" style="height:340px">          
+                <div style="text-align:center">Notifications</div>
+            </div>
+            <div class="col-md-4" style="height:400px">          
+                <img src="../assets/images/campaigns.png" style="height:340px">                  
+                <div style="text-align:center">Campaigns</div>             
             </div>
         </div>
     </div>

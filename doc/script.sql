@@ -90,7 +90,6 @@ Create table test."Users_Contacts"
 ) Without Oids;
 
 
-Alter table test."n_Contacts_Notifications" add  foreign key ("ContactID") references test."Contacts" ("ContactID") on update restrict on delete restrict;
 
 /* Create Foreign Keys */
 
@@ -113,11 +112,8 @@ INSERT INTO test."Contacts"(
 			(5, 'e', 'a', 'a', 'a', 'a', '12/12/2016', 'a', '{2,3}', '{denine,block}'),
 			(6, 'f', 'a', 'a', 'a', 'a', '12/12/2016', 'a', '{1,2,3}', '{default,denine,block}');
 
--- 2 table khac nhau nho ngan cach bang dau ;
-
 INSERT INTO test."n_Tag"(
 	"TagID", "TagNameDisplay", "AccountID", "IsDefault")
 	VALUES  (1, 'default', 1, true),
     		(2, 'denine', 2, false),
             (3, 'block', 1, true);
-

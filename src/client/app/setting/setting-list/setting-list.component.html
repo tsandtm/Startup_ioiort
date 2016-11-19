@@ -1,0 +1,70 @@
+<div class='panel panel-primary'>
+    <div class='panel-heading'>
+        Quản lý API key
+    </div>
+
+    <!-- Filter the Products   -->
+    <div class='panel-body'>
+        <div class='row'>
+            <div class='col-md-2' style="line-height:37px">Tìm kiếm:</div>
+            <div class='col-md-8'>
+                <input type='text' class="form-control" [(ngModel)]='listFilter' />
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-md-6'>
+                <a class="btn btn-primary" [routerLink]="['/setting-create']">Thêm mới</a>
+            </div>            
+        </div>
+        <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+
+        <div class='table-responsive'>
+            <table class="table" *ngIf='itempages && itempages.length'>
+                <thead>
+                    <tr>
+                        <th>App Id</th>
+                        <th>Api key</th>
+                        <th>App name</th>
+                        <th>Trạng thái</th>   
+                        <th>Ngày tạo</th>                     
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let set of itempages | settingFilter:listFilter'> 
+                        <td>{{ set.appid }}</td>
+                        <td>{{ set.apikey }}</td>
+                        <td>{{ set.appname }}</td>      
+                        <td>{{ set.trangthai }}</td>
+                        <td>{{ set.ngaytao }}</td>                  
+                        <td>
+                            <a class="btn" [routerLink]="['/setting-detail', set.appid]">Chi tiết</a>
+                            <a class="btn" [routerLink]="['/setting-edit',set.appid]">Sửa</a>
+                            <a class="btn" [routerLink]="['/setting-delete',set.appid]">Xóa</a>
+                        </td>
+                    </tr>    
+                </tbody>
+            </table>
+            <div class="text-center">            <!-- pager -->
+                <ul  class="pagination">
+                    <li [ngClass]="{disabled:pager.currentPage === 1}">
+                        <a (click)="setPage(1)">First</a>
+                    </li>
+                    <li [ngClass]="{disabled:pager.currentPage === 1}">
+                        <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+                    </li>
+                    <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                        <a (click)="setPage(page)">{{page}}</a>
+                    </li>
+                    <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                        <a (click)="setPage(pager.currentPage + 1)">Next</a>
+                    </li>
+                    <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                        <a (click)="setPage(pager.totalPages)">Last</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
