@@ -23,8 +23,8 @@ export class TienIchRepo extends RepoBase {
         return pResult.then(result => {
             let tienichs: TienIch[] = result.rows.map(r => {
                 let tienich = new TienIch();
-                tienich.id = r.id;
-                tienich.TienIchID = r.TienIchID;
+               // tienich.id = r.id;
+                tienich.id = r.TienIchID;
                 tienich.KyHieu = r.KyHieu;
                 tienich.TenGoi = r.TenGoi;
                 tienich.BieuTuong = r.BieuTuong;
@@ -36,5 +36,13 @@ export class TienIchRepo extends RepoBase {
                 console.error(err.message);
                 return null;
             });
+    }
+
+    public add(tienich: TienIch): Promise<TienIch>{
+        let queryText = 'INSERT INTO "ioh_TienIch" VALUES ($1,$2,$3,$4)';
+
+        return this._pgPool.query(queryText,[tienich.TienIchID,tienich.KyHieu,tienich.TenGoi,tienich.BieuTuong])
+            .then(result => tienich)
+            .catch(error => Promise.reject(error));
     }
 }

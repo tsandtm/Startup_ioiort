@@ -3,4 +3,4 @@ export class TienIch {
     KyHieu: string;
     TenGoi: string;
     BieuTuong: string;
-}
+}    

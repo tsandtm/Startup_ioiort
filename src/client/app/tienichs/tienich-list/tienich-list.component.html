@@ -2,8 +2,6 @@
     <div class='panel-heading'>
         {{pageTitle}}
     </div>
-
-    <!-- Tìm kiếm tin tức   -->`
     <div class='panel-body'>
 
         <div class='table-responsive'>
@@ -14,12 +12,13 @@
                         <th>Ký hiệu</th>
                         <th>Tên gọi</th>
                         <th>Biểu tượng</th>
+                        <th>Chức năng</th>
 
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor='let n of tienichs|paginate: { itemsPerPage:3, currentPage: p}'>
-                        <td>{{n.TienIchID}}</td>
+                        <td>{{n.id}}</td>
                         <td>{{n.KyHieu}}</td>
                         <td>{{n.TenGoi}}</td>
                         <td>
@@ -28,6 +27,18 @@
                             [style.margin.px]='imageMargin'>
                             <!--[routerLink]="['/tintuc',tintuc.id]"-->
                         </td>
+                        <td> 
+                            <button class="btn btn-danger" (click)='Delete()'>
+                                Xóa
+                            </button>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>   
+                            <button class="btn btn-info" type="submit" [routerLink]="['/themtienich']">
+                                Thêm mới
+                            </button>
+                        </th>
                     </tr>
                 </tbody>
             </table>   
