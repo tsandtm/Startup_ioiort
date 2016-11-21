@@ -10,7 +10,7 @@ import app from '../../api/app';
 import { Server } from 'http';
 
 import path = require('path');
-let testdata = require(path.join(__dirname, 'report.test.json'));
+let testdata = require(path.join(__dirname, 'setting.test.json'));
 let config = require(path.join(__dirname, '..', '..', 'config', 'server.config.json'))['test'];
 
 export class ReportTest {
@@ -40,9 +40,9 @@ export class ReportTest {
     // timeout la thoi gian ma cai test nay se cho
     @AsyncTest('mot danh sach cac device')
     @Timeout(5000)
-    public getAllSetting() {
+    public getAllBook() {
         return new bluebird((resolve, reject) => {
-            this.request.get('/Report')
+            this.request.get('/setting')
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .expect((res: supertest.Response) => {
