@@ -1,3 +1,18 @@
+export class LoaiDichVu  {
+    id:number;
+    KyHieu:string;
+    TenGoi:string;
+    HinhThuc:string
+}
+export class  KhachHang {
+    id:number;
+    HoTen:string;
+    Email:string;
+    DiaChi:string;
+    DienThoai:number;
+    LienHe:string;
+    DiDong:string;
+}
 export class Yeucauban{
     id: number;
     LoaiDichVuID:number;

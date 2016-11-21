@@ -1,0 +1,160 @@
+<style type="text/css">
+	.container-fluid {
+		background: #E6E6FA;
+		width: 800px;
+		height: 800px;
+		margin-left: 180px;
+		margin-top: -100px;
+	}
+	
+	.container-fluid h2 {
+		color: red;
+	}
+</style>
+
+<body>
+	<div class="container-fluid">
+		<h2 style="text-align: center;">Đăng tin mua bán cho thuê nhà đất hiệu quả nhất</h2>
+		<div class="row">
+		<!--thong tin khac-->
+			<div class="col-md-12">
+				<h4>Thông tin bắt buộc</h4>
+				<div class="col-md-3">
+					<!--<p>Tieu de: {{tieude}}</p>-->
+					<p>Tiêu đề tin:</p>
+					<!--<p style="margin-top: 22px">Loại Dịch vụ:</p>-->
+					<p style="margin-top: 22px">Đv tính:</p>
+					<p style="margin-top: 22px">Tỉnh/Thành phố:</p>
+					<p style="margin-top: 20px">Giá:</p>
+					<p style="margin-top: 20px">Địa chỉ:</p>
+					<p style="margin-top: 15px">Mô tả:</p>
+				</div>
+				<div class="col-md-9">
+					<input [(ngModel)]="TieuDeTin" name="TieuDeTin" type="text" class="form-control" placeholder="Nhập tiêu đề vào ..." style="width: 520px;margin-bottom: 5px">
+					<div class="col-md-4" style="padding-left: 0px;">
+						<!--<select [(ngModel)]="LoaiDichVu" name="LoaiDichVu" class="form-control" style="width: 190px;margin-bottom: 5px;margin-right: 5px ">
+							<option value="Mua">Mua</option>
+							<option value="Bán">Bán</option>
+							<option value="Cho thuê">Cho thuê</option>
+						</select>-->
+						<input [(ngModel)]="DonViTinh" name="DonViTinh"class="form-control" type="text" style="width: 190px;margin-bottom: 5px;margin-right: 5px">
+						<select [(ngModel)]="TinhThanh" name="TinhThanh" class="form-control" style="width: 190px;margin-bottom: 5px;margin-right: 5px ">
+							<option value="TP HCM">TP HCM</option>
+							<option value="Hà Nội">Hà Nội</option>
+							<option value="Đà Nẵng">Đà Nẵng</option>
+						</select>
+						<input [(ngModel)]="Gia" name="Gia" class="form-control" type="text" style="width: 190px;margin-bottom: 5px; ">
+						<input [(ngModel)]="DiaChi" name="DiaChi" type="text" class="form-control" placeholder="Nhập địa chỉ vào ..." style="width: 520px;margin-bottom: 5px">
+						<textarea  [(ngModel)]="MoTa" name="MoTa" class="form-control" rows="3" style="width: 520px;margin-bottom: 5px"></textarea>
+					</div>
+					<div class="col-md-2">
+						<p style="margin-top: 7px">Quận/Huyện:</p>
+						<p style="margin-top: 22px">Phường/Xã:</p>
+						
+
+					</div>
+					<div class="col-md-4">
+						<select [(ngModel)]="QuanHuyen" class="form-control" style="width: 200px;margin-bottom: 5px;margin-left: 32px ">
+							<option value="Quận 1">Quận 1</option>
+							<option value="Quận 2">Quận 2</option>
+							<option value="Quận 3">Quận 3</option>
+							<option value="Huyện Hóc Môn">Huyện Hóc Môn</option>
+							<option value="Bình Thạnh">Bình Thạnh</option>
+							<option value="Phú Nhuận">Phú Nhuận</option>
+						</select>
+						<input [(ngModel)]="PhuongXa" name="PhuongXa"class="form-control" type="text" style="width: 200px;margin-bottom: 5px;margin-left: 32px">
+						
+						
+
+					</div>
+					
+
+				</div>
+			</div>
+			<!--thong tin khac-->
+			<div class="col-md-12">
+				<h4>Thông tin khac</h4>
+				<div class="col-md-3">
+					<p style="margin-top: 10px">Mat tien:</p>
+					<p style="margin-top: 19px">Duong vao:</p>
+					<p style="margin-top: 20px">Huong nha:</p>
+					<p style="margin-top: 20px">Huong ban cong:</p>
+					<p style="margin-top: 15px">Noi that:</p>
+					
+					<!--<p style="margin-top: 40px">Hinh anh:</p>-->
+		
+				</div>
+				<div class="col-md-9">
+					<div class="col-md-4" style="padding-left: 0px;">
+						<input [(ngModel)]="MatTienM2" name="MatTienM2" class="form-control" type="text" style="width: 190px;margin-bottom: 5px; ">
+						<input [(ngModel)]="DuongVaoM2" name="DuongVaoM2" class="form-control" type="text" style="width: 190px;margin-bottom: 5px; ">
+						<select [(ngModel)]="HuongNha" name="HuongNha" class="form-control" style="width: 190px;margin-bottom: 5px;margin-right: 5px ">
+							<option value="Dong">Dong</option>
+							<option value="Tay">Tay</option>
+							<option value="Nam">Nam</option>
+							<option value="Bac">Bac</option>
+						</select>
+						<select [(ngModel)]="HuongBanCong" name="HuongBanCong" class="form-control" style="width: 190px;margin-bottom: 5px;margin-right: 5px ">
+							<option value="Dong">Dong</option>
+							<option value="Tay">Tay</option>
+							<option value="Nam">Nam</option>
+							<option value="Bac">Bac</option>
+						</select>
+						<textarea  [(ngModel)]="NoiThat" name="NoiThat" class="form-control" rows="3" style="width: 520px;margin-bottom: 5px"></textarea>
+						<!--<input [(ngModel)]="ArraryLinkHinh" name="ArraryLinkHinh" type="file" />-->
+						
+					</div>
+					<div class="col-md-2">
+						<p style="margin-top: 7px">So tang:</p>
+						<p style="margin-top: 22px">Sp ngu:</p>
+						<p style="margin-top: 22px">so toilet:</p>
+					
+
+					</div>
+					<div class="col-md-4">
+						<input [(ngModel)]="SoTang" name="SoTang" class="form-control" type="text" style="width: 200px;margin-bottom: 5px;margin-left: 32px ">
+						<input [(ngModel)]="SoPhongNgu" name="SoPhongNgu"class="form-control" type="text" style="width: 200px;margin-bottom: 5px;margin-left: 32px">
+						<input [(ngModel)]="SoToilet" name="SoToilet"class="form-control" type="text" style="width: 200px;margin-bottom: 5px;margin-left: 32px">
+						
+
+					</div>
+					
+
+				</div>
+			</div>
+			<!---->
+			<!--<div class="col-md-12">
+				<h4>Lich dang</h4>
+				<div class="col-md-3">
+					<p style="margin-top: 10px">Ngay bd:</p>
+				</div>
+				<div class="col-md-9">
+					<div class="col-md-4" style="padding-left: 0px;">
+						<input [(ngModel)]="NgayBatDau" name="NgayBatDau" class="form-control" type="date" style="width: 190px;margin-bottom: 5px; ">
+					</div>
+					<div class="col-md-2">
+						<p style="margin-top: 10px">Ngay kt:</p>
+
+					</div>
+					<div class="col-md-4">
+						<input [(ngModel)]="NgayKetThuc" name="NgayKetThuc"class="form-control" type="date" style="width: 200px;margin-bottom: 5px;margin-left: 32px">
+
+					</div>
+				</div>
+			</div>-->
+		</div>
+	<button class="bnt bnt-default" type="submit" style="margin-left:350px;" (click)="createYeucauban()">Đăng tin</button>
+	</div>
+
+	<!--<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Tutorials
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">HTML</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">CSS</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">JavaScript</a></li>
+      <li role="presentation" class="divider"></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>
+    </ul>
+  </div>-->
+	

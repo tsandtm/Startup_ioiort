@@ -1,38 +1,72 @@
-<div class="container">
-   <div class='content'>
-           <div class='row' >
-                <div class='col-md-5'>
-                    <div class="search">
-                        <h4>Tìm kiếm <input type ='text'/></h4>        
-                        <!--<button class="btn btn-primary" (click) = 'btnTim()'>Tìm</button>-->
-                    </div>
-                </div>
-        </div>
-       <div class="col-md-8"> <button class="btn btn-primary" (click) = 'btnDelete(new.id,i)' >Thêm</button> </div>  
-       <div class='row'>
-           <div class="col-md-9" >        
-                <div class="col-md-4" *ngFor='let yeucau of yeucauban'>
-                    <div class="box">
-                        <div class="box1">
-                            <ul>
-                                <li style="height: 170px">
-                                    <img [src]='yeucau.ArraryLinkHinh'
+
+<div> <button class="btn btn-info" type="submit" [routerLink]="['/dangtin-add']"> Thêm mới</button></div>
+<div class='panel panel-primary'>
+    <div class='panel-body'>
+       
+        <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+
+        <div class='table-responsive'>
+
+            <table class='table'*ngIf='yeucauban && yeucauban.length' >
+                <thead>
+                    <tr>
+                        <th>
+                            <button class='btn btn-primary' (click)='toggleImage()'>
+                                {{showImage ? 'Hide' : 'Show'}} Image
+                            </button>
+                        </th>
+                        <th>Tiêu đề</th>
+                        <th>Ngày đăng</th>
+                        <th>Mô tả</th>
+                        <th>Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let yeucau of yeucauban |paginate: { itemsPerPage:5, currentPage: p}'>
+                        <td>
+                            <img [src]='yeucau.ArraryLinkHinh'
+                                        [title]='yeucau.TieuDeTin | uppercase'
                                         [style.width.px]='imageWidth' 
                                         [style.height.px]='imageHeight'/>
-                                </li>
-                                <li><a style="font-weight:bold; font-size:15px">{{yeucau.TieuDeTin}}</a></li>
-                                <li><h6 style="text-align:right;margin-top:10px;">{{yeucau.NgayDangTin | date : "dd-MM-y"}}</h6></li>
-                                <li><h5>{{yeucau.MoTa}}</h5></li>
-                            </ul>
-                        </div>
-                        <div class="box2">                    
-                            <!--<button class="btn btn-primary" (click) = 'btnDelete(new.id,i)' >Xóa</button> -->
-                            <!--<button class="btn btn-primary" (click) = 'btnSave()'>Lưu</button>-->
-                        </div>
-                    </div>
-                </div>
-            </div>   
-           
+                        </td>
+                        <td> 
+                           {{yeucau.TieuDeTin}}
+                           
+                        </td>
+                        <td>{{yeucau.NgayDangTin | date : "dd-MM-y"}}</td>
+                        <td>{{yeucau.MoTa}}</td>
+                        <td >
+                            <button class="btn btn-primary" (click) = 'btnDelete(yeucau.id,i)' >Xóa</button>
+                                                   
+                        </td>
+                         <!--<td >
+                           
+                            <button class="btn btn-primary" (click) = 'btnDelete(yeucau.id,i)' >Sua</button>                        
+                        </td>-->
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+<pagination-template #pagination="paginationApi" (pageChange)="p = $event">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li [class.disabled]="pagination.isFirstPage()">
+                    <a aria-label="Previous" (click)="pagination.previous()" href="javascript:;" *ngIf="!pagination.isFirstPage()">
+                        <span>&laquo;</span>
+                    </a>
+                </li>
+                <li *ngFor="let page of pagination.pages" [class.active]="pagination.getCurrent() == page.value">
+                    <a (click)="pagination.setCurrent(page.value)" href="javascript:;">
+                                {{page.label}}
+                            </a>
+                </li>
+                <li [class.disabled]="pagination.isLastPage()" *ngIf="pagination.directionLinks">
+                    <a aria-label="Next" href="javascript:;" (click)="pagination.next()" *ngIf="!pagination.isLastPage()">
+                        <span>&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </pagination-template>

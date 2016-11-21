@@ -1,6 +1,18 @@
 import {ModelBase} from './model.base';
 
-
+export class LoaiDichVu extends ModelBase {
+    KyHieu:string;
+    TenGoi:string;
+    HinhThuc:string
+}
+export class  KhachHang extends ModelBase{
+    HoTen:string;
+    Email:string;
+    DiaChi:string;
+    DienThoai:number;
+    LienHe:string;
+    DiDong:string;
+}
 export class Yeucauban extends ModelBase {
     LoaiDichVuID:number;
     KhachHangID:number;

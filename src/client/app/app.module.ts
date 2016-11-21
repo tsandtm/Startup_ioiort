@@ -31,6 +31,7 @@ import {NotificationstDetailComponent} from './notifications/notifications-detai
 import { NotificationsService } from './notifications/shared/notifications.service';
 import {YeucaubanListComponent} from './yeucauban/yeucauban-list/yeucauban-list.component';
 import { YeucaubanService } from './yeucauban/shared/yeucauban.service';
+import {DangTinComponent} from './yeucauban/dangtin/dangtin-add.component';
 @NgModule({
     imports: [BrowserModule,routing,FormsModule,HttpModule, Ng2PaginationModule],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,ContactsService,NotificationsService,YeucaubanService ],
@@ -46,6 +47,7 @@ import { YeucaubanService } from './yeucauban/shared/yeucauban.service';
     NotificationsListComponent,
     NotificationstDetailComponent,
     YeucaubanListComponent,
+    DangTinComponent,
     StarComponent],
     bootstrap: [AppComponent]
 })

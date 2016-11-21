@@ -12,6 +12,7 @@ import {ContactsListComponent} from './contacts/contacts-list/contacts-list.comp
 import {NotificationsListComponent} from './notifications/notifications-list/notifications-list.component';
 import {NotificationstDetailComponent} from './notifications/notifications-detail/notifications-detail.component';
 import {YeucaubanListComponent} from './yeucauban/yeucauban-list/yeucauban-list.component';
+import {DangTinComponent} from './yeucauban/dangtin/dangtin-add.component';
 const appRoutes: Route[] = [
     { path: '', redirectTo: 'notification', pathMatch: 'full' },
     { path: 'book-list', component: BookListComponent },
@@ -24,6 +25,7 @@ const appRoutes: Route[] = [
     { path: 'notification', component: NotificationsListComponent },
     { path: 'notification-detail/:id', component: NotificationstDetailComponent },
     { path: 'yeucauban', component: YeucaubanListComponent },
+   { path: 'dangtin-add', component: DangTinComponent }
 ]
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
