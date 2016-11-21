@@ -1,0 +1,72 @@
+[
+  {
+    "ContactID": 1,
+    "Token": "cWgcrzFU6r8:APA91bGYCG1XClYZuNFDtdlfDW9QgdpepGfqcv6v4Aspt7bTv7PfW_hqebhR18Xqo8bk0QNxFHNjKFCKLe2ZEhVGfBjgWCoYCncek9FJAgvtRNSxviq8WkFxC8zbMJVdh3R7pTtY2y8b",
+    "Email": "abc@yahoo.com",
+    "TaiKhoan": "Lightning",
+    "Device": "android",
+    "PhoneNumber": "0123456789",
+    "NgayTao": "2016-11-07T17:00:00.000Z",
+    "FaceBook": "LightningAce",
+    "Contact_TagID": [
+      1,
+      2
+    ],
+    "Contact_TagName": null
+  },
+  {
+    "ContactID": 2,
+    "Token": "token2",
+    "Email": "abc@yahoo.com",
+    "TaiKhoan": "Ace",
+    "Device": "android",
+    "PhoneNumber": "0123456789",
+    "NgayTao": "2016-11-07T17:00:00.000Z",
+    "FaceBook": "LightningAce",
+    "Contact_TagID": [
+      1
+    ],
+    "Contact_TagName": null
+  },
+  {
+    "ContactID": 3,
+    "Token": "3",
+    "Email": "3",
+    "TaiKhoan": "3",
+    "Device": "3",
+    "PhoneNumber": "3",
+    "NgayTao": "2016-03-09T17:00:00.000Z",
+    "FaceBook": "3",
+    "Contact_TagID": [
+      2,
+      3
+    ],
+    "Contact_TagName": null
+  },
+  {
+    "ContactID": 4,
+    "Token": "3",
+    "Email": "3",
+    "TaiKhoan": "3",
+    "Device": "3",
+    "PhoneNumber": "3",
+    "NgayTao": "2016-03-09T17:00:00.000Z",
+    "FaceBook": "3",
+    "Contact_TagID": [],
+    "Contact_TagName": null
+  },
+  {
+    "ContactID": 5,
+    "Token": "3",
+    "Email": "3",
+    "TaiKhoan": "3",
+    "Device": "3",
+    "PhoneNumber": "3",
+    "NgayTao": "2016-03-09T17:00:00.000Z",
+    "FaceBook": "3",
+    "Contact_TagID": [
+      3
+    ],
+    "Contact_TagName": null
+  }
+]

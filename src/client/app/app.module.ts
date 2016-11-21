@@ -75,6 +75,7 @@ import { SettingFilterPipe } from './setting/setting-filter/setting-filter.pipe'
 
     WelcomeComponent,
 
+    NotificationsListComponent,
     ProductDetailComponent,
     ProductListComponent,
     ProductFilterPipe,
