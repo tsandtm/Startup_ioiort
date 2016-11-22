@@ -22,7 +22,7 @@
 				<div class="col-md-3">
 					<!--<p>Tieu de: {{tieude}}</p>-->
 					<p>Tiêu đề tin:</p>
-					<!--<p style="margin-top: 22px">Loại Dịch vụ:</p>-->
+					<p style="margin-top: 22px">Loại Dịch vụ:</p>
 					<p style="margin-top: 22px">Đv tính:</p>
 					<p style="margin-top: 22px">Tỉnh/Thành phố:</p>
 					<p style="margin-top: 20px">Giá:</p>
@@ -32,11 +32,11 @@
 				<div class="col-md-9">
 					<input [(ngModel)]="TieuDeTin" name="TieuDeTin" type="text" class="form-control" placeholder="Nhập tiêu đề vào ..." style="width: 520px;margin-bottom: 5px">
 					<div class="col-md-4" style="padding-left: 0px;">
-						<!--<select [(ngModel)]="LoaiDichVu" name="LoaiDichVu" class="form-control" style="width: 190px;margin-bottom: 5px;margin-right: 5px ">
-							<option value="Mua">Mua</option>
-							<option value="Bán">Bán</option>
-							<option value="Cho thuê">Cho thuê</option>
-						</select>-->
+						<select [(ngModel)]="LoaiDichVu" name="LoaiDichVu" class="form-control" style="width: 190px;margin-bottom: 5px;margin-right: 5px ">
+							<option value="1">Mua</option>
+							<option value="2">Bán</option>
+							<option value="3">Cho thuê</option>
+						</select>
 						<input [(ngModel)]="DonViTinh" name="DonViTinh"class="form-control" type="text" style="width: 190px;margin-bottom: 5px;margin-right: 5px">
 						<select [(ngModel)]="TinhThanh" name="TinhThanh" class="form-control" style="width: 190px;margin-bottom: 5px;margin-right: 5px ">
 							<option value="TP HCM">TP HCM</option>

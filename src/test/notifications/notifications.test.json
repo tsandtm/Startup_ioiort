@@ -1,0 +1,58 @@
+[
+    
+    {
+        id: 2,
+        AppID: 1,
+        TieuDe: "Tìm nhà trọ quận 3",
+        NoiDung: "Sạch sẽ, thoáng mát, wifi mạnh",
+        ThoiGianGui: "2016-09-10T17:00:00.000Z",
+        ThoiHanToiDa: "2016-12-10T17:00:00.000Z",
+        DoUuTien: 1,
+        TrangThaiGoi: 65,
+        SoLuong: 20
+    },
+    {
+        id: 3,
+        AppID: 2,
+        TieuDe: "Tìm nhà trọ quận 12",
+        NoiDung: "Sạch sẽ, thoáng mát, wifi mạnh",
+        ThoiGianGui: "2016-09-10T17:00:00.000Z",
+        ThoiHanToiDa: "2016-12-10T17:00:00.000Z",
+        DoUuTien: 1,
+        TrangThaiGoi: 65,
+        SoLuong: 20
+    },
+    {
+        id: 4,
+        AppID: 3,
+        TieuDe: "Tìm nhà trọ HCM",
+        NoiDung: "Sạch sẽ, thoáng mát, wifi mạnh",
+        ThoiGianGui: "2016-09-10T17:00:00.000Z",
+        ThoiHanToiDa: "2016-12-10T17:00:00.000Z",
+        DoUuTien: 1,
+        TrangThaiGoi: 65,
+        SoLuong: 20
+    },
+    {
+        id: 5,
+        AppID: 3,
+        TieuDe: "Tìm nhà trọ quận Thủ Đức",
+        NoiDung: "Sạch sẽ, thoáng mát, wifi mạnh",
+        ThoiGianGui: "2016-09-10T17:00:00.000Z",
+        ThoiHanToiDa: "2016-12-10T17:00:00.000Z",
+        DoUuTien: 1,
+        TrangThaiGoi: 65,
+        SoLuong: 20
+    }
+    {
+        id: 1,
+        AppID: 1,
+        TieuDe: "Tìm nhà trọ quận 2",
+        NoiDung: "Sạch sẽ, thoáng mát, wifi mạnh",
+        ThoiGianGui: "2016-09-10T17:00:00.000Z",
+        ThoiHanToiDa: "2016-12-10T17:00:00.000Z",
+        DoUuTien: 1,
+        TrangThaiGoi: 65,
+        SoLuong: 20
+    },
+]

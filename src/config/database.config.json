@@ -1,6 +1,6 @@
 {
     "development": {
-        "database": "nha2",
+        "database": "testdb2",
         "username": "postgres",
         "password": "200494",
         "config": {

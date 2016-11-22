@@ -13,7 +13,7 @@ export class DangTinComponent {
     errorMessage: string;
     yeucauban:Yeucauban[];
     id: number;
-   // LoaiDichVuID:number;
+    LoaiDichVuID:number;
    // KhachHangID:number;
    // NgayDangTin:Date;
     TieuDeTin: string;
@@ -43,7 +43,7 @@ export class DangTinComponent {
 
 public createYeucauban(){
          let yeucauban = new Yeucauban();
-            //    yeucauban.LoaiDichVuID = this.LoaiDichVuID;
+               yeucauban.LoaiDichVuID = this.LoaiDichVuID;
              //   yeucauban.KhachHangID = this.KhachHangID;
                // yeucauban.NgayDangTin = this.NgayDangTin;
                 yeucauban.TieuDeTin = this.TieuDeTin;
