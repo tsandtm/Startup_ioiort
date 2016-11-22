@@ -30,7 +30,7 @@ export class TagRouter {
 
     @AsyncTest('should return json array')
     @Timeout(5000)
-    public getAllBook() {
+    public getTag() {
         return new bluebird((resolve, reject) => {
             this.request.get('/Tag')
                 .expect('Content-Type', /json/)
