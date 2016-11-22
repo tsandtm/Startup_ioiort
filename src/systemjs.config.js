@@ -29,7 +29,7 @@
       'ng2-charts' : 'npm:ng2-charts',
       'angular2-modal': 'npm:angular2-modal/bundles/angular2-modal.umd.js',
       'angular2-modal/plugins/bootstrap': 'npm:angular2-modal/bundles/angular2-modal.' + plugin + '.umd.js',
-      'ng2-pagination': 'npm:ng2-pagination'
+      'ng2-pagination': 'npm:ng2-pagination',
       'angular2-tag-input' : 'npm:angular2-tag-input/dist/angular2-tag-input.bundle.js',
       'ng2-tag-input':'npm:ng2-tag-input/dist/ng2-tag-input.bundle.js',
       'socket.io-client': "npm:socket.io-client/socket.io.js"
@@ -49,7 +49,7 @@
       },
       'ng2-pagination':{
          main: './index.js',
-         defaultExtension: 'js'
+         defaultExtension: 'js'},
       'angular2-tag-input':{
         // main: './dist/index.js',
         defaultExtension: 'js'
@@ -61,6 +61,6 @@
         defaultExtension: 'js'
       }
     }
-  }
+  
   });
 })(this);

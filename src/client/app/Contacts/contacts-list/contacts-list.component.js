@@ -9,17 +9,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-require('rxjs/Rx'); // Load all features
-var AppComponent = (function () {
-    function AppComponent() {
+var contacts_service_1 = require('../shared/contacts.service');
+var ContactsListComponent = (function () {
+    function ContactsListComponent(_contactsService) {
+        this._contactsService = _contactsService;
+        this.pageTitle = 'Contacts List';
     }
-    AppComponent = __decorate([
+    ContactsListComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this._contactsService.getList()
+            .then(function (contacts) { return _this.contacts = contacts; });
+    };
+    ContactsListComponent = __decorate([
         core_1.Component({
-            selector: 'my-app',
-            templateUrl: 'app.component.html'
+            templateUrl: '/contacts/contacts-list/contacts-list.component.html'
         }), 
-        __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+        __metadata('design:paramtypes', [contacts_service_1.ContactsService])
+    ], ContactsListComponent);
+    return ContactsListComponent;
 }());
-exports.AppComponent = AppComponent;
+exports.ContactsListComponent = ContactsListComponent;

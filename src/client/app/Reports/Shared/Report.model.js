@@ -12,3 +12,9 @@ var ListDevice = (function () {
     return ListDevice;
 }());
 exports.ListDevice = ListDevice;
+var Percent = (function () {
+    function Percent() {
+    }
+    return Percent;
+}());
+exports.Percent = Percent;

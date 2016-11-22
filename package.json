@@ -5,7 +5,7 @@
   "private": true,
   "main": "./src/server.js",
   "scripts": {
-    "test": "gulp compile && alsatian ./dist/test/report/report.router.spec.js",
+    "test": "alsatian ./dist/test/report/reportdevice.router.spec.js",
     "start": "gulp",
     "create-mock-data": "node ./src/scripts/mock-data.js",
     "drop-all": "node ./src/scripts/drop-all.js",
