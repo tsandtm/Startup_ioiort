@@ -9,17 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-require('rxjs/Rx'); // Load all features
-var AppComponent = (function () {
-    function AppComponent() {
+var http_1 = require('@angular/http');
+var ContactsService = (function () {
+    function ContactsService(_http) {
+        this._http = _http;
     }
-    AppComponent = __decorate([
-        core_1.Component({
-            selector: 'my-app',
-            templateUrl: 'app.component.html'
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    ContactsService.prototype.getList = function () {
+        return this._http.get('/api/contact')
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    ContactsService.prototype.handleError = function (error) {
+        console.error(error);
+        return Promise.reject(error.message || error);
+    };
+    ContactsService = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [http_1.Http])
+    ], ContactsService);
+    return ContactsService;
 }());
-exports.AppComponent = AppComponent;
+exports.ContactsService = ContactsService;

@@ -61,5 +61,6 @@
         defaultExtension: 'js'
       }
     }
+
   });
 })(this);

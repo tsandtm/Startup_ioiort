@@ -9,17 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-require('rxjs/Rx'); // Load all features
-var AppComponent = (function () {
-    function AppComponent() {
+var MenuListComponent = (function () {
+    function MenuListComponent() {
+        this.pageTitle = 'Menu List';
     }
-    AppComponent = __decorate([
+    MenuListComponent = __decorate([
         core_1.Component({
-            selector: 'my-app',
-            templateUrl: 'app.component.html'
+            templateUrl: '/menu/menu-list/menu-list.component.html',
+            styleUrls: ['menu/menu-list/menu-list.component.css']
         }), 
         __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    ], MenuListComponent);
+    return MenuListComponent;
 }());
-exports.AppComponent = AppComponent;
+exports.MenuListComponent = MenuListComponent;
