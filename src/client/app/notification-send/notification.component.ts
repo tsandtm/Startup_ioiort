@@ -6,11 +6,11 @@ import { Tag } from './shared/tag.model';
 import { Contact } from './shared/Contact.model';
 import { AppService } from './shared/app.service';
 import { NotifiService } from './shared/notifi.service';
-import { ContactService } from './shared/contact.service';
+import { ContactNotifiService } from './shared/contact.service';
 import { TagService } from './shared/tag.service';
 @Component({
     templateUrl: '/notification-send/notification.component.html',
-    providers: [AppService,NotifiService,ContactService,TagService]
+    providers: [AppService,NotifiService,ContactNotifiService,TagService]
 })
 export class NotifiSendComponent implements OnInit{
     optionsTag = {
@@ -78,7 +78,7 @@ export class NotifiSendComponent implements OnInit{
     constructor(private appService: AppService,
     private notifiservice:NotifiService,
     private tagservice:TagService,
-    private contactservice:ContactService,
+    private contactservice:ContactNotifiService,
     private _router: Router,
     private _route: ActivatedRoute) {
 
@@ -123,6 +123,28 @@ export class NotifiSendComponent implements OnInit{
         var num=item.slice(0,pos);
         this.delPos(this.listIDContactDenied,parseInt(num));
     }
+    // public TagDeniedAdded(item:string) {
+    //     var pos=item.indexOf('.');
+    //     var num=item.slice(0,pos);
+    //     this.listIDTag.push(parseInt(num));
+    // }
+    // public TagDeniedRemoved(item:string) {
+    //     var pos=item.indexOf('.');
+    //     var num=item.slice(0,pos);
+    //     this.delPos(this.listIDTag,parseInt(num));
+    // }
+    // public ContactDeniedAdded(item:string) {
+    //     var pos=item.indexOf('.');
+    //     var num=item.slice(0,pos);
+    //     this.listIDContact.push(parseInt(num));
+    //     console.log(this.listIDContact.toString());
+    // }
+    // public ContactDeniedRemoved(item:string) {
+    //     var pos=item.indexOf('.');
+    //     var num=item.slice(0,pos);
+    //     this.delPos(this.listIDContact,parseInt(num));
+    //     console.log(this.listIDContact.toString());
+    // }
     delPos(ar:Array<number>,key:number){
         for(var i=0;i<=ar.length;i++){
             if(ar[i]==key){
@@ -238,6 +260,20 @@ export class NotifiSendComponent implements OnInit{
                 this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
             })
         }
+        this.notifi={AppID:this.AppID,
+        NotifiID:this.notifiID,
+        TieuDe:this.tieude,
+        Noidung:this.Noidung,
+        DoUuTien:this.doUuTien,
+        Trangthai:this.Trangthai,
+        Soluong:1,
+        Thoigiangui:this.Thoigiangui,
+        ThoiHan:this.ThoiHan,
+        SendTag:this.listIDTag,
+        SendUser:this.listIDContact,
+        DeniedTag:this.listIDTagDenied,
+        DeniedUser:this.listIDContactDenied};
+        this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
     }
 
 

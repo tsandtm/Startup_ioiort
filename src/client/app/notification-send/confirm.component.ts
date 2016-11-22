@@ -1,3 +1,4 @@
+
 import { Component,OnInit,Input,OnDestroy } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -5,10 +6,12 @@ import { Appkey } from './shared/app.model';
 import { Notifi,SLSend,SentUser,UpdateData,InsertUser } from './shared/notifi.model';
 import { AppService } from './shared/app.service';
 import { NotifiService } from './shared/notifi.service';
+
 import { PushService } from './shared/pushservice.service';
 @Component({
     templateUrl: '/notification-send/confirm.component.html',
     providers: [AppService,NotifiService,PushService]
+
 })
 export class ConfirmComponent implements OnInit {
     @Input() notifi:Notifi;
@@ -20,6 +23,7 @@ export class ConfirmComponent implements OnInit {
     Douutien:string;
     date:Date;
     now:Date;
+
     token:string;
     constructor(private appService: AppService,
     private notifiservice:NotifiService,
@@ -49,7 +53,7 @@ export class ConfirmComponent implements OnInit {
     }
 
     getNotifi(id: number):Promise<void> {
-        return this.notifiservice.getOne(id)
+        return this.notifiservice.getOne(id)          
             .then(notifi => {
                 this.notifi = notifi;
                 if(this.notifi.DoUuTien==1){
@@ -71,6 +75,7 @@ export class ConfirmComponent implements OnInit {
             this.sl=sl
         })
     }
+
     getSentUserDenied(id: number) {
         this.notifiservice.getSendUserDenied(id)
             .then(sent => {

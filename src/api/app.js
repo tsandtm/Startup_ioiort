@@ -26,5 +26,6 @@ app.use('/api', [(new notifi_router_1.NotifiRouter()).getRouter()]);
 app.use('/api', [(new tag_router_1.TagRouter()).getRouter()]);
 app.use('/api', [(new Contact_router_1.ContactRouter()).getRouter()]);
 app.use('/api', [(new app_router_1.AppRouter()).getRouter()]);
+
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = app;

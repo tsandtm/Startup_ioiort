@@ -11,7 +11,7 @@ export class TagService {
     constructor(private _http: Http) { }
 
     getAllTag(): Promise<Tag[]> {
-        return this._http.get('/api/tag')
+        return this._http.get('/api/Tag')
             .toPromise()
             .then(response => response.json() as Tag[])
             .catch(this.handleError);

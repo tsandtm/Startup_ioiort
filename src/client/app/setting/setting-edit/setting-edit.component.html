@@ -1,0 +1,30 @@
+<div class='panel-primary' *ngIf='setting'>
+    <div class="container">
+        <form>
+            <h3>Edit</h3>
+            <div class="form-group">
+                <label class="">App ID:</label>
+                <input type="text" class="form-control" name="appid" [(ngModel)]="setting.appid">
+            </div>  
+            
+            <div class="form-group">
+                <label class="">Api key:</label>
+                <input type="text" class="form-control" name="apikey" [(ngModel)]="setting.apikey">
+            </div>  
+            <div class="form-group">
+                <label class="">App name:</label>
+                <input type="text" class="form-control" name="appname" [(ngModel)]="setting.appname">
+            </div>  
+            <div class="form-group">
+                <label class="">Trạng thái:</label>
+                <input type="checkbox" name="trangthai" [(ngModel)]="setting.trangthai" checked *ngIf='setting.trangthai==true'>
+                <input type="checkbox" name="trangthai" [(ngModel)]="setting.trangthai" *ngIf='setting.trangthai==false'>
+            </div>  
+
+            <div class="row"> 
+            <button type="button" style="float:left;margin-right:10px" class="btn btn-success btn-lg" (click)='Edit()'>Save</button>
+            <button type="button" style="float:left" class="btn btn-default btn-lg" (click)='Back()'>Back</button>
+            </div>
+        </form>
+    </div>
+</div>

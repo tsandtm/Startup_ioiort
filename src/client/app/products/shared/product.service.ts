@@ -24,6 +24,7 @@ export class ProductService {
         // return this.getProducts()
         //     .map((products: Product[]) => products.find(p => p.productId === id))
         //     .catch(this.handleError);
+        
         return this.getProducts()
             .then(products => products.find(p => p.productId === id))
             .catch(this.handleError);

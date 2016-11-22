@@ -15,6 +15,9 @@ var forms_1 = require('@angular/forms');
 var http_1 = require('@angular/http');
 var ng2_charts_1 = require('ng2-charts/ng2-charts');
 var ng2_pagination_1 = require('ng2-pagination');
+// modal module
+var angular2_modal_1 = require('angular2-modal');
+var bootstrap_1 = require('angular2-modal/plugins/bootstrap');
 var app_routing_module_1 = require('./app.routing.module');
 var app_component_1 = require('./app.component');
 var book_list_component_1 = require('./books/book-list/book-list.component');
@@ -41,6 +44,13 @@ var notification_component_1 = require('./notification-send/notification.compone
 var confirm_component_1 = require('./notification-send/confirm.component');
 //import {RlTagInputModule} from 'angular2-tag-input';
 var ng2_tag_input_1 = require('ng2-tag-input');
+var Contact_list_component_1 = require('./Contacts/Contact-list/Contact-list.component');
+//BarChartDemoComponent
+var Report_component_1 = require('./Reports/Report/Report.component');
+var Contact_filter_pipe_1 = require('./Contacts/Contact-filter/Contact-filter.pipe');
+var Contact_detail_component_1 = require('./Contacts/Contact-detail/Contact-detail.component');
+var Contact_update_component_1 = require('./Contacts/Contact-update/Contact-update.component');
+
 var AppModule = (function () {
     function AppModule() {
     }
@@ -63,8 +73,13 @@ var AppModule = (function () {
                 notifications_detail_component_1.NotificationstDetailComponent,
                 yeucauban_list_component_1.YeucaubanListComponent,
                 star_component_1.StarComponent,
-                confirm_component_1.ConfirmComponent],
-            bootstrap: [app_component_1.AppComponent]
+                confirm_component_1.ConfirmComponent,
+                Contact_detail_component_1.ContactDetailComponent,
+                Contact_filter_pipe_1.ContactFilterPipe,
+                Contact_update_component_1.ModalContactUpdate
+            ],
+            bootstrap: [app_component_1.AppComponent],
+            entryComponents: [Contact_update_component_1.ModalContactUpdate]
         }), 
         __metadata('design:paramtypes', [])
     ], AppModule);

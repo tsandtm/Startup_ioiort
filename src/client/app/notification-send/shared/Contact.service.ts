@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Contact } from './Contact.model';
 
 @Injectable()
-export class ContactService {
+export class ContactNotifiService {
     private _productUrl = 'api/products/products.json';
 
     constructor(private _http: Http) { }
@@ -15,7 +15,7 @@ export class ContactService {
         //     .map((response: Response) => <Product[]>response.json())
         //     .do(data => console.log('All: ' + JSON.stringify(data)))
         //     .catch(this.handleError);
-        return this._http.get('/api/Contact')
+        return this._http.get('/api/Contactnotifi')
             .toPromise()
             .then(response => response.json() as Contact[])
             .catch(this.handleError);

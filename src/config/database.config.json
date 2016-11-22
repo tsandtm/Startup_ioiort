@@ -1,8 +1,8 @@
 {
     "development": {
-        "database": "testdb",
+        "database": "Appnhatro",
         "username": "postgres",
-        "password": "",
+        "password": "postgres",
         "config": {
             "dialect": "postgres",
             "define": {
@@ -20,13 +20,13 @@
             "min": 4
         },
         "idleTimeoutMillis": 2000,
-        "schema": "test"
+        "schema": "public"
         
     },
     "test": {
         "database": "travis_ci_test",
         "username": "postgres",
-        "password": null,
+        "password": "123456",
         "config": {
             "dialect": "postgres",
             "define": {

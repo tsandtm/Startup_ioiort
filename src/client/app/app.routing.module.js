@@ -10,6 +10,16 @@ var notifications_list_component_1 = require('./notifications/notifications-list
 var notifications_detail_component_1 = require('./notifications/notifications-detail/notifications-detail.component');
 var yeucauban_list_component_1 = require('./yeucauban/yeucauban-list/yeucauban-list.component');
 var confirm_component_1 = require('./notification-send/confirm.component');
+var product_list_component_1 = require('./products/product-list/product-list.component');
+var welcome_component_1 = require('./home/welcome.component');
+var product_detail_component_1 = require('./products/product-detail/product-detail.component');
+
+var Contact_list_component_1 = require('./Contacts/Contact-list/Contact-list.component');
+
+//BarChartDemoComponent
+var Report_component_1 = require('./Reports/Report/Report.component');
+var Contact_detail_component_1 = require('./Contacts/Contact-detail/Contact-detail.component');
+
 var appRoutes = [
     { path: '', redirectTo: 'notification', pathMatch: 'full' },
     { path: 'book-list', component: book_list_component_1.BookListComponent },
@@ -25,5 +35,11 @@ var appRoutes = [
     { path: 'yeucauban', component: yeucauban_list_component_1.YeucaubanListComponent },
     { path: 'notifi-send', component: notification_component_1.NotifiSendComponent },
     { path: 'confirm/:id', component: confirm_component_1.ConfirmComponent },
+    { path: 'welcome', component: welcome_component_1.WelcomeComponent },
+    { path: 'products', component: product_list_component_1.ProductListComponent },
+    { path: 'product/:id', component: product_detail_component_1.ProductDetailComponent },
+    { path: 'Contacts', component: Contact_list_component_1.ContactListComponent },
+    { path: 'Reports', component: Report_component_1.BarChartDemoComponent },
+    { path: 'Contacts/:ContactID', component: Contact_detail_component_1.ContactDetailComponent }
 ];
 exports.routing = router_1.RouterModule.forRoot(appRoutes);
