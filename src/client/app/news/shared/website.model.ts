@@ -1,7 +1,13 @@
 export interface IWeb {
-    id: number;
-    name: string;
-    icon: string;
-    show : boolean;
+   IDDanhMucSite: number;
+    DuongDan:string;
+    TenGoi: string;
+    MoTa:string;
+    SoLuongTinDuyetTim:number;
+    TempateCrawlTieuDe:string;
+    TempateCrawlMoTa:string;
+    TempateCrawlNoiDung:string;
+    TempateCrawlImage:string;
+    LinkRSS:string;
 
 }

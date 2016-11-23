@@ -1,8 +1,11 @@
 export interface INews {
-    id: number;
-    name: string;
-    description: string; 
-    content: string;       
-    datepub: Date;
-    imgurl: string;
+    IDTinTuc:number;
+    IDDanhMucSite:number;
+    TieuDe:string;
+    MoTa:string;
+    NoiDung:string;
+    ThoiGianDangTin:Date;
+    URLNews:string;
+    URLThumbImage:string;
+    URLImage:string;
 }

@@ -8,19 +8,21 @@ export class ListNewsRepo extends RepoBase {
         super();
     }
      public getList(option): Promise<ListNews[]> {
-        let queryText = 'select * from "news" order by datepub asc';
+        let queryText = 'SELECT * FROM public."TinTuc" ORDER BY "IDTinTuc" ASC ';
 
         console.info('Excute: ' + queryText);
         let pResult;
 
         if (option) {
             pResult = this._pgPool.query(queryText, 
-            [option.id, 
-            option.name, 
-            option.description,
-            option.content,
-            option.datepub,
-            option.imgurl
+            [option.IDTinTuc,
+                option.TieuDe,
+                option.MoTa,
+                option.NoiDung,
+                option.ThoiGianDangTin,
+                option.URLNews,
+                option.URLThumbImage,
+                option.URLImage,
             ])
         } else {
             pResult = this._pgPool.query(queryText)
@@ -30,12 +32,15 @@ export class ListNewsRepo extends RepoBase {
         return pResult.then(result => {
             let news: ListNews[] = result.rows.map(r => {
                 let nw = new ListNews();
-                nw.id = r.id;
-                nw.name = r.name;
-                nw.description = r.description;
-                nw.content= r.content;
-                nw.datepub = r.datepub;
-                nw.imgurl= r.imgurl;
+               nw.IDTinTuc = r.IDTinTuc;
+                nw.IDDanhMucSite = r.IDDanhMucSite;
+                nw.TieuDe = r.TieuDe;
+                nw.MoTa = r.MoTa;
+                nw.NoiDung = r.NoiDung;
+                nw.ThoiGianDangTin = r.ThoiGianDangTin;
+                nw.URLNews = r.URLNews;
+                nw.URLThumbImage = r.URLThumbImage;
+                nw.URLImage = r.URLImage;
                 return nw;
             });
             return news;
@@ -58,14 +63,14 @@ export class ListNewsRepo extends RepoBase {
     // }
 
     public DeleteNews(id : number): Promise<ListNews> {
-        let queryText = 'delete from "news" where id=$1';
+        let queryText = 'delete from "TinTuc" where IDTinTuc=$1';
 
         console.info('Excute: ' + queryText);
 
         return this._pgPool.query(queryText, [id])
             .then(result => { 
                 let news = new ListNews();
-                news.id = id;
+                news.IDTinTuc = id;
                 console.log('rows: ' + JSON.stringify(result.rows))
                 return news;
             })

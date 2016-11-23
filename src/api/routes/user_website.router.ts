@@ -3,21 +3,21 @@ import { Router, Response, Request } from 'express';
 
 import path = require('path');
 // import các module tạo table
-import { ListWebRepo } from '../repositories/website.repo';
-import { ListWeb } from '../models/website.model'
+import { UserWebRepo } from '../repositories/user_website.repo';
+import { User_Web } from '../models/user_website.model'
 
 // let mockNews = require(path.join(__dirname,'..','json','news.json'));
 
 
 
-export class WebsRouter {
+export class UserWebsRouter {
 
     private router: Router;
-    private websRepo: ListWebRepo;
+    private userwebsRepo: UserWebRepo;
 
     constructor() {
         this.router = Router();
-        this.websRepo = new ListWebRepo();
+        this.userwebsRepo = new UserWebRepo();
 
         //this.model = model;
     }
@@ -25,8 +25,8 @@ export class WebsRouter {
 
     public getRouter(): Router {
 
-        this.router.route('/website')
-            .get(this.getAllWebs);
+        this.router.route('/userwebsite')
+            .post(this.Create);
             // .put(this.updateShow);
         // this.router.get('/getWebs', this.getWebs);
 
@@ -37,18 +37,16 @@ export class WebsRouter {
         return this.router;
     }
 
-    private getAllWebs = (req: Request, res: Response) => {
+    private Create = (req: Request, res: Response) => {
 
-        console.log(req.query.limit);
-        console.log(req.query.skip);
-
-        this.websRepo.getList(null,req.query.limit,req.query.skip)
+        this.userwebsRepo.Create(req.body)
             .then(lnw => {
+                res.send(lnw);                
                 res.status(200).json(lnw);
             })
             .catch(err => {
                 console.error(err);
-                return Promise.reject(err);
+                res.status(500).send(err)
             })
     }
     // private getWebs = (req: Request, res: Response) => {

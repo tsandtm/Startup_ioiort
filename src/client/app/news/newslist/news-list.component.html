@@ -20,14 +20,14 @@
                         <div class="box1">
                             <ul>
                                 <li style="height: 120px">
-                                    <img [src]='new.imgurl'
+                                    <img [src]='new.URLThumbImage'
                                         [title]='new.name | uppercase'
                                         [style.width.px]='imageWidth' 
                                         [style.height.px]='imageHeight'/>
                                 </li>
-                                <li><a style="font-weight:bold; font-size:15px" (click) = "openCustom(new)">{{new.name}}</a></li>
-                                <li><h6 style="text-align:right;margin-top:10px;">{{new.datepub | date : "dd-MM-y"}}</h6></li>
-                                <li><h5>{{new.description}}</h5></li>
+                                <li><a style="font-weight:bold; font-size:15px" (click) = "openCustom(new)">{{new.TieuDe}}</a></li>
+                                <li><h6 style="text-align:right;margin-top:10px;">{{new.ThoiGianDangTin}}</h6></li>
+                                <li><h5>{{new.MoTa}}</h5></li>
                             </ul>
                         </div>
                         <div class="box2">                    

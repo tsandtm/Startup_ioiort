@@ -18,7 +18,7 @@ export class WebsService {
     }
 
     getListWebs(): Promise<IWeb[]> {
-         return this._http.get('/api/getWebs')
+         return this._http.get('/api/website')
             .toPromise()
             .then(response => response.json() as IWeb[])
             .catch(this.handleError);
@@ -26,7 +26,7 @@ export class WebsService {
 
      getWeb(id: number): Promise<IWeb> {
         return this.getWebs()
-            .then(inew => inew.find(p => p.id === id))
+            .then(inew => inew.find(p => p.IDDanhMucSite === id))
             .catch(this.handleError);
     }
 

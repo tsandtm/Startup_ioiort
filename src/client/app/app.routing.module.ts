@@ -8,6 +8,7 @@ import { ProductService } from './products/shared/product.service';
 import { WelcomeComponent } from './home/welcome.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 
+import{WebsListComponent} from'./news/website/website.component';
 import {NewsListComponent} from './news/newslist/news-list.component';
 import {NewsService} from './news/shared/news.service';
 
@@ -19,7 +20,8 @@ const appRoutes: Route[] = [
     { path: 'welcome', component: WelcomeComponent },
     { path: 'products', component: ProductListComponent },
     { path: 'product/:id', component: ProductDetailComponent},
-    { path: 'newslist', component: NewsListComponent}
+    { path: 'newslist', component: NewsListComponent},
+    {path:'website',component:WebsListComponent},
 ]
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

@@ -19,7 +19,7 @@ export class NewsService {
 
      getNew(id: number): Promise<INews> {
         return this.getNews()
-            .then(inew => inew.find(p => p.id === id))
+            .then(inew => inew.find(p => p.IDDanhMucSite === id))
             .catch(this.handleError);
     }
 
