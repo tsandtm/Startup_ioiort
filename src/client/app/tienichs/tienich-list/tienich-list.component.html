@@ -3,7 +3,12 @@
         {{pageTitle}}
     </div>
     <div class='panel-body'>
-
+        <div class='row'>
+            <div class='col-md-2'>Tìm kiếm:</div>
+            <div class='col-md-4'>
+                <input type='text' [(ngModel)]='listFilter' />
+            </div>
+        </div>
         <div class='table-responsive'>
             <table class='table' *ngIf='tienichs && tienichs.length'>
                 <thead>
@@ -17,53 +22,57 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor='let n of tienichs|paginate: { itemsPerPage:3, currentPage: p}'>
+                    <tr *ngFor='let n of tienichs|tienichFilter: listFilter|paginate: { itemsPerPage:4, currentPage: p}; let i = index'>
                         <td>{{n.id}}</td>
                         <td>{{n.KyHieu}}</td>
                         <td>{{n.TenGoi}}</td>
                         <td>
-                            <img [src]="n.BieuTuong"
+                            <img [src]="n.BieuTuong" 
                             [style.width.px]='imageWidth' 
-                            [style.margin.px]='imageMargin'>
+                            [style.margin.px]='imageMargin'
+                            [routerLink]="['/tienich',n.id]">
                             <!--[routerLink]="['/tintuc',tintuc.id]"-->
                         </td>
-                        <td> 
-                            <button class="btn btn-danger" (click)='Delete()'>
+                        <td>
+                            <button class="btn btn-primary" type="submit" [routerLink]="['/suatienich',n.id]" >
+                                Sữa
+                            </button>
+                            <button class="btn btn-danger" (click)='btnXoa(n.id,i)'>
                                 Xóa
-                            </button>  
+                            </button>
                         </td>
                     </tr>
                     <tr>
-                        <th>   
+                        <th>
                             <button class="btn btn-info" type="submit" [routerLink]="['/themtienich']">
                                 Thêm mới
                             </button>
                         </th>
                     </tr>
                 </tbody>
-            </table>   
-            
-        </div>                  
+            </table>
+
+        </div>
     </div>
 </div>
 <pagination-template #pagination="paginationApi" (pageChange)="p = $event">
-        <nav aria-label="Page navigation">
-            <ul class="pagination">
-                <li [class.disabled]="pagination.isFirstPage()">
-                    <a aria-label="Previous" (click)="pagination.previous()" href="javascript:;" *ngIf="!pagination.isFirstPage()">
-                        <span>&laquo;</span>
-                    </a>
-                </li>
-                <li *ngFor="let page of pagination.pages" [class.active]="pagination.getCurrent() == page.value">
-                    <a (click)="pagination.setCurrent(page.value)" href="javascript:;">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li [class.disabled]="pagination.isFirstPage()">
+                <a aria-label="Previous" (click)="pagination.previous()" href="javascript:;" *ngIf="!pagination.isFirstPage()">
+                    <span>&laquo;</span>
+                </a>
+            </li>
+            <li *ngFor="let page of pagination.pages" [class.active]="pagination.getCurrent() == page.value">
+                <a (click)="pagination.setCurrent(page.value)" href="javascript:;">
                                 {{page.label}}
                             </a>
-                </li>
-                <li [class.disabled]="pagination.isLastPage()" *ngIf="pagination.directionLinks">
-                    <a aria-label="Next" href="javascript:;" (click)="pagination.next()" *ngIf="!pagination.isLastPage()">
-                        <span>&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </pagination-template>
+            </li>
+            <li [class.disabled]="pagination.isLastPage()" *ngIf="pagination.directionLinks">
+                <a aria-label="Next" href="javascript:;" (click)="pagination.next()" *ngIf="!pagination.isLastPage()">
+                    <span>&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</pagination-template>

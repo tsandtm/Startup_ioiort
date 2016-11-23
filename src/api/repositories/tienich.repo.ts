@@ -39,10 +39,39 @@ export class TienIchRepo extends RepoBase {
     }
 
     public add(tienich: TienIch): Promise<TienIch>{
-        let queryText = 'INSERT INTO "ioh_TienIch" VALUES ($1,$2,$3,$4)';
+        let queryText = 'INSERT INTO public."ioh_TienIch" VALUES ($1,$2,$3,$4)';
 
         return this._pgPool.query(queryText,[tienich.TienIchID,tienich.KyHieu,tienich.TenGoi,tienich.BieuTuong])
             .then(result => tienich)
             .catch(error => Promise.reject(error));
+    }
+
+    
+    public xoa(id: number): Promise<TienIch> {
+        let queryText = 'DELETE FROM public."ioh_TienIch" WHERE "TienIchID"=$1';
+        
+        return this._pgPool.query(queryText, [id])
+            .then(result => {
+                let tienich = new TienIch();
+                tienich.id = id;
+                    
+                return tienich;
+            }).catch(error => {
+                console.error('Error: ', error);
+                return Promise.reject(error);
+            })
+    }
+
+    public suaTienIch(tienich: TienIch){
+        let queryText = `UPDATE public."ioh_TienIch"
+	                SET "KyHieu"=$2, "TenGoi"=$3, "BieuTuong"=$4
+	                WHERE "TienIchID"=$1`;
+        return this._pgPool.query(queryText,[tienich.id,tienich.KyHieu,tienich.TenGoi,tienich.BieuTuong])
+                .then(result => tienich)
+                .catch(err => {
+                    console.error('Error: ', err);
+                    return null;
+                })
+
     }
 }

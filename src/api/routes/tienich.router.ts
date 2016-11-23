@@ -27,8 +27,11 @@ export class TienIchRouter {
 
         this.router.route('/tienich')
             .get(this.getAllTienich)
-            .post(this.themTienIch);
+            .post(this.themTienIch)
+            .delete(this.xoaTienIch)
+            .put(this.suaTienIch);
             return this.router;
+            
             // .post(this.createABook)
             // .delete(this.deleteABook);
         
@@ -56,7 +59,22 @@ export class TienIchRouter {
             .then(result => res.status(200).json(result))
             .catch(error => res.status(500).send(error.message))
     }
-}
+     private xoaTienIch = (reqs: Request, res: Response) => {
+        this.tienichRepo.xoa(reqs.query.id)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+            console.error(error.message);
+            res.status(500).send(error.message);
+        })
+    }
+    
+    private suaTienIch = (reqs: Request, res: Response) => {
+        this.tienichRepo.suaTienIch(reqs.body)
+            .then(result => res.status(200).json(result))
+            .catch(error => res.status(500).send(error.message))
+    }
 
 
 

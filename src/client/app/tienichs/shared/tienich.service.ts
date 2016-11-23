@@ -27,9 +27,10 @@ export class TienIchService {
         //     .map((products: Product[]) => products.find(p => p.productId === id))
         //     .catch(this.handleError);
         return this.getTienIchs()
-            .then(tienichs => tienichs.find(p => p.TienIchID === id))
+            .then(tienichs => tienichs.find(p => p.id === id))
             .catch(this.handleError);
     }
+    
     private handleError(error: Error): Promise<any> {
         // in a real world app, we may send the server to some remote logging infrastructure
         // instead of just logging it to the console
@@ -48,7 +49,22 @@ export class TienIchService {
                 return null;
             })
     }
-    
+    xoaTienIch(id:number): Promise<TienIch>{
+         return this._http.delete('/api/tienich?id='+id)
+            .toPromise()
+            .then(response => response.json() as TienIch)
+            .catch(this.handleError);
+     }
+     public suaTienIch(tienich:TienIch): Promise<TienIch>{
+        return this._http.put('/api/tienich',tienich)
+            .toPromise()
+            .then(respose => tienich)
+              .catch(error => {
+                console.error('Lỗi sửa tiện ích',error);
+                return null;
+            })
+    }
+}
     // public Add = (TienIchID: number, KyHieu: string, TenGoi:string, BieuTuong: string): Observable<TienIch> => {
     //     let toAdd = JSON.stringify({ Ma: TienIchID,
     //                                  KyHieu: KyHieu,
@@ -70,4 +86,3 @@ export class TienIchService {
     //     return this._http.delete(this.actionUrl + id)
     //         .catch(this.handleError);
     // }
-}

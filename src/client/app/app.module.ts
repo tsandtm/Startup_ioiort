@@ -23,6 +23,9 @@ import {TintucDetailComponent} from './tintucs/tintuc-detail/tintuc-detail.compo
 import {TienIchtListComponent} from './tienichs/tienich-list/tienich-list.component';
 import {TienIchService} from './tienichs/shared/tienich.service';
 import {ThemtienichComponent} from './tienichs/themtienich/themtienich.component';
+import {SuatienichComponent} from './tienichs/suatienich/suatienich.component';
+import {TienichDetailComponent} from './tienichs/tienich-detail/tienich-detail.component';
+import {TienichFilterPipe} from './tienichs/tienich-filter/tienich-filter.pipe';
 
 
 @NgModule({
@@ -40,7 +43,10 @@ import {ThemtienichComponent} from './tienichs/themtienich/themtienich.component
     TintuctFilterPipe,
     TintucDetailComponent,
     TienIchtListComponent,
-    ThemtienichComponent],
+    ThemtienichComponent,
+    SuatienichComponent,
+    TienichDetailComponent,
+    TienichFilterPipe],
     bootstrap: [AppComponent]
 })
 export class AppModule{}

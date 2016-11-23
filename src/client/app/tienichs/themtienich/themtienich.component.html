@@ -1,0 +1,28 @@
+<!--tao trang them o day
+bo may cai input vao do
+xong roi ong chi tiep ha??-->
+<form>
+    <label>Mã Tiện ích: </label>
+    <input type="text" name="matienich" [(ngModel)]="matienich" /> <br/>
+    <label>Ký hiệu: </label>
+    <input class="w3-input" type="text" name="kyhieu" [(ngModel)]="kyhieu" /> <br/>
+    <label>Tên gọi: </label>
+    <input type="text" name="tengoi" [(ngModel)]="tengoi" /> <br/>
+    <label>Biệu tượng: </label>
+    <input type="text" name="bieutuong" [(ngModel)]="bieutuong" /> <br/>
+
+        <a class='btn btn-facebook' (click)='onBack()' style='width:80px'>
+            <i class='glyphicon glyphicon-chevron-left'></i> Trở về
+        </a>
+
+    <button class="btn btn-info" (click)="themtienich()">Lưu</button>
+
+</form>
+    
+<style>
+    label {
+        padding: 10px;
+        display: inline-block;
+        width  : 150px;        
+    }
+</style>    
