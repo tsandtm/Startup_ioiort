@@ -27,158 +27,174 @@ export class NotifiRouter {
     }
 
 
-        // this.router.route('/notifi')
-        //     .post(this.Create)
-        // this.router.route("/notifigetone")
-        // .post(this.Update);
 
-        // this.router.route("/sl")
-        // .post(this.getSLsend)
-
-        // this.router.route("/sldenied")
-        // .post(this.getSLsenddenied)
-
-        // this.router.route("/sentuser")
-        // .post(this.Insert)
-        
-
-    // @AsyncTest('should return json array')
-    // @Timeout(5000)
-    // public getLastNotifi() {
-    //     return new bluebird((resolve, reject) => {
-    //         this.request.get('/notifi')
-    //             .expect('Content-Type', /json/)
-    //             .expect(200)
-    //             .expect((res: supertest.Response) => {
-    //                 Expect(res.body).toEqual(testdata[0])
-    //             })
-    //             .end((err, res) => {
-    //                 if (err) {
-    //                     reject(err);
-    //                 } else {
-    //                     resolve();
-    //                 }
-    //             })
+    @AsyncTest('should return json array')
+    @Timeout(5000)
+    public getLastNotifi() {
+        return new bluebird((resolve, reject) => {
+            this.request.get('/notifi')
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .expect((res: supertest.Response) => {
+                    Expect(res.body).toEqual(testdata[0])
+                })
+                .end((err, res) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve();
+                    }
+                })
                 
-    //     })
-    // }
+        })
+    }
 
-    // @AsyncTest('should return json array')
-    // @Timeout(5000)
-    // public getAllnotifi() {
-    //     return new bluebird((resolve, reject) => {
-    //         this.request.get('/notifigetone')
-    //             .expect('Content-Type', /json/)
-    //             .expect(200)
-    //             .expect((res: supertest.Response) => {
-    //                 Expect(res.body).toEqual(testdata[1])
-    //             })
-    //             .end((err, res) => {
-    //                 if (err) {
-    //                     reject(err);
-    //                 } else {
-    //                     resolve();
-    //                 }
-    //             })
+    @AsyncTest('should return json array')
+    @Timeout(5000)
+    public getAllnotifi() {
+        return new bluebird((resolve, reject) => {
+            this.request.get('/notifigetone')
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .expect((res: supertest.Response) => {
+                    Expect(res.body).toEqual(testdata[1])
+                })
+                .end((err, res) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve();
+                    }
+                })
                 
-    //     })
-    // }
+        })
+    }
     
-    // @AsyncTest('should return json array')
-    // @Timeout(5000)
-    // public getSL() {
-    //     return new bluebird((resolve, reject) => {
-    //         this.request.get('/sl')
-    //             .expect('Content-Type', /json/)
-    //             .expect(200)
-    //             .expect((res: supertest.Response) => {
-    //                 Expect(res.body).toEqual(testdata[2])
-    //             })
-    //             .end((err, res) => {
-    //                 if (err) {
-    //                     reject(err);
-    //                 } else {
-    //                     resolve();
-    //                 }
-    //             })
+    @AsyncTest('should return json array')
+    @Timeout(5000)
+    public getSL() {
+        return new bluebird((resolve, reject) => {
+            this.request.get('/sl')
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .expect((res: supertest.Response) => {
+                    Expect(res.body).toEqual(testdata[2])
+                })
+                .end((err, res) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve();
+                    }
+                })
 
-    //     })
-    // }
+        })
+    }
 
-    // @AsyncTest('should return json array')
-    // @Timeout(5000)
-    // public getSLdenied() {
-    //     return new bluebird((resolve, reject) => {
-    //         this.request.get('/sldenied')
-    //             .expect('Content-Type', /json/)
-    //             .expect(200)
-    //             .expect((res: supertest.Response) => {
-    //                 Expect(res.body).toEqual(testdata[3])
-    //             })
-    //             .end((err, res) => {
-    //                 if (err) {
-    //                     reject(err);
-    //                 } else {
-    //                     resolve();
-    //                 }
-    //             })
+    @AsyncTest('should return json array')
+    @Timeout(5000)
+    public getSLdenied() {
+        return new bluebird((resolve, reject) => {
+            this.request.get('/sldenied')
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .expect((res: supertest.Response) => {
+                    Expect(res.body).toEqual(testdata[3])
+                })
+                .end((err, res) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve();
+                    }
+                })
 
-    //     })
-    // }
-
-
-    // @AsyncTest('should return json array')
-    // @Timeout(5000)
-    // public getSentUser() {
-    //     return new bluebird((resolve, reject) => {
-    //         this.request.get('/sentuser')
-    //             .expect('Content-Type', /json/)
-    //             .expect(200)
-    //             .expect((res: supertest.Response) => {
-    //                 Expect(res.body).toEqual(testdata[4])
-    //             })
-    //             .end((err, res) => {
-    //                 if (err) {
-    //                     reject(err);
-    //                 } else {
-    //                     resolve();
-    //                 }
-    //             })
-
-    //     })
-    // }
+        })
+    }
 
 
-    // @AsyncTest('should return json array')
-    // @Timeout(5000)
-    // public getSentUserDenied() {
-    //     return new bluebird((resolve, reject) => {
-    //         this.request.get('/sentuserdenied')
-    //             .expect('Content-Type', /json/)
-    //             .expect(200)
-    //             .expect((res: supertest.Response) => {
-    //                 Expect(res.body).toEqual(testdata[5])
-    //             })
-    //             .end((err, res) => {
-    //                 if (err) {
-    //                     reject(err);
-    //                 } else {
-    //                     resolve();
-    //                 }
-    //             })
+    @AsyncTest('should return json array')
+    @Timeout(5000)
+    public getSentUser() {
+        return new bluebird((resolve, reject) => {
+            this.request.get('/sentuser')
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .expect((res: supertest.Response) => {
+                    Expect(res.body).toEqual(testdata[4])
+                })
+                .end((err, res) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve();
+                    }
+                })
 
-    //     })
-    // }
+        })
+    }
+
+
+    @AsyncTest('should return json array')
+    @Timeout(5000)
+    public getSentUserDenied() {
+        return new bluebird((resolve, reject) => {
+            this.request.get('/sentuserdenied')
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .expect((res: supertest.Response) => {
+                    Expect(res.body).toEqual(testdata[5])
+                })
+                .end((err, res) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve();
+                    }
+                })
+
+        })
+    }
 
 
     
 
-    @AsyncTest('should create and return book')
+    @AsyncTest('should create')
     @Timeout(5000)
     public createNotifi() {
         return new bluebird((resolve, reject) => {
             this.request.post('/notifi')
-                .query({NotifiID:2,AppID:1,TieuDe:'test',NoiDung:'test'})
+                .type('form')
+                .send({
+                    NotifiID: 2,
+                    AppID: 1,
+                    TieuDe: 'test',
+                    NoiDung: 'test'
+                })
+                .expect(200)
+                .expect((res: supertest.Response) => {
+                    Expect(res.body).toEqual(null)
+                })
+                .end(err => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve()
+                    }
+                })
+        })
+    }
+    
+    @AsyncTest('should update')
+    @Timeout(5000)
+    public updateNotifi() {
+        return new bluebird((resolve, reject) => {
+            this.request.post('/notifigetone')
+                .type('form')
+                .send({
+                    NotifiID: 1,
+                    Trangthai:1
+                })
                 .expect(200)
                 .expect((res: supertest.Response) => {
                     Expect(res.body).toEqual(null)
@@ -193,26 +209,79 @@ export class NotifiRouter {
         })
     }
 
-//     // @AsyncTest('should delete and return book name')
-//     // @Timeout(5000)
-//     // @TestCase(1)
-//     // public deleteABook(index: number) {
-//     //     return new bluebird((resolve, reject) => {
-//     //         this.request.delete('/book')
-//     //             .query({ id: bookData[index].id })
-//     //             .expect(200)
-//     //             .expect((res: supertest.Response) => {
-//     //                 Expect(res.text).toEqual('sach ' + bookData[index].name + ' da duoc huy')
-//     //             })
-//     //             .end(err => {
-//     //                 if (err) {
-//     //                     reject(err)
-//     //                 } else {
-//     //                     resolve()
-//     //                 }
-//     //             })
-//     //     })
-//     // }
+    @AsyncTest('should get slsend')
+    @Timeout(5000)
+    public getSlSend() {
+        return new bluebird((resolve, reject) => {
+            this.request.post('/sl')
+                .type('form')
+                .send({
+                    contact: [2,4],
+                    tag:[1,3],
+                    contactdenied:[1],
+                    tagdenied:[2]
+                })
+                .expect(200)
+                .expect((res: supertest.Response) => {
+                    Expect(res.body).toEqual(3)
+                })
+                .end(err => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve()
+                    }
+                })
+        })
+    }
+
+    @AsyncTest('should get slsend denied')
+    @Timeout(5000)
+    public getSlSendDenied() {
+        return new bluebird((resolve, reject) => {
+            this.request.post('/sldenied')
+                .type('form')
+                .send({
+                    contactdenied:[2],
+                    tagdenied:[1,3]
+                })
+                .expect(200)
+                .expect((res: supertest.Response) => {
+                    Expect(res.body).toEqual(1)
+                })
+                .end(err => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve()
+                    }
+                })
+        })
+    }
+
+    @AsyncTest('should insert')
+    @Timeout(5000)
+    public Insert() {
+        return new bluebird((resolve, reject) => {
+            this.request.post('/sentuser')
+                .type('form')
+                .send({
+                    ContactID:2,
+                    NotifiID:2
+                })
+                .expect(200)
+                .expect((res: supertest.Response) => {
+                    Expect(res.body).toEqual(null)
+                })
+                .end(err => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve()
+                    }
+                })
+        })
+    }
 
     @Test('add 1 and 2 shuold return 3')
     @TestCase(1,2,3)
