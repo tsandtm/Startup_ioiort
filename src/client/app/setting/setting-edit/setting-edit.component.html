@@ -4,21 +4,21 @@
             <h3>Edit</h3>
             <div class="form-group">
                 <label class="">App ID:</label>
-                <input type="text" class="form-control" name="appid" [(ngModel)]="setting.appid">
+                <input type="text" class="form-control" name="appid" [(ngModel)]="setting.AppID" readonly>
             </div>  
             
             <div class="form-group">
                 <label class="">Api key:</label>
-                <input type="text" class="form-control" name="apikey" [(ngModel)]="setting.apikey">
+                <input type="text" class="form-control" name="apikey" [(ngModel)]="setting.APIKey">
             </div>  
             <div class="form-group">
                 <label class="">App name:</label>
-                <input type="text" class="form-control" name="appname" [(ngModel)]="setting.appname">
+                <input type="text" class="form-control" name="appname" [(ngModel)]="setting.AppName">
             </div>  
             <div class="form-group">
                 <label class="">Trạng thái:</label>
-                <input type="checkbox" name="trangthai" [(ngModel)]="setting.trangthai" checked *ngIf='setting.trangthai==true'>
-                <input type="checkbox" name="trangthai" [(ngModel)]="setting.trangthai" *ngIf='setting.trangthai==false'>
+                <input type="checkbox" name="trangthai" [(ngModel)]="setting.IsActive" checked *ngIf='setting.IsActive==true'>
+                <input type="checkbox" name="trangthai" [(ngModel)]="setting.IsActive" *ngIf='setting.IsActive==false'>
             </div>  
 
             <div class="row"> 

@@ -32,15 +32,15 @@
                 </thead>
                 <tbody>
                     <tr *ngFor='let set of itempages | settingFilter:listFilter'> 
-                        <td>{{ set.appid }}</td>
-                        <td>{{ set.apikey }}</td>
-                        <td>{{ set.appname }}</td>      
-                        <td>{{ set.trangthai }}</td>
-                        <td>{{ set.ngaytao }}</td>                  
+                        <td>{{ set.AppID }}</td>
+                        <td>{{ set.APIKey }}</td>
+                        <td>{{ set.AppName }}</td>      
+                        <td>{{ set.IsActive }}</td>
+                        <td>{{ set.NgayTao }}</td>                  
                         <td>
-                            <a class="btn" [routerLink]="['/setting-detail', set.appid]">Chi tiết</a>
-                            <a class="btn" [routerLink]="['/setting-edit',set.appid]">Sửa</a>
-                            <a class="btn" [routerLink]="['/setting-delete',set.appid]">Xóa</a>
+                            <a class="btn" [routerLink]="['/setting-detail', set.AppID]">Chi tiết</a>
+                            <a class="btn" [routerLink]="['/setting-edit',set.AppID]">Sửa</a>
+                            <a class="btn" [routerLink]="['/setting-delete',set.AppID]">Xóa</a>
                         </td>
                     </tr>    
                 </tbody>

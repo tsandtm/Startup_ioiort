@@ -27,8 +27,6 @@ export class SettingRouter {
             .post(this.Edit);
         this.router.route("/settingdelete")
             .post(this.Delete);
-        this.router.route("/settingdetail")
-            .post(this.Detail);
         
         return this.router;
     }
@@ -65,16 +63,6 @@ export class SettingRouter {
     }
     private Delete = (req: Request, res: Response) => {
         this.settingRepo.Delete(req.body)
-            .then(result => {
-                res.status(200).json(result)
-            })
-            .catch(error => {
-                console.error(error.message);
-                res.status(500).send(error.message)
-            });
-    }
-    private Detail = (req: Request, res: Response) => {
-        this.settingRepo.Detail(req.body)
             .then(result => {
                 res.status(200).json(result)
             })

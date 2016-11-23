@@ -91,7 +91,7 @@ var BarChartDemoComponent = (function () {
         console.log(year);
         console.log(my);
         if (id == 1) {
-            month = date.getMonth() - 3;
+            month = date.getMonth();
             year = date.getFullYear();
             my = month + ";" + year;
             console.log(my);
@@ -105,7 +105,7 @@ var BarChartDemoComponent = (function () {
             });
         }
         else if (id == 2) {
-            month = date.getMonth() - 2;
+            month = date.getMonth() + 1;
             year = date.getFullYear();
             my = month + ";" + year;
             console.log(my);
@@ -180,7 +180,7 @@ var BarChartDemoComponent = (function () {
             .then(function () {
             for (var i = 0; i < _this.ArrayReport.length; i++) {
                 if (flag != _this.ArrayReport[i].name) {
-                    _this.c[i] = Math.floor((parseInt(_this.ArrayReport[i].count.toString()) / _this.testto) * 100) + "   " + "thiết bị " + _this.ArrayReport[i].name + "html.raw(<br\/>)";
+                    _this.c[i] = Math.floor((parseInt(_this.ArrayReport[i].count.toString()) / _this.testto) * 100) + "%   " + "thiết bị " + _this.ArrayReport[i].name;
                 }
             }
         });

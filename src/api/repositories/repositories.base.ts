@@ -13,7 +13,7 @@ export abstract class RepoBase {
         this._pgPool = PgPool.getPool();
     }
 
-    public abstract getList(option);
+    //public abstract getList(option);
     //public abstract getOne(option);
     // them vai thu nua
     

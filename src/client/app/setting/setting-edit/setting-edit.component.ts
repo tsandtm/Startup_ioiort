@@ -29,8 +29,8 @@ export class SettingEditComponent {
         
     }
     Edit(): void{
-        if(this.setting.trangthai==undefined)
-            this.setting.trangthai=false;        
+        if(this.setting.IsActive==undefined)
+            this.setting.IsActive=false;        
         this.settingservice.Edit(this.setting).then(result=>this._router.navigate(['setting-list']));
     }
     Back(): void {

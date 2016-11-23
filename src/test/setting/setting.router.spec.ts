@@ -13,7 +13,7 @@ import path = require('path');
 let testdata = require(path.join(__dirname, 'setting.test.json'));
 let config = require(path.join(__dirname, '..', '..', 'config', 'server.config.json'))['test'];
 
-export class ReportTest {
+export class SettingTest {
     // no se tao ra mot client gia va se noi chuyen voi url la http://localhost:8081/api 
     request: supertest.SuperTest<supertest.Test> = supertest('http://' + config.host + ':' + config.port + '/api');
     instance: Server;
@@ -40,7 +40,7 @@ export class ReportTest {
     // timeout la thoi gian ma cai test nay se cho
     @AsyncTest('mot danh sach cac device')
     @Timeout(5000)
-    public getAllBook() {
+    public getAllSetting() {
         return new bluebird((resolve, reject) => {
             this.request.get('/setting')
                 .expect('Content-Type', /json/)
@@ -79,27 +79,66 @@ export class ReportTest {
     //     })
     // }
 
-    // @AsyncTest('shuold create and return book')
-    // @Timeout(5000)
-    // public createABook() {
-    //     return new bluebird((resolve, reject) => {
-    //         this.request.post('/book')
-    //             .type('form')
-    //             .send({ name: 'tao tu test' })
-    //             .expect(200)
-    //             .expect((res: supertest.Response) => {
-    //                 Expect(res.body).toEqual({ id: 4, name: 'tao tu test' })
-    //             })
-    //             .end(err => {
-    //                 if (err) {
-    //                     reject(err)
-    //                 } else {
-    //                     resolve()
-    //                 }
-    //             })
-    //     })
-    // }
-
+    @AsyncTest('shuold create and return book')
+    @Timeout(5000)
+    public createASetting() {
+        return new bluebird((resolve, reject) => {
+            this.request.post('/setting')
+                .type('form')
+                .send({ AppID: 2,APIKey: 'asdfasdfa3213',AppName: 'Shop',IsActive:'true', NgayTao: '24/11/2016' })
+                .expect(200)
+                .expect((res: supertest.Response) => {
+                    //Expect(res.body).toEqual({ id: 4, name: 'tao tu test' })
+                })
+                .end(err => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve()
+                    }
+                })
+        })
+    }
+    @AsyncTest('shuold create and return book')
+    @Timeout(5000)
+    public editASetting() {
+        return new bluebird((resolve, reject) => {
+            this.request.post('/settingedit')
+                .type('form')
+                .send({ AppID: 2,APIKey: 'asdfasdfa3213',AppName: 'Shop test edit',IsActive:'true', NgayTao: '24/11/2016' })
+                .expect(200)
+                .expect((res: supertest.Response) => {
+                    //Expect(res.body).toEqual({ id: 4, name: 'tao tu test' })
+                })
+                .end(err => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve()
+                    }
+                })
+        })
+    }
+    @AsyncTest('shuold delete and return book')
+    @Timeout(5000)
+    public DeleteABook() {
+        return new bluebird((resolve, reject) => {
+            this.request.post('/settingdelete')
+                .type('form')
+                .send({ AppID: 2 })
+                .expect(200)
+                .expect((res: supertest.Response) => {
+                    //Expect(res.body).toEqual({ id: 4, name: 'tao tu test' })
+                })
+                .end(err => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve()
+                    }
+                })
+        })
+    }
     // @AsyncTest('should delete and return book name')
     // @Timeout(5000)
     // @TestCase(1)
@@ -121,11 +160,11 @@ export class ReportTest {
     //     })
     // }
 
-    @Test('add 1 and 2 shuold return 3')
-    @TestCase(1, 2, 3)
-    public testAdd(v1, v2, expected) {
-        Expect(v1 + v2).toEqual(expected);
-    }
+    // @Test('add 1 and 2 shuold return 3')
+    // @TestCase(1, 2, 3)
+    // public testAdd(v1, v2, expected) {
+    //     Expect(v1 + v2).toEqual(expected);
+    // }
 
 
 }

@@ -14,7 +14,7 @@ import { ProductListComponent } from './products/product-list/product-list.compo
 import { ProductService } from './products/shared/product.service';
 import { NotifiService } from './notification-send/shared/notifi.service';
 import { TagService } from './notification-send/shared/tag.service';
-import { ContactService } from './notification-send/shared/contact.service';
+import { ContactNotifiService } from './notification-send/shared/contact.service';
 import { WelcomeComponent } from './home/welcome.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import { BarChartDemoComponent } from './Reports/Report/Report.component';
@@ -61,7 +61,7 @@ import { SettingFilterPipe } from './setting/setting-filter/setting-filter.pipe'
         ModalModule.forRoot(),
         BootstrapModalModule
         ],
-    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,ContactsService,NotificationsService,YeucaubanService,ContactService,NotifiService,TagService,SettingService ],
+    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,ContactsService,ContactNotifiService,NotificationsService,YeucaubanService,ContactService,NotifiService,TagService,SettingService ],
     declarations: [
     AppComponent,
     NotifiSendComponent,
@@ -75,6 +75,7 @@ import { SettingFilterPipe } from './setting/setting-filter/setting-filter.pipe'
 
     WelcomeComponent,
 
+    NotificationsListComponent,
     ProductDetailComponent,
     ProductListComponent,
     ProductFilterPipe,

@@ -26,8 +26,8 @@ import { SettingDetailComponent } from './setting/setting-detail/setting-detail.
 
 const appRoutes: Route[] = [
     { path: '', redirectTo: 'notification', pathMatch: 'full' },
-    { path: 'book-list', component: BookListComponent },
-    { path: 'book-detail', component: BookDetailComponent },
+    //{ path: 'book-list', component: BookListComponent },
+    //{ path: 'book-detail', component: BookDetailComponent },
     { path: 'Reports', component: BarChartDemoComponent },
     //{ path: 'welcome', component: WelcomeComponent },
    // { path: 'products', component: ProductListComponent },

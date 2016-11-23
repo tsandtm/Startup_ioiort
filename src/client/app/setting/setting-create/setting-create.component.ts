@@ -27,11 +27,11 @@ export class SettingCreateComponent {
             this.trangthai=false;
         this.ngaytao = new Date().toLocaleDateString();
         this.setting={
-            appid: this.appid,
-            apikey: this.apikey,
-            trangthai: this.trangthai,
-            ngaytao:this.ngaytao,
-            appname: this.appname,
+            AppID: this.appid,
+            APIKey: this.apikey,
+            IsActive: this.trangthai,
+            NgayTao: this.ngaytao,
+            AppName: this.appname,
         }
         this.settingservice.Create(this.setting).then(result=>this._router.navigate(['setting-list']));
     }

@@ -103,14 +103,38 @@ Alter table test."n_Contacts_Notifications" add  foreign key ("NotifiID") refere
 
 Alter table test."Users_Contacts" add  foreign key ("AccountID") references test."AccountID" ("AccountID") on update restrict on delete restrict;
 
+
+
 INSERT INTO test."Contacts"(
 	"ContactID", "Token", "Email", "TaiKhoan", "Device", "PhoneNumber", "NgayTao", "FaceBook", "Contact_TagID", "Contact_TagName")
-	VALUES  (1, 'a', 'a', 'a', 'a', 'a', '12/12/2016', 'a', '{1}', '{default}'),
-			(2, 'b', 'a', 'a', 'a', 'a', '12/12/2016', 'a', '{2}', '{denine}'),
-			(3, 'c', 'a', 'a', 'a', 'a', '12/12/2016', 'a', '{3}', '{block}'),
-			(4, 'd', 'a', 'a', 'a', 'a', '12/12/2016', 'a', '{1,2}', '{default,denine}'),
-			(5, 'e', 'a', 'a', 'a', 'a', '12/12/2016', 'a', '{2,3}', '{denine,block}'),
-			(6, 'f', 'a', 'a', 'a', 'a', '12/12/2016', 'a', '{1,2,3}', '{default,denine,block}');
+
+	VALUES  (1, 'a', 'a', 'a', 'ios', 'a', '11/11/2016', 'a', '{1}', '{a dmd ,b  dasdhasd}'),
+			(2, 'b', 'a', 'a', 'ios', 'a', '11/11/2016', 'a', '{2}', '{a dmd ,b  dasdhasd}'),
+			(3, 'c', 'a', 'a', 'android', 'a', '10/11/2016', 'a', '{3}', '{a dmd ,b  dasdhasd}'),
+			(4, 'd', 'a', 'a', 'android', 'a', '9/10/2016', 'a', '{1,2}', '{a dmd ,b  dasdhasd}'),
+			(5, 'e', 'a', 'a', 'ios', 'a', '10/10/2016', 'a', '{2,3}', '{a dmd ,b  dasdhasd}'),
+			(6, 'f', 'a', 'a', 'ios', 'a', '10/10/2016', 'a', '{1,2,3}', '{a dmd ,b  dasdhasd}'),
+			(7, 'a', 'a', 'a', 'ios', 'a', '10/11/2016', 'a', '{1}', '{a dmd ,b  dasdhasd}'),
+			(8, 'b', 'a', 'a', 'ios', 'a', '10/11/2016', 'a', '{2}', '{a dmd ,b  dasdhasd}'),
+			(9, 'c', 'a', 'a', 'android', 'a', '11/10/2016', 'a', '{3}', '{a dmd ,b  dasdhasd}'),
+			(10, 'd', 'a', 'a', 'android', 'a', '11/9/2016', 'a', '{1,2}', '{a dmd ,b  dasdhasd}'),
+			(11, 'e', 'a', 'a', 'ios', 'a', '9/9/2016', 'a', '{2,3}', '{a dmd ,b  dasdhasd}'),
+			(12, 'a', 'a', 'a', 'android', 'a', '10/11/2016', 'a', '{1}', '{a dmd ,b  dasdhasd}'),
+			(13, 'b', 'a', 'a', 'ios', 'a', '10/11/2016', 'a', '{2}', '{a dmd ,b  dasdhasd}'),
+			(14, 'c', 'a', 'a', 'ios', 'a', '11/10/2016', 'a', '{3}', '{a dmd ,b  dasdhasd}'),
+			(15, 'd', 'a', 'a', 'android', 'a', '11/9/2016', 'a', '{1,2}', '{a dmd ,b  dasdhasd}'),
+			(16, 'e', 'a', 'a', 'android', 'a', '9/9/2016', 'a', '{2,3}', '{a dmd ,b  dasdhasd}'),
+			(17, 'f', 'a', 'a', 'android', 'a', '9/9/2016', 'a', '{1,2,3}', '{a dmd ,b  dasdhasd}'),
+			(18, 'f', 'a', 'a', 'ios', 'a', '9/9/2016', 'a', '{1,2,3}', '{a dmd ,b  dasdhasd}');
+
+
+	-- VALUES  (1, 'a', 'a', 'a', 'a', 'a', '12/12/2016', 'a', '{1}', '{default}'),
+	-- 		(2, 'b', 'a', 'a', 'a', 'a', '12/12/2016', 'a', '{2}', '{denine}'),
+	-- 		(3, 'c', 'a', 'a', 'a', 'a', '12/12/2016', 'a', '{3}', '{block}'),
+	-- 		(4, 'd', 'a', 'a', 'a', 'a', '12/12/2016', 'a', '{1,2}', '{default,denine}'),
+	-- 		(5, 'e', 'a', 'a', 'a', 'a', '12/12/2016', 'a', '{2,3}', '{denine,block}'),
+	-- 		(6, 'f', 'a', 'a', 'a', 'a', '12/12/2016', 'a', '{1,2,3}', '{default,denine,block}');
+
 
 INSERT INTO test."n_Tag"(
 	"TagID", "TagNameDisplay", "AccountID", "IsDefault")

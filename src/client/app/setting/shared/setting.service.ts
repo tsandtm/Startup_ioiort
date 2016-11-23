@@ -42,7 +42,7 @@ export class SettingService{
     
     getOne(id): Promise<Setting> {
         return this.getAllSetting()
-            .then(products => products.find(p => p.appid === id))
+            .then(products => products.find(p => p.AppID === id))
             .catch(this.handleError);
     }
 

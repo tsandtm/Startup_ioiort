@@ -12,7 +12,6 @@ var core_1 = require('@angular/core');
 require('rxjs/Rx'); // Load all features
 var AppComponent = (function () {
     function AppComponent() {
-        this.pageTitle = 'Acme Product Management';
     }
     AppComponent = __decorate([
         core_1.Component({

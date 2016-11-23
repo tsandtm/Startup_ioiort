@@ -13,7 +13,6 @@ app.use(body_parser.urlencoded({ extended: true }));
 app.use(body_parser.json());
 
 
-<<<<<<< HEAD
 import { BookRouter } from './routes/book.router';
 import { ReportRouter } from './routes/Report.router';
 import { ContactsRouter } from './routes/contacts.router';

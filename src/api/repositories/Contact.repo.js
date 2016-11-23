@@ -14,7 +14,6 @@ var ContactRepo = (function (_super) {
     ContactRepo.prototype.getList = function (option) {
         var queryText = 'select * from test."Contacts"';
         var pResult;
-<<<<<<< HEAD
         if (option.Contact_Tag != undefined) {
             pResult = this._pgPool.query(queryText + 'where "Contact_Tag" = ' + "'{" + option.Contact_Tag + "}'");
             console.info(option.Contact_Tag);
@@ -22,7 +21,6 @@ var ContactRepo = (function (_super) {
         else {
             pResult = this._pgPool.query(queryText);
         }
-=======
         pResult = this._pgPool.query(queryText);
         return pResult.then(function (result) {
             var Contacts = result.rows.map(function (r) {
@@ -91,7 +89,7 @@ var ContactRepo = (function (_super) {
         option.Contact_Tag = parseInt(option.Contact_Tag, 10);
         var queryText = 'select * from test."Contacts" order by "Contact_Tag" = Array[' + option.Contact_Tag + '] desc';
         var pResult = this._pgPool.query(queryText);
->>>>>>> tu-f-notifi-contact
+
         return pResult.then(function (result) {
             var Contacts = result.rows.map(function (r) {
                 var contact = new Contact_model_1.Contact();
@@ -103,12 +101,9 @@ var ContactRepo = (function (_super) {
                 contact.PhoneNumber = r.PhoneNumber;
                 contact.NgayTao = r.NgayTao;
                 contact.FaceBook = r.FaceBook;
-<<<<<<< HEAD
                 contact.Contact_Tag = r.Contact_Tag;
-=======
                 contact.Contact_TagID = r.Contact_TagID;
                 contact.Contact_TagName = r.Contact_TagName;
->>>>>>> tu-f-notifi-contact
                 return contact;
             });
             return Contacts;
@@ -116,6 +111,24 @@ var ContactRepo = (function (_super) {
             .catch(function (err) {
             console.error(err.message);
             return null;
+        });
+    };
+    ContactRepo.prototype.getOne = function (option) {
+        var queryText = 'select * from test.Contacts where "Contact_Tag" = $1';
+        console.info('Excute: ' + queryText);
+        return this._pgPool.query(queryText, [option.Contact_Tag])
+            .then(function (result) {
+            var contact = new Contact_model_1.Contact();
+            contact.ContactID = result.rows[0].ContactID;
+            contact.Token = result.rows[0].Token;
+            contact.Email = result.rows[0].Email;
+            contact.TaiKhoan = result.rows[0].TaiKhoan;
+            contact.Device = result.rows[0].Device;
+            contact.PhoneNumber = result.rows[0].PhoneNumber;
+            contact.NgayTao = result.rows[0].NgayTao;
+            contact.FaceBook = result.rows[0].FaceBook;
+            contact.Contact_Tag = result.rows[0].Contact_Tag;
+            return contact;
         });
     };
     return ContactRepo;

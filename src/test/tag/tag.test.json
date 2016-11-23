@@ -1,0 +1,20 @@
+[
+  {
+    "TagID": 1,
+    "TagNameDisplay": "Admin",
+    "AccountID": "1",
+    "IsDefault": true
+  },
+  {
+    "TagID": 2,
+    "TagNameDisplay": "Manager",
+    "AccountID": "1",
+    "IsDefault": true
+  },
+  {
+    "TagID": 3,
+    "TagNameDisplay": "Designer",
+    "AccountID": "1",
+    "IsDefault": true
+  }
+]
