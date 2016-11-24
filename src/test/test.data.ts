@@ -1,6 +1,6 @@
 export let tienichData = [
     {
-        id: 4,
+        id: 2,
         KyHieu: "ddd",
         TenGoi: "đéo",
         BieuTuong: "hhhhh"
