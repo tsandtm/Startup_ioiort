@@ -24,12 +24,13 @@ export class TienIchtListComponent implements OnInit {
             .then(tienichs => this.tienichs = tienichs)
     }
      btnXoa(id: number, index) {
+         if (confirm(" Bạn muốn xóa với mã = " + id + "?"))
         this._tienichService.xoaTienIch(id)
             .then(t => {
                 if (t) {
                     alert('Đã xóa thành công!');
-                    this._router.navigate(['tienichs']);
                     this.tienichs.splice(index, 1);
+                    this._router.navigate(['tienichs']);
                 }
             })
             .catch(errorMessage => {
