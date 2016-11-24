@@ -17,10 +17,11 @@ app.use(body_parser.json());
 import {BookRouter} from './routes/book.router';
 import {TinTucRouter} from './routes/tintuc.router';
 import {TienIchRouter} from './routes/tienich.router';
+import {LoaiTinDangRouter} from './routes/loaitindang.router';
 
 
 // sử dụng các router được định nghĩa từ các modules
 app.use('/api', [(new BookRouter()).getRouter()],
-[(new TinTucRouter()).getRouter()], [(new TienIchRouter()).getRouter()]);
+[(new TinTucRouter()).getRouter()], [(new TienIchRouter()).getRouter()] , [(new LoaiTinDangRouter()).getRouter()] );
 
 export default app;

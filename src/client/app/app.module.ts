@@ -20,14 +20,27 @@ import {TinTuctListComponent} from './tintucs/tintuc-list/tintuc-list.component'
 import {TintucService} from './tintucs/shared/tintuc.service';
 import {TintuctFilterPipe} from './tintucs/tintuc-filter/tintuc-filter.pipe';
 import {TintucDetailComponent} from './tintucs/tintuc-detail/tintuc-detail.component';
+
+
+//tienich
 import {TienIchtListComponent} from './tienichs/tienich-list/tienich-list.component';
 import {TienIchService} from './tienichs/shared/tienich.service';
 import {ThemtienichComponent} from './tienichs/themtienich/themtienich.component';
+import {TienIchFilterPipe} from './tienichs/tienich-filter/tienich-filter.pipe';
+import {TienIchDetailComponent} from './tienichs/tienich-detail/tienich-detail.component';
+import {SuatienichComponent} from './tienichs/suatienich/suatienich.component';
+//loaitindang
+import {LoaiTinDangListComponent} from './loaitindangs/loaitindang-list/loaitindang-list.component';
+import {LoaiTinDangService} from './loaitindangs/shared/loaitindang.service';
+import {ThemloaitindangComponent} from './loaitindangs/themloaitindang/themloaitindang.component';
+import {LoaiTinDangFilterPipe} from './loaitindangs/loaitindang-filter/loaitindang-filter.pipe';
+import {LoaiTinDangDetailComponent} from './loaitindangs/loaitindang-detail/loaitindang-detail.component';
+import {SuaLoaiTinDangComponent} from './loaitindangs/sualoaitindang/sualoaitindang.component';
 
 
 @NgModule({
     imports: [BrowserModule,routing,FormsModule,HttpModule,Ng2PaginationModule],
-    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,TintucService,TienIchService, Ng2PaginationModule],
+    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,TintucService,TienIchService, LoaiTinDangService, Ng2PaginationModule],
     declarations: [AppComponent,
     BookListComponent,
     BookDetailComponent,
@@ -38,8 +51,20 @@ import {ThemtienichComponent} from './tienichs/themtienich/themtienich.component
     StarComponent,
     TinTuctListComponent,
     TintuctFilterPipe,
-    TintucDetailComponent,
+    TintucDetailComponent, 
+
+
+    ///
+    LoaiTinDangListComponent,
+    ThemloaitindangComponent,
+    LoaiTinDangFilterPipe,
+    LoaiTinDangDetailComponent,
+    SuaLoaiTinDangComponent,
+///
+    TienIchFilterPipe,
+    TienIchDetailComponent,
     TienIchtListComponent,
+    SuatienichComponent,
     ThemtienichComponent],
     bootstrap: [AppComponent]
 })

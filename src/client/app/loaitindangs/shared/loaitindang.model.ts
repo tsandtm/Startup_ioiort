@@ -1,6 +1,6 @@
-export class TienIch {
+export class LoaiTinDang {
     id: number;
-    TienIchID: number;
+    LoaiTinDangID: number;
     KyHieu: string;
     TenGoi: string;
     BieuTuong: string;

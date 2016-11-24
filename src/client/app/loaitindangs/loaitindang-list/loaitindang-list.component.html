@@ -1,0 +1,63 @@
+<button style="margin-left: 1050px;" class="btn btn-info" type="submit" [routerLink]="['/themloaitindang']"> Thêm mới </button>
+
+<div class='panel panel-primary'>
+    <div class='panel-heading'>
+        {{pageTitle}}
+    </div>
+    <div class='panel-body'>
+        <div class='row'>
+            <div class='col-md-2'>Filter by:</div>
+            <div class='col-md-4'>
+                <input type='text' [(ngModel)]='listFilter' />
+            </div>
+        </div>
+        <div class='row' *ngIf='listFilter'>
+            <div class='col-md-6'>
+                <h3>Filtered by: {{listFilter}} </h3>
+            </div>
+        </div>
+
+        <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+
+
+
+        <div class='table-responsive'>
+            <table class='table' *ngIf='loaitindangs && loaitindangs.length'>
+                <thead>
+                    <tr>
+                        <th>Mã Loại Tin Đăng</th>
+                        <th>Ký hiệu</th>
+                        <th>Tên gọi</th>
+                        <th>Biểu tượng</th>
+                        <th>Chức năng</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let loaitindang of loaitindangs | loaitindangFilter : listFilter ; let i = index; '>
+                        <td>{{loaitindang.id}}</td>
+                        <td>{{loaitindang.KyHieu}}</td>
+                        <td><a [routerLink]="['/loaitindang',loaitindang.id]">  {{loaitindang.TenGoi}} </a></td>
+                        <td>
+                            <img [src]="loaitindang.BieuTuong"
+                            [style.width.px]='imageWidth' 
+                            [style.margin.px]='imageMargin'
+                            >
+                            <!--[routerLink]="['/tintuc',tintuc.id]"-->
+                        </td>
+                        <td> 
+                            <button class="btn btn-danger" type="submit" [routerLink]="['/suatienich',loaitindang.id]" >
+                                Sữa
+                            </button>  
+                            <button class="btn btn-danger" (click)='btnXoa(loaitindang.id,i)'>
+                                Xóa
+                            </button>  
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>   
+            
+        </div>                  
+    </div>
+</div>

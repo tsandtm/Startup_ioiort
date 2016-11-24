@@ -1,4 +1,4 @@
-<div class='panel panel-primary' *ngIf='tienich'>
+<div class='panel panel-primary' *ngIf='loaitindang'>
     <div class='panel-heading' style='font-size:large'>
         {{pageTitle}}
     </div>
@@ -8,15 +8,15 @@
             <div class='col-md-6'>
                 <div class='row'>
                     <div class='col-md-3'>Mã:</div>
-                    <div class='col-md-6'>{{tienich.id}}</div>
+                    <div class='col-md-6'>{{loaitindang.id}}</div>
                 </div>
                 <div class='row'>
                     <div class='col-md-3'>Ký Hiệu:</div>
-                    <div class='col-md-6'>{{tienich.KyHieu}}</div>
+                    <div class='col-md-6'>{{loaitindang.KyHieu}}</div>
                 </div>
                 <div class='row'>
                     <div class='col-md-3'>Tên Gọi:</div>
-                    <div class='col-md-6'>{{tienich.TenGoi}}</div>
+                    <div class='col-md-6'>{{loaitindang.TenGoi}}</div>
                 </div>
             </div>
 
@@ -24,8 +24,8 @@
                 <img class='center-block img-responsive' 
                      [style.width.px]='200' 
                      [style.margin.px]='2' 
-                     [src]='tienich.BieuTuong'
-                     [title]='tienich.TienIchID'>
+                     [src]='loaitindang.BieuTuong'
+                     [title]='loaitindang.LoaiTinDangID'>
             </div>
         </div>
     </div>

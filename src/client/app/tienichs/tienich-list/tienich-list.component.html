@@ -1,8 +1,25 @@
+<button style="margin-left: 1050px;" class="btn btn-info" type="submit" [routerLink]="['/themtienich']"> Thêm mới </button>
+
 <div class='panel panel-primary'>
     <div class='panel-heading'>
         {{pageTitle}}
     </div>
     <div class='panel-body'>
+        <div class='row'>
+            <div class='col-md-2'>Filter by:</div>
+            <div class='col-md-4'>
+                <input type='text' [(ngModel)]='listFilter' />
+            </div>
+        </div>
+        <div class='row' *ngIf='listFilter'>
+            <div class='col-md-6'>
+                <h3>Filtered by: {{listFilter}} </h3>
+            </div>
+        </div>
+
+        <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+
+
 
         <div class='table-responsive'>
             <table class='table' *ngIf='tienichs && tienichs.length'>
@@ -17,29 +34,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor='let n of tienichs|paginate: { itemsPerPage:3, currentPage: p}'>
-                        <td>{{n.id}}</td>
-                        <td>{{n.KyHieu}}</td>
-                        <td>{{n.TenGoi}}</td>
+                    <tr *ngFor='let tienich of tienichs |tienichFilter: listFilter|  paginate: { itemsPerPage:3, currentPage: p} ; let i = index ;'>
+                        <td>{{tienich.id}}</td>
+                        <td>{{tienich.KyHieu}}</td>
+                        <td><a [routerLink]="['/tienich',tienich.id]">  {{tienich.TenGoi}} </a></td>
                         <td>
-                            <img [src]="n.BieuTuong"
+                            <img [src]="tienich.BieuTuong"
                             [style.width.px]='imageWidth' 
-                            [style.margin.px]='imageMargin'>
+                            [style.margin.px]='imageMargin'
+                            >
                             <!--[routerLink]="['/tintuc',tintuc.id]"-->
                         </td>
                         <td> 
-                            <button class="btn btn-danger" (click)='Delete()'>
+                            <button class="btn btn-danger" type="submit" [routerLink]="['/suatienich',tienich.id]" >
+                                Sữa
+                            </button>  
+                            <button class="btn btn-danger" (click)='btnXoa(tienich.id,i)'>
                                 Xóa
                             </button>  
                         </td>
                     </tr>
-                    <tr>
-                        <th>   
-                            <button class="btn btn-info" type="submit" [routerLink]="['/themtienich']">
-                                Thêm mới
-                            </button>
-                        </th>
-                    </tr>
+
                 </tbody>
             </table>   
             

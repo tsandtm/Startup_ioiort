@@ -3,21 +3,21 @@ import { Router, Response, Request } from 'express';
 
 import path = require('path');
 // import các module tạo table
-import { TienIchRepo } from '../repositories/tienich.repo';
+import { LoaiTinDangRepo } from '../repositories/loaitindang.repo';
 
 // let mockProduct = require(path.join(__dirname,'..','json','products.json'));
 
 
 
 
-export class TienIchRouter {
+export class LoaiTinDangRouter {
 
     private router: Router;
-    private tienichRepo: TienIchRepo;
+    private loaitindangRepo: LoaiTinDangRepo;
 
     constructor() {
         this.router = Router();
-        this.tienichRepo = new TienIchRepo();
+        this.loaitindangRepo = new LoaiTinDangRepo();
 
         //this.model = model;
     }
@@ -25,11 +25,11 @@ export class TienIchRouter {
 
     public getRouter(): Router {
 
-        this.router.route('/tienich')
-            .get(this.getAllTienich)
-            .post(this.themTienIch)
-            .put(this.suaTienIch)
-            .delete(this.xoaTienIch)
+        this.router.route('/loaitindang')
+            .get(this.getAllLoaiTinDang)
+            .post(this.themLoaiTinDang)
+            .put(this.suaLoaiTinDang)
+            .delete(this.xoaLoaiTinDang)
             return this.router;
             // .post(this.createABook)
             // .delete(this.deleteABook);
@@ -37,13 +37,13 @@ export class TienIchRouter {
        // this.router.get('/countBook',this.countBook)
     }
 
-    private getAllTienich = (reqs: Request, res: Response) => {
+    private getAllLoaiTinDang = (reqs: Request, res: Response) => {
 
         //res.status(200).json(mockProduct);
 
         // let object={ id: 1, name: 'book1' };
 
-        this.tienichRepo.getList(null)
+        this.loaitindangRepo.getList(null)
             .then(result => {
                 res.status(200).json(result)
             })
@@ -53,18 +53,18 @@ export class TienIchRouter {
             })
     }
 
-    private themTienIch = (reqs: Request, res: Response) => {
-        this.tienichRepo.add(reqs.body)
+    private themLoaiTinDang = (reqs: Request, res: Response) => {
+        this.loaitindangRepo.add(reqs.body)
             .then(result => res.status(200).json(result))
             .catch(error => res.status(500).send(error.message))
     }
-    private suaTienIch = (reqs: Request, res: Response) => {
-        this.tienichRepo.suaTienIch(reqs.body)
+    private suaLoaiTinDang = (reqs: Request, res: Response) => {
+        this.loaitindangRepo.suaLoaiTinDang(reqs.body)
             .then(result => res.status(200).json(result))
             .catch(error => res.status(500).send(error.message))
     }
-     private xoaTienIch = (reqs: Request, res: Response) => {
-        this.tienichRepo.xoaTienIch(reqs.query.id)
+     private xoaLoaiTinDang = (reqs: Request, res: Response) => {
+        this.loaitindangRepo.xoaLoaiTinDang(reqs.query.id)
             .then(result => {
                 res.status(200).json(result)
             })
