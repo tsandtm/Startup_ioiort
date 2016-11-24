@@ -109,7 +109,7 @@ export class BookRouterTest {
     //     })
     // }
 
-    @Test('add 1 and 2 shuold return 3')
+    @Test('add 1 and 2 should return 3')
     @TestCase(1,2,3)
     public testAdd(v1,v2,expected){
         Expect(v1+v2).toEqual(expected);

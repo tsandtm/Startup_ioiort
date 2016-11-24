@@ -28,11 +28,6 @@ export class TienichDetailComponent implements OnInit {
     }
 
     getTintuc(id: number) {
-        // this._productService.getProduct(id)
-        //     .subscribe(
-        //     product => this.product = product,
-        //     error => this.errorMessage = <any>error);
-
         this._tienichcService.getTienIch(id)
             .then(tienich => this.tienich = tienich)
     }

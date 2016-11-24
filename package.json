@@ -5,7 +5,7 @@
   "private": true,
   "main": "./dist/server.js",
   "scripts": {
-    "test": "gulp compile && alsatian ./dist/test/book.router.spec.js",
+    "test": "gulp compile && alsatian ./dist/test/tienich.router.spec.js",
     "start": "gulp",
     "create-mock-data": "node ./dist/scripts/mock-data.js",
     "drop-all": "node ./dist/scripts/drop-all.js",
@@ -63,6 +63,7 @@
     "@angular/platform-browser-dynamic": "~2.1.1",
     "@angular/router": "~3.1.1",
     "@angular/upgrade": "~2.1.1",
+    "angular2-image-upload": "^0.2.1",
     "angular2-modal": "^2.0.2",
     "bluebird": "^3.4.6",
     "body-parser": "^1.15.2",

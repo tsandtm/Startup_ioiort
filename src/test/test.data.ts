@@ -1,3 +1,11 @@
+export let tienichData = [
+    {
+        id: 4,
+        KyHieu: "ddd",
+        TenGoi: "đéo",
+        BieuTuong: "hhhhh"
+    },
+]
 export let bookData = [
     {
         id: 1,

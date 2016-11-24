@@ -46,5 +46,4 @@ export class ThemtienichComponent implements OnInit {
     onBack(): void {
         this._router.navigate(['tienichs']);
     }
-
 }

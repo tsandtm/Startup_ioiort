@@ -57,7 +57,10 @@ export class TienIchRouter {
     private themTienIch = (reqs: Request, res: Response) => {
         this.tienichRepo.add(reqs.body)
             .then(result => res.status(200).json(result))
-            .catch(error => res.status(500).send(error.message))
+            .catch(error => {
+                res.status(500).send(error.message)
+                console.error('Error: ', error.message)
+            })
     }
      private xoaTienIch = (reqs: Request, res: Response) => {
         this.tienichRepo.xoa(reqs.query.id)
@@ -76,5 +79,6 @@ export class TienIchRouter {
             .catch(error => res.status(500).send(error.message))
     }
 
+}
 
 
