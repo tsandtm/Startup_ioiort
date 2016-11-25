@@ -7,10 +7,9 @@ import { ProductListComponent } from './products/product-list/product-list.compo
 import { ProductService } from './products/shared/product.service';
 import { WelcomeComponent } from './home/welcome.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
-
+import{DanhMucListComponent} from './danhmuc/danhmuc-list/danhmuc-list.component';
 import{TinTucDetailsComponent} from './tintuc/tintucs-details/tintuc-details.component';
 import {TinTucListComponent} from './tintuc/tintucs/tintuc-list.component';
-import{Create} from './tintuc/create/create';
 //import{TestComponent} from './test/test.component';
 const appRoutes: Route[] = [
     { path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -20,8 +19,8 @@ const appRoutes: Route[] = [
     { path: 'products', component: ProductListComponent },
     { path: 'product/:id', component: ProductDetailComponent},
     {path:'tintuc',component:TinTucListComponent},
+    {path:'danhmuc',component:DanhMucListComponent},
     {path:'tintucs/:id',component:TinTucDetailsComponent},
-    {path:'create',component:Create},
    // {path:'test',component:TestComponent}
 ]
 

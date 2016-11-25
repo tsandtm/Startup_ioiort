@@ -10,4 +10,7 @@
         URLNews:string;
         URLThumbImage:string;
         URLImage:string;
+        ArrayDaXem:number;
+        ArrayDaXoa:number;
+        ArrayQuanTam:number;
     }

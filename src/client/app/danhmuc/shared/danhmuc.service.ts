@@ -2,28 +2,28 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { TinTuc } from './tintuc.model';
+import { DanhMuc } from './danhmuc.model';
 
 @Injectable()
-export class TinTucService {
+export class DanhMucService {
     constructor(private _http: Http) { }
 
-    getTinTucs(): Promise<TinTuc[]> {
+    getDanhMucs(): Promise<DanhMuc[]> {
         // return this._http.get('/api/book')
         //     .map((response: Response) => <Product[]>response.json())
         //     .do(data => console.log('All: ' + JSON.stringify(data)))
         //     .catch(this.handleError);
-        return this._http.get('/api/tintuc')
+        return this._http.get('/api/danhmuc')
             .toPromise()
-            .then(response => response.json() as TinTuc[])
+            .then(response => response.json() as DanhMuc[])
             .catch(this.handleError);
     }
 
-    getTinTuc(id: number): Promise<TinTuc> {
+    getDanhMuc(id: number): Promise<DanhMuc> {
         // return this.getProducts()
         //     .map((products: Product[]) => products.find(p => p.productId === id))
         //     .catch(this.handleError);
-        return this.getTinTucs()
+        return this.getDanhMucs()
             .then(tintuc => {
                 let tin = tintuc.find(t => +t.id === id);
                 console.log(tin);
@@ -40,10 +40,10 @@ export class TinTucService {
 
     }
 
-    xoaTinTuc(id: number): Promise<TinTuc>{
-        return this._http.delete('/api/tintuc/' + id)
+    xoaDanhMuc(id: number): Promise<DanhMuc>{
+        return this._http.delete('/api/danhmuc/' + id)
                 .toPromise()
-                .then(res => res.json() as TinTuc)
+                .then(res => res.json() as DanhMuc)
                 .catch(error => {
                     console.error('Error: ', error)
                     return null;

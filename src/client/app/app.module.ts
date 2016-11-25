@@ -15,14 +15,15 @@ import { ProductDetailComponent } from './products/product-detail/product-detail
 import {ProductFilterPipe} from './products/product-filter/product-filter.pipe'
 import {StarComponent} from './shared/star.component'
 
+import{DanhMucListComponent} from './danhmuc/danhmuc-list/danhmuc-list.component';
+import{DanhMucService} from './danhmuc/shared/danhmuc.service';
 import{TinTucListComponent} from './tintuc/tintucs/tintuc-list.component';
 import{TinTucService} from './tintuc/shared/tintuc.service';
 import{TinTucDetailsComponent} from './tintuc/tintucs-details/tintuc-details.component';
-import{Create} from './tintuc/create/create';
 //import{TestComponent} from './test/test.component';
 @NgModule({
     imports: [BrowserModule,routing,FormsModule,HttpModule],
-    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,TinTucService],
+    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,TinTucService,DanhMucService],
     declarations: [AppComponent,
     BookListComponent,
     BookDetailComponent,
@@ -31,7 +32,7 @@ import{Create} from './tintuc/create/create';
     ProductListComponent,
     ProductFilterPipe,
     TinTucListComponent,
-    Create,
+    DanhMucListComponent,
     TinTucDetailsComponent,
     StarComponent],
     bootstrap: [AppComponent]
