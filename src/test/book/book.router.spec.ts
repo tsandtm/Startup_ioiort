@@ -2,7 +2,7 @@ import { Expect, Test, TestCase, AsyncTest, Setup, Teardown, Timeout } from 'als
 import * as supertest from 'supertest';
 import * as bluebird from 'bluebird';
 import { bookData,productData } from './test.data';
-import app from '../api/app';
+import app from '../../api/app';
 import { Server } from 'http';
 
 
@@ -42,7 +42,6 @@ export class BookRouterTest {
                         resolve();
                     }
                 })
-                
         })
     }
 
@@ -67,7 +66,7 @@ export class BookRouterTest {
     //     })
     // }
 
-    // @AsyncTest('shuold create and return book')
+    // @AsyncTest('should create and return book')
     // @Timeout(5000)
     // public createABook() {
     //     return new bluebird((resolve, reject) => {
