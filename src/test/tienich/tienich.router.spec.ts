@@ -26,49 +26,49 @@ export class TienichRouterTest {
 
 
 
-    // @AsyncTest('should return json array')
-    // @Timeout(5000)
-    // public getAllTienich() {
-    //     return new bluebird((resolve, reject) => {
-    //         this.request.get('/tienich')
-    //             .expect('Content-Type', /json/)
-    //             .expect(200)
-    //             .expect((res: supertest.Response) => {
-    //                 Expect(res.body).toEqual(testtienich)
-    //             })
-    //             .end((err, res) => {
-    //                 if (err) {
-    //                     reject(err);
-    //                 } else {
-    //                     resolve();
-    //                 }
-    //             })
+    @AsyncTest('should return json array')
+    @Timeout(5000)
+    public getAllTienich() {
+        return new bluebird((resolve, reject) => {
+            this.request.get('/tienich')
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .expect((res: supertest.Response) => {
+                    Expect(res.body).toEqual(testtienich)
+                })
+                .end((err, res) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve();
+                    }
+                })
 
-    //     })
-    // }
+        })
+    }
 
 
 
-    // @AsyncTest('should delete and return name')
-    // @Timeout(5000)
-    // @TestCase(2)
-    // public xoaTienIch(index: number) {
-    //     return new bluebird((resolve, reject) => {
-    //         this.request.delete('/tienich')
-    //             .query({id:testtienich[index].id})
-    //             .expect(200)
-    //             .expect((res: supertest.Response) => {
-    //                 Expect(res.text).toEqual('Tên '+testtienich[index].TenGoi + ' đã xóa được')
-    //             })
-    //             .end(err => {
-    //                 if (err) {
-    //                     reject(err)
-    //                 } else {
-    //                     resolve()
-    //                 }
-    //             })
-    //     })
-    // }
+    @AsyncTest('should delete and return name')
+    @Timeout(5000)
+    @TestCase(2)
+    public xoaTienIch(index: number) {
+        return new bluebird((resolve, reject) => {
+            this.request.delete('/tienich')
+                .query({id:testtienich[index].id})
+                .expect(200)
+                .expect((res: supertest.Response) => {
+                    Expect(res.text).toEqual('Tên '+testtienich[index].TenGoi + ' đã xóa được')
+                })
+                .end(err => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve()
+                    }
+                })
+        })
+    }
 
 
     @AsyncTest('should create and return tienich')
@@ -94,26 +94,26 @@ export class TienichRouterTest {
         })
     }
     
-//    @AsyncTest('should edit and return Tienich')
-//    @Timeout(7000)
-//     public suaTienIch() {
-//         return new bluebird((resolve, reject) => {
-//             this.request.put('/tienich')
-//                 .type('form')
-//                 .send({id: 3, KyHieu: 'faf', TenGoi: 'fsd', BieuTuong: 'gsfasfh' })
-//                 .expect(200)
-//                 .expect((res: supertest.Response) => {
-//                     Expect(res.body).toEqual({id: "3", KyHieu: 'faf', TenGoi: 'fsd', BieuTuong: 'gsfasfh'})
-//                 })
-//                 .end(function(err){
-//                     if (err) {
-//                         reject(err);
-//                         console.log("sửa bị lỗi");
-//                     } else {
-//                         resolve();
-//                         console.log("sửa thành công");
-//                     }
-//                 })
-//         })
-//     }
+   @AsyncTest('should edit and return Tienich')
+   @Timeout(7000)
+    public suaTienIch() {
+        return new bluebird((resolve, reject) => {
+            this.request.put('/tienich')
+                .type('form')
+                .send({id: 3, KyHieu: 'faf', TenGoi: 'fsd', BieuTuong: 'gsfasfh' })
+                .expect(200)
+                .expect((res: supertest.Response) => {
+                    Expect(res.body).toEqual({id: "3", KyHieu: 'faf', TenGoi: 'fsd', BieuTuong: 'gsfasfh'})
+                })
+                .end(function(err){
+                    if (err) {
+                        reject(err);
+                        console.log("sửa bị lỗi");
+                    } else {
+                        resolve();
+                        console.log("sửa thành công");
+                    }
+                })
+        })
+    }
  }
