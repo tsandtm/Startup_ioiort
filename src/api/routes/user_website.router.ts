@@ -26,7 +26,8 @@ export class UserWebsRouter {
     public getRouter(): Router {
 
         this.router.route('/userwebsite')
-            .post(this.Create);
+            .post(this.Create)
+            .delete(this.Delete);
             // .put(this.updateShow);
         // this.router.get('/getWebs', this.getWebs);
 
@@ -49,6 +50,21 @@ export class UserWebsRouter {
                 res.status(500).send(err)
             })
     }
+
+    private Delete = (req: Request, res: Response) => {
+        console.log(`---------`)
+        
+        this.userwebsRepo.Delete({idUser: req.query.idUser, idDanhMuc: req.query.idDanhMuc})
+            .then(lnw => {
+                res.send(lnw);                
+                res.status(200).json(lnw);
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).send(err)
+            })
+    }
+
     // private getWebs = (req: Request, res: Response) => {
 
     //     this.websRepo.getListShow(null)

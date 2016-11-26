@@ -29,16 +29,31 @@ export class UserWebRepo extends RepoBase {
             })
     }
 
-
-    public count(option): Promise<number> {
-        let queryText = 'select count(*) as abc from news';
+     public Delete(option): Promise<any> {
+        // console.log(JSON.stringify(option))
+        let queryText = 'DELETE FROM public."User_DanhMucSite" WHERE "IDUser" = $1 and "IDDanhMucSite" = $2;';
 
         console.info('Excute: ' + queryText);
-
-        return this._pgPool.query(queryText)
-            .then(result => {
-                return result.rows[0].abc
+        return this._pgPool.query(queryText, [option.idUser,option.idDanhMuc])
+            .then((result)=>{
+                console.log(JSON.stringify(result))
+                return Promise.resolve()
+            })
+            .catch(error => {
+                console.error('Error: ', error);
+                return Promise.reject(error);
             })
     }
+
+    // public count(option): Promise<number> {
+    //     let queryText = 'select count(*) as abc from news';
+
+    //     console.info('Excute: ' + queryText);
+
+    //     return this._pgPool.query(queryText)
+    //         .then(result => {
+    //             return result.rows[0].abc
+    //         })
+    // }
 
 }
