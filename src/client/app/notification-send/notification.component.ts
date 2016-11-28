@@ -261,20 +261,20 @@ export class NotifiSendComponent implements OnInit{
                 this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
             })
         }
-        this.notifi={AppID:this.AppID,
-        NotifiID:this.notifiID,
-        TieuDe:this.tieude,
-        Noidung:this.Noidung,
-        DoUuTien:this.doUuTien,
-        Trangthai:this.Trangthai,
-        Soluong:1,
-        Thoigiangui:this.Thoigiangui,
-        ThoiHan:this.ThoiHan,
-        SendTag:this.listIDTag,
-        SendUser:this.listIDContact,
-        DeniedTag:this.listIDTagDenied,
-        DeniedUser:this.listIDContactDenied};
-        this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
+        // this.notifi={AppID:this.AppID,
+        // NotifiID:this.notifiID,
+        // TieuDe:this.tieude,
+        // Noidung:this.Noidung,
+        // DoUuTien:this.doUuTien,
+        // Trangthai:this.Trangthai,
+        // Soluong:this.Soluong,
+        // Thoigiangui:this.Thoigiangui,
+        // ThoiHan:this.ThoiHan,
+        // SendTag:this.listIDTag,
+        // SendUser:this.listIDContact,
+        // DeniedTag:this.listIDTagDenied,
+        // DeniedUser:this.listIDContactDenied};
+        // this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
     }
 
 
