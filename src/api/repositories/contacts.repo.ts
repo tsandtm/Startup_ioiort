@@ -9,7 +9,7 @@ export class ContactsRepo extends RepoBase {
     }
 
     public getList(option): Promise<Contacts[]> {
-        let queryText = 'SELECT * FROM public."Contacts"ORDER BY "ContactID"ASC ';
+        let queryText = 'SELECT * FROM test."Contacts"ORDER BY "ContactID"ASC ';
 
         console.info('Excute: ' + queryText);
         let pResult;

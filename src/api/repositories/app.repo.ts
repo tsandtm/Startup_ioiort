@@ -9,17 +9,11 @@ export class AppRepo extends RepoBase {
     }
 
     public getList(option): Promise<Appkey[]> {
-        let queryText = 'select * from test."n_App"';
+        let queryText = 'select * from test."n_App" where "IsActive"=true';
 
         console.info('Excute: ' + queryText);
         let pResult;
-
-        if (option.IsActive != undefined) {
-            pResult = this._pgPool.query(queryText + 'where "IsActive" = ' + option.IsActive)
-        } else {
             pResult = this._pgPool.query(queryText)
-        }
-
 
         return pResult.then(result => {
             let apps: Appkey[] = result.rows.map(r => {

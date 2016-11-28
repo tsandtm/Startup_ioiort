@@ -40,7 +40,7 @@ export class NotificationRepo extends RepoBase {
     }
 
     public getOne(option): Promise<Notification> {
-        let queryText = 'select * from test.Notifications where "Notification_Tag" = $1';
+        let queryText = 'select * from test."n_Notifications" where "Notification_Tag" = $1';
 
         console.info('Excute: ' + queryText);
 

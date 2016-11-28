@@ -66,6 +66,7 @@ export class NotifiSendComponent implements OnInit{
             //1=Complete
             //2=Draft
     Soluong:number;
+    today:Date;
     date:Date;
     hour:number=12;
     minute:number=0;
@@ -291,6 +292,7 @@ export class NotifiSendComponent implements OnInit{
         this.getNotifi();
         this.getTag();
         this.getContact();
+        this.today=new Date();
         this.loophour=this.loop(1,24);
         this.loopminute=this.loop(0,60);
         this.loophourTH=this.loop(5,24);
