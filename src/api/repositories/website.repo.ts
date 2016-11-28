@@ -57,7 +57,54 @@ export class ListWebRepo extends RepoBase {
                 return null;
             });
     }
+     public getList_User(option) : Promise<ListWeb[]>{
+         let queryText= 'SELECT "DanhMucSite"."IDDanhMucSite", "DuongDan", "TenGoi", "MoTa", "SoLuongTinDuyetTim", "TempateCrawlTieuDe", "TempateCrawlMoTa", "TempateCrawlNoiDung", "TempateCrawlImage", "LinkRSS", "TenGoi_KoDau", "Icon" FROM public."DanhMucSite" , public."User_DanhMucSite" where "DanhMucSite"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite"';
+         console.info('Excute: ' + queryText);
+        let pResult;
 
+        if (option) {
+            pResult = this._pgPool.query(queryText,
+                [option.IDDanhMucSite,
+                option.DuongDan,
+                option.TenGoi,
+                option.MoTa,
+                option.SoLuongTinDuyetTim,
+                option.TempateCrawlTieuDe,
+                option.TempateCrawlMoTa,
+                option.TempateCrawlNoiDung,
+                option.TempateCrawlImage,
+                option.LinkRSS,
+                option.Icon,
+                option.TenGoi_KoDau
+                ])
+        } else {
+            pResult = this._pgPool.query(queryText)
+        }
+        return pResult.then(result => {
+            let webs: ListWeb[] = result.rows.map(r => {
+                let web = new ListWeb();
+                web.IDDanhMucSite = r.IDDanhMucSite;
+                web.DuongDan = r.DuongDan;
+                web.TenGoi = r.TenGoi;
+                web.MoTa = r.MoTa;
+                web.SoLuongTinDuyetTim = r.SoLuongTinDuyetTim;
+                web.TempateCrawlTieuDe = r.TempateCrawlTieuDe;
+                web.TempateCrawlMoTa = r.TempateCrawlMoTa;
+                web.TempateCrawlNoiDung = r.TempateCrawlNoiDung;
+                web.TempateCrawlImage = r.TempateCrawlImage;
+                web.LinkRSS = r.LinkRSS;
+                web.Icon=r.Icon,
+                web.TenGoi_KoDau=r.TenGoi_KoDau
+                return web;
+            });
+            return webs;
+        })
+            .catch(err => {
+                console.error(err.message);
+                return null;
+            });
+     }
+     
     // public getListShow(option): Promise<ListWeb[]> {
     //     let queryText = 'select * from "danhmuc" where show = true order by name asc';
 
