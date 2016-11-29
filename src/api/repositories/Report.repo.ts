@@ -24,7 +24,7 @@ export class ReportRepo extends RepoBase {
             pResult = this._pgPool.query(queryText);
         } else {
             queryText = 'select "Device",count("Device") as count,date_part(\'month\',"NgayTao") as date from test."Contacts" group by "Device",date_part(\'month\',"NgayTao") order by date_part(\'month\',"NgayTao")';
-            console.log("cau 2" + queryText);
+            // console.log("cau 2" + queryText);
             pResult = this._pgPool.query(queryText);
         }
         // if (option.Contact_Tag != undefined) {
@@ -50,12 +50,11 @@ export class ReportRepo extends RepoBase {
                     listDevices.push(xx);
                     listDevices[index].date = r.date;
                     flag = r.date;
-                    console.log('listDevices:' + listDevices);
                 }
                 report.name = r.Device;
                 report.count = r.count;
                 listDevices[index].listdevice.push(report);
-                console.log('Report: ' + report)
+                // console.log('Report xx: ' + report)
                 // listDevices.listdevice.push(report);               
                 // listDevices.listdevice[index] = list;
                 // console.log(listDevices);

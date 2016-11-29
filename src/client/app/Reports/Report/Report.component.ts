@@ -73,15 +73,15 @@ export class BarChartDemoComponent {
     let month = date.getMonth();
     let year = date.getFullYear();
     let my: string = month + ";" + year;
-    console.log(month);
-    console.log(year);
-    console.log(my);
+    // console.log(month);
+    // console.log(year);
+    // console.log(my);
 
     if (id == 1) {
       month = date.getMonth();
       year = date.getFullYear();
       my = month + ";" + year;
-      console.log(my);
+      // console.log(my);
       this.reportService.getDevicebydate(my).then((result) => {
         this.listDevice = result;
         this.barChartLabels = this.getmonthlabel();
@@ -106,12 +106,14 @@ export class BarChartDemoComponent {
       });
     } else {
       this.reportService.getDevice().then((result) => {
+        // this.listDevice = new ListDevice[10]();
         this.listDevice = result;
         this.barChartLabels = this.getmonthlabel();
         this.createDataSets();
+        // console.log(JSON.stringify(this.datasets));
         this.barChartData = this.datasets;
       });
-    }
+    } 
   }
 
   getmonthlabel() {
@@ -157,7 +159,7 @@ export class BarChartDemoComponent {
   c=[];
   gettotal() {
 
-    console.log('gettotal: ');
+   
 
     // let tong: number;
     this.loadAllDeviceforDougnut()
