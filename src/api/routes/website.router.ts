@@ -27,7 +27,7 @@ export class WebsRouter {
 
         this.router.route('/website')
             .get(this.getAllWebs);
-            // .put(this.updateShow);
+        // .put(this.updateShow);
         this.router.get('/getWebs', this.getList_User);
 
 
@@ -42,7 +42,7 @@ export class WebsRouter {
         console.log(req.query.limit);
         console.log(req.query.skip);
 
-        this.websRepo.getList(null,req.query.limit,req.query.skip)
+        this.websRepo.getList(null, req.query.limit, req.query.skip)
             .then(lnw => {
                 res.status(200).json(lnw);
             })

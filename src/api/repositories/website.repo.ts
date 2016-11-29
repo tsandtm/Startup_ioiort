@@ -11,7 +11,7 @@ export class ListWebRepo extends RepoBase {
         console.log('Limit: ' + limit)
         console.log('Offset: ' + offset)
         let queryText = 'SELECT * FROM public."DanhMucSite" ORDER BY "IDDanhMucSite" ASC LIMIT $1 OFFSET $2';
-
+      
         console.info('Excute: ' + queryText);
         let pResult;
 
@@ -46,8 +46,8 @@ export class ListWebRepo extends RepoBase {
                 web.TempateCrawlNoiDung = r.TempateCrawlNoiDung;
                 web.TempateCrawlImage = r.TempateCrawlImage;
                 web.LinkRSS = r.LinkRSS;
-                web.Icon=r.Icon,
-                web.TenGoi_KoDau=r.TenGoi_KoDau
+                web.Icon = r.Icon,
+                    web.TenGoi_KoDau = r.TenGoi_KoDau
                 return web;
             });
             return webs;
@@ -57,9 +57,9 @@ export class ListWebRepo extends RepoBase {
                 return null;
             });
     }
-     public getList_User(option) : Promise<ListWeb[]>{
-         let queryText= 'SELECT "DanhMucSite"."IDDanhMucSite", "DuongDan", "TenGoi", "MoTa", "SoLuongTinDuyetTim", "TempateCrawlTieuDe", "TempateCrawlMoTa", "TempateCrawlNoiDung", "TempateCrawlImage", "LinkRSS", "TenGoi_KoDau", "Icon" FROM public."DanhMucSite" , public."User_DanhMucSite" where "DanhMucSite"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite"';
-         console.info('Excute: ' + queryText);
+    public getList_User(option): Promise<ListWeb[]> {
+        let queryText = 'SELECT "DanhMucSite"."IDDanhMucSite", "DuongDan", "TenGoi", "MoTa", "SoLuongTinDuyetTim", "TempateCrawlTieuDe", "TempateCrawlMoTa", "TempateCrawlNoiDung", "TempateCrawlImage", "LinkRSS", "TenGoi_KoDau", "Icon" FROM public."DanhMucSite" , public."User_DanhMucSite" where "DanhMucSite"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite"';
+        console.info('Excute: ' + queryText);
         let pResult;
 
         if (option) {
@@ -93,18 +93,18 @@ export class ListWebRepo extends RepoBase {
                 web.TempateCrawlNoiDung = r.TempateCrawlNoiDung;
                 web.TempateCrawlImage = r.TempateCrawlImage;
                 web.LinkRSS = r.LinkRSS;
-                web.Icon=r.Icon,
-                web.TenGoi_KoDau=r.TenGoi_KoDau
+                web.Icon = r.Icon,
+                    web.TenGoi_KoDau = r.TenGoi_KoDau
                 return web;
             });
             return webs;
         })
             .catch(err => {
                 console.error(err.message);
-                return null;
+                return;
             });
-     }
-     
+    }
+
     // public getListShow(option): Promise<ListWeb[]> {
     //     let queryText = 'select * from "danhmuc" where show = true order by name asc';
 
