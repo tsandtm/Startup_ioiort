@@ -39,17 +39,18 @@ export class BookRouter {
     private getAllBook = (req: Request, res: Response) => {
 
         res.status(200).json(mockProduct);
+    //    req.body['id']
+    //    req.body['name']
+    //     let object={ id: 1, name: 'book1' };
 
-        // let object={ id: 1, name: 'book1' };
-
-        // this.bookRepo.getList(null)
-        //     .then(result => {
-        //         res.status(200).json(result)
-        //     })
-        //     .catch(error => {
-        //         console.error(error.message);
-        //         res.status(500).send(error.message)
-        //     })
+    //     this.bookRepo.getList(null)
+    //         .then(result => {
+    //             res.status(200).json(result)
+    //         })
+    //         .catch(error => {
+    //             console.error(error.message);
+    //             res.status(500).send(error.message)
+    //         })
     }
 
     private countBook = (req: Request,res: Response) => {

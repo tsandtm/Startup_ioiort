@@ -8,9 +8,9 @@ export class BookRepo extends RepoBase {
         super();
     }
 
-    public getList(option): Promise<Book[]> {
+    public getList(option?): Promise<Book[]> {
         let queryText = 'select * from test.books';
-
+        let query = 'slect * from test.books where id =$1'
         console.info('Excute: ' + queryText);
         let pResult;
 
