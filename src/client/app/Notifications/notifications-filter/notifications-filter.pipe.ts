@@ -6,9 +6,9 @@ import { Notifications } from '../shared/notifications.model';
 })
 export class NotificationFilterPipe implements PipeTransform {
 
-    transform(value: Notifications[], args: string[]): Notifications[] {
-        let filter: string = args[0] ? args[0].toLocaleLowerCase() : null;
-        return filter ? value.filter((notification: Notifications) =>
-            notification.TieuDe.toLocaleLowerCase().indexOf(filter) !== -1) : value;
+    transform(value: Notifications[], filterBy: string): Notifications[] {
+        filterBy = filterBy ? filterBy.toLocaleLowerCase() : null;
+        return filterBy ? value.filter((set: Notifications) =>
+            set.TieuDe.toLocaleLowerCase().indexOf(filterBy) !== -1) : value;
     }
 }

@@ -1,8 +1,8 @@
 {
     "development": {
-        "database": "Notification",
+        "database": "Appnhatro",
         "username": "postgres",
-        "password": "123456",
+        "password": "postgres",
         "config": {
             "dialect": "postgres",
             "define": {

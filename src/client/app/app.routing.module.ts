@@ -25,7 +25,7 @@ import { SettingDeleteComponent } from './setting/setting-delete/setting-delete.
 import { SettingDetailComponent } from './setting/setting-detail/setting-detail.component';
 
 const appRoutes: Route[] = [
-    { path: '', redirectTo: 'notification', pathMatch: 'full' },
+    { path: '', redirectTo: 'menu-list', pathMatch: 'full' },
     //{ path: 'book-list', component: BookListComponent },
     //{ path: 'book-detail', component: BookDetailComponent },
     { path: 'Reports', component: BarChartDemoComponent },
