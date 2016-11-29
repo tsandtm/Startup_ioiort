@@ -3,7 +3,6 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { Product } from './product.model';
-
 @Injectable()
 export class ProductService {
     private _productUrl = 'api/products/products.json';
@@ -11,10 +10,6 @@ export class ProductService {
     constructor(private _http: Http) { }
 
     getProducts(): Promise<Product[]> {
-        // return this._http.get('/api/book')
-        //     .map((response: Response) => <Product[]>response.json())
-        //     .do(data => console.log('All: ' + JSON.stringify(data)))
-        //     .catch(this.handleError);
         return this._http.get('/api/book')
             .toPromise()
             .then(response => response.json() as Product[])

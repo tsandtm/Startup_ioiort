@@ -3,18 +3,21 @@ import { Router } from '@angular/router';
 import { Yeucauban } from '../shared/yeucauban.model';
 import { YeucaubanService } from '../shared/yeucauban.service';
 
+import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
 
+// const URL = '/api/';
+const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 @Component({
     templateUrl: '/yeucauban/dangtin/dangtin-add.component.html',
    // styleUrls: ['/yeucauban/dangtin/dangtin-add.component.css']
+   
 })
 export class DangTinComponent {
     pageTitle: string = ''; 
     errorMessage: string;
     yeucauban:Yeucauban[];
-    id: number;
     LoaiDichVuID:number;
-   // KhachHangID:number;
+    KhachHangID:number;
    // NgayDangTin:Date;
     TieuDeTin: string;
     MatTienM2:number;
@@ -25,7 +28,7 @@ export class DangTinComponent {
     SoPhongNgu:number;
     SoToilet:number;
     NoiThat: string;
- //   ArraryLinkHinh: string;
+    ArraryLinkHinh: string;
     TinhThanh: string;
     QuanHuyen: string;
     PhuongXa: string;
@@ -37,14 +40,25 @@ export class DangTinComponent {
   //  Map_Long: string;
     MoTa: string;
    // ArraryDichVu:string;  
-    constructor(private _yeucaubanService: YeucaubanService,private _router: Router ) {
+    constructor(private _yeucaubanService: YeucaubanService,private _router: Router ) { }
 
-    }
+  public uploader:FileUploader = new FileUploader({url: URL});
+  public hasBaseDropZoneOver:boolean = false;
+  public hasAnotherDropZoneOver:boolean = false;
+
+  public fileOverBase(e:any):void {
+    this.hasBaseDropZoneOver = e;
+  }
+
+  public fileOverAnother(e:any):void {
+    this.hasAnotherDropZoneOver = e;
+  }
+   
 
 public createYeucauban(){
          let yeucauban = new Yeucauban();
                yeucauban.LoaiDichVuID = this.LoaiDichVuID;
-             //   yeucauban.KhachHangID = this.KhachHangID;
+               yeucauban.KhachHangID = this.KhachHangID;
                // yeucauban.NgayDangTin = this.NgayDangTin;
                 yeucauban.TieuDeTin = this.TieuDeTin;
                 yeucauban.MatTienM2 = this.MatTienM2;
@@ -55,7 +69,7 @@ public createYeucauban(){
                 yeucauban.SoPhongNgu = this.SoPhongNgu;
                 yeucauban.SoToilet = this.SoToilet;
                 yeucauban.NoiThat = this.NoiThat;
-              //  yeucauban.ArraryLinkHinh = this.ArraryLinkHinh;
+                yeucauban.ArraryLinkHinh = this.ArraryLinkHinh;
                 yeucauban.TinhThanh = this.TinhThanh;
                 yeucauban.QuanHuyen = this.QuanHuyen;
                 yeucauban.PhuongXa = this.PhuongXa;

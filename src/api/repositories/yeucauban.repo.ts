@@ -86,6 +86,7 @@ export class YeucaubanRepo extends RepoBase {
                 return null;
             });
     }
+    
 
     public add(yeucauban: Yeucauban): Promise<Yeucauban> {
         let queryText = `INSERT INTO public."ioh_YeuCauBan"("LoaiDichVuID", "KhachHangID",

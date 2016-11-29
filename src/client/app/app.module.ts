@@ -7,6 +7,9 @@ import {HttpModule} from '@angular/http';
 
 import { Ng2PaginationModule } from 'ng2-pagination';
 
+// import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
+import { FileUploadModule } from 'ng2-file-upload';
+
 
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
@@ -33,7 +36,7 @@ import {YeucaubanListComponent} from './yeucauban/yeucauban-list/yeucauban-list.
 import { YeucaubanService } from './yeucauban/shared/yeucauban.service';
 import {DangTinComponent} from './yeucauban/dangtin/dangtin-add.component';
 @NgModule({
-    imports: [BrowserModule,routing,FormsModule,HttpModule, Ng2PaginationModule],
+    imports: [BrowserModule,routing,FormsModule,HttpModule, Ng2PaginationModule,FileUploadModule],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,ContactsService,NotificationsService,YeucaubanService ],
     declarations: [AppComponent,
     BookListComponent,
@@ -49,6 +52,7 @@ import {DangTinComponent} from './yeucauban/dangtin/dangtin-add.component';
     YeucaubanListComponent,
     DangTinComponent,
     StarComponent],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    
 })
 export class AppModule{}

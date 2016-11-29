@@ -2,7 +2,7 @@
 	.container-fluid {
 		background: #E6E6FA;
 		width: 800px;
-		height: 800px;
+		height: 1000px;
 		margin-left: 180px;
 		margin-top: -100px;
 	}
@@ -11,18 +11,25 @@
 		color: red;
 	}
 </style>
+<style>
+    .my-drop-zone { border: dotted 3px lightgray; }
+    .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+    .another-file-over-class { border: dotted 3px green; }
+
+    html, body { height: 100%; }
+</style>
 
 <body>
 	<div class="container-fluid">
 		<h2 style="text-align: center;">Đăng tin mua bán cho thuê nhà đất hiệu quả nhất</h2>
 		<div class="row">
-		<!--thong tin khac-->
+			<!--thong tin khac-->
 			<div class="col-md-12">
 				<h4>Thông tin bắt buộc</h4>
 				<div class="col-md-3">
 					<!--<p>Tieu de: {{tieude}}</p>-->
 					<p>Tiêu đề tin:</p>
-					<p style="margin-top: 22px">Loại Dịch vụ:</p>
+					<!--<p style="margin-top: 22px">Loại Dịch vụ:</p>-->
 					<p style="margin-top: 22px">Đv tính:</p>
 					<p style="margin-top: 22px">Tỉnh/Thành phố:</p>
 					<p style="margin-top: 20px">Giá:</p>
@@ -37,7 +44,7 @@
 							<option value="2">Bán</option>
 							<option value="3">Cho thuê</option>
 						</select>
-						<input [(ngModel)]="DonViTinh" name="DonViTinh"class="form-control" type="text" style="width: 190px;margin-bottom: 5px;margin-right: 5px">
+						<input [(ngModel)]="DonViTinh" name="DonViTinh" class="form-control" type="text" style="width: 190px;margin-bottom: 5px;margin-right: 5px">
 						<select [(ngModel)]="TinhThanh" name="TinhThanh" class="form-control" style="width: 190px;margin-bottom: 5px;margin-right: 5px ">
 							<option value="TP HCM">TP HCM</option>
 							<option value="Hà Nội">Hà Nội</option>
@@ -45,12 +52,12 @@
 						</select>
 						<input [(ngModel)]="Gia" name="Gia" class="form-control" type="text" style="width: 190px;margin-bottom: 5px; ">
 						<input [(ngModel)]="DiaChi" name="DiaChi" type="text" class="form-control" placeholder="Nhập địa chỉ vào ..." style="width: 520px;margin-bottom: 5px">
-						<textarea  [(ngModel)]="MoTa" name="MoTa" class="form-control" rows="3" style="width: 520px;margin-bottom: 5px"></textarea>
+						<textarea [(ngModel)]="MoTa" name="MoTa" class="form-control" rows="3" style="width: 520px;margin-bottom: 5px"></textarea>
 					</div>
 					<div class="col-md-2">
 						<p style="margin-top: 7px">Quận/Huyện:</p>
 						<p style="margin-top: 22px">Phường/Xã:</p>
-						
+
 
 					</div>
 					<div class="col-md-4">
@@ -62,12 +69,12 @@
 							<option value="Bình Thạnh">Bình Thạnh</option>
 							<option value="Phú Nhuận">Phú Nhuận</option>
 						</select>
-						<input [(ngModel)]="PhuongXa" name="PhuongXa"class="form-control" type="text" style="width: 200px;margin-bottom: 5px;margin-left: 32px">
-						
-						
+						<input [(ngModel)]="PhuongXa" name="PhuongXa" class="form-control" type="text" style="width: 200px;margin-bottom: 5px;margin-left: 32px">
+
+
 
 					</div>
-					
+
 
 				</div>
 			</div>
@@ -80,9 +87,8 @@
 					<p style="margin-top: 20px">Huong nha:</p>
 					<p style="margin-top: 20px">Huong ban cong:</p>
 					<p style="margin-top: 15px">Noi that:</p>
-					
-					<!--<p style="margin-top: 40px">Hinh anh:</p>-->
-		
+					<p style="margin-top: 40px">Hinh anh:</p>
+
 				</div>
 				<div class="col-md-9">
 					<div class="col-md-4" style="padding-left: 0px;">
@@ -100,25 +106,74 @@
 							<option value="Nam">Nam</option>
 							<option value="Bac">Bac</option>
 						</select>
-						<textarea  [(ngModel)]="NoiThat" name="NoiThat" class="form-control" rows="3" style="width: 520px;margin-bottom: 5px"></textarea>
-						<!--<input [(ngModel)]="ArraryLinkHinh" name="ArraryLinkHinh" type="file" />-->
-						
+						<textarea [(ngModel)]="NoiThat" name="NoiThat" class="form-control" rows="3" style="width: 520px;margin-bottom: 5px"></textarea>
+						<input [(ngModel)]="ArraryLinkHinh" name="ArraryLinkHinh" type="file" ng2FileSelect [uploader]="uploader" />
+						<div class="col-md-9" style="margin-bottom: 40px">
+
+							<h3>Upload queue</h3>
+							<p>Queue length: {{ uploader?.queue?.length }}</p>
+
+							<table class="table">
+								<thead>
+									<tr>
+										<th width="50%">Name</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let item of uploader.queue">
+										<td><strong>{{ item?.file?.name }}</strong></td>
+										<td nowrap>
+											<button type="button" class="btn btn-success btn-xs" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                            <span class="glyphicon glyphicon-upload"></span> Upload
+                        </button>
+											<button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading">
+                            <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                        </button>
+											<button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
+                            <span class="glyphicon glyphicon-trash"></span> Remove
+                        </button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+							<!--<div>
+								<div>
+									Queue progress:
+									<div class="progress" style="">
+										<div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+									</div>
+								</div>
+								<button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                    <span class="glyphicon glyphicon-upload"></span> Upload all
+                </button>
+								<button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                    <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+                </button>
+								<button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                    <span class="glyphicon glyphicon-trash"></span> Remove all
+                </button>
+							</div>-->
+
+						</div>
+
+
 					</div>
 					<div class="col-md-2">
 						<p style="margin-top: 7px">So tang:</p>
 						<p style="margin-top: 22px">Sp ngu:</p>
 						<p style="margin-top: 22px">so toilet:</p>
-					
+
 
 					</div>
 					<div class="col-md-4">
 						<input [(ngModel)]="SoTang" name="SoTang" class="form-control" type="text" style="width: 200px;margin-bottom: 5px;margin-left: 32px ">
-						<input [(ngModel)]="SoPhongNgu" name="SoPhongNgu"class="form-control" type="text" style="width: 200px;margin-bottom: 5px;margin-left: 32px">
-						<input [(ngModel)]="SoToilet" name="SoToilet"class="form-control" type="text" style="width: 200px;margin-bottom: 5px;margin-left: 32px">
-						
+						<input [(ngModel)]="SoPhongNgu" name="SoPhongNgu" class="form-control" type="text" style="width: 200px;margin-bottom: 5px;margin-left: 32px">
+						<input [(ngModel)]="SoToilet" name="SoToilet" class="form-control" type="text" style="width: 200px;margin-bottom: 5px;margin-left: 32px">
+
 
 					</div>
-					
+
 
 				</div>
 			</div>
@@ -143,18 +198,5 @@
 				</div>
 			</div>-->
 		</div>
-	<button class="bnt bnt-default" type="submit" style="margin-left:350px;" (click)="createYeucauban()">Đăng tin</button>
+		<button class="bnt bnt-default" type="submit" style="margin-left:350px;" (click)="createYeucauban()">Đăng tin</button>
 	</div>
-
-	<!--<div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Tutorials
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">HTML</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">CSS</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">JavaScript</a></li>
-      <li role="presentation" class="divider"></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>
-    </ul>
-  </div>-->
-	

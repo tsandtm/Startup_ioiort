@@ -19,16 +19,15 @@ export class ProductListComponent implements OnInit {
     errorMessage: string;
     products: Product[];
 
-
     constructor(private _productService: ProductService) {
 
     }
-
     toggleImage(): void {
         this.showImage = !this.showImage;
     }
 
     ngOnInit(): void {
+   // ProductService d = new ProductService();
         //    this._productService.getProducts()
         //              .subscribe(
         //                products => this.products = products,

@@ -1,6 +1,6 @@
 /*
 Created		9/8/2016
-Modified		11/14/2016
+Modified		11/23/2016
 Project		
 Model			
 Company		
@@ -15,7 +15,7 @@ Database		PostgreSQL 8.1
 
 Create table "ioh_TienIch"
 (
-	"TienIchID" Integer NOT NULL,
+	"TienIchID" Serial NOT NULL,
 	"KyHieu" Varchar(25),
 	"TenGoi" Varchar(500),
 	"BieuTuong" Varchar(100),
@@ -25,10 +25,10 @@ Create table "ioh_TienIch"
 
 Create table "ioh_LoaiDichVu"
 (
-	"LoaiDichVuID" Integer NOT NULL,
+	"LoaiDichVuID" Serial NOT NULL,
 	"KyHieu" Varchar(25),
 	"TenGoi" Varchar(500),
-	"HinhThuc" Char(1),
+	"HinhThuc" Varchar(256),
  primary key ("LoaiDichVuID")
 ) Without Oids;
 
@@ -44,21 +44,21 @@ Create table "ioh_LoaiDichVu_TienIch"
 
 Create table "ioh_KhachHang"
 (
-	"KhachHangID" Bigint NOT NULL,
+	"KhachHangID" Serial NOT NULL,
 	"HoTen" Varchar(256),
 	"Email" Varchar(256),
-	"DiaChi" Char(1),
-	"DienThoai" Char(1),
-	"LienHeKhac" Char(1),
-	"DiDong" Char(1) NOT NULL,
+	"DiaChi" Varchar(256),
+	"DienThoai" Numeric,
+	"LienHeKhac" Varchar(256),
+	"DiDong" Numeric NOT NULL,
  primary key ("KhachHangID")
 ) Without Oids;
 
 
 Create table "ioh_YeuCauMua"
 (
-	"YeuCauMuaID" Bigint NOT NULL,
-	"KhachHangID" Bigint NOT NULL,
+	"YeuCauMuaID" Serial NOT NULL,
+	"KhachHangID" Integer NOT NULL,
 	"NgayDangTin" Date,
  primary key ("YeuCauMuaID")
 ) Without Oids;
@@ -66,10 +66,10 @@ Create table "ioh_YeuCauMua"
 
 Create table "ioh_YeuCauBan"
 (
-	"YeuCauBanID" Bigint NOT NULL,
+	"YeuCauBanID" Serial NOT NULL,
 	"LoaiDichVuID" Integer NOT NULL,
-	"KhachHangID" Bigint NOT NULL,
-	"NgayDangTin" Time,
+	"KhachHangID" Integer NOT NULL,
+	"NgayDangTin" Date,
 	"TieuDeTin" Varchar(2000),
 	"MatTienM2" Numeric,
 	"DuongVaoM2" Numeric,
@@ -89,7 +89,7 @@ Create table "ioh_YeuCauBan"
 	"DonViTinh" Varchar(50),
 	"Map_Lat" Varchar(50),
 	"Map_Long" Varchar(50),
-	"MoTa" Text,
+	"MoTa" Varchar(256),
 	"ArrayDichVu" Varchar(1000),
  primary key ("YeuCauBanID")
 ) Without Oids;
@@ -97,7 +97,7 @@ Create table "ioh_YeuCauBan"
 
 Create table "ioh_LoaiTinDang"
 (
-	"LoaiTinDangID" Integer NOT NULL,
+	"LoaiTinDangID" Serial NOT NULL,
 	"KyHieu" Varchar(256),
 	"TenGoi" Varchar(1000),
 	"BieuTuong" Varchar(256),
@@ -107,7 +107,7 @@ Create table "ioh_LoaiTinDang"
 
 Create table "ioh_DonViGia"
 (
-	"DonViID" Integer NOT NULL,
+	"DonViID" Serial NOT NULL,
 	"TenGoi" Varchar(50),
 	"LoaiDichVuID" Integer NOT NULL,
  primary key ("DonViID")
@@ -117,7 +117,7 @@ Create table "ioh_DonViGia"
 Create table "ioh_YeuCauMua_DichVu"
 (
 	"LoaiDichVuID" Integer NOT NULL,
-	"YeuCauMuaID" Bigint NOT NULL,
+	"YeuCauMuaID" Integer NOT NULL,
  primary key ("LoaiDichVuID","YeuCauMuaID")
 ) Without Oids;
 
