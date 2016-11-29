@@ -8,11 +8,10 @@ export class TinTucRepo extends RepoBase {
         super();
     }
     public getList(option, limit, offset): Promise<TinTuc[]> {
-        let queryText = `SELECT * FROM public."TinTuc" ORDER BY "IDTinTuc" ASC LIMIT ${limit} OFFSET ${offset}`;
+        let queryText = `SELECT * FROM public."TinTuc" WHERE "ArrayDaXoa" is null ORDER BY "IDTinTuc" ASC LIMIT ${limit} OFFSET ${offset}`;
 
         console.info('Excute: ' + queryText);
         let pResult;
-
         if (option) {
             pResult = this._pgPool.query(queryText, [option.id, option.name])
         } else {
@@ -38,6 +37,19 @@ export class TinTucRepo extends RepoBase {
             .catch(err => {
                 console.error(err.message);
                 return null;
+            });
+    }
+
+    public xoatin(option):Promise<TinTuc>{
+         console.log('option: ' + option);
+        let queryText = `UPDATE public."TinTuc" Set "ArrayDaXoa"= "ArrayDaXoa" || ARRAY[1]::BIGINT[] WHERE "IDTinTuc"=${option.id}`;
+        return this._pgPool.query(queryText)
+            .then(result => {
+                return option;
+            })
+            .catch(error => {
+                console.error('Error: ', error);
+                return Promise.reject(error);
             });
     }
     // public update(option):Promise<TinTuc>{
@@ -69,7 +81,7 @@ export class TinTucRepo extends RepoBase {
     }
     public update(option): Promise<TinTuc> {
         console.log('option: ' + option);
-        let queryText = `UPDATE public."TinTuc" Set "ArrayQuanTam"= "ArrayQuanTam" || ARRAY[1]::BIGINT[],"ArrayDaXem"="ArrayDaXem" || ARRAY[1]::BIGINT[],"ArrayDaXoa"="ArrayDaXoa" || ARRAY[1]::BIGINT[] WHERE "IDTinTuc"=${option.id}`;
+        let queryText = `UPDATE public."TinTuc" Set "ArrayQuanTam"= "ArrayQuanTam" || ARRAY[1]::BIGINT[] WHERE "IDTinTuc"=${option.id}`;
         return this._pgPool.query(queryText)
             .then(result => {
                 return option;
@@ -79,52 +91,111 @@ export class TinTucRepo extends RepoBase {
                 return Promise.reject(error);
             });
     }
-    // create(TinTuc){
-    // var IDTinTuc=TinTuc.id;
-    // var IDDanhMucSite=TinTuc.IDDanhMucSite;
-    // var TieuDe=TinTuc.TieuDe;
-    // var MoTa=TinTuc.MoTa;
-    // var NoiDung=TinTuc.NoiDung;
-    // var URLThumbImage=TinTuc.URLThumbImage;
-    // var URLNews=TinTuc.URLNews;
-    // var URLImage=TinTuc.URLImage;
-    //     public create(option):Promise<TinTuc>{
-    //         let queryText='INSERT INTO public."TinTuc" ("IDTinTuc", "IDDanhMucSite", "TieuDe", "MoTa", "NoiDung", "URLNews", "URLThumbImage", "URLImage", "ThoiGianDangTin") VALUES (IDTinTuc=$1,IDDanhMucSite=$2, MoTa=$3, NoiDung=&4, ?, ?, ?, ?, ?);'
-    //         return this._pgPool.query(queryText)
-    //         .then(result=>{
-    //             let tin=new TinTuc();
-    //             tin.
+    //xai dc
+    // public delete(id: number): Promise<TinTuc> {
+    //     let queryText = 'DELETE FROM public."TinTuc" WHERE "IDTinTuc"=$1';
+
+    //     return this._pgPool.query(queryText, [id])
+    //         .then(result => {
+    //             let tin = new TinTuc();
+    //             tin.id = id;
+    //             console.log(result.rows[0]);
+    //             return tin;
+    //         }).catch(error => {
+    //             console.error('Error: ', error);
+    //             return Promise.reject(error);
     //         })
     // }
 
-    //     public update(id:number):Promise<TinTuc>{
-    //         let queryText='UPDATE public."TinTuc" Set "ArrayDaXem"=$1,"ArrayDaXoa"=$2,"ArrayQuanTam"=$3 WHERE "IDTinTuc"=$4' 
-    //         return this._pgPool.query(queryText,[id])
-    //                     .then(result=>{
-    //                         let tin=new TinTuc();
-    //                         tin.ArrayQuanTam=id;
-    //                         console.log(result.rows[0]);
-    //                         return tin;
-    //                     })
-    // }
-    // public update(option:TinTuc):Promise<TinTuc>{
-    //     let queryText;
-    //     console.log(option.id);
-    //     queryText='UPDATE public."TinTuc" Set "ArrayDaXem"=$1,"ArrayDaXoa"=$2,"ArrayQuanTam"=$3 WHERE "IDTinTuc"='
-    // }
-    public delete(id: number): Promise<TinTuc> {
-        let queryText = 'DELETE FROM public."TinTuc" WHERE "IDTinTuc"=$1';
-
-        return this._pgPool.query(queryText, [id])
+     public delele(option): Promise<TinTuc> {
+        console.log('option: ' + option);
+        let queryText = `UPDATE public."TinTuc" Set "ArrayQuanTam"= null WHERE "IDTinTuc"=${option.id}`;
+        return this._pgPool.query(queryText)
             .then(result => {
-                let tin = new TinTuc();
-                tin.id = id;
-                console.log(result.rows[0]);
-                return tin;
-            }).catch(error => {
+                return option;
+            })
+            .catch(error => {
                 console.error('Error: ', error);
                 return Promise.reject(error);
+            });
+    }
+    public quantam(option): Promise<TinTuc[]> {
+        let queryText = `SELECT * FROM public."TinTuc"  WHERE "ArrayQuanTam" is not null ORDER BY "IDTinTuc"`;
+
+        console.info('Excute: ' + queryText);
+        let pResult;
+
+        if (option) {
+            pResult = this._pgPool.query(queryText, [option.id, option.name])
+        } else {
+            pResult = this._pgPool.query(queryText)
+        }
+        return pResult.then(result => {
+            let TinTucs: TinTuc[] = result.rows.map(r => {
+                let tintuc = new TinTuc();
+                tintuc.id = r.IDTinTuc;
+                tintuc.IDDanhMucSite = r.IDDanhMucSite;
+                tintuc.TieuDe = r.TieuDe;
+                tintuc.MoTa = r.MoTa;
+                tintuc.NoiDung = r.NoiDung;
+                tintuc.ThoiGianDangTin = r.ThoiGianDangTin;
+                tintuc.URLNews = r.URLNews;
+                tintuc.URLThumbImage = r.URLThumbImage;
+                tintuc.URLImage = r.URLImage;
+                // console.log(r.idtintuc)
+                return tintuc;
+            });
+            return TinTucs;
+        })
+            .catch(err => {
+                console.error(err.message);
+                return null;
+            });
+    }
+    public chuadoc(option): Promise<TinTuc[]> {
+        let queryText = `SELECT * FROM public."TinTuc"  WHERE "ArrayDaXem" is null ORDER BY "IDTinTuc"`;
+
+        console.info('Excute: ' + queryText);
+        let pResult;
+
+        if (option) {
+            pResult = this._pgPool.query(queryText, [option.id, option.name])
+        } else {
+            pResult = this._pgPool.query(queryText)
+        }
+        return pResult.then(result => {
+            let TinTucs: TinTuc[] = result.rows.map(r => {
+                let tintuc = new TinTuc();
+                tintuc.id = r.IDTinTuc;
+                tintuc.IDDanhMucSite = r.IDDanhMucSite;
+                tintuc.TieuDe = r.TieuDe;
+                tintuc.MoTa = r.MoTa;
+                tintuc.NoiDung = r.NoiDung;
+                tintuc.ThoiGianDangTin = r.ThoiGianDangTin;
+                tintuc.URLNews = r.URLNews;
+                tintuc.URLThumbImage = r.URLThumbImage;
+                tintuc.URLImage = r.URLImage;
+                // console.log(r.idtintuc)
+                return tintuc;
+            });
+            return TinTucs;
+        })
+            .catch(err => {
+                console.error(err.message);
+                return null;
+            });
+    }
+     public daxem(option): Promise<TinTuc> {
+        console.log('option: ' + option);
+        let queryText = `UPDATE public."TinTuc" Set "ArrayDaXem"= "ArrayDaXem" || ARRAY[1]::BIGINT[] WHERE "IDTinTuc"=${option.id}`;
+        return this._pgPool.query(queryText)
+            .then(result => {
+                return option;
             })
+            .catch(error => {
+                console.error('Error: ', error);
+                return Promise.reject(error);
+            });
     }
     // public edit(id:number):Promise<TinTuc>{
     //     let queryText='UPDATE public."TinTuc" set '
