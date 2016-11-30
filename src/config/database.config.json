@@ -1,23 +1,15 @@
 {
     "development": {
-<<<<<<< HEAD
-        "database": "Appnhatro",
+        "database": "testdb",
         "username": "postgres",
-        "password": "postgres",
-=======
-        "database": "testdb2",
-        "username": "postgres",
-        "password": "200494",
->>>>>>> c8b7cdc11e48563c0d6015c3225e9a356c0672d5
+        "password": "123",
         "config": {
             "dialect": "postgres",
             "define": {
                 "timestamps": false,
-                "schema": "public"
+                "schema": "test"
             }
         },
-
-        
         "host": "localhost",
         "port": 5432,
         "ssl": false,
@@ -26,13 +18,13 @@
             "min": 4
         },
         "idleTimeoutMillis": 2000,
-        "schema": "public"
+        "schema": "test"
         
     },
     "test": {
         "database": "travis_ci_test",
         "username": "postgres",
-        "password": "123456",
+        "password": null,
         "config": {
             "dialect": "postgres",
             "define": {
