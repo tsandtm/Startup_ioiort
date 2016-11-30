@@ -1,12 +1,10 @@
 // đây là vùng import tất cả các modules bên ngoài
 import { Router, Response, Request } from 'express';
 
-import path = require('path');
 // import các module tạo table
 import { UserWebRepo } from '../repositories/user_website.repo';
 import { User_Web } from '../models/user_website.model'
 
-// let mockNews = require(path.join(__dirname,'..','json','news.json'));
 
 
 
