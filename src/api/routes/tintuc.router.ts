@@ -21,6 +21,7 @@ export class TinTucRouter {
         this.router.route('/tintuc/:id?')
             .get(this.getAllBook)
         this.router.route('/xoa')//asd
+        this.router.route('/xoa')
             .post(this.deleteABook);
         this.router.route('/tintuc')
             .post(this.update);

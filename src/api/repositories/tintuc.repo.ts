@@ -75,7 +75,6 @@ export class TinTucRepo extends RepoBase {
                 return null;
             });
     }
-
     public xoatin(option):Promise<TinTuc>{
          console.log('option: ' + option);
         let queryText = `UPDATE public."TinTuc" Set "ArrayDaXoa"= "ArrayDaXoa" || ARRAY[1]::BIGINT[] WHERE "IDTinTuc"=${option.id}`;
@@ -88,6 +87,11 @@ export class TinTucRepo extends RepoBase {
                 return Promise.reject(error);
             });
     }
+    // public update(option):Promise<TinTuc>{
+    //     let queryText='UPDATE *FROM public."TinTuc" Set "ArrayDaXem"=$1 ,"ArrayDaXoa"=$2,"ArrayQuanTam"=$3 WHERE "IDTinTuc"=$4'
+    //     console.log('Add api: ' + JSON.stringify(option))
+    //     return this._pgPool.query(queryText,[option.id,option.name])
+
     // public phuchoi(option):Promise<TinTuc>{
     //      console.log('option: ' + option);
     //     let queryText = `UPDATE public."TinTuc" Set "ArrayDaXoa"= null`;
@@ -227,8 +231,6 @@ export class TinTucRepo extends RepoBase {
                 return null;
             });
     }
-
-
      public daxem(option): Promise<TinTuc> {
         console.log('option: ' + option);
         let queryText = `UPDATE public."TinTuc" Set "ArrayDaXem"= "ArrayDaXem" || ARRAY[1]::BIGINT[] WHERE "IDTinTuc"=${option.id}`;
