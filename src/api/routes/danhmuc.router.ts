@@ -20,21 +20,34 @@ export class DanhMucRouter {
 
     public getRouter(): Router {
 
-        this.router.route('/danhmuc/:id?')
+        this.router.route('/danhmuc')
             .get(this.getAllBook);
+            this.router.get('/getWebs', this.getList_User);
             //.delete(this.deleteABook);
+            
         return this.router;
     }
     private getAllBook = (req: Request, res: Response) => {
 
 
-        this.danhmucRepo.getList(null)
+        this.danhmucRepo.getList(null, req.query.limit, req.query.skip)
             .then(result => {
                 res.status(200).json(result)
             })
             .catch(error => {
                 console.error(error.message);
                 res.status(500).send(error.message)
+            })
+    }
+    private getList_User = (req: Request, res: Response) => {
+
+        this.danhmucRepo.getList_User(null)
+            .then(lnw => {
+                res.status(200).json(lnw);
+            })
+            .catch(err => {
+                console.error(err);
+                return Promise.reject(err);
             })
     }
     // private deleteABook = (req: Request, res: Response) => {

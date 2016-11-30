@@ -23,8 +23,8 @@ app.use(function(req, res, next) {
 import {BookRouter} from './routes/book.router';
 import{TinTucRouter}from './routes/tintuc.router';
 import{DanhMucRouter}from'./routes/danhmuc.router';
-
+import{UserWebsRouter} from './routes/user_website.roter';
 // sử dụng các router được định nghĩa từ các modules
-app.use('/api', [(new BookRouter()).getRouter()],[(new TinTucRouter()).getRouter()],[(new DanhMucRouter()).getRouter()]);
+app.use('/api', [(new BookRouter()).getRouter()],[(new TinTucRouter()).getRouter()],[(new DanhMucRouter()).getRouter()],[(new UserWebsRouter()).getRouter()]);
 
 export default app;

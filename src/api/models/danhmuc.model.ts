@@ -9,4 +9,6 @@
         TempateCrawlNoiDung:string;
         TempateCrawlImage:string;
         LinkRSS:string;
+        Icon:string;
+        TenGoi_KoDau:string;
     }

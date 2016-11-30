@@ -7,16 +7,17 @@ export class DanhMucRePo extends RepoBase {
     constructor() {
         super();
     }
-    public getList(option): Promise<DanhMuc[]> {
-        let queryText = 'SELECT * FROM public."DanhMucSite" ORDER BY "IDDanhMucSite" ASC';
-
+    public getList(option, limit: number, offset: number): Promise<DanhMuc[]> {
+        let queryText = 'SELECT * FROM public."DanhMucSite" ORDER BY "IDDanhMucSite" ASC LIMIT $1 OFFSET $2';
+           console.log('Limit: ' + limit)
+        console.log('Offset: ' + offset)
         console.info('Excute: ' + queryText);
         let pResult;
 
         if (option) {
             pResult = this._pgPool.query(queryText, [option.id, option.name])
         } else {
-            pResult = this._pgPool.query(queryText)
+            pResult = this._pgPool.query(queryText, [limit, offset])
         }
            return pResult.then(result => {
             let DanhMucs: DanhMuc[] = result.rows.map(r => {
@@ -31,6 +32,8 @@ export class DanhMucRePo extends RepoBase {
                 d.TempateCrawlMoTa=r.TempateCrawlMoTa;
                 d.TempateCrawlNoiDung=r.TempateCrawlNoiDung;
                 d.TempateCrawlImage=r.TempateCrawlImage;
+                d.Icon=r.Icon;
+                d.TenGoi_KoDau=r.TenGoi_KoDau;
                 d.LinkRSS=r.LinkRSS;
                 return d;
             });
@@ -58,9 +61,59 @@ export class DanhMucRePo extends RepoBase {
                 tintuc.TempateCrawlNoiDung=result.rows[0].TempateCrawlNoiDung;
                 tintuc.TempateCrawlImage=result.rows[0].TempateCrawlImage;
                 tintuc.LinkRSS=result.rows[0].LinkRSS;
+                tintuc.Icon=result.rows[0].Icon;
+                tintuc.TenGoi_KoDau=result.rows[0].TenGoi_KoDau;
                 return tintuc;
             });
     }
+    public getList_User(option): Promise<DanhMuc[]> {
+        let queryText = 'SELECT "DanhMucSite"."IDDanhMucSite", "DuongDan", "TenGoi", "MoTa", "SoLuongTinDuyetTim", "TempateCrawlTieuDe", "TempateCrawlMoTa", "TempateCrawlNoiDung", "TempateCrawlImage", "LinkRSS", "TenGoi_KoDau", "Icon" FROM public."DanhMucSite" , public."User_DanhMucSite" where "DanhMucSite"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite"';
+        console.info('Excute: ' + queryText);
+        let pResult;
+
+        if (option) {
+            pResult = this._pgPool.query(queryText,
+                [option.IDDanhMucSite,
+                option.DuongDan,
+                option.TenGoi,
+                option.MoTa,
+                option.SoLuongTinDuyetTim,
+                option.TempateCrawlTieuDe,
+                option.TempateCrawlMoTa,
+                option.TempateCrawlNoiDung,
+                option.TempateCrawlImage,
+                option.LinkRSS,
+                option.Icon,
+                option.TenGoi_KoDau
+                ])
+        } else {
+            pResult = this._pgPool.query(queryText)
+        }
+        return pResult.then(result => {
+            let webs: DanhMuc[] = result.rows.map(r => {
+                let web = new DanhMuc();
+                web.id = r.IDDanhMucSite;
+                web.DuongDan = r.DuongDan;
+                web.TenGoi = r.TenGoi;
+                web.MoTa = r.MoTa;
+                web.SoLuongTinDuyetTim = r.SoLuongTinDuyetTim;
+                web.TemplateCrawlTieuDe = r.TempateCrawlTieuDe;
+                web.TempateCrawlMoTa = r.TempateCrawlMoTa;
+                web.TempateCrawlNoiDung = r.TempateCrawlNoiDung;
+                web.TempateCrawlImage = r.TempateCrawlImage;
+                web.LinkRSS = r.LinkRSS;
+                web.Icon = r.Icon,
+                    web.TenGoi_KoDau = r.TenGoi_KoDau
+                return web;
+            });
+            return webs;
+        })
+            .catch(err => {
+                console.error(err.message);
+                return;
+            });
+    }
+    
     // create(TinTuc){
         // var IDTinTuc=TinTuc.id;
         // var IDDanhMucSite=TinTuc.IDDanhMucSite;
