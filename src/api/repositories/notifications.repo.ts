@@ -9,7 +9,7 @@ export class NotificationsRepo extends RepoBase {
     }
 
     public getList(option): Promise<Notifications[]> {
-        let queryText = 'SELECT * FROM test."n_Notifications" ORDER BY "NotifiID"ASC  ';
+        let queryText = 'SELECT * FROM "n_Notifications" ORDER BY "NotifiID"ASC  ';
 
         console.info('Excute: ' + queryText);
         let pResult;
@@ -44,7 +44,7 @@ export class NotificationsRepo extends RepoBase {
  }
  public getOne(option): Promise<Notifications> {
       //  let queryText = 'SELECT "NotifiID", "AppID", "TieuDe", "NoiDung", "ThoiGianGui", "ThoiHanToiDa", "DoUuTien", "TrangThaiGoi", "SoLuong"FROM public."n_Notifications"; where NotifiID=id';
-        let queryText = 'SELECT "NotifiID", "AppID", "TieuDe", "NoiDung", "ThoiGianGui", "ThoiHanToiDa", "DoUuTien", "TrangThaiGoi", "SoLuong"FROM test."n_Notifications"; where id=$1';
+        let queryText = 'SELECT "NotifiID", "AppID", "TieuDe", "NoiDung", "ThoiGianGui", "ThoiHanToiDa", "DoUuTien", "TrangThaiGoi", "SoLuong"FROM "n_Notifications"; where id=$1';
         console.info('Excute: ' + queryText);
 
         return this._pgPool.query(queryText, [option.id, option.TieuDe])

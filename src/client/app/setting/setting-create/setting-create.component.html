@@ -10,7 +10,7 @@
                     <div class="container">
                         <div class="row">
                             <div class='col-sm-6'>
-                                <input type="text" class="form-control" name="appid" [(ngModel)]="appid" placeholder="App ID">
+                                <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control" name="appid" [(ngModel)]="appid" placeholder="App ID">
                             </div>  
                             <div style="color:red;line-height:33.99px">{{alert}}</div>
                         </div>
