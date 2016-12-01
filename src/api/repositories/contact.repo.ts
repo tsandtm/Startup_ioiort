@@ -9,7 +9,7 @@ export class ContactRepo extends RepoBase {
         super();
     }
 
-    public count(option): Promise<any> {
+    public count(option): Promise<number> {
         let queryText = 'SELECT * FROM public."User" WHERE "TaiKhoan" = $1 AND "Password" = $2;';
 
         console.info('Excute: ' + queryText +`${option.TaiKhoan}${option.Password}` );
@@ -17,9 +17,10 @@ export class ContactRepo extends RepoBase {
         return this._pgPool.query(queryText, [option.TaiKhoan, option.Password])
             .then(result => {
                 if (result.rowCount == 1)
-                    return "OK";
+                    return result.rows[0].IDUser;
                 else
-                    return "Faile";
+                    return -1;
             })
+            .catch(err=>{})
     }
 }

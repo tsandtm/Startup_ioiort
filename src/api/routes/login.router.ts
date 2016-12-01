@@ -30,14 +30,14 @@ export class LoginRouter {
     private Get(req: Request, res: Response) {
         return res.sendStatus(200)
     }
-    private Login = (req: Request, res: Response)=> {
+    private Login = (req: Request, res: Response) => {
         console.log(req.body)
         this.contactrepo.count(req.body)
             .then(result => {
-                if(result === 'OK')
-                    return res.status(200).send({ Message: result })
-                else    
-                    return  res.status(400).send({ Message: result })
+                if (result > 0)
+                    return res.status(200).send({ Message: `OK`, id: result })
+                else
+                    return res.status(400).send({ Message: result })
             })
             .catch(err => res.status(400).send({ Message: err }))
     }

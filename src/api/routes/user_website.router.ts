@@ -24,6 +24,7 @@ export class UserWebsRouter {
     public getRouter(): Router {
 
         this.router.route('/userwebsite')
+            .get(this.GetUser)
             .post(this.Create)
             .delete(this.Delete);
         // .put(this.updateShow);
@@ -53,7 +54,7 @@ export class UserWebsRouter {
 
         this.userwebsRepo.Delete({ idUser: req.query.idUser, idDanhMuc: req.query.idDanhMuc })
             .then(lnw => {
-              
+
                 return res.status(200).json(lnw);
             })
             .catch(err => {
@@ -62,28 +63,18 @@ export class UserWebsRouter {
             })
     }
 
-    // private getWebs = (req: Request, res: Response) => {
-
-    //     this.websRepo.getListShow(null)
-    //         .then(lnw => {
-    //             res.status(200).json(lnw);
-    //         })
-    //         .catch(err => {
-    //             console.error(err);
-    //             return Promise.reject(err);
-    //         })
-    // }
-
-    // private updateShow = (req: Request, res: Response) => {
-
-    //     this.websRepo.UpdateShow(req.query.id, req.body)
-    //         .then(result => {
-    //             res.status(200).json({ show: true });
-    //         })
-    //         .catch(err => {
-    //             console.error(err);
-    //             return Promise.reject(err);
-    //         })
-    // }
+    private GetUser = (req: Request, res: Response) => {
+        this.userwebsRepo.Delete({ idUser: req.query.idUser })
+            .then(lnw => {
+                if(lnw != -1)
+                    return res.sendStatus(200)
+                else    
+                    return res.sendStatus(400)
+            })
+            .catch(err => {
+                console.error(err);
+                return res.status(500).send(err)
+            })
+    }
 
 }

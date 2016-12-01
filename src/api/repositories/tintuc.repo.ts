@@ -8,7 +8,7 @@ export class TinTucRepo extends RepoBase {
         super();
     }
     public getList(option, limit, offset): Promise<TinTuc[]> {
-        let queryText = `SELECT * FROM public."TinTuc" WHERE "ArrayDaXoa" is null ORDER BY "IDTinTuc" ASC LIMIT ${limit} OFFSET ${offset}`;
+        let queryText = `SELECT * FROM public."TinTuc",public."User_DanhMucSite" WHERE "ArrayDaXoa" is null AND "TinTuc"."IDDanhMucSite"="User_DanhMucSite"."IDDanhMucSite" ORDER BY "IDTinTuc" ASC LIMIT ${limit} OFFSET ${offset}`;
 
         console.info('Excute: ' + queryText);
         let pResult;
@@ -40,8 +40,7 @@ export class TinTucRepo extends RepoBase {
             });
     }
     public TinNoiBat(option, limit, offset): Promise<TinTuc[]> {
-        let queryText = `SELECT "IDTinTuc", "IDDanhMucSite", "TieuDe", "MoTa", "NoiDung", "ThoiGianDangTin", "URLNews", "URLThumbImage", "URLImage", "ArrayDaXem", "ArrayDaXoa", "ArrayQuanTam"
-	FROM public."TinTuc" WHERE "ArrayDaXoa" is null ORDER BY cardinality("ArrayDaXem") DESC NULLS LAST LIMIT ${limit} OFFSET ${offset}`;
+        let queryText = `SELECT * FROM public."TinTuc",public."User_DanhMucSite" WHERE "ArrayDaXoa" is null AND "TinTuc"."IDDanhMucSite"="User_DanhMucSite"."IDDanhMucSite" ORDER BY cardinality("ArrayDaXem") DESC NULLS LAST LIMIT ${limit} OFFSET ${offset}`;
 
         console.info('Excute: ' + queryText);
         let pResult;

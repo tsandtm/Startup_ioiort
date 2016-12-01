@@ -45,15 +45,23 @@ export class UserWebRepo extends RepoBase {
             })
     }
 
-    // public count(option): Promise<number> {
-    //     let queryText = 'select count(*) as abc from news';
+    public Get(option): Promise<any> {
+        // console.log(JSON.stringify(option))
+        let queryText = 'SELECT "IDUser", "IDDanhMucSite", "CreatedDate" FROM public."User_DanhMucSite" WHERE "IDUser" = $1 ';
 
-    //     console.info('Excute: ' + queryText);
+        console.info('Excute: ' + queryText);
+        return this._pgPool.query(queryText, [option.idUser])
+            .then( result =>{
+                if (result.rowCount > 0)
+                    return result.rowCount;
+                else
+                    return -1;
+            })
+            .catch(error => {
+                console.error('Error: ', error);
+                return Promise.reject(error);
+            })
+    }
 
-    //     return this._pgPool.query(queryText)
-    //         .then(result => {
-    //             return result.rows[0].abc
-    //         })
-    // }
 
 }

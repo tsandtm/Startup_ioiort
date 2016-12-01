@@ -29,8 +29,8 @@ export class NewsRouter {
             .get(this.getAllNews)
             .delete(this.deleteNews);
 
-            
         this.router.get('/getNews', this.getNews)
+        this.router.get('/gettinnoibat', this.gettinnoibat)
         // this.router.get('/countNews',this.countNews)
 
 
@@ -39,7 +39,32 @@ export class NewsRouter {
 
     private getAllNews = (req: Request, res: Response) => {
 
-        this.newsRepo.getList(null)
+        this.newsRepo.getList(null, req.query.limit, req.query.skip)
+            .then(lnw => {
+                return res.status(200).json(lnw);
+            })
+            .catch(err => {
+                console.error(err);
+                return Promise.reject(err);
+            })
+    }
+
+    private getNews = (req: Request, res: Response) => {
+
+        this.newsRepo.getNew(null, req.query.limit, req.query.skip)
+            .then(lnw => {
+                return res.status(200).json(lnw);
+            })
+            .catch(err => {
+                console.error(err);
+                return Promise.reject(err);
+            })
+    }
+
+    /*** */
+    private gettinnoibat = (req: Request, res: Response) => {
+
+        this.newsRepo.gettinnoibat(null, req.query.limit, req.query.skip)
             .then(lnw => {
                 return res.status(200).json(lnw);
             })
@@ -60,17 +85,6 @@ export class NewsRouter {
             })
     }
 
-    private getNews = (req: Request, res: Response) => {
-
-        this.newsRepo.getNew(null, req.query.limit, req.query.skip)
-            .then(lnw => {
-                return res.status(200).json(lnw);
-            })
-            .catch(err => {
-                console.error(err);
-                return Promise.reject(err);
-            })
-    }
 
     // private countNews= (req: Request,res: Response) => {
     //     this.newsRepo.count(null)
