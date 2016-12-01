@@ -29,6 +29,8 @@ export class NewsRouter {
             .get(this.getAllNews)
             .delete(this.deleteNews);
 
+            
+        this.router.get('/getNews', this.getNews)
         // this.router.get('/countNews',this.countNews)
 
 
@@ -55,6 +57,18 @@ export class NewsRouter {
             .catch(error => {
                 console.error(error.message);
                 return res.status(500).send(error.message);
+            })
+    }
+
+    private getNews = (req: Request, res: Response) => {
+
+        this.newsRepo.getNew(null, req.query.limit, req.query.skip)
+            .then(lnw => {
+                return res.status(200).json(lnw);
+            })
+            .catch(err => {
+                console.error(err);
+                return Promise.reject(err);
             })
     }
 

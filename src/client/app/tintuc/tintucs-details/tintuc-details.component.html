@@ -1,0 +1,22 @@
+
+<div class='panel panel-primary'*ngIf='tintuc'>
+    <div class='panel-heading'>
+        {{pageTitle}}
+    </div>
+    <div class="col-lg-3">
+        ID San Pham:{{tintuc.id}}
+        <br/>
+        Tieu De:{{tintuc.TieuDe}}
+        <br/>NoiDung:{{tintuc.NoiDung}}
+            <br/>Mô Tả:{{tintuc.MoTa}}
+    </div>
+    <div class="col-lg-6">
+        <img [src]="tintuc.URLImage" width="100px" height="90px">
+    </div>
+    <div class='panel-footer'>
+        <a class='btn btn-default' (click)='onBack()' style='width:80px'>
+            <i class='glyphicon glyphicon-chevron-left'></i> Back
+        </a>
+    </div>
+    <button (click)="xoa()">Xóa</button>
+</div>

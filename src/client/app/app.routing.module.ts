@@ -7,12 +7,13 @@ import { ProductListComponent } from './products/product-list/product-list.compo
 import { ProductService } from './products/shared/product.service';
 import { WelcomeComponent } from './home/welcome.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
-
 import{WebsListComponent} from'./news/website/website.component';
 import {NewsListComponent} from './news/newslist/news-list.component';
 import {NewsService} from './news/shared/news.service';
-
-
+import{DanhMucListComponent} from './danhmuc/danhmuc-list/danhmuc-list.component';
+import{TinTucDetailsComponent} from './tintuc/tintucs-details/tintuc-details.component';
+import {TinTucListComponent} from './tintuc/tintucs/tintuc-list.component';
+//import{TestComponent} from './test/test.component';
 const appRoutes: Route[] = [
     { path: '', redirectTo: 'welcome', pathMatch: 'full' },
     { path: 'book-list', component: BookListComponent },
@@ -22,6 +23,10 @@ const appRoutes: Route[] = [
     { path: 'product/:id', component: ProductDetailComponent},
     { path: 'newslist', component: NewsListComponent},
     {path:'website',component:WebsListComponent},
+    {path:'tintuc',component:TinTucListComponent},
+    {path:'danhmuc',component:DanhMucListComponent},
+    {path:'tintucs/:id',component:TinTucDetailsComponent},
+   // {path:'test',component:TestComponent}
 ]
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

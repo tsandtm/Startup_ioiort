@@ -12,6 +12,7 @@ let app = express();
 app.use(body_parser.urlencoded({ extended: true }));
 app.use(body_parser.json());
 
+
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE');
@@ -33,6 +34,12 @@ import { UserWebsRouter } from './routes/user_website.router'
 import { LoginRouter } from './routes/login.router'
 
 // sử dụng các router được định nghĩa từ các modules
+
+// import router
+import{TinTucRouter}from './routes/tintuc.router';
+// sử dụng các router được định nghĩa từ các modules
+app.use('/api',[(new TinTucRouter()).getRouter()]);
 app.use('/api', [(new BookRouter()).getRouter(), (new NewsRouter()).getRouter(), (new WebsRouter()).getRouter(), (new UserWebsRouter()).getRouter()]);
 app.use('/tintuc', [new LoginRouter().GetRouter()])
+
 export default app;
