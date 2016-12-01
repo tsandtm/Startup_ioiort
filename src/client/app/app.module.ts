@@ -48,6 +48,7 @@ import { SettingEditComponent } from './setting/setting-edit/setting-edit.compon
 import { SettingDeleteComponent } from './setting/setting-delete/setting-delete.component';
 import { SettingDetailComponent } from './setting/setting-detail/setting-detail.component';
 import { SettingFilterPipe } from './setting/setting-filter/setting-filter.pipe';
+import { DateFilterPipe } from './notifications/notifications-filter/datefilter';
 
 @NgModule({
     imports: [
@@ -96,6 +97,7 @@ import { SettingFilterPipe } from './setting/setting-filter/setting-filter.pipe'
     NotificationstDetailComponent,
     NotificationstDetailEditComponent,
     NotificationFilterPipe,
+    DateFilterPipe
     ],
     bootstrap: [AppComponent],
     entryComponents: [ModalContactUpdate]

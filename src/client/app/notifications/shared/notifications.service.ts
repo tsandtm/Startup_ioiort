@@ -15,7 +15,17 @@ export class NotificationsService {
             .then(response => response.json() as Notifications[])
             .catch(this.handleError);
     }
-
+    getAllNotifications(): Promise<Notifications[]> {
+        // return this._http.get('/api/book')
+        //     .map((response: Response) => <Product[]>response.json())
+        //     .do(data => console.log('All: ' + JSON.stringify(data)))
+        //     .catch(this.handleError);
+        return this._http.get('/api/notification')
+            .toPromise()
+            .then(response => response.json() as Notifications[])
+            .catch(this.handleError);
+            
+    }
     getNotifications(id: number): Promise<Notifications> {
         return this.getList()
             .then(notifications => notifications.find(p => p.id === id))
@@ -32,5 +42,16 @@ export class NotificationsService {
         return Promise.reject(error.message || error);
         
 
-    }    
-}
+    }
+      getOne(id): Promise<Notifications> {
+        return this.getAllNotifications()
+            .then(products => products.find(p => p.id === id))
+            .catch(this.handleError);
+      }
+      Edit(req): Promise<Notifications> {
+        return this._http.post('/api/notificationedit',req)
+            .toPromise()
+            .then(response => response.json() as Notifications)
+            .catch(this.handleError);
+    }
+}   
