@@ -20,24 +20,52 @@ export class TinTucRouter {
     public getRouter(): Router {
         this.router.route('/tintuc/:id?')
             .get(this.getAllBook)
-        this.router.route('/xoa')//asd
+        this.router.route('/tindaxoa/:id?')
+            .get(this.lktindaxoa)
         this.router.route('/xoa')
             .post(this.deleteABook);
+        this.router.route('/boxoa')
+            .post(this.boxoa);
         this.router.route('/tintuc')
             .post(this.update);
         this.router.route('/xoatin')
         .post(this.xoatin);
-        // this.router.route('/phuchoi')
-        // .post(this.phuchoi);
         this.router.route('/daxem')
             .post(this.daxem);
-        this.router.route('/tinquantam')
+           
+        this.router.route('/tinquantam') /**api cua tin quan tam */
             .get(this.getallquantam)
         this.router.route('/tinchuadoc')
             .get(this.chuadoc);
         this.router.route('/tinnoibat/:id?')
             .get(this.tinnoibat);
         return this.router;
+    }
+    private lktindaxoa = (req: Request, res: Response) => {
+        let limit = req.query.limit ? req.query.limit : "all";
+        let offset = req.query.offset ? req.query.offset: 0;
+
+        this.tintucRepo.lktindaxoa(null,limit,offset)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            })
+    } 
+     private boxoa = (req: Request, res: Response) => {
+        let option = new TinTuc();
+        option = req.body;
+
+        this.tintucRepo.boxoa(option)
+            .then((result) => {
+                res.status(200).json(result);
+            })
+            .catch((error) => {
+                console.error(error.message);
+                res.status(500).send(error.message);
+            });
     }
     private getAllBook = (req: Request, res: Response) => {
         let limit = req.query.limit ? req.query.limit : "all";
