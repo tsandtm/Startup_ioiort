@@ -3,5 +3,5 @@ export class Setting {
 	APIKey: string;
     AppName: string;
 	IsActive: boolean;
-    NgayTao: Date;
+    NgayTao: string;
 }

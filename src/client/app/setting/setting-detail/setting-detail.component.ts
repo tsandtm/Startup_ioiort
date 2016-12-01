@@ -26,7 +26,8 @@ export class SettingDetailComponent {
     }
     getSetting(id: number) {
         this.settingservice.getOne(id)
-            .then(setting => this.setting = setting)
+            .then(setting => this.setting = setting);
+        console.log(this.setting);
         
     }
 
