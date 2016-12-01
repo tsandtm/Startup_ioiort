@@ -34,8 +34,10 @@ export class SettingCreateComponent {
         for(let s of this.setting1)
         {
             if(s.AppID==this.appid)
+            {
                 i=1;
-            break;
+                break;
+            }            
         }
         if(i==0)
         {
