@@ -17,6 +17,7 @@ export class BarChartDemoComponent {
   filter: string;
   datasets = [];
   ArrayReport: Report[];
+  devices = [];
   constructor(private reportService: ReportService) {
 
   }
@@ -26,16 +27,21 @@ export class BarChartDemoComponent {
 
   // }
   loadGetAll() {
+    this.reportService.getAllDeviceforDougnut().then((result) => {
+      this.Reports = result;
+      this.devices = this.getlabeldonoughnut()
+    });
     this.reportService.getDevice().then((result) => {
       this.listDevice = result;
       this.barChartLabels = this.getmonthlabel();
+
       this.createDataSets();
       this.barChartData = this.datasets;
       return 1;
     })
-    .then((result)=>{
-      this.loadgetdougnut();
-    });
+      .then((result) => {
+        this.loadgetdougnut();
+      });
   }
   loadgetdougnut() {
     this.reportService.getAllDeviceforDougnut().then((result) => {
@@ -43,14 +49,38 @@ export class BarChartDemoComponent {
       this.createDataSets();
       this.doughnutChartData = this.getdatadonoughnut();
       this.doughnutChartLabels = this.getlabeldonoughnut();
+
       this.gettotal();
       this.getpercent();
     });
   }
 
   private createDataSets() {
+    // for (let i = 0; i < this.devices.length; i++) {
+
     this.listDevice.forEach(ld => {
+      if (ld.listdevice.length < this.devices.length) {
+          ld.listdevice.forEach(d => {
+
+              for (let i = 0; i < this.devices.length; i++) {
+            console.log("Lan thu " +i +"Thiet bi "+ d.name +" Thiet bi dem dc"+ this.devices[i]);
+              if(!this.devices.find(f=>f == d.name)){
+                  d.name=this.devices[i];
+                  d.count=0;
+                  ld.listdevice.push(d);
+              }
+          }})
+        
+      }
+      console.log(JSON.stringify(ld));
       ld.listdevice.forEach(d => {
+
+        // if(this.devices[i] != d.name)
+        // {
+        //   console.log("mang devices: " + this.devices[i]);
+        //     d.name=this.devices[i];
+        //     d.count=0;
+        // }
         let index = this.checkIfLabelExists(d.name);
         if (index === -1) {
           this.datasets.push({ data: [d.count], label: d.name });
@@ -59,6 +89,7 @@ export class BarChartDemoComponent {
         }
       })
     })
+    // }
   }
 
 
@@ -92,10 +123,10 @@ export class BarChartDemoComponent {
       });
     }
     else if (id == 2) {
-      month = date.getMonth() +1;
+      month = date.getMonth() + 1;
       year = date.getFullYear();
       my = month + ";" + year;
-      console.log(my);
+
       this.reportService.getDevicebydate(my).then((result) => {
         this.listDevice = result;
         this.barChartLabels = this.getmonthlabel();
@@ -106,20 +137,17 @@ export class BarChartDemoComponent {
       });
     } else {
       this.reportService.getDevice().then((result) => {
-        // this.listDevice = new ListDevice[10]();
         this.listDevice = result;
         this.barChartLabels = this.getmonthlabel();
         this.createDataSets();
-        // console.log(JSON.stringify(this.datasets));
         this.barChartData = this.datasets;
       });
-    } 
+    }
   }
 
   getmonthlabel() {
     let a: string[] = [];
     this.listDevice.forEach(r => {
-      //  console.log(JSON.stringify(r.date));
       a.push("Tháng " + r.date)
     })
     return a;
@@ -155,13 +183,10 @@ export class BarChartDemoComponent {
 
   testto: number = 0;
   a: number[] = [];
-  b:string[] = [];
-  c=[];
+  b: string[] = [];
+  c = [];
+
   gettotal() {
-
-   
-
-    // let tong: number;
     this.loadAllDeviceforDougnut()
       .then(() => {
         for (let i = 0; i < this.ArrayReport.length; i++) {
@@ -176,11 +201,12 @@ export class BarChartDemoComponent {
       .then(() => {
         for (let i = 0; i < this.ArrayReport.length; i++) {
           if (flag != this.ArrayReport[i].name) {
-            this.c[i] = Math.floor((parseInt(this.ArrayReport[i].count.toString()) / this.testto) * 100)+"%   " + "thiết bị "+this.ArrayReport[i].name;         
+            this.c[i] = Math.floor((parseInt(this.ArrayReport[i].count.toString()) / this.testto) * 100) + "%   " + "thiết bị " + this.ArrayReport[i].name;
           }
         }
       });
   }
+
   ngOnInit(): void {
     this.loadGetAll();
     // this.loadgetdougnut();
