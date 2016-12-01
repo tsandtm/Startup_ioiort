@@ -17,10 +17,9 @@ export class SettingRepo extends RepoBase {
             let sets: Setting[] = result.rows.map(r => {
                 let set = new Setting();
                 set.AppID = r.AppID;
-                console.log(r.AppID);
                 set.APIKey = r.APIKey;
                 set.AppName = r.AppName;
-                set.NgayTao = r.NgayTao;
+                set.NgayTao = new Date(r.NgayTao).toISOString().replace(/T.*/,'').split('-').reverse().join('/');
                 set.IsActive = r.IsActive;
                 return set;
             });
