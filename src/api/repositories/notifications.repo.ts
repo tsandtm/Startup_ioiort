@@ -28,7 +28,7 @@ export class NotificationsRepo extends RepoBase {
                 notification.AppID = r.AppID;
                 notification.TieuDe = r.TieuDe;
                 notification.NoiDung = r.NoiDung;
-                notification.ThoiGianGui = r.ThoiGianGui;
+                notification.ThoiGianGui = new Date(r.ThoiGianGui).toLocaleDateString().replace(/T.*/,'').split('-').reverse().join('/');
                 notification.ThoiHanToiDa = r.ThoiHanToiDa;
                 notification.DoUuTien = r.DoUuTien;
                 notification.TrangThaiGoi = r.TrangThaiGoi;
