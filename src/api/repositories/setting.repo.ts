@@ -20,7 +20,6 @@ export class SettingRepo extends RepoBase {
                 set.APIKey = r.APIKey;
                 set.AppName = r.AppName;
                 set.NgayTao = new Date(r.NgayTao).toISOString().replace(/T.*/,'').split('-').reverse().join('/');
-                console.log(set.NgayTao);
                 set.IsActive = r.IsActive;
                 return set;
             });
