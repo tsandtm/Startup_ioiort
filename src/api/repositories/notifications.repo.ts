@@ -9,7 +9,7 @@ export class NotificationsRepo extends RepoBase {
     }
 
     public getList(option): Promise<Notifications[]> {
-        let queryText = 'SELECT * FROM test."n_Notifications" ORDER BY "NotifiID"ASC  ';
+        let queryText = 'SELECT * FROM "n_Notifications" ORDER BY "NotifiID"ASC  ';
 
         console.info('Excute: ' + queryText);
         let pResult;
@@ -28,7 +28,7 @@ export class NotificationsRepo extends RepoBase {
                 notification.AppID = r.AppID;
                 notification.TieuDe = r.TieuDe;
                 notification.NoiDung = r.NoiDung;
-                notification.ThoiGianGui = r.ThoiGianGui;
+                notification.ThoiGianGui = new Date(r.ThoiGianGui).toLocaleDateString().replace(/T.*/,'').split('-').reverse().join('/');
                 notification.ThoiHanToiDa = r.ThoiHanToiDa;
                 notification.DoUuTien = r.DoUuTien;
                 notification.TrangThaiGoi = r.TrangThaiGoi;
@@ -41,6 +41,7 @@ export class NotificationsRepo extends RepoBase {
                 console.error(err.message);
                 return null;
             });
+
     }
     public getOne(option): Promise<Notifications> {
         //  let queryText = 'SELECT "NotifiID", "AppID", "TieuDe", "NoiDung", "ThoiGianGui", "ThoiHanToiDa", "DoUuTien", "TrangThaiGoi", "SoLuong"FROM public."n_Notifications"; where NotifiID=id';

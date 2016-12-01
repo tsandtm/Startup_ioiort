@@ -40,6 +40,7 @@ import { ContactDetailComponent } from './Contacts/Contact-detail/Contact-detail
 import { ContactService } from './Contacts/shared/Contact.service';
 import { ModalContactUpdate } from './Contacts/Contact-update/Contact-update.component';
 import { NotificationFilterPipe } from './notifications/notifications-filter/notifications-filter.pipe';
+import { NotificationDateFilterPipe } from './notifications/notifications-filter/notificationsdate-filter.pipe';
 import { NotificationstDetailEditComponent } from './notifications/notifications-detailedit/notifications-detailedit.component';
 import { SettingListComponent } from './setting/setting-list/setting-list.component';
 import { SettingService } from './setting/shared/setting.service';

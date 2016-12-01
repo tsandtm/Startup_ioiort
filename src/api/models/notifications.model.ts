@@ -5,7 +5,7 @@ export class Notifications extends ModelBase {
     AppID:number;
     TieuDe: string;
     NoiDung: string;
-    ThoiGianGui:Date;
+    ThoiGianGui:string;
     ThoiHanToiDa:Date;
     DoUuTien: number;
     TrangThaiGoi: number;

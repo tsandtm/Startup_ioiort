@@ -10,17 +10,10 @@
             <div class='col-md-4'>
                 <input type='text' [(ngModel)]='listFilter'/>
             </div>           
+
             <input type="date" [(ngModel)]='dateValue'> <i class="fa fa-calendar" aria-hidden="true"></i>             
             <button style="float:right; margin-right:10px" type="button">New Mesenger</button>
         </div>
-        <div class='row' *ngIf='listFilter'>
-            <div class='col-md-6'>
-                <h3>Filtered by: {{ listFilter }}</h3>
-            </div>
-        </div>
-
-
-
         <div class='table-responsive'>
             <table class='table'>
                 <thead>
@@ -34,10 +27,11 @@
                     </tr>
                 </thead>
                 <tbody>
+
             <tr *ngFor='let notification of notifications | paginate: {itemsPerPage: 5, currentPage: p} | notificationFilter:listFilter | dateFilter:dateValue '>
                 <td>{{notification.TieuDe | lowercase}}</td>
                 <td>{{notification.TrangThaiGoi}}</td>
-                <td>{{notification.ThoiGianGui | date:"dd/MM/yyyy"}}</td>
+                <td>{{notification.ThoiGianGui }}</td>
                 <td>{{notification.SoLuong}}</td>
                 <td>{{notification.ThoiHanToiDa | date:"dd/MM/yyyy"}}</td>
                 <td *ngIf='notification.TrangThaiGoi == 1'>
