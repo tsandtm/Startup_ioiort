@@ -10,6 +10,9 @@ import { Ng2PaginationModule } from 'ng2-pagination';
 // import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import { FileUploadModule } from 'ng2-file-upload';
 
+//datetime
+import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
+//import { Ng2DatetimePickerModule ,DateTime } from 'ng2-datetime-picker';
 
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
@@ -36,7 +39,7 @@ import {YeucaubanListComponent} from './yeucauban/yeucauban-list/yeucauban-list.
 import { YeucaubanService } from './yeucauban/shared/yeucauban.service';
 import {DangTinComponent} from './yeucauban/dangtin/dangtin-add.component';
 @NgModule({
-    imports: [BrowserModule,routing,FormsModule,HttpModule, Ng2PaginationModule,FileUploadModule],
+    imports: [BrowserModule,routing,FormsModule,HttpModule, Ng2PaginationModule,FileUploadModule,NKDatetimeModule],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,ContactsService,NotificationsService,YeucaubanService ],
     declarations: [AppComponent,
     BookListComponent,

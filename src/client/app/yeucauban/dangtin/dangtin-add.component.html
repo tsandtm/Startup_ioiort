@@ -12,11 +12,26 @@
 	}
 </style>
 <style>
-    .my-drop-zone { border: dotted 3px lightgray; }
-    .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
-    .another-file-over-class { border: dotted 3px green; }
-
-    html, body { height: 100%; }
+	.my-drop-zone {
+		border: dotted 3px lightgray;
+	}
+	
+	.nv-file-over {
+		border: dotted 3px red;
+	}
+	/* Default class applied to drop zones on over */
+	
+	.another-file-over-class {
+		border: dotted 3px green;
+	}
+	.progress-bar{
+		width: 40px;
+	}
+	
+	html,
+	body {
+		height: 40%;
+	}
 </style>
 
 <body>
@@ -39,11 +54,11 @@
 				<div class="col-md-9">
 					<input [(ngModel)]="TieuDeTin" name="TieuDeTin" type="text" class="form-control" placeholder="Nhập tiêu đề vào ..." style="width: 520px;margin-bottom: 5px">
 					<div class="col-md-4" style="padding-left: 0px;">
-						<select [(ngModel)]="LoaiDichVu" name="LoaiDichVu" class="form-control" style="width: 190px;margin-bottom: 5px;margin-right: 5px ">
+						<!--<select [(ngModel)]="LoaiDichVu" name="LoaiDichVu" class="form-control" style="width: 190px;margin-bottom: 5px;margin-right: 5px ">
 							<option value="1">Mua</option>
 							<option value="2">Bán</option>
 							<option value="3">Cho thuê</option>
-						</select>
+						</select>-->
 						<input [(ngModel)]="DonViTinh" name="DonViTinh" class="form-control" type="text" style="width: 190px;margin-bottom: 5px;margin-right: 5px">
 						<select [(ngModel)]="TinhThanh" name="TinhThanh" class="form-control" style="width: 190px;margin-bottom: 5px;margin-right: 5px ">
 							<option value="TP HCM">TP HCM</option>
@@ -88,6 +103,7 @@
 					<p style="margin-top: 20px">Huong ban cong:</p>
 					<p style="margin-top: 15px">Noi that:</p>
 					<p style="margin-top: 40px">Hinh anh:</p>
+					<!--<p style="margin-top: 180px">Ngày đăng tin:</p>-->
 
 				</div>
 				<div class="col-md-9">
@@ -108,56 +124,90 @@
 						</select>
 						<textarea [(ngModel)]="NoiThat" name="NoiThat" class="form-control" rows="3" style="width: 520px;margin-bottom: 5px"></textarea>
 						<input [(ngModel)]="ArraryLinkHinh" name="ArraryLinkHinh" type="file" ng2FileSelect [uploader]="uploader" />
-						<div class="col-md-9" style="margin-bottom: 40px">
+						<!--<input [(ngModel)]="ArraryLinkHinh" name="ArraryLinkHinh" type="file" ng2FileSelect [uploader]="uploader" />-->
+						<!--<div class="container">
+							<div class="row">
 
-							<h3>Upload queue</h3>
-							<p>Queue length: {{ uploader?.queue?.length }}</p>
+								<div class="col-md-3">-->
 
-							<table class="table">
-								<thead>
-									<tr>
-										<th width="50%">Name</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr *ngFor="let item of uploader.queue">
-										<td><strong>{{ item?.file?.name }}</strong></td>
-										<td nowrap>
-											<button type="button" class="btn btn-success btn-xs" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
-                            <span class="glyphicon glyphicon-upload"></span> Upload
-                        </button>
-											<button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading">
-                            <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-                        </button>
-											<button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
-                            <span class="glyphicon glyphicon-trash"></span> Remove
-                        </button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+									<!--<h3>Select files</h3>
 
-							<!--<div>
-								<div>
-									Queue progress:
-									<div class="progress" style="">
-										<div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+									<div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader"
+										class="well my-drop-zone">
+										Base drop zone
 									</div>
-								</div>
-								<button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-                    <span class="glyphicon glyphicon-upload"></span> Upload all
-                </button>
-								<button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
-                    <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
-                </button>
-								<button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
-                    <span class="glyphicon glyphicon-trash"></span> Remove all
-                </button>
-							</div>-->
 
-						</div>
+									<div ng2FileDrop [ngClass]="{'another-file-over-class': hasAnotherDropZoneOver}" (fileOver)="fileOverAnother($event)" [uploader]="uploader"
+										class="well my-drop-zone">
+										Another drop zone
+									</div>-->
 
+									<!--Multiple
+									<input type="file" ng2FileSelect [uploader]="uploader" multiple /><br/> Single-->
+					<!--<div class="col-md-9" style=" width:600px; margin-right:200px">-->
 
+									<h3>Upload queue</h3>
+									<p>Queue length: {{ uploader?.queue?.length }}</p>
+
+									<table class="table">
+										<thead>
+											<tr>
+												<th width="50%">Name</th>
+												<!--<th>Size</th>-->
+												<th>Progress</th>
+												<!--<th>Status</th>
+												<th>Actions</th>-->
+											</tr>
+										</thead>
+										<tbody>
+											<tr *ngFor="let item of uploader.queue">
+												<td><strong>{{ item?.file?.name }}</strong></td>
+												<td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+												<td *ngIf="uploader.isHTML5">
+													<div class="progress" style="margin-bottom: 0;">
+														<div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+													</div>
+												</td>
+												<td class="text-center">
+													<span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+													<span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+													<span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+												</td>
+												<td nowrap>
+													<button type="button" class="btn btn-success btn-xs" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                            						<span class="glyphicon glyphicon-upload"></span> Upload
+                        							</button>
+													<button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading">
+                            						<span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                        							</button>
+													<button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
+                           							 <span class="glyphicon glyphicon-trash"></span> Remove
+                       								 </button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<div>
+										<div>
+											Queue progress:
+											<div class="progress" style="">
+												<div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+											</div>
+										</div>
+										<!--<button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+										<span class="glyphicon glyphicon-upload"></span> Upload all
+										</button>
+										<button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+										<span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+										</button>
+										<button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+										<span class="glyphicon glyphicon-trash"></span> Remove all
+										</button>-->
+									</div>
+
+							
+																
 					</div>
 					<div class="col-md-2">
 						<p style="margin-top: 7px">So tang:</p>
@@ -177,26 +227,8 @@
 
 				</div>
 			</div>
-			<!---->
-			<!--<div class="col-md-12">
-				<h4>Lich dang</h4>
-				<div class="col-md-3">
-					<p style="margin-top: 10px">Ngay bd:</p>
-				</div>
-				<div class="col-md-9">
-					<div class="col-md-4" style="padding-left: 0px;">
-						<input [(ngModel)]="NgayBatDau" name="NgayBatDau" class="form-control" type="date" style="width: 190px;margin-bottom: 5px; ">
-					</div>
-					<div class="col-md-2">
-						<p style="margin-top: 10px">Ngay kt:</p>
 
-					</div>
-					<div class="col-md-4">
-						<input [(ngModel)]="NgayKetThuc" name="NgayKetThuc"class="form-control" type="date" style="width: 200px;margin-bottom: 5px;margin-left: 32px">
-
-					</div>
-				</div>
-			</div>-->
 		</div>
+
 		<button class="bnt bnt-default" type="submit" style="margin-left:350px;" (click)="createYeucauban()">Đăng tin</button>
 	</div>

@@ -29,7 +29,8 @@
       'angular2-modal/plugins/bootstrap': 'npm:angular2-modal/bundles/angular2-modal.' + plugin + '.umd.js',
       'ng2-pagination': 'npm:ng2-pagination',
       'ng2-file-upload':'npm:ng2-file-upload',
-      'ng2-datetime':'ng2-datetime'
+       'ng2-datetime':'npm:ng2-datetime'
+      // 'ng2-datetime-picker': 'npm:ng2-datetime-picker/dist',
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -55,7 +56,11 @@
     'ng2-datetime':{
          main: './index.js',
          defaultExtension: 'js'
-    }
+    },
+    // 'ng2-datetime-picker': {
+    //     main: 'ng2-datetime-picker.umd.js',
+    //     defaultExtension: 'js'
+    //   },
   }
   });
 })(this);
