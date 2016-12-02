@@ -33,6 +33,18 @@ var NotifiService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
+    NotifiService.prototype.getslsend = function (req) {
+        return this._http.post('/api/sl', req)
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    NotifiService.prototype.getsldenied = function (req) {
+        return this._http.post('/api/sldenied', req)
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
     NotifiService.prototype.getLastNotifi = function () {
         return this._http.get('/api/notifi')
             .toPromise()

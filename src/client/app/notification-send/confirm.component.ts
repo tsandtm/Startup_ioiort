@@ -112,10 +112,10 @@ export class ConfirmComponent implements OnInit {
                 };
                 this.notifiservice.Insert(this.insertUser);
             });
-        this._router.navigate(['welcome']);
+        this._router.navigate(['menu-list']);
     }
     SaveAsDraft(): void {
-        this._router.navigate(['welcome']);
+        this._router.navigate(['menu-list']);
     }
     Finish():void{
         this.now=new Date();

@@ -12,17 +12,16 @@ var SettingRepo = (function (_super) {
         _super.call(this);
     }
     SettingRepo.prototype.getList = function (option) {
-        var queryText = 'select * from test."n_App"';
+        var queryText = 'select * from test."n_App" ORDER BY "AppID"ASC ';
         console.info('Excute: ' + queryText);
         var pResult = this._pgPool.query(queryText);
         return pResult.then(function (result) {
             var sets = result.rows.map(function (r) {
                 var set = new setting_model_1.Setting();
                 set.AppID = r.AppID;
-                console.log(r.AppID);
                 set.APIKey = r.APIKey;
                 set.AppName = r.AppName;
-                set.NgayTao = r.NgayTao;
+                set.NgayTao = new Date(r.NgayTao).toLocaleDateString().replace(/T.*/, '').split('-').reverse().join('/');
                 set.IsActive = r.IsActive;
                 return set;
             });

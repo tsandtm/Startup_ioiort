@@ -225,7 +225,6 @@ export class BarChartDemoComponent {
     } else {
       this.reportService.getDevice().then((result) => {
         this.listDevice = result;
-        console.log("nam nay" + JSON.stringify(this.listDevice))
         this.barChartLabels = [];
         this.barChartLabels = this.getmonthlabel();
         this.datasets = [];
@@ -240,6 +239,7 @@ export class BarChartDemoComponent {
   getmonthlabel() {
     let a: string[] = [];
     this.listDevice.forEach(r => {
+      //  console.log(JSON.stringify(r.date));
       a.push("Tháng " + r.date)
     })
     return a;

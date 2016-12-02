@@ -8,7 +8,7 @@ export class SettingRepo extends RepoBase {
     }
 
     public getList(option): Promise<Setting[]> {
-        let queryText = 'select * from test."n_App"';
+        let queryText = 'select * from test."n_App" ORDER BY "AppID"ASC ';
 
         console.info('Excute: ' + queryText);
         let pResult = this._pgPool.query(queryText)
@@ -17,10 +17,9 @@ export class SettingRepo extends RepoBase {
             let sets: Setting[] = result.rows.map(r => {
                 let set = new Setting();
                 set.AppID = r.AppID;
-                console.log(r.AppID);
                 set.APIKey = r.APIKey;
                 set.AppName = r.AppName;
-                set.NgayTao = r.NgayTao;
+                set.NgayTao = new Date(r.NgayTao).toLocaleDateString().replace(/T.*/,'').split('-').reverse().join('/');
                 set.IsActive = r.IsActive;
                 return set;
             });

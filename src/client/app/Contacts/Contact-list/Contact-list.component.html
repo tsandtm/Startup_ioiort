@@ -21,10 +21,13 @@
         </div>
         <div class="row" *ngIf='Tags' style="margin-left: 10px;">
             Tag:
-            <a style="cursor:pointer; text-decoration: underline; margin-left: 10px;" *ngFor='let itemTag of Tags' (click)='orderByTag(itemTag.TagID)'>
+            <a style="cursor:pointer; text-decoration: underline; margin-left: 10px;" *ngFor='let itemTag of Tags' (click)='SearchByTag(itemTag.TagNameDisplay)'>
                 {{ itemTag.TagNameDisplay }}
             </a>
         </div>
+
+
+
         <div class='table-responsive'>
             <table class='table'>
                 <thead>
@@ -40,11 +43,11 @@
                         <th>Phone number</th>
                         <th>Ngày tạo</th>
                         <th>Facebook</th>
-                        <th>Contact tag</th>
+                        <th>Tag</th>
                     </tr>
                 </thead>
                 <tbody id='listcheckall'>
-                    <tr *ngFor='let item of Contacts | ContactFilter: filter'>
+                    <tr *ngFor='let item of itempages | ContactFilter: filter'>
                         <td>
                             <input type="checkbox" class="checkbox-item" [checked]="checkbox" />
                         </td>
@@ -69,7 +72,7 @@
                             {{ item.PhoneNumber }}
                         </td>
                         <td>
-                            {{ item.NgayTao }}
+                            {{ item.NgayTao|date:"dd/MM/yyyy" }}
                         </td>
                         <td>
                             {{ item.FaceBook }}
@@ -80,6 +83,26 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="text-center">
+                <!-- pager -->
+                <ul class="pagination">
+                    <li [ngClass]="{disabled:pager.currentPage === 1}">
+                        <a (click)="setPage(1)">First</a>
+                    </li>
+                    <li [ngClass]="{disabled:pager.currentPage === 1}">
+                        <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+                    </li>
+                    <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                        <a (click)="setPage(page)">{{page}}</a>
+                    </li>
+                    <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                        <a (click)="setPage(pager.currentPage + 1)">Next</a>
+                    </li>
+                    <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                        <a (click)="setPage(pager.totalPages)">Last</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

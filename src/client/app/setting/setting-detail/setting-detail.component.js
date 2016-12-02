@@ -31,6 +31,7 @@ var SettingDetailComponent = (function () {
         var _this = this;
         this.settingservice.getOne(id)
             .then(function (setting) { return _this.setting = setting; });
+        console.log(this.setting);
     };
     SettingDetailComponent.prototype.Back = function () {
         this._router.navigate(['setting-list']);

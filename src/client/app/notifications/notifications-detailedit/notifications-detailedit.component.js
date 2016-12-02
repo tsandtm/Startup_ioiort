@@ -45,18 +45,22 @@ var NotificationstDetailEditComponent = (function () {
         this.ACTag = [];
         this.ACTagItem = [];
         this.listIDTag = [];
+        this.listNameTag = [];
         //Contact    
         this.ACContact = [];
         this.ACContactItem = [];
         this.listIDContact = [];
+        this.listNameContact = [];
         //TagDenied
         this.ACTagDenied = [];
         this.ACTagDeniedItem = [];
         this.listIDTagDenied = [];
+        this.listNameTagDenied = [];
         //ContactDenied
         this.ACContactDenied = [];
         this.ACContactDeniedItem = [];
         this.listIDContactDenied = [];
+        this.listNameContactDenied = [];
         //----//
         this.sendnow = true;
         this.sendlater = false;
@@ -72,22 +76,67 @@ var NotificationstDetailEditComponent = (function () {
     NotificationstDetailEditComponent.prototype.TagAdded = function (item) {
         var pos = item.indexOf('.');
         var num = item.slice(0, pos);
+        var name = item.slice(pos + 1, item.length);
         this.listIDTag.push(parseInt(num));
+        this.listNameTag.push(name);
     };
     NotificationstDetailEditComponent.prototype.TagRemoved = function (item) {
         var pos = item.indexOf('.');
         var num = item.slice(0, pos);
+        var name = item.slice(pos + 1, item.length);
         this.delPos(this.listIDTag, parseInt(num));
+        this.delPosstring(this.listNameTag, name);
+        console.log(this.ACTag);
     };
     NotificationstDetailEditComponent.prototype.ContactAdded = function (item) {
         var pos = item.indexOf('.');
         var num = item.slice(0, pos);
+        var name = item.slice(pos + 1, item.length);
         this.listIDContact.push(parseInt(num));
+        this.listNameContact.push(name);
+        console.log(this.ACContact);
     };
     NotificationstDetailEditComponent.prototype.ContactRemoved = function (item) {
         var pos = item.indexOf('.');
         var num = item.slice(0, pos);
+        var name = item.slice(pos + 1, item.length);
         this.delPos(this.listIDContact, parseInt(num));
+        this.delPosstring(this.listNameContact, name);
+        console.log(this.ACContact);
+    };
+    NotificationstDetailEditComponent.prototype.TagDeniedAdded = function (item) {
+        var pos = item.indexOf('.');
+        var num = item.slice(0, pos);
+        var name = item.slice(pos + 1, item.length);
+        this.listIDTagDenied.push(parseInt(num));
+        this.listNameTagDenied.push(name);
+        console.log(this.listIDTagDenied);
+        console.log(this.listNameTagDenied);
+    };
+    NotificationstDetailEditComponent.prototype.TagDeniedRemoved = function (item) {
+        var pos = item.indexOf('.');
+        var num = item.slice(0, pos);
+        var name = item.slice(pos + 1, item.length);
+        this.delPos(this.listIDTagDenied, parseInt(num));
+        this.delPosstring(this.listNameTagDenied, name);
+        console.log(this.listIDTagDenied);
+        console.log(this.listNameTagDenied);
+    };
+    NotificationstDetailEditComponent.prototype.ContactDeniedAdded = function (item) {
+        var pos = item.indexOf('.');
+        var num = item.slice(0, pos);
+        var name = item.slice(pos + 1, item.length);
+        this.listIDContactDenied.push(parseInt(num));
+        this.listNameContactDenied.push(name);
+        console.log(this.ACContactDenied);
+    };
+    NotificationstDetailEditComponent.prototype.ContactDeniedRemoved = function (item) {
+        var pos = item.indexOf('.');
+        var num = item.slice(0, pos);
+        var name = item.slice(pos + 1, item.length);
+        this.delPos(this.listIDContactDenied, parseInt(num));
+        this.delPosstring(this.listNameContactDenied, name);
+        console.log(this.ACContactDenied);
     };
     // public TagDeniedAdded(item:string) {
     //     var pos=item.indexOf('.');
@@ -112,6 +161,13 @@ var NotificationstDetailEditComponent = (function () {
     //     console.log(this.listIDContact.toString());
     // }
     NotificationstDetailEditComponent.prototype.delPos = function (ar, key) {
+        for (var i = 0; i <= ar.length; i++) {
+            if (ar[i] == key) {
+                ar.splice(i, 1);
+            }
+        }
+    };
+    NotificationstDetailEditComponent.prototype.delPosstring = function (ar, key) {
         for (var i = 0; i <= ar.length; i++) {
             if (ar[i] == key) {
                 ar.splice(i, 1);
@@ -145,6 +201,7 @@ var NotificationstDetailEditComponent = (function () {
             _this.Contact = contact;
             _this.Contact.forEach(function (element) {
                 _this.ACContactItem.push(element.ContactID + '.' + element.TaiKhoan);
+                console.log(element.ContactID);
             });
         });
     };
@@ -155,57 +212,6 @@ var NotificationstDetailEditComponent = (function () {
     NotificationstDetailEditComponent.prototype.sendlaterclick = function () {
         this.sendnow = false;
         this.sendlater = true;
-    };
-    NotificationstDetailEditComponent.prototype.Create = function () {
-        var _this = this;
-        this.date = new Date(this.date);
-        if (this.sendnow) {
-            this.date = new Date();
-            this.Thoigiangui = this.date.toLocaleDateString('en-US') + ' ' + this.date.toLocaleTimeString();
-        }
-        else if (this.sendlater) {
-            this.Thoigiangui = this.date.toLocaleDateString('en-US') + ' ' + this.hour + ":" + this.minute + ":00";
-        }
-        if (this.thoiHanDV == "Week") {
-            this.date.setDate(this.date.getDate() + (7 * this.thoiHannum));
-        }
-        if (this.thoiHanDV == "Day") {
-            this.date.setDate(this.date.getDate() + parseInt(this.thoiHannum.toString()));
-        }
-        if (this.thoiHanDV == "Hour") {
-            this.date.setDate(this.date.getDate());
-            this.date.setHours(this.date.getHours() + parseInt(this.thoiHannum.toString()));
-        }
-        if (this.thoiHanDV == "Minute") {
-            this.date.setDate(this.date.getDate());
-            this.date.setMinutes(this.date.getMinutes() + parseInt(this.thoiHannum.toString()));
-        }
-        if (this.notifi == null) {
-            this.notifiID = 1;
-        }
-        else {
-            this.notifiID = this.notifi.NotifiID + 1;
-        }
-        if (this.sendlater) {
-            this.ThoiHan = this.date.toLocaleDateString('en-US') + ' ' + this.hour + ":" + this.minute + ":00";
-        }
-        else {
-            this.ThoiHan = this.date.toLocaleDateString('en-US') + ' ' + this.date.toLocaleTimeString();
-        }
-        this.notifi = { AppID: this.AppID,
-            NotifiID: this.notifiID,
-            TieuDe: this.tieude,
-            Noidung: this.Noidung,
-            DoUuTien: this.doUuTien,
-            Trangthai: this.Trangthai,
-            Soluong: 1,
-            Thoigiangui: this.Thoigiangui,
-            ThoiHan: this.ThoiHan,
-            SendTag: this.listIDTag,
-            SendUser: this.listIDContact,
-            DeniedTag: this.listIDTagDenied,
-            DeniedUser: this.listIDContactDenied };
-        this.notifiservice.Create(this.notifi).then(function (result) { return _this._router.navigate(['confirm', _this.notifi.NotifiID]); });
     };
     NotificationstDetailEditComponent.prototype.loadGetAll = function () {
         var _this = this;
@@ -231,7 +237,114 @@ var NotificationstDetailEditComponent = (function () {
     NotificationstDetailEditComponent.prototype.getNotifications = function (id) {
         var _this = this;
         this._notificationsService.getNotifications(id)
-            .then(function (notifications) { return _this.notifications = notifications; });
+            .then(function (notifications) {
+            _this.notifications = notifications;
+            _this.listNameTag = notifications.Send_TagName,
+                _this.listNameContact = notifications.Send_UserName,
+                _this.listNameTagDenied = notifications.Send_TagDenieName;
+            _this.listNameContactDenied = notifications.Send_UserDenieName,
+                _this.listIDTag = notifications.Send_TagID;
+            _this.listIDContact = notifications.Send_UserID;
+            _this.listIDTagDenied = notifications.Send_TagDenieID;
+            _this.listIDContactDenied = notifications.Send_UserDenieID;
+            _this.tieude = notifications.TieuDe;
+            _this.Noidung = notifications.NoiDung;
+            for (var i = 0; i < _this.listIDTag.length; i++) {
+                _this.ACTag.push(_this.listIDTag[i] + '.' + _this.listNameTag[i]);
+            }
+            for (var i = 0; i < _this.listIDContact.length; i++) {
+                _this.ACContact.push(_this.listIDContact[i] + '.' + _this.listNameContact[i]);
+            }
+            for (var i = 0; i < _this.listIDTagDenied.length; i++) {
+                _this.ACTagDenied.push(_this.listIDTagDenied[i] + '.' + _this.listNameTagDenied[i]);
+            }
+            for (var i = 0; i < _this.listIDContactDenied.length; i++) {
+                _this.ACContactDenied.push(_this.listIDContactDenied[i] + '.' + _this.listNameContactDenied[i]);
+            }
+            console.log(_this.ACTag);
+            console.log(_this.ACContact);
+            console.log(_this.ACTagDenied);
+            console.log(_this.ACContactDenied);
+        });
+    };
+    NotificationstDetailEditComponent.prototype.getslsend = function (req) {
+        var _this = this;
+        return this.notifiservice.getslsend(req).then(function (result) { return _this.Soluong = result; });
+    };
+    NotificationstDetailEditComponent.prototype.getslsenddenied = function (req) {
+        var _this = this;
+        return this.notifiservice.getsldenied(req).then(function (result) { return _this.Soluong = result; });
+    };
+    NotificationstDetailEditComponent.prototype.Edit = function () {
+        var _this = this;
+        this.date = new Date(this.date);
+        if (this.sendnow) {
+            this.date = new Date();
+            this.Thoigiangui = this.date.toLocaleDateString('en-US') + ' ' + this.date.toLocaleTimeString();
+        }
+        else if (this.sendlater) {
+            this.Thoigiangui = this.date.toLocaleDateString('en-US') + ' ' + this.hour + ":" + this.minute + ":00";
+        }
+        if (this.thoiHanDV == "Week") {
+            this.date.setDate(this.date.getDate() + (7 * this.thoiHannum));
+        }
+        if (this.thoiHanDV == "Day") {
+            this.date.setDate(this.date.getDate() + parseInt(this.thoiHannum.toString()));
+        }
+        if (this.thoiHanDV == "Hour") {
+            this.date.setDate(this.date.getDate());
+            this.date.setHours(this.date.getHours() + parseInt(this.thoiHannum.toString()));
+        }
+        if (this.thoiHanDV == "Minute") {
+            this.date.setDate(this.date.getDate());
+            this.date.setMinutes(this.date.getMinutes() + parseInt(this.thoiHannum.toString()));
+        }
+        if (this.sendlater) {
+            this.ThoiHan = this.date.toLocaleDateString('en-US') + ' ' + this.hour + ":" + this.minute + ":00";
+        }
+        else {
+            this.ThoiHan = this.date.toLocaleDateString('en-US') + ' ' + this.date.toLocaleTimeString();
+        }
+        if (this.listIDTag.length == 0 && this.listIDContact.length == 0) {
+            this.getslsenddenied({ contactdenied: this.listIDContactDenied, tagdenied: this.listIDTagDenied }).then(function (result) {
+                _this.notifications.AppID = _this.AppID;
+                _this.notifications.TieuDe = _this.tieude;
+                _this.notifications.NoiDung = _this.Noidung;
+                _this.notifications.DoUuTien = _this.doUuTien;
+                _this.notifications.ThoiHanToiDa = _this.ThoiHan;
+                _this.notifications.ThoiGianGui = _this.Thoigiangui;
+                _this.notifications.SoLuong = result;
+                _this.notifications.Send_TagName = _this.listNameTag;
+                _this.notifications.Send_TagID = _this.listIDTag;
+                _this.notifications.Send_UserName = _this.listNameContact;
+                _this.notifications.Send_UserID = _this.listIDContact;
+                _this.notifications.Send_TagDenieName = _this.listNameTagDenied;
+                _this.notifications.Send_TagDenieID = _this.listIDTagDenied;
+                _this.notifications.Send_UserDenieName = _this.listNameContactDenied;
+                _this.notifications.Send_UserDenieID = _this.listIDContactDenied;
+                _this._notificationsService.Edit(_this.notifications).then(function (result) { return _this._router.navigate(['confirm', _this.notifications.id]); });
+            });
+        }
+        else {
+            this.getslsend({ contact: this.listIDContact, tag: this.listIDTag, contactdenied: this.listIDContactDenied, tagdenied: this.listIDTagDenied }).then(function (result) {
+                _this.notifications.AppID = _this.AppID;
+                _this.notifications.TieuDe = _this.tieude;
+                _this.notifications.NoiDung = _this.Noidung;
+                _this.notifications.DoUuTien = _this.doUuTien;
+                _this.notifications.ThoiHanToiDa = _this.ThoiHan;
+                _this.notifications.ThoiGianGui = _this.Thoigiangui;
+                _this.notifications.SoLuong = result;
+                _this.notifications.Send_TagName = _this.listNameTag;
+                _this.notifications.Send_TagID = _this.listIDTag;
+                _this.notifications.Send_UserName = _this.listNameContact;
+                _this.notifications.Send_UserID = _this.listIDContact;
+                _this.notifications.Send_TagDenieName = _this.listNameTagDenied;
+                _this.notifications.Send_TagDenieID = _this.listIDTagDenied;
+                _this.notifications.Send_UserDenieName = _this.listNameContactDenied;
+                _this.notifications.Send_UserDenieID = _this.listIDContactDenied;
+                _this._notificationsService.Edit(_this.notifications).then(function (result) { return _this._router.navigate(['confirm', _this.notifications.id]); });
+            });
+        }
     };
     __decorate([
         core_1.Input(), 

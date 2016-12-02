@@ -24,7 +24,8 @@ var SettingListComponent = (function () {
     }
     SettingListComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this._SettingService.getAllSetting().then(function (setting) { return _this.setting = setting; }).then(function (result) { return _this.setPage(1); });
+        this._SettingService.getAllSetting().then(function (setting) { return _this.setting = setting; })
+            .then(function (result) { return _this.setPage(1); });
     };
     SettingListComponent.prototype.setPage = function (page) {
         if (this.setting != undefined) {

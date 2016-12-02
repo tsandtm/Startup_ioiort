@@ -79,9 +79,14 @@ var ContactRepo = (function (_super) {
             return option;
         });
     };
-    ContactRepo.prototype.orderByTag = function (option) {
-        option.Contact_TagID = parseInt(option.Contact_TagID, 10);
-        var queryText = 'select * from test."Contacts" order by "Contact_TagID" = \'{ ' + option.Contact_TagID + ' }\' desc';
+    ContactRepo.prototype.SearchByTag = function (Contact_TagName) {
+        var queryText;
+        if (Contact_TagName == "All" || Contact_TagName == "all") {
+            queryText = 'select * from test."Contacts" ORDER BY "ContactID" ASC';
+        }
+        else {
+            queryText = 'select * from test."Contacts" where \'' + Contact_TagName + '\' = any("Contact_TagName")';
+        }
         var pResult = this._pgPool.query(queryText);
         return pResult.then(function (result) {
             var Contacts = result.rows.map(function (r) {

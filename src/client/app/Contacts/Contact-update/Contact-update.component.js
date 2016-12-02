@@ -106,10 +106,15 @@ var ModalContactUpdate = (function () {
                 valueTagName.push(this.Tags[i].TagNameDisplay);
             }
         }
+        this.contactService.updateContact(valueID, valueTagID, valueTagName);
         this.contactService.updateContact(valueID, valueTagID, valueTagName)
-            .subscribe(function (data) { return _this.postData = JSON.stringify(data); }, function (error) { return alert(error); }, function () { return console.log('finish'); });
-        this.wrongAnswer = false;
-        this.dialog.close();
+            .then(function (result) {
+            _this.wrongAnswer = false;
+            _this.dialog.close("ok");
+        })
+            .catch(function (err) {
+            alert(err);
+        });
     };
     ModalContactUpdate.prototype.onClose = function () {
         this.wrongAnswer = false;

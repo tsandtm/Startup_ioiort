@@ -25,12 +25,18 @@ var NotificationstDetailComponent = (function () {
             console.log(params["id"]);
             var id = +params["id"];
             _this.getNotifications(id);
+            _this.getAllSentUser(id);
         });
     };
     NotificationstDetailComponent.prototype.getNotifications = function (id) {
         var _this = this;
         this._notificationsService.getNotifications(id)
             .then(function (notifications) { return _this.notifications = notifications; });
+    };
+    NotificationstDetailComponent.prototype.getAllSentUser = function (id) {
+        var _this = this;
+        this._notificationsService.getSendUser(id)
+            .then(function (sent) { return _this.sentUser = sent; });
     };
     NotificationstDetailComponent.prototype.onBack = function () {
         this._router.navigate(['notification']);
@@ -39,6 +45,10 @@ var NotificationstDetailComponent = (function () {
         core_1.Input(), 
         __metadata('design:type', notifications_model_1.Notifications)
     ], NotificationstDetailComponent.prototype, "notifications", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Array)
+    ], NotificationstDetailComponent.prototype, "sentUser", void 0);
     NotificationstDetailComponent = __decorate([
         core_1.Component({
             templateUrl: '/notifications/notifications-detail/notifications-detail.component.html'
