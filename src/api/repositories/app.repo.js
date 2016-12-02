@@ -12,15 +12,10 @@ var AppRepo = (function (_super) {
         _super.call(this);
     }
     AppRepo.prototype.getList = function (option) {
-        var queryText = 'select * from test."n_App"';
+        var queryText = 'select * from test."n_App" where "IsActive"=true';
         console.info('Excute: ' + queryText);
         var pResult;
-        if (option.IsActive != undefined) {
-            pResult = this._pgPool.query(queryText + 'where "IsActive" = ' + option.IsActive);
-        }
-        else {
-            pResult = this._pgPool.query(queryText);
-        }
+        pResult = this._pgPool.query(queryText);
         return pResult.then(function (result) {
             var apps = result.rows.map(function (r) {
                 var app = new app_model_1.Appkey();

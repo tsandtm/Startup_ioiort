@@ -8,17 +8,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var alsatian_1 = require('alsatian');
+var alsatian_2 = require('alsatian');
 var supertest = require('supertest');
 var bluebird = require('bluebird');
 var test_data_1 = require('./test.data');
-var app_1 = require('../api/app');
+var app_2 = require('../api/app');
 var BookRouterTest = (function () {
     function BookRouterTest() {
         this.request = supertest('http://localhost:8081/api');
     }
     BookRouterTest.prototype.setUp = function () {
-        this.instance = app_1.default.listen(8081, 'localhost');
+        this.instance = app_2.default.listen(8081, 'localhost');
         // console.log('chay setup')
     };
     BookRouterTest.prototype.tearDown = function () {
@@ -32,7 +32,7 @@ var BookRouterTest = (function () {
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .expect(function (res) {
-                alsatian_1.Expect(res.body).toEqual(test_data_1.productData);
+                alsatian_2.Expect(res.body).toEqual(test_data_1.productData);
             })
                 .end(function (err, res) {
                 if (err) {
@@ -104,30 +104,30 @@ var BookRouterTest = (function () {
     //     })
     // }
     BookRouterTest.prototype.testAdd = function (v1, v2, expected) {
-        alsatian_1.Expect(v1 + v2).toEqual(expected);
+        alsatian_2.Expect(v1 + v2).toEqual(expected);
     };
     __decorate([
-        alsatian_1.Setup, 
+        alsatian_2.Setup, 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
     ], BookRouterTest.prototype, "setUp", null);
     __decorate([
-        alsatian_1.Teardown, 
+        alsatian_2.Teardown, 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
     ], BookRouterTest.prototype, "tearDown", null);
     __decorate([
-        alsatian_1.AsyncTest('should return json array'),
-        alsatian_1.Timeout(5000), 
+        alsatian_2.AsyncTest('should return json array'),
+        alsatian_2.Timeout(5000), 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
     ], BookRouterTest.prototype, "getAllBook", null);
     __decorate([
-        alsatian_1.Test('add 1 and 2 shuold return 3'),
-        alsatian_1.TestCase(1, 2, 3), 
+        alsatian_2.Test('add 1 and 2 shuold return 3'),
+        alsatian_2.TestCase(1, 2, 3), 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', [Object, Object, Object]), 
         __metadata('design:returntype', void 0)

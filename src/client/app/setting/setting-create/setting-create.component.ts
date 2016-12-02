@@ -31,20 +31,21 @@ export class SettingCreateComponent {
         
         this.getSetting(this.appid);
         var i = 0;
+        
         for(let s of this.setting1)
         {
             if(s.AppID==this.appid)
             {
                 i=1;
                 break;
-            }            
+            }
         }
         if(i==0)
         {
             this.alert='';
             if(this.trangthai==undefined)
             this.trangthai=false;        
-            this.ngaytao = new Date().toLocaleDateString()+'';
+            this.ngaytao = new Date().toLocaleDateString("en-US")+'';
             this.setting={
                 AppID: this.appid,
                 APIKey: this.apikey,
@@ -54,7 +55,7 @@ export class SettingCreateComponent {
             }
             this.settingservice.Create(this.setting).then(result=>this._router.navigate(['setting-list']));
         }
-        else
+        else if(i==1)
         {
             this.alert='AppID đã được sử dụng!!!!';
         }

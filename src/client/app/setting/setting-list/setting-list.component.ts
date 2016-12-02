@@ -4,7 +4,7 @@ import { Setting } from '../shared/setting.model';
 import { SettingService } from '../shared/setting.service';
 
 @Component({
-    templateUrl:'/setting/setting-list/setting-list.component.html'
+    templateUrl: '/setting/setting-list/setting-list.component.html'
 })
 export class SettingListComponent {
     pageTitle: string = 'Setting List';
@@ -16,17 +16,17 @@ export class SettingListComponent {
     // paged items
     constructor(
         // private $confirm: AngularConfirm.IConfirmModalFactory,
-        private _route: ActivatedRoute,private _router: Router,
+        private _route: ActivatedRoute, private _router: Router,
         private _SettingService: SettingService) {
 
     }
 
     ngOnInit(): void {
-        this._SettingService.getAllSetting().then(setting => this.setting = setting).then(result=>this.setPage(1)); 
+        this._SettingService.getAllSetting().then(setting => this.setting = setting)
+            .then(result => this.setPage(1));
     }
     setPage(page: number): void {
-        if(this.setting!=undefined)
-        {
+        if (this.setting != undefined) {
             if (page < 1 || page > this.pager.totalPages) {
                 return;
             }
@@ -34,16 +34,16 @@ export class SettingListComponent {
             // get current page of items
             this.itempages = this.setting.slice(this.pager.startIndex, this.pager.endIndex + 1);
         }
-        
+
     }
-    Delete(s: Setting): void{
+    Delete(s: Setting): void {
         // console.log(s.servername);
-        this._SettingService.Delete(s).then(result=>this._router.navigate(['setting-list']));
+        this._SettingService.Delete(s).then(result => this._router.navigate(['setting-list']));
     }
     // launchConfirm = (tgtName:string = 'selected Object'): ng.IPromise<any> => {
- 
+
     //         var titleText: string = 'Delete '+tgtName+' ?';
- 
+
     //         return this.$confirm(
     //             <AngularConfirm.IConfirmModalData>{
     //                 text: 'Are you sure you want to delete this thing here?',

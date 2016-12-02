@@ -11,3 +11,12 @@ export class Notifications extends ModelBase {
     TrangThaiGoi: number;
     SoLuong: number;
 }
+export class SentContact extends ModelBase {
+    ContactID:number;
+    NotifiID:number;
+    TrangThai:number;
+    ThoiGianCanGoi:Date;
+    LogLoi:string;
+    SoLanGoi:number;
+    ThoiGianDaGoi:Date;
+}

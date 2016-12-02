@@ -8,7 +8,7 @@
 						<div style="width: 220px;margin-left: 10px;margin-top: -26px;word-wrap: break-word;">
 						<span class="glyphicon glyphicon-envelope"></span>
 							<p style="color:white;display: inline;letter-spacing: 1px;font-size:12px">{{notifications.TieuDe}}</p><br/>
-							<p style="opacity: 0.5;display: inline;letter-spacing: 1px;font-size:11px">{{notifications.ThoiGianGui}}</p>
+							<p style="opacity: 0.5;display: inline;letter-spacing: 1px;font-size:11px">{{notifications.ThoiGianGui  | date:"dd/MM/yyyy"}}</p>
 							<div >
 								<p style="color:white;margin: 0px;font-size:12px;letter-spacing: 1px;">{{notifications.NoiDung}}</p>
 								<!--<p style="opacity: 0.5;font-size:11px">slide to view</p>-->
@@ -20,7 +20,48 @@
          <div class='row'>
             <div class='col-md-3'>Tiêu đề:</div>
             <div class='col-md-6'>{{notifications.TieuDe}}</div>
-             <a><i class="fa fa-external-link fa-6" style="font-size:30px" aria-hidden="true"></i></a>
+             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+             <i class="fa fa-external-link fa-6" style="font-size:30px" aria-hidden="true"></i></button>
+             <div id="myModal" class="modal fade" role="dialog">
+						<div class="modal-dialog">
+
+							<!-- Modal content-->
+							<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">List Sent User</h4>
+							</div>
+							<div class="modal-body">
+								<table class="table">
+									<thead>
+									<tr>
+										<th>ContactID</th>
+										<th>Trạng thái</th>
+										<th>Thời Gian Cần Gửi</th>
+										<th>Log Lỗi</th>
+										<th>Số Lần Gửi</th>
+										<th>Thời Gian Đã Gửi</th>
+									</tr>
+									</thead>
+									<tbody>
+									<tr *ngFor='let item of sentUser'>
+										<td>{{item.ContactID}}</td>
+										<td>{{item.TrangThai}}</td>
+										<td>{{item.ThoiGianCanGoi}}</td>
+										<td>{{item.LogLoi}}</td>
+										<td>{{item.SoLanGoi}}</td>
+										<td>{{item.ThoiGianDaGoi}}</td>
+									</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+							</div>
+
+						</div>
+						</div>
          </div><br/> 
         <div class='row'>
              <div class='col-md-3'>Nội dung:</div>
@@ -32,7 +73,7 @@
         </div><br/>  
         <div class='row'>
             <div class='col-md-3'>Thời gian gửi:</div>
-            <div class='col-md-6'>{{notifications.ThoiGianGui}}</div>
+            <div class='col-md-6'>{{notifications.ThoiGianGui  | date:"dd/MM/yyyy"}}</div>
         </div><br/>
         <div class='row'>
             <div class='col-md-3'>Độ ưu tiên:</div>
@@ -40,7 +81,7 @@
         </div><br/> 
         <div class='row'>
             <div class='col-md-3'>Thời hạn tối đa:</div>
-        <div class='col-md-6'>{{notifications.ThoiHanToiDa}}</div>
+        <div class='col-md-6'>{{notifications.ThoiHanToiDa  | date:"dd/MM/yyyy"}}</div>
         </div><br/> 
         <!--<a class='btn btn-default' (click)='onBack()' style='width:100px'>
          <i class="fa fa-reply" aria-hidden="true"></i> Quay lại
