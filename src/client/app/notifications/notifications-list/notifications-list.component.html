@@ -29,7 +29,7 @@
             <tr *ngFor='let notification of notifications | paginate: {itemsPerPage: 5, currentPage: p} | notificationFilter:listFilter | notificationdateFilter:listFilter1 '>
                 <td>{{notification.TieuDe | lowercase}}</td>
                 <td>{{notification.TrangThaiGoi}}</td>
-                <td>{{notification.ThoiGianGui }}</td>
+                <td>{{notification.ThoiGianGui|date:"dd/MM/yyyy" }}</td>
                 <td>{{notification.SoLuong}}</td>
                 <td>{{notification.ThoiHanToiDa | date:"dd/MM/yyyy"}}</td>
                 <td *ngIf='notification.TrangThaiGoi == 1'>
