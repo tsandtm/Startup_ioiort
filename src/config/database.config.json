@@ -2,7 +2,7 @@
     "development": {
         "database": "postgres",
         "username": "postgres",
-        "password": "quang123",
+        "password": "123",
         "config": {
             "dialect": "postgres",
             "define": {
