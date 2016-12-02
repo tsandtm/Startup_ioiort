@@ -25,7 +25,7 @@ export class SettingCreateComponent {
     Create(): void{
         if(this.trangthai==undefined)
             this.trangthai=false;
-        this.ngaytao = new Date().toLocaleDateString();
+        this.ngaytao = new Date().toLocaleDateString('en-US');
         this.setting={
             AppID: this.appid,
             APIKey: this.apikey,

@@ -12,7 +12,7 @@ var ContactsRepo = (function (_super) {
         _super.call(this);
     }
     ContactsRepo.prototype.getList = function (option) {
-        var queryText = 'SELECT * FROM public."Contacts"ORDER BY "ContactID"ASC ';
+        var queryText = 'SELECT * FROM test."Contacts"ORDER BY "ContactID"ASC ';
         console.info('Excute: ' + queryText);
         var pResult;
         if (option) {

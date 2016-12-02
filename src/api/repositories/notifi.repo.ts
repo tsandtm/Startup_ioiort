@@ -23,6 +23,7 @@ export class NotifiRepo extends RepoBase {
         option.Trangthai,
         option.Soluong,
         option.SendUser,
+        option.SendUserName,
         option.SendTag,
         option.DeniedUser,
         option.DeniedTag,

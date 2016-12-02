@@ -106,6 +106,28 @@ var NotifiSendComponent = (function () {
         var num = item.slice(0, pos);
         this.delPos(this.listIDContactDenied, parseInt(num));
     };
+    // public TagDeniedAdded(item:string) {
+    //     var pos=item.indexOf('.');
+    //     var num=item.slice(0,pos);
+    //     this.listIDTag.push(parseInt(num));
+    // }
+    // public TagDeniedRemoved(item:string) {
+    //     var pos=item.indexOf('.');
+    //     var num=item.slice(0,pos);
+    //     this.delPos(this.listIDTag,parseInt(num));
+    // }
+    // public ContactDeniedAdded(item:string) {
+    //     var pos=item.indexOf('.');
+    //     var num=item.slice(0,pos);
+    //     this.listIDContact.push(parseInt(num));
+    //     console.log(this.listIDContact.toString());
+    // }
+    // public ContactDeniedRemoved(item:string) {
+    //     var pos=item.indexOf('.');
+    //     var num=item.slice(0,pos);
+    //     this.delPos(this.listIDContact,parseInt(num));
+    //     console.log(this.listIDContact.toString());
+    // }
     NotifiSendComponent.prototype.delPos = function (ar, key) {
         for (var i = 0; i <= ar.length; i++) {
             if (ar[i] == key) {
@@ -223,6 +245,20 @@ var NotifiSendComponent = (function () {
                 _this.notifiservice.Create(_this.notifi).then(function (result) { return _this._router.navigate(['confirm', _this.notifi.NotifiID]); });
             });
         }
+        // this.notifi={AppID:this.AppID,
+        // NotifiID:this.notifiID,
+        // TieuDe:this.tieude,
+        // Noidung:this.Noidung,
+        // DoUuTien:this.doUuTien,
+        // Trangthai:this.Trangthai,
+        // Soluong:this.Soluong,
+        // Thoigiangui:this.Thoigiangui,
+        // ThoiHan:this.ThoiHan,
+        // SendTag:this.listIDTag,
+        // SendUser:this.listIDContact,
+        // DeniedTag:this.listIDTagDenied,
+        // DeniedUser:this.listIDContactDenied};
+        // this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
     };
     NotifiSendComponent.prototype.loadGetAll = function () {
         var _this = this;
@@ -241,6 +277,7 @@ var NotifiSendComponent = (function () {
         this.getNotifi();
         this.getTag();
         this.getContact();
+        this.today = new Date();
         this.loophour = this.loop(1, 24);
         this.loopminute = this.loop(0, 60);
         this.loophourTH = this.loop(5, 24);
@@ -250,9 +287,9 @@ var NotifiSendComponent = (function () {
     NotifiSendComponent = __decorate([
         core_1.Component({
             templateUrl: '/notification-send/notification.component.html',
-            providers: [app_service_1.AppService, notifi_service_1.NotifiService, contact_service_1.ContactService, tag_service_1.TagService]
+            providers: [app_service_1.AppService, notifi_service_1.NotifiService, contact_service_1.ContactNotifiService, tag_service_1.TagService]
         }), 
-        __metadata('design:paramtypes', [app_service_1.AppService, notifi_service_1.NotifiService, tag_service_1.TagService, contact_service_1.ContactService, router_1.Router, router_1.ActivatedRoute])
+        __metadata('design:paramtypes', [app_service_1.AppService, notifi_service_1.NotifiService, tag_service_1.TagService, contact_service_1.ContactNotifiService, router_1.Router, router_1.ActivatedRoute])
     ], NotifiSendComponent);
     return NotifiSendComponent;
 }());

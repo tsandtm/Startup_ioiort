@@ -82,9 +82,15 @@ export class ContactRepo extends RepoBase {
             });
     }
 
-    public orderByTag(option): Promise<Contact[]> {
-        option.Contact_TagID = parseInt(option.Contact_TagID, 10)
-        let queryText = 'select * from test."Contacts" order by "Contact_TagID" = \'{ ' + option.Contact_TagID + ' }\' desc';
+    public SearchByTag(Contact_TagName): Promise<Contact[]> {
+        let queryText;
+        if(Contact_TagName == "All" || Contact_TagName == "all"){
+            queryText = 'select * from test."Contacts" ORDER BY "ContactID" ASC';
+        }
+        else{
+            queryText = 'select * from test."Contacts" where \'' + Contact_TagName + '\' = any("Contact_TagName")';
+        }
+        
         let pResult = this._pgPool.query(queryText);
 
         return pResult.then(result => {

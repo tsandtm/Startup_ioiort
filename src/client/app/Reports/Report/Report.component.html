@@ -1,3 +1,4 @@
+<div *ngIf='Reports'>
 <!--<template ngFor #item [ngForOf]="Reports" #i="index" >-->
 <div>
   
@@ -17,13 +18,14 @@
 </div>
 <!--</template>-->
 
-<div style="display: block">
+<div style="display: block;width:300px;height:300px">
   <canvas baseChart
               [data]="doughnutChartData"
               [labels]="doughnutChartLabels"
               [chartType]="doughnutChartType"
               (chartHover)="chartHovered($event)"
               (chartClick)="chartClicked($event)"></canvas>
-              <h2>{{c}}</h2>
+              <h2 *ngFor="let item of c">{{item}}</h2>
               <h2>{{testto}} Tổng thiết bị</h2>
+</div>
 </div>

@@ -10,17 +10,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
-var ContactService = (function () {
-    function ContactService(_http) {
+var ContactNotifiService = (function () {
+    function ContactNotifiService(_http) {
         this._http = _http;
         this._productUrl = 'api/products/products.json';
     }
-    ContactService.prototype.getAllContact = function () {
+    ContactNotifiService.prototype.getAllContact = function () {
         // return this._http.get('/api/book')
         //     .map((response: Response) => <Product[]>response.json())
         //     .do(data => console.log('All: ' + JSON.stringify(data)))
         //     .catch(this.handleError);
-        return this._http.get('/api/Contact')
+        return this._http.get('/api/Contactnotifi')
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
@@ -33,17 +33,17 @@ var ContactService = (function () {
     //         .then(products => products.find(p => p.productId === id))
     //         .catch(this.handleError);
     // }
-    ContactService.prototype.handleError = function (error) {
+    ContactNotifiService.prototype.handleError = function (error) {
         // in a real world app, we may send the server to some remote logging infrastructure
         // instead of just logging it to the console
         console.error(error);
         return Promise.reject(error.message || error);
         // return Observable.throw(error.json().error || 'Server error');
     };
-    ContactService = __decorate([
+    ContactNotifiService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])
-    ], ContactService);
-    return ContactService;
+    ], ContactNotifiService);
+    return ContactNotifiService;
 }());
-exports.ContactService = ContactService;
+exports.ContactNotifiService = ContactNotifiService;

@@ -31,7 +31,10 @@ export class BarChartDemoComponent {
       this.barChartLabels = this.getmonthlabel();
       this.createDataSets();
       this.barChartData = this.datasets;
-
+      return 1;
+    })
+    .then((result)=>{
+      this.loadgetdougnut();
     });
   }
   loadgetdougnut() {
@@ -104,6 +107,7 @@ export class BarChartDemoComponent {
     } else {
       this.reportService.getDevice().then((result) => {
         this.listDevice = result;
+        console.log(this.listDevice);
         this.barChartLabels = this.getmonthlabel();
         this.createDataSets();
         this.barChartData = this.datasets;
@@ -115,7 +119,7 @@ export class BarChartDemoComponent {
     let a: string[] = [];
     this.listDevice.forEach(r => {
       //  console.log(JSON.stringify(r.date));
-      a.push(r.date)
+      a.push("Tháng " + r.date)
     })
     return a;
   }
@@ -178,7 +182,7 @@ export class BarChartDemoComponent {
   }
   ngOnInit(): void {
     this.loadGetAll();
-    this.loadgetdougnut();
+    // this.loadgetdougnut();
   }
 
   public barChartOptions: any = {

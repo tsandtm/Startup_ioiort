@@ -31,8 +31,8 @@ export class ContactRouter {
             .post(this.create);
         this.router.route('/Contact/Update')
             .post(this.update);
-        this.router.route('/Contact/orderByTag')
-            .get(this.orderByTag);
+        this.router.route('/Contact/SearchByTag')
+            .get(this.SearchByTag);
         return this.router;
     }
 
@@ -92,18 +92,16 @@ export class ContactRouter {
             });
     }
 
-    private orderByTag = (req: Request, res: Response) => {
-        let option = new Contact();
-        option.Contact_TagID = req.query.Contact_TagID;
-
-        this.contactRepo.orderByTag(option)
-            .then((result) => {
-                res.status(200).json(result);
-            })
-            .catch((error) => {
-                console.error(error.message);
-                res.status(500).send(error.message);
-            }); 
+    private SearchByTag = (req: Request, res: Response) => {
+        let Contact_TagName = req.query.Contact_TagName;
+        this.contactRepo.SearchByTag(Contact_TagName)
+        .then((result) => {
+            res.status(200).json(result);
+        })
+        .catch((error) => {
+            console.error(error.message);
+            res.status(500).send(error.message);
+        })
     }
 
 }

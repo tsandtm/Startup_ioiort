@@ -39,7 +39,7 @@ export class ModalContactUpdate implements CloseGuard, ModalComponent<ContactMod
     public fills;
     public TagUpdate: Tag[];
     public TagCheckUpdate: Tag[];
- 
+
     ngOnInit() {
         this.getContact(this.dialog.context.ContactID)
             .then(() => {
@@ -93,7 +93,7 @@ export class ModalContactUpdate implements CloseGuard, ModalComponent<ContactMod
 
     removeTag(valueTagID: number) {
         for (let i = 0; i < this.Tags.length; i++) {
-            if(valueTagID == this.Tags[i].TagID) {
+            if (valueTagID == this.Tags[i].TagID) {
                 this.Tags[i].checked = false;
                 this.Tags[i].hidden = false;
             }
@@ -104,7 +104,7 @@ export class ModalContactUpdate implements CloseGuard, ModalComponent<ContactMod
     Save(valueID: number) {
         let valueTagID = new Array();
         let valueTagName = new Array();
- 
+
         for (let i = 0; i < this.Tags.length; i++) {
             if (this.Tags[i].checked) {
                 valueTagID.push(this.Tags[i].TagID);
@@ -112,16 +112,17 @@ export class ModalContactUpdate implements CloseGuard, ModalComponent<ContactMod
             }
         }
 
+        this.contactService.updateContact(valueID, valueTagID, valueTagName)
+
 
         this.contactService.updateContact(valueID, valueTagID, valueTagName)
-            .subscribe(
-            data => this.postData = JSON.stringify(data),
-            error => alert(error),
-            () => console.log('finish'));
-
-        this.wrongAnswer = false;
-        this.dialog.close();
-
+            .then((result) => {
+                this.wrongAnswer = false;
+                this.dialog.close("ok");
+            })
+            .catch((err) => {
+                alert(err);
+            })
     }
 
     onClose() {

@@ -1,13 +1,13 @@
 {
     "development": {
-        "database": "Notification",
+        "database": "testdb",
         "username": "postgres",
-        "password": "123456",
+        "password": "123",
         "config": {
             "dialect": "postgres",
             "define": {
                 "timestamps": false,
-                "schema": "public"
+                "schema": "test"
             }
         },
 
@@ -20,7 +20,7 @@
             "min": 4
         },
         "idleTimeoutMillis": 2000,
-        "schema": "public"
+        "schema": "test"
         
     },
     "test": {

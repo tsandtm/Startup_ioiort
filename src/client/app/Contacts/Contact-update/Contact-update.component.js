@@ -50,8 +50,8 @@ var ModalContactUpdate = (function () {
         })
             .then(function () {
             for (var i = 0; i < _this.Tags.length; i++) {
-                for (var j = 0; j < _this.contact.Contact_Tag.length; j++) {
-                    if (_this.Tags[i].TagID == _this.contact.Contact_Tag[j]) {
+                for (var j = 0; j < _this.contact.Contact_TagID.length; j++) {
+                    if (_this.Tags[i].TagID == _this.contact.Contact_TagID[j]) {
                         _this.Tags[i].checked = true;
                         _this.Tags[i].hidden = true;
                         break;
@@ -98,18 +98,23 @@ var ModalContactUpdate = (function () {
     };
     ModalContactUpdate.prototype.Save = function (valueID) {
         var _this = this;
-        var valueTags = new Array();
+        var valueTagID = new Array();
+        var valueTagName = new Array();
         for (var i = 0; i < this.Tags.length; i++) {
             if (this.Tags[i].checked) {
-                console.log(this.Tags[i].TagID);
-                valueTags.push(this.Tags[i].TagID);
+                valueTagID.push(this.Tags[i].TagID);
+                valueTagName.push(this.Tags[i].TagNameDisplay);
             }
         }
-        console.log('valueTags: ' + valueTags);
-        this.contactService.updateContact(valueID, valueTags)
-            .subscribe(function (data) { return _this.postData = JSON.stringify(data); }, function (error) { return alert(error); }, function () { return console.log('finish'); });
-        this.wrongAnswer = false;
-        this.dialog.close();
+        this.contactService.updateContact(valueID, valueTagID, valueTagName);
+        this.contactService.updateContact(valueID, valueTagID, valueTagName)
+            .then(function (result) {
+            _this.wrongAnswer = false;
+            _this.dialog.close("ok");
+        })
+            .catch(function (err) {
+            alert(err);
+        });
     };
     ModalContactUpdate.prototype.onClose = function () {
         this.wrongAnswer = false;
