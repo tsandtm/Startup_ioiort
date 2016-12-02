@@ -121,8 +121,6 @@ export class NotificationsRepo extends RepoBase {
             option.Send_UserDenieName,
             option.Send_UserDenieID,
             option.SoLuong,
-            option.TieuDe,
-            option.NoiDung,
             option.id
         ]).then(result => null).catch(error => {
             console.error('Error: ', error);
