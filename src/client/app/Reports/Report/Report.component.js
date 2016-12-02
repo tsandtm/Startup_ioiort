@@ -10,11 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var Report_service_1 = require('../Shared/Report.service');
+var Report_model_1 = require('../Shared/Report.model');
 // webpack html imports
 var BarChartDemoComponent = (function () {
     function BarChartDemoComponent(reportService) {
         this.reportService = reportService;
         this.datasets = [];
+        this.devices = [];
         this.testto = 0;
         this.a = [];
         this.b = [];
@@ -44,11 +46,19 @@ var BarChartDemoComponent = (function () {
     // }
     BarChartDemoComponent.prototype.loadGetAll = function () {
         var _this = this;
+        this.reportService.getAllDeviceforDougnut().then(function (result) {
+            _this.Reports = result;
+            _this.devices = _this.getlabeldonoughnut();
+        });
         this.reportService.getDevice().then(function (result) {
             _this.listDevice = result;
             _this.barChartLabels = _this.getmonthlabel();
             _this.createDataSets();
             _this.barChartData = _this.datasets;
+            return 1;
+        })
+            .then(function (result) {
+            _this.loadgetdougnut();
         });
     };
     BarChartDemoComponent.prototype.loadgetdougnut = function () {
@@ -65,6 +75,30 @@ var BarChartDemoComponent = (function () {
     BarChartDemoComponent.prototype.createDataSets = function () {
         var _this = this;
         this.listDevice.forEach(function (ld) {
+            console.log("do dai cua list" + ld.listdevice.length);
+            if (ld.listdevice.length == 0) {
+                ld.listdevice.forEach(function (d) {
+                    for (var i = 0; i < _this.devices.length; i++) {
+                        _this.rp = new Report_model_1.Report();
+                        _this.rp.name = _this.devices[i];
+                        _this.rp.count = 0;
+                        ld.listdevice.push(_this.rp);
+                    }
+                });
+            }
+            if (ld.listdevice.length < _this.devices.length) {
+                ld.listdevice.forEach(function (d) {
+                    for (var i = 0; i < _this.devices.length; i++) {
+                        if (_this.devices[i] != d.name) {
+                            _this.rp = new Report_model_1.Report();
+                            _this.rp.name = _this.devices[i];
+                            _this.rp.count = 0;
+                            ld.listdevice.push(_this.rp);
+                        }
+                    }
+                });
+            }
+            console.log(JSON.stringify(ld));
             ld.listdevice.forEach(function (d) {
                 var index = _this.checkIfLabelExists(d.name);
                 if (index === -1) {
@@ -74,6 +108,34 @@ var BarChartDemoComponent = (function () {
                     _this.datasets[index].data.push(d.count);
                 }
             });
+        });
+    };
+    BarChartDemoComponent.prototype.createDataSetEach = function () {
+        this.listDevice.forEach(function (ld) {
+            console.log("do dai cua list" + ld.listdevice.length);
+            // if (ld.listdevice.length == 2) {
+            //   console.log("có vo đay k ok")
+            //   ld.listdevice.forEach(d => {
+            //     console.log("do dai cua thiet bi :"+ this.devices.length)
+            //     for (let i = 0; i < this.devices.length; i++) {
+            //        if (this.devices[i] != d.name) {
+            //         this.rp = new Report();
+            //         this.rp.name = this.devices[i];
+            //         this.rp.count = 0;
+            //         ld.listdevice.push(this.rp);
+            //       }
+            //     }
+            //   })
+            // }     
+            console.log(JSON.stringify(ld));
+            // ld.listdevice.forEach(d => {
+            //   let index = this.checkIfLabelExists(d.name);
+            //   if (index === -1) {
+            //     this.datasets.push({ data: [d.count], label: d.name });
+            //   } else {
+            //     this.datasets[index].data.push(d.count);
+            //   }
+            // })
         });
     };
     BarChartDemoComponent.prototype.checkIfLabelExists = function (label) {
@@ -87,18 +149,20 @@ var BarChartDemoComponent = (function () {
         var month = date.getMonth();
         var year = date.getFullYear();
         var my = month + ";" + year;
-        console.log(month);
-        console.log(year);
-        console.log(my);
+        // console.log(month);
+        // console.log(year);
+        // console.log(my);
         if (id == 1) {
             month = date.getMonth();
             year = date.getFullYear();
             my = month + ";" + year;
-            console.log(my);
+            // console.log(my);
             this.reportService.getDevicebydate(my).then(function (result) {
                 _this.listDevice = result;
                 _this.barChartLabels = _this.getmonthlabel();
-                _this.createDataSets();
+                console.log("day la thang trc" + _this.getmonthlabel());
+                _this.createDataSetEach();
+                console.log("Day la danh sach thang truoc" + JSON.stringify(_this.datasets));
                 _this.barChartData = _this.datasets;
             }).catch(function (error) {
                 console.log("error");
@@ -108,11 +172,11 @@ var BarChartDemoComponent = (function () {
             month = date.getMonth() + 1;
             year = date.getFullYear();
             my = month + ";" + year;
-            console.log(my);
             this.reportService.getDevicebydate(my).then(function (result) {
                 _this.listDevice = result;
                 _this.barChartLabels = _this.getmonthlabel();
-                _this.createDataSets();
+                _this.createDataSetEach();
+                console.log("dong data lay ra" + JSON.stringify(_this.datasets));
                 _this.barChartData = _this.datasets;
             }).catch(function (error) {
                 console.log("error");
@@ -130,8 +194,7 @@ var BarChartDemoComponent = (function () {
     BarChartDemoComponent.prototype.getmonthlabel = function () {
         var a = [];
         this.listDevice.forEach(function (r) {
-            //  console.log(JSON.stringify(r.date));
-            a.push(r.date);
+            a.push("Tháng " + r.date);
         });
         return a;
     };
@@ -163,8 +226,6 @@ var BarChartDemoComponent = (function () {
     };
     BarChartDemoComponent.prototype.gettotal = function () {
         var _this = this;
-        console.log('gettotal: ');
-        // let tong: number;
         this.loadAllDeviceforDougnut()
             .then(function () {
             for (var i = 0; i < _this.ArrayReport.length; i++) {
@@ -187,7 +248,7 @@ var BarChartDemoComponent = (function () {
     };
     BarChartDemoComponent.prototype.ngOnInit = function () {
         this.loadGetAll();
-        this.loadgetdougnut();
+        // this.loadgetdougnut();
     };
     // events
     BarChartDemoComponent.prototype.chartClicked = function (e) {

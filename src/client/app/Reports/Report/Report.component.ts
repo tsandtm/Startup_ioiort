@@ -15,18 +15,20 @@ export class BarChartDemoComponent {
   listDevice: ListDevice[];
   Reports: Report[];
   filter: string;
+  datasetsthangtr = [];
+  datasetsthangnay = [];
   datasets = [];
   ArrayReport: Report[];
   devices = [];
-  rp:Report;
+  rp: Report;
+  flag: number;
+  flagtr: number;
+  flagnay: number;
+
   constructor(private reportService: ReportService) {
 
   }
 
-  // loadGetAll() {
-  //     // this.reportService.getDevice().then( (result) => this.Reports = result);
-
-  // }
   loadGetAll() {
     this.reportService.getAllDeviceforDougnut().then((result) => {
       this.Reports = result;
@@ -35,10 +37,8 @@ export class BarChartDemoComponent {
     this.reportService.getDevice().then((result) => {
       this.listDevice = result;
       this.barChartLabels = this.getmonthlabel();
-
       this.createDataSets();
       this.barChartData = this.datasets;
-      return 1;
     })
       .then((result) => {
         this.loadgetdougnut();
@@ -50,38 +50,29 @@ export class BarChartDemoComponent {
       this.createDataSets();
       this.doughnutChartData = this.getdatadonoughnut();
       this.doughnutChartLabels = this.getlabeldonoughnut();
-
       this.gettotal();
       this.getpercent();
     });
   }
 
   private createDataSets() {
-    // for (let i = 0; i < this.devices.length; i++) {
-
     this.listDevice.forEach(ld => {
+      console.log("so thiet bi" + this.devices.length+ " so thiet bi moi thang "+ld.listdevice.length)
+      
       if (ld.listdevice.length < this.devices.length) {
-          ld.listdevice.forEach(d => {
-
-              for (let i = 0; i < this.devices.length; i++) {
-              if(this.devices[i] != d.name){
-                  this.rp=new Report();
-                  this.rp.name=this.devices[i];
-                  this.rp.count=0;
-                  ld.listdevice.push(this.rp);
-              }
-          }})
-        
+        ld.listdevice.forEach(d => {
+          for (let i = 0; i < this.devices.length; i++) {
+            if (this.devices[i] != d.name) {
+              this.rp = new Report();
+              this.rp.name = this.devices[i];
+              this.rp.count = 0;
+              ld.listdevice.push(this.rp);
+            }
+          }
+        })
       }
-      console.log(JSON.stringify(ld));
+      console.log("load tat ca"+JSON.stringify(ld));    
       ld.listdevice.forEach(d => {
-
-        // if(this.devices[i] != d.name)
-        // {
-        //   console.log("mang devices: " + this.devices[i]);
-        //     d.name=this.devices[i];
-        //     d.count=0;
-        // }
         let index = this.checkIfLabelExists(d.name);
         if (index === -1) {
           this.datasets.push({ data: [d.count], label: d.name });
@@ -90,14 +81,76 @@ export class BarChartDemoComponent {
         }
       })
     })
-    // }
   }
 
+  private createDataSetEach() {
+    this.listDevice.forEach(ld => {
+      if (ld.listdevice.length == 2) {
+        console.log("có vo đay k ok")
+        ld.listdevice.forEach(d => {
+          console.log("do dai cua thiet bi :" + this.devices.length)
+          for (let i = 0; i < this.devices.length; i++) {
+            if (this.devices[i] != d.name) {
+              this.rp = new Report();
+              this.rp.name = this.devices[i];
+              this.rp.count = 0;
+              ld.listdevice.push(this.rp);
+            }
+          }
+        })
+      }
+      console.log(JSON.stringify(ld));
+      ld.listdevice.forEach(d => {
+        let index = this.checkIfLabeltrcExists(d.name);
+        if (index === -1) {
+          this.datasetsthangtr.push({ data: [d.count], label: d.name });
+        } else {
+          this.datasetsthangtr[index].data.push(d.count);
+        }
+      })
+    })
+  }
 
+  private createDataSetEachthangnay() {
+    this.listDevice.forEach(ld => {
+      if (ld.listdevice.length == 2) {  
+        ld.listdevice.forEach(d => {
+          for (let i = 0; i < this.devices.length; i++) {
+            if (this.devices[i] != d.name) {
+              this.rp = new Report();
+              this.rp.name = this.devices[i];
+              this.rp.count = 0;
+              ld.listdevice.push(this.rp);
+            }
+          }
+        })
+      }
+      console.log(JSON.stringify(ld));
+      ld.listdevice.forEach(d => {
+        let index = this.checkIfLabelnayExists(d.name);
+        if (index === -1) {
+          this.datasetsthangnay.push({ data: [d.count], label: d.name });
+        } else {
+          this.datasetsthangnay[index].data.push(d.count);
+        }
+      })
+      console.log("du lieu sau khi do" + JSON.stringify(ld));
+    })
+  }
   checkIfLabelExists(label): number {
     if (this.datasets.length === 0)
       return -1;
     return this.datasets.findIndex(d => d.label === label);
+  }
+  checkIfLabeltrcExists(label): number {
+    if (this.datasetsthangtr.length === 0)
+      return -1;
+    return this.datasetsthangtr.findIndex(d => d.label === label);
+  }
+  checkIfLabelnayExists(label): number {
+    if (this.datasetsthangnay.length === 0)
+      return -1;
+    return this.datasetsthangnay.findIndex(d => d.label === label);
   }
 
   getdatabymonth(id: number) {
@@ -105,20 +158,35 @@ export class BarChartDemoComponent {
     let month = date.getMonth();
     let year = date.getFullYear();
     let my: string = month + ";" + year;
-    // console.log(month);
-    // console.log(year);
-    // console.log(my);
 
     if (id == 1) {
       month = date.getMonth();
       year = date.getFullYear();
       my = month + ";" + year;
-      // console.log(my);
       this.reportService.getDevicebydate(my).then((result) => {
         this.listDevice = result;
-        this.barChartLabels = this.getmonthlabel();
-        this.createDataSets();
-        this.barChartData = this.datasets;
+        if (this.listDevice.length == 0) {
+          this.flagtr = 1;
+          let date = new Date();
+          let month = date.getMonth();
+          this.barChartLabels = [];
+          this.datasetsthangtr = [];
+
+          this.barChartLabels.push("Tháng " + month.toString());
+          if (this.flagtr == 1) {
+            this.datasetsthangtr.push({ data: 0, label: "Không có dữ liệu" })
+          }
+          this.barChartData = this.datasetsthangtr;
+        } else {
+          this.barChartLabels = [];
+          this.barChartLabels = this.getmonthlabel();
+          this.barChartData = [];
+          console.log("day la thang trc" + this.getmonthlabel());
+          this.datasetsthangtr = [];
+          this.createDataSetEach();
+          console.log("Day la danh sach thang truoc" + JSON.stringify(this.datasetsthangtr));
+          this.barChartData = this.datasetsthangtr;
+        }
       }).catch((error) => {
         console.log("error");
       });
@@ -127,20 +195,43 @@ export class BarChartDemoComponent {
       month = date.getMonth() + 1;
       year = date.getFullYear();
       my = month + ";" + year;
-
       this.reportService.getDevicebydate(my).then((result) => {
         this.listDevice = result;
-        this.barChartLabels = this.getmonthlabel();
-        this.createDataSets();
-        this.barChartData = this.datasets;
+        console.log("flag:" + this.flag)
+        if (this.listDevice.length == 0) {
+          this.flag = 1;
+          console.log("flag da doi:" + this.flag)
+          let date = new Date();
+          let month = date.getMonth() + 1;
+          this.barChartLabels = [];
+          this.datasetsthangnay = [];
+
+          this.barChartLabels.push("Tháng " + month.toString());
+          if (this.flag == 1) {
+            this.datasetsthangnay.push({ data: 0, label: "Không có dữ liệu" })
+          }
+          this.barChartData = this.datasetsthangnay;
+        } else {
+          this.barChartLabels = [];
+          this.barChartLabels = this.getmonthlabel();
+          this.datasetsthangnay = [];
+          this.createDataSetEachthangnay();
+          this.barChartData = this.datasetsthangnay;
+          console.log("dong data lay ra" + JSON.stringify(this.datasetsthangnay));
+        }
       }).catch((error) => {
         console.log("error");
       });
     } else {
       this.reportService.getDevice().then((result) => {
         this.listDevice = result;
+        console.log("nam nay" + JSON.stringify(this.listDevice))
+        this.barChartLabels = [];
         this.barChartLabels = this.getmonthlabel();
+        this.datasets = [];
         this.createDataSets();
+        console.log("dataset nam nay:"+ JSON.stringify(this.datasets))
+        this.barChartData = [];
         this.barChartData = this.datasets;
       });
     }
@@ -209,6 +300,9 @@ export class BarChartDemoComponent {
   }
 
   ngOnInit(): void {
+    this.flag = 0;
+    this.flagtr = 0;
+    this.flagnay = 0;
     this.loadGetAll();
     // this.loadgetdougnut();
   }

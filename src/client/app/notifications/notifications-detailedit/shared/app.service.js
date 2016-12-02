@@ -10,28 +10,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
-var TagService = (function () {
-    function TagService(_http) {
+var AppService = (function () {
+    function AppService(_http) {
         this._http = _http;
         this._productUrl = 'api/products/products.json';
     }
-    TagService.prototype.getAllTag = function () {
-        return this._http.get('/api/Tag')
+    AppService.prototype.getApp = function () {
+        // return this._http.get('/api/book')
+        //     .map((response: Response) => <Product[]>response.json())
+        //     .do(data => console.log('All: ' + JSON.stringify(data)))
+        //     .catch(this.handleError);
+        return this._http.get('/api/app')
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    TagService.prototype.handleError = function (error) {
+    // getProduct(id: number): Promise<Product> {
+    //     return this.getProducts()
+    //         .then(products => products.find(p => p.productId === id))
+    //         .catch(this.handleError);
+    // }
+    AppService.prototype.handleError = function (error) {
         // in a real world app, we may send the server to some remote logging infrastructure
         // instead of just logging it to the console
         console.error(error);
         return Promise.reject(error.message || error);
         // return Observable.throw(error.json().error || 'Server error');
     };
-    TagService = __decorate([
+    AppService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])
-    ], TagService);
-    return TagService;
+    ], AppService);
+    return AppService;
 }());
-exports.TagService = TagService;
+exports.AppService = AppService;

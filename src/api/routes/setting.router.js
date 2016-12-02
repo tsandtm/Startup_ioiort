@@ -2,13 +2,51 @@
 // đây là vùng import tất cả các modules bên ngoài
 var express_1 = require('express');
 // import các module tạo table
-var Notification_repo_1 = require('../repositories/Notification.repo');
-var NotificationRouter = (function () {
-    function NotificationRouter() {
+var setting_repo_1 = require('../repositories/setting.repo');
+var SettingRouter = (function () {
+    function SettingRouter() {
         var _this = this;
-        this.getAllNotification = function (req, res) {
-            var option = { Notification_Tag: req.query.Notification_Tag };
-            _this.notificationRepo.getList(option)
+        this.getAllSetting = function (req, res) {
+            console.log('abc' + req.body);
+            _this.settingRepo.getList(req.body)
+                .then(function (result) {
+                res.status(200).json(result);
+            })
+                .catch(function (error) {
+                console.error(error.message);
+                res.status(500).send(error.message);
+            });
+            // this.bookRepo.getList(null)
+            //     .then(result => {
+            //         res.status(200).json(result)
+            //     })
+            //     .catch(error => {
+            //         console.error(error.message);
+            //         res.status(500).send(error.message)
+            //     })
+        };
+        this.Create = function (req, res) {
+            _this.settingRepo.Create(req.body)
+                .then(function (result) {
+                res.status(200).json(result);
+            })
+                .catch(function (error) {
+                console.error(error.message);
+                res.status(500).send(error.message);
+            });
+        };
+        this.Delete = function (req, res) {
+            _this.settingRepo.Delete(req.body)
+                .then(function (result) {
+                res.status(200).json(result);
+            })
+                .catch(function (error) {
+                console.error(error.message);
+                res.status(500).send(error.message);
+            });
+        };
+        this.Edit = function (req, res) {
+            _this.settingRepo.Edit(req.body)
                 .then(function (result) {
                 res.status(200).json(result);
             })
@@ -18,18 +56,23 @@ var NotificationRouter = (function () {
             });
         };
         this.router = express_1.Router();
-        this.notificationRepo = new Notification_repo_1.NotificationRepo();
+        this.settingRepo = new setting_repo_1.SettingRepo();
+        //this.model = model;
     }
-    NotificationRouter.prototype.getRouter = function () {
-        this.router.route('/Notification')
-            .get(this.getAllNotification);
-        // .post(this.createANotification)
-        // .delete(this.deleteANotification);
+    SettingRouter.prototype.getRouter = function () {
+        console.log('abc');
+        this.router.route('/setting')
+            .get(this.getAllSetting)
+            .post(this.Create);
+        this.router.route("/settingedit")
+            .post(this.Edit);
+        this.router.route("/settingdelete")
+            .post(this.Delete);
         return this.router;
     };
-    return NotificationRouter;
+    return SettingRouter;
 }());
-exports.NotificationRouter = NotificationRouter;
+exports.SettingRouter = SettingRouter;
 // cấu hình router với url mình muốn (ở đây là /book => localhost:port/api/book)
 // router.route('/book')
 //     //lay het sach, hoac lay sach theo id

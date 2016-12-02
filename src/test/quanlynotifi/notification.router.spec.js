@@ -17,21 +17,21 @@ var bluebird = require('bluebird');
 // lay cai app chinh
 var app_2 = require('../../api/app');
 var path = require('path');
-var testdata = require(path.join(__dirname, 'report.test.json'));
+var testdata = require(path.join(__dirname, 'notification.test.json'));
 var config = require(path.join(__dirname, '..', '..', 'config', 'server.config.json'))['test'];
-var ReportTest = (function () {
-    function ReportTest() {
+var NotificationTest = (function () {
+    function NotificationTest() {
         // no se tao ra mot client gia va se noi chuyen voi url la http://localhost:8081/api 
         this.request = supertest('http://' + config.host + ':' + config.port + '/api');
     }
     // ham nay se chay dau tien truoc khi cac test chay
-    ReportTest.prototype.setUp = function () {
+    NotificationTest.prototype.setUp = function () {
         // khoi tao cai Server
         this.instance = app_2.default.listen(config.port, config.host);
         // console.log('chay setup')
     };
     // cai ham nay se chay cuoi cung sau khi cac test chay
-    ReportTest.prototype.tearDown = function () {
+    NotificationTest.prototype.tearDown = function () {
         // dong server lai
         this.instance.close();
         // console.log('chay Teardown')
@@ -39,10 +39,10 @@ var ReportTest = (function () {
     // dung se test nhung thu ko tra ve lien
     // va them cai dong de mo ta cai test
     // timeout la thoi gian ma cai test nay se cho
-    ReportTest.prototype.getAllSetting = function () {
+    NotificationTest.prototype.getAllBook = function () {
         var _this = this;
         return new bluebird(function (resolve, reject) {
-            _this.request.get('/Report')
+            _this.request.get('/notification')
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .expect(function (res) {
@@ -117,7 +117,7 @@ var ReportTest = (function () {
     //             })
     //     })
     // }
-    ReportTest.prototype.testAdd = function (v1, v2, expected) {
+    NotificationTest.prototype.testAdd = function (v1, v2, expected) {
         alsatian_2.Expect(v1 + v2).toEqual(expected);
     };
     __decorate([
@@ -125,27 +125,27 @@ var ReportTest = (function () {
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
-    ], ReportTest.prototype, "setUp", null);
+    ], NotificationTest.prototype, "setUp", null);
     __decorate([
         alsatian_2.Teardown, 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
-    ], ReportTest.prototype, "tearDown", null);
+    ], NotificationTest.prototype, "tearDown", null);
     __decorate([
-        alsatian_2.AsyncTest('mot danh sach cac device'),
+        alsatian_2.AsyncTest('mot danh sach cac notification'),
         alsatian_2.Timeout(5000), 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
-    ], ReportTest.prototype, "getAllSetting", null);
+    ], NotificationTest.prototype, "getAllBook", null);
     __decorate([
         alsatian_2.Test('add 1 and 2 shuold return 3'),
         alsatian_2.TestCase(1, 2, 3), 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', [Object, Object, Object]), 
         __metadata('design:returntype', void 0)
-    ], ReportTest.prototype, "testAdd", null);
-    return ReportTest;
+    ], NotificationTest.prototype, "testAdd", null);
+    return NotificationTest;
 }());
-exports.ReportTest = ReportTest;
+exports.NotificationTest = NotificationTest;

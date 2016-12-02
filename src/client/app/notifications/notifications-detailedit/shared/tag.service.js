@@ -16,7 +16,7 @@ var TagService = (function () {
         this._productUrl = 'api/products/products.json';
     }
     TagService.prototype.getAllTag = function () {
-        return this._http.get('/api/Tag')
+        return this._http.get('/api/tag')
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);

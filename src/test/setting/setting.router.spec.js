@@ -17,21 +17,21 @@ var bluebird = require('bluebird');
 // lay cai app chinh
 var app_2 = require('../../api/app');
 var path = require('path');
-var testdata = require(path.join(__dirname, 'report.test.json'));
+var testdata = require(path.join(__dirname, 'setting.test.json'));
 var config = require(path.join(__dirname, '..', '..', 'config', 'server.config.json'))['test'];
-var ReportTest = (function () {
-    function ReportTest() {
+var SettingTest = (function () {
+    function SettingTest() {
         // no se tao ra mot client gia va se noi chuyen voi url la http://localhost:8081/api 
         this.request = supertest('http://' + config.host + ':' + config.port + '/api');
     }
     // ham nay se chay dau tien truoc khi cac test chay
-    ReportTest.prototype.setUp = function () {
+    SettingTest.prototype.setUp = function () {
         // khoi tao cai Server
         this.instance = app_2.default.listen(config.port, config.host);
         // console.log('chay setup')
     };
     // cai ham nay se chay cuoi cung sau khi cac test chay
-    ReportTest.prototype.tearDown = function () {
+    SettingTest.prototype.tearDown = function () {
         // dong server lai
         this.instance.close();
         // console.log('chay Teardown')
@@ -39,10 +39,10 @@ var ReportTest = (function () {
     // dung se test nhung thu ko tra ve lien
     // va them cai dong de mo ta cai test
     // timeout la thoi gian ma cai test nay se cho
-    ReportTest.prototype.getAllSetting = function () {
+    SettingTest.prototype.getAllSetting = function () {
         var _this = this;
         return new bluebird(function (resolve, reject) {
-            _this.request.get('/Report')
+            _this.request.get('/setting')
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .expect(function (res) {
@@ -77,75 +77,106 @@ var ReportTest = (function () {
     //             })
     //     })
     // }
-    // @AsyncTest('shuold create and return book')
-    // @Timeout(5000)
-    // public createABook() {
-    //     return new bluebird((resolve, reject) => {
-    //         this.request.post('/book')
-    //             .type('form')
-    //             .send({ name: 'tao tu test' })
-    //             .expect(200)
-    //             .expect((res: supertest.Response) => {
-    //                 Expect(res.body).toEqual({ id: 4, name: 'tao tu test' })
-    //             })
-    //             .end(err => {
-    //                 if (err) {
-    //                     reject(err)
-    //                 } else {
-    //                     resolve()
-    //                 }
-    //             })
-    //     })
-    // }
-    // @AsyncTest('should delete and return book name')
-    // @Timeout(5000)
-    // @TestCase(1)
-    // public deleteABook(index: number) {
-    //     return new bluebird((resolve, reject) => {
-    //         this.request.delete('/book')
-    //             .query({ id: bookData[index].id })
-    //             .expect(200)
-    //             .expect((res: supertest.Response) => {
-    //                 Expect(res.text).toEqual('sach ' + bookData[index].name + ' da duoc huy')
-    //             })
-    //             .end(err => {
-    //                 if (err) {
-    //                     reject(err)
-    //                 } else {
-    //                     resolve()
-    //                 }
-    //             })
-    //     })
-    // }
-    ReportTest.prototype.testAdd = function (v1, v2, expected) {
-        alsatian_2.Expect(v1 + v2).toEqual(expected);
+    SettingTest.prototype.createASetting = function () {
+        var _this = this;
+        return new bluebird(function (resolve, reject) {
+            _this.request.post('/setting')
+                .type('form')
+                .send({ AppID: 2, APIKey: 'asdfasdfa3213', AppName: 'Shop', IsActive: 'true', NgayTao: '24/11/2016' })
+                .expect(200)
+                .expect(function (res) {
+                //Expect(res.body).toEqual({ id: 4, name: 'tao tu test' })
+            })
+                .end(function (err) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve();
+                }
+            });
+        });
+    };
+    SettingTest.prototype.editASetting = function () {
+        var _this = this;
+        return new bluebird(function (resolve, reject) {
+            _this.request.post('/settingedit')
+                .type('form')
+                .send({ AppID: 2, APIKey: 'asdfasdfa3213', AppName: 'Shop test edit', IsActive: 'true', NgayTao: '24/11/2016' })
+                .expect(200)
+                .expect(function (res) {
+                //Expect(res.body).toEqual({ id: 4, name: 'tao tu test' })
+            })
+                .end(function (err) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve();
+                }
+            });
+        });
+    };
+    SettingTest.prototype.DeleteABook = function () {
+        var _this = this;
+        return new bluebird(function (resolve, reject) {
+            _this.request.post('/settingdelete')
+                .type('form')
+                .send({ AppID: 2 })
+                .expect(200)
+                .expect(function (res) {
+                //Expect(res.body).toEqual({ id: 4, name: 'tao tu test' })
+            })
+                .end(function (err) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve();
+                }
+            });
+        });
     };
     __decorate([
         alsatian_2.Setup, 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
-    ], ReportTest.prototype, "setUp", null);
+    ], SettingTest.prototype, "setUp", null);
     __decorate([
         alsatian_2.Teardown, 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
-    ], ReportTest.prototype, "tearDown", null);
+    ], SettingTest.prototype, "tearDown", null);
     __decorate([
         alsatian_2.AsyncTest('mot danh sach cac device'),
         alsatian_2.Timeout(5000), 
         __metadata('design:type', Function), 
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
-    ], ReportTest.prototype, "getAllSetting", null);
+    ], SettingTest.prototype, "getAllSetting", null);
     __decorate([
-        alsatian_2.Test('add 1 and 2 shuold return 3'),
-        alsatian_2.TestCase(1, 2, 3), 
+        alsatian_2.AsyncTest('shuold create and return book'),
+        alsatian_2.Timeout(5000), 
         __metadata('design:type', Function), 
-        __metadata('design:paramtypes', [Object, Object, Object]), 
+        __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
-    ], ReportTest.prototype, "testAdd", null);
-    return ReportTest;
+    ], SettingTest.prototype, "createASetting", null);
+    __decorate([
+        alsatian_2.AsyncTest('shuold create and return book'),
+        alsatian_2.Timeout(5000), 
+        __metadata('design:type', Function), 
+        __metadata('design:paramtypes', []), 
+        __metadata('design:returntype', void 0)
+    ], SettingTest.prototype, "editASetting", null);
+    __decorate([
+        alsatian_2.AsyncTest('shuold delete and return book'),
+        alsatian_2.Timeout(5000), 
+        __metadata('design:type', Function), 
+        __metadata('design:paramtypes', []), 
+        __metadata('design:returntype', void 0)
+    ], SettingTest.prototype, "DeleteABook", null);
+    return SettingTest;
 }());
-exports.ReportTest = ReportTest;
+exports.SettingTest = SettingTest;

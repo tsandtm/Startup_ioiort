@@ -9,19 +9,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-<<<<<<< HEAD
-var Contact_service_1 = require('../Shared/Contact.service');
-var ContactListComponent = (function () {
-    function ContactListComponent(contactService) {
-        this.contactService = contactService;
-    }
-    ContactListComponent.prototype.loadGetAll = function () {
-        var _this = this;
-        this.contactService.getProducts().then(function (result) { return _this.Contacts = result; });
-    };
-    ContactListComponent.prototype.ngOnInit = function () {
-        this.loadGetAll();
-=======
 var router_1 = require('@angular/router');
 var angular2_modal_1 = require('angular2-modal');
 var bootstrap_1 = require('angular2-modal/plugins/bootstrap');
@@ -41,13 +28,6 @@ var ContactListComponent = (function () {
     }
     ContactListComponent.prototype.loadGetAll = function () {
         var _this = this;
-        // this.getContacts()
-        //     .then(() => {
-        //         return this.getTag();
-        //     })
-        //     .catch((error) => {
-        //         console.log('error: ' +error);
-        //     });
         this.contactService.getContacts().then(function (result) { return _this.Contacts = result; });
     };
     ContactListComponent.prototype.ngOnInit = function () {
@@ -101,18 +81,12 @@ var ContactListComponent = (function () {
             .catch(function (error) {
             console.error(error);
         });
->>>>>>> tu-f-notifi-contact
     };
     ContactListComponent = __decorate([
         core_1.Component({
             selector: 'Contact-list',
             templateUrl: '/Contacts/Contact-list/Contact-list.component.html',
             styleUrls: ['/assets/shop-homepage.css'],
-<<<<<<< HEAD
-            providers: [Contact_service_1.ContactService]
-        }), 
-        __metadata('design:paramtypes', [Contact_service_1.ContactService])
-=======
             providers: [
                 Contact_service_1.ContactService,
                 Tag_service_1.TagService,
@@ -120,7 +94,6 @@ var ContactListComponent = (function () {
             ]
         }), 
         __metadata('design:paramtypes', [Contact_service_1.ContactService, Tag_service_1.TagService, bootstrap_1.Modal, router_1.Router, router_1.ActivatedRoute])
->>>>>>> tu-f-notifi-contact
     ], ContactListComponent);
     return ContactListComponent;
 }());

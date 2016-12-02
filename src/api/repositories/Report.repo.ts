@@ -23,7 +23,7 @@ export class ReportRepo extends RepoBase {
             console.log("repo" + option.month + "" + option.year);
             pResult = this._pgPool.query(queryText);
         } else {
-            queryText = 'select "Device",count("Device") as count,date_part(\'month\',"NgayTao") as date from test."Contacts" group by "Device",date_part(\'month\',"NgayTao") order by date_part(\'month\',"NgayTao")';
+            queryText = 'select "Device",count("Device") as count,date_part(\'month\',"NgayTao") as date from test."Contacts" group by "Device",date_part(\'month\',"NgayTao"),date_part(\'year\',"NgayTao") order by date_part(\'month\',"NgayTao")';
             // console.log("cau 2" + queryText);
             pResult = this._pgPool.query(queryText);
         }
