@@ -9,7 +9,7 @@ export class NotificationsRepo extends RepoBase {
     }
 
     public getList(option): Promise<Notifications[]> {
-        let queryText = 'SELECT * FROM test."n_Notifications" ORDER BY "NotifiID"ASC  ';
+        let queryText = 'SELECT * FROM "n_Notifications" ORDER BY "NotifiID"ASC  ';
 
         console.info('Excute: ' + queryText);
         let pResult;
@@ -28,7 +28,7 @@ export class NotificationsRepo extends RepoBase {
                 notification.AppID = r.AppID;
                 notification.TieuDe = r.TieuDe;
                 notification.NoiDung = r.NoiDung;
-                notification.ThoiGianGui = r.ThoiGianGui;
+                notification.ThoiGianGui = new Date(r.ThoiGianGui).toLocaleDateString().replace(/T.*/,'').split('-').reverse().join('/');
                 notification.ThoiHanToiDa = r.ThoiHanToiDa;
                 notification.DoUuTien = r.DoUuTien;
                 notification.TrangThaiGoi = r.TrangThaiGoi;
@@ -41,10 +41,11 @@ export class NotificationsRepo extends RepoBase {
                 console.error(err.message);
                 return null;
             });
- }
- public getOne(option): Promise<Notifications> {
-      //  let queryText = 'SELECT "NotifiID", "AppID", "TieuDe", "NoiDung", "ThoiGianGui", "ThoiHanToiDa", "DoUuTien", "TrangThaiGoi", "SoLuong"FROM public."n_Notifications"; where NotifiID=id';
-        let queryText = 'SELECT "NotifiID", "AppID", "TieuDe", "NoiDung", "ThoiGianGui", "ThoiHanToiDa", "DoUuTien", "TrangThaiGoi", "SoLuong"FROM test."n_Notifications"; where id=$1';
+
+    }
+    public getOne(option): Promise<Notifications> {
+        //  let queryText = 'SELECT "NotifiID", "AppID", "TieuDe", "NoiDung", "ThoiGianGui", "ThoiHanToiDa", "DoUuTien", "TrangThaiGoi", "SoLuong"FROM public."n_Notifications"; where NotifiID=id';
+        let queryText = 'SELECT "NotifiID", "AppID", "TieuDe", "NoiDung", "ThoiGianGui", "ThoiHanToiDa", "DoUuTien", "TrangThaiGoi", "SoLuong"FROM public."n_Notifications"; where id=$1';
         console.info('Excute: ' + queryText);
 
         return this._pgPool.query(queryText, [option.id, option.TieuDe])
@@ -62,5 +63,36 @@ export class NotificationsRepo extends RepoBase {
                 return notifications;
             });
     }
-    
+    public Edit(option): Promise<Notifications> {
+        // let queryText = 'UPDATE test."n_Notifications" SET "NotifiID" = $1, "AppID" = $2 , "TieuDe" =$3, "NoiDung" = $4,"ThoiGianGui" = $5,"ThoiHanToiDa" = $6,"DoUuTien" = $7,"TrangThaiGoi" = $8,"SoLuong" = $9';
+        console.log(JSON.stringify(option));
+        let queryText = 'UPDATE test."n_Notifications" SET "TieuDe" =$1, "NoiDung" = $2 WHERE "NotifiID"=$3';
+
+        console.info('Excute: ' + queryText);
+
+        return this._pgPool.query(queryText,[
+            option.TieuDe,
+            option.NoiDung,
+            option.id
+        ]).then(result => null).catch(error => {
+            console.error('Error: ', error);
+            return Promise.reject(error);
+        })
+
+        // return this._pgPool.query(queryText, [
+        //     option.NotifiID,
+        //     option.AppID,
+        //     option.TieuDe,
+        //     option.NoiDung,
+        //     option.ThoiGianGui,
+        //     option.ThoiHanToiDa,
+        //     option.DoUuTien,
+        //     option.TrangThaiGoi,
+        //     option.SoLuong,
+
+        // ])
+        //     .then(result => {
+        //         return null;
+        //     });
+    }
 }

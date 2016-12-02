@@ -33,20 +33,24 @@ export class NotifiSendComponent implements OnInit{
     ACTag = [];
     ACTagItem = [];
     listIDTag=[];
+    listNameTag=[];
     Tag:Tag[];
     //Contact    
     ACContact = [];
     ACContactItem = [];
     listIDContact=[];
+    listNameContact=[];
     Contact:Contact[];
     //TagDenied
     ACTagDenied = [];
     ACTagDeniedItem = [];
     listIDTagDenied=[];
+    listNameTagDenied=[];
     //ContactDenied
     ACContactDenied = [];
     ACContactDeniedItem = [];
     listIDContactDenied=[];
+    listNameContactDenied=[];
     //----//
     sendnow: boolean = true;
     sendlater: boolean = false;
@@ -87,42 +91,58 @@ export class NotifiSendComponent implements OnInit{
     public TagAdded(item:string) {
         var pos=item.indexOf('.');
         var num=item.slice(0,pos);
+        var name=item.slice(pos+1,item.length);
         this.listIDTag.push(parseInt(num));
+        this.listNameTag.push(name);
     }
     public TagRemoved(item:string) {
         var pos=item.indexOf('.');
         var num=item.slice(0,pos);
+        var name=item.slice(pos+1,item.length);
         this.delPos(this.listIDTag,parseInt(num));
+        this.delPosstring(this.listNameTag,name);
     }
     public ContactAdded(item:string) {
         var pos=item.indexOf('.');
         var num=item.slice(0,pos);
+        var name=item.slice(pos+1,item.length);
         this.listIDContact.push(parseInt(num));
+        this.listNameContact.push(name);
     }
     public ContactRemoved(item:string) {
         var pos=item.indexOf('.');
         var num=item.slice(0,pos);
+        var name=item.slice(pos+1,item.length);
         this.delPos(this.listIDContact,parseInt(num));
+        this.delPosstring(this.listNameContact,name);
     }
     public TagDeniedAdded(item:string) {
         var pos=item.indexOf('.');
         var num=item.slice(0,pos);
+        var name=item.slice(pos+1,item.length);
         this.listIDTagDenied.push(parseInt(num));
+        this.listNameTagDenied.push(name);
     }
     public TagDeniedRemoved(item:string) {
         var pos=item.indexOf('.');
         var num=item.slice(0,pos);
+        var name=item.slice(pos+1,item.length);
         this.delPos(this.listIDTagDenied,parseInt(num));
+        this.delPosstring(this.listNameTagDenied,name);
     }
     public ContactDeniedAdded(item:string) {
         var pos=item.indexOf('.');
         var num=item.slice(0,pos);
+        var name=item.slice(pos+1,item.length);
         this.listIDContactDenied.push(parseInt(num));
+        this.listNameContactDenied.push(name);
     }
     public ContactDeniedRemoved(item:string) {
         var pos=item.indexOf('.');
         var num=item.slice(0,pos);
+        var name=item.slice(pos+1,item.length);
         this.delPos(this.listIDContactDenied,parseInt(num));
+        this.delPosstring(this.listNameContactDenied,name);
     }
     // public TagDeniedAdded(item:string) {
     //     var pos=item.indexOf('.');
@@ -147,6 +167,13 @@ export class NotifiSendComponent implements OnInit{
     //     console.log(this.listIDContact.toString());
     // }
     delPos(ar:Array<number>,key:number){
+        for(var i=0;i<=ar.length;i++){
+            if(ar[i]==key){
+                ar.splice(i,1);
+            }
+        }
+    }
+    delPosstring(ar:Array<string>,key:string){
         for(var i=0;i<=ar.length;i++){
             if(ar[i]==key){
                 ar.splice(i,1);
@@ -224,42 +251,57 @@ export class NotifiSendComponent implements OnInit{
         else{
             this.ThoiHan=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString(); 
         }
-        if(this.listIDTag.length==0 && this.listIDContact.length==0)
+        if(this.tieude == undefined || this.Noidung == undefined)
         {
-            this.getslsenddenied({contactdenied:this.listIDContactDenied,tagdenied:this.listIDTagDenied}).then(result=>{
-                this.notifi={AppID:this.AppID,
-                NotifiID:this.notifiID,
-                TieuDe:this.tieude,
-                Noidung:this.Noidung,
-                DoUuTien:this.doUuTien,
-                Trangthai:this.Trangthai,
-                Soluong:result,
-                Thoigiangui:this.Thoigiangui,
-                ThoiHan:this.ThoiHan,
-                SendTag:this.listIDTag,
-                SendUser:this.listIDContact,
-                DeniedTag:this.listIDTagDenied,
-                DeniedUser:this.listIDContactDenied};
-                this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
-            })
+            console.log(false);
+            return false;
         }
         else{
-            this.getslsend({contact:this.listIDContact,tag:this.listIDTag,contactdenied:this.listIDContactDenied,tagdenied:this.listIDTagDenied}).then(result=>{
-                this.notifi={AppID:this.AppID,
-                NotifiID:this.notifiID,
-                TieuDe:this.tieude,
-                Noidung:this.Noidung,
-                DoUuTien:this.doUuTien,
-                Trangthai:this.Trangthai,
-                Soluong:this.Soluong,
-                Thoigiangui:this.Thoigiangui,
-                ThoiHan:this.ThoiHan,
-                SendTag:this.listIDTag,
-                SendUser:this.listIDContact,
-                DeniedTag:this.listIDTagDenied,
-                DeniedUser:this.listIDContactDenied};
-                this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
-            })
+            if(this.listIDTag.length==0 && this.listIDContact.length==0)
+            {
+                this.getslsenddenied({contactdenied:this.listIDContactDenied,tagdenied:this.listIDTagDenied}).then(result=>{
+                    this.notifi={AppID:this.AppID,
+                    NotifiID:this.notifiID,
+                    TieuDe:this.tieude,
+                    Noidung:this.Noidung,
+                    DoUuTien:this.doUuTien,
+                    Trangthai:this.Trangthai,
+                    Soluong:result,
+                    Thoigiangui:this.Thoigiangui,
+                    ThoiHan:this.ThoiHan,
+                    SendTag:this.listIDTag,
+                    SendTagName:this.listNameTag,
+                    SendUser:this.listIDContact,
+                    SendUserName:this.listNameContact,
+                    DeniedTag:this.listIDTagDenied,
+                    DeniedTagName:this.listNameTagDenied,
+                    DeniedUser:this.listIDContactDenied,
+                    DeniedUserName:this.listNameContactDenied};
+                    this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
+                })
+            }
+            else{
+                this.getslsend({contact:this.listIDContact,tag:this.listIDTag,contactdenied:this.listIDContactDenied,tagdenied:this.listIDTagDenied}).then(result=>{
+                    this.notifi={AppID:this.AppID,
+                    NotifiID:this.notifiID,
+                    TieuDe:this.tieude,
+                    Noidung:this.Noidung,
+                    DoUuTien:this.doUuTien,
+                    Trangthai:this.Trangthai,
+                    Soluong:result,
+                    Thoigiangui:this.Thoigiangui,
+                    ThoiHan:this.ThoiHan,
+                    SendTag:this.listIDTag,
+                    SendTagName:this.listNameTag,
+                    SendUser:this.listIDContact,
+                    SendUserName:this.listNameContact,
+                    DeniedTag:this.listIDTagDenied,
+                    DeniedTagName:this.listNameTagDenied,
+                    DeniedUser:this.listIDContactDenied,
+                    DeniedUserName:this.listNameContactDenied};
+                    this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
+                })
+            }
         }
         // this.notifi={AppID:this.AppID,
         // NotifiID:this.notifiID,

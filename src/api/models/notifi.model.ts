@@ -29,6 +29,7 @@ export class SentUser{
     Device: string;
     Email: string;
     FaceBook: string;
+    ContactTagName:string;
 }
 export class UpdateData{
     NotifiID:number;

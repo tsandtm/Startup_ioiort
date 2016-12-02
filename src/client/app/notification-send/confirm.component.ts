@@ -23,7 +23,7 @@ export class ConfirmComponent implements OnInit {
     Douutien:string;
     date:Date;
     now:Date;
-
+    
     token:string;
     constructor(private appService: AppService,
     private notifiservice:NotifiService,

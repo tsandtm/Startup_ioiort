@@ -13,6 +13,7 @@ export class NotificationsListComponent {
     pageTitle: string = 'Notifications List'; 
     notifications:Notifications[];
     listFilter: string = '';
+    listFilter1: string ='';
     constructor(private _notificationsService: NotificationsService) {
 
     }
