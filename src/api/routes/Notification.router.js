@@ -7,8 +7,8 @@ var NotificationRouter = (function () {
     function NotificationRouter() {
         var _this = this;
         this.getAllNotification = function (req, res) {
-            var option = [req.query.Notification_Tag];
-            _this.notificationRepo.getList(req.query.Notification_Tag)
+            var option = { Notification_Tag: req.query.Notification_Tag };
+            _this.notificationRepo.getList(option)
                 .then(function (result) {
                 res.status(200).json(result);
             })
@@ -18,7 +18,7 @@ var NotificationRouter = (function () {
             });
         };
         this.router = express_1.Router();
-        this.NotificationRepo = new Notification_repo_1.NotificationRepo();
+        this.notificationRepo = new Notification_repo_1.NotificationRepo();
     }
     NotificationRouter.prototype.getRouter = function () {
         this.router.route('/Notification')

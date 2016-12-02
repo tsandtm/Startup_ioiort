@@ -49,6 +49,10 @@ var BarChartDemoComponent = (function () {
             _this.barChartLabels = _this.getmonthlabel();
             _this.createDataSets();
             _this.barChartData = _this.datasets;
+            return 1;
+        })
+            .then(function (result) {
+            _this.loadgetdougnut();
         });
     };
     BarChartDemoComponent.prototype.loadgetdougnut = function () {
@@ -121,6 +125,7 @@ var BarChartDemoComponent = (function () {
         else {
             this.reportService.getDevice().then(function (result) {
                 _this.listDevice = result;
+                console.log(_this.listDevice);
                 _this.barChartLabels = _this.getmonthlabel();
                 _this.createDataSets();
                 _this.barChartData = _this.datasets;
@@ -131,7 +136,7 @@ var BarChartDemoComponent = (function () {
         var a = [];
         this.listDevice.forEach(function (r) {
             //  console.log(JSON.stringify(r.date));
-            a.push(r.date);
+            a.push("Tháng " + r.date);
         });
         return a;
     };
@@ -187,7 +192,7 @@ var BarChartDemoComponent = (function () {
     };
     BarChartDemoComponent.prototype.ngOnInit = function () {
         this.loadGetAll();
-        this.loadgetdougnut();
+        // this.loadgetdougnut();
     };
     // events
     BarChartDemoComponent.prototype.chartClicked = function (e) {

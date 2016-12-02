@@ -11,7 +11,7 @@
                 <input type='text' [(ngModel)]='listFilter'/>
             </div>           
             <input type="date" [(ngModel)]='dateValue'> <i class="fa fa-calendar" aria-hidden="true"></i>             
-            <button style="float:right; margin-right:10px" type="button">New Mesenger</button>
+            <button style="float:right; margin-right:10px" type="button" [routerLink]="['/notifi-send']">New Mesenger</button>
         </div>
         <div class='row' *ngIf='listFilter'>
             <div class='col-md-6'>
@@ -38,7 +38,7 @@
                 <td>{{notification.ThoiGianGui|date:"dd/MM/yyyy" }}</td>
                 <td>{{notification.SoLuong}}</td>
                 <td>{{notification.ThoiHanToiDa | date:"dd/MM/yyyy"}}</td>
-                <td *ngIf='notification.TrangThaiGoi == 1'>
+                <td *ngIf='notification.TrangThaiGoi == 1 || notification.TrangThaiGoi == 0'>
                     <a [routerLink]="['/notification-detail',notification.id]"><button><i class="fa fa-eye" aria-hidden="true"></i></button></a></td>
                 <td *ngIf='notification.TrangThaiGoi == 2'>
                     <a [routerLink]="['/notification-detailedit',notification.id]"><button><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a></td>

@@ -13,40 +13,21 @@ var http_1 = require('@angular/http');
 var ContactService = (function () {
     function ContactService(_http) {
         this._http = _http;
-<<<<<<< HEAD
         this._productUrl = 'api/products/products.json';
     }
-    ContactService.prototype.getProducts = function () {
-=======
-    }
     ContactService.prototype.getContacts = function () {
->>>>>>> tu-f-notifi-contact
-        // return this._http.get('/api/book')
-        //     .map((response: Response) => <Product[]>response.json())
-        //     .do(data => console.log('All: ' + JSON.stringify(data)))
-        //     .catch(this.handleError);
         return this._http.get('/api/Contact')
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-<<<<<<< HEAD
-    // getProduct(id: number): Promise<Product> {
-    //     // return this.getProducts()
-    //     //     .map((products: Product[]) => products.find(p => p.productId === id))
-    //     //     .catch(this.handleError);
-    //     return this.getProducts()
-    //         .then(products => products.find(p => p.productId === id))
-    //         .catch(this.handleError);
-    // }
-=======
     ContactService.prototype.getContact = function (ContactID) {
         return this.getContacts()
             .then(function (response) { return response.find(function (x) { return x.ContactID == ContactID; }); })
             .catch(this.handleError);
     };
-    ContactService.prototype.updateContact = function (valueID, valueTag) {
-        var params = JSON.stringify({ ContactID: valueID, Contact_Tag: valueTag });
+    ContactService.prototype.updateContact = function (valueID, valueTagID, valueTagName) {
+        var params = JSON.stringify({ ContactID: valueID, Contact_TagID: valueTagID, Contact_TagName: valueTagName });
         var headers = new http_1.Headers();
         console.log('params: ' + params);
         headers.append('Content-Type', 'application/json');
@@ -54,21 +35,73 @@ var ContactService = (function () {
             headers: headers,
             body: params
         })
-            .map(function (res) { return res.json(); });
+            .toPromise()
+            .then(function (response) {
+            return response;
+        })
+            .catch(this.handleError);
     };
-    ContactService.prototype.orderByTag = function (valueTag) {
-        return this._http.get('/api/Contact/orderByTag?Contact_Tag=' + valueTag)
+    ContactService.prototype.SearchByTag = function (Contact_TagName) {
+        return this._http.get('/api/Contact/SearchByTag?Contact_TagName=' + Contact_TagName)
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
->>>>>>> tu-f-notifi-contact
+    ContactService.prototype.getPager = function (totalItems, currentPage, pageSize) {
+        if (currentPage === void 0) { currentPage = 1; }
+        if (pageSize === void 0) { pageSize = 10; }
+        // calculate total pages
+        var totalPages = Math.ceil(totalItems / pageSize);
+        var startPage, endPage;
+        if (totalPages <= 10) {
+            // less than 10 total pages so show all
+            startPage = 1;
+            endPage = totalPages;
+        }
+        else {
+            // more than 10 total pages so calculate start and end pages
+            if (currentPage <= 6) {
+                startPage = 1;
+                endPage = 10;
+            }
+            else if (currentPage + 4 >= totalPages) {
+                startPage = totalPages - 9;
+                endPage = totalPages;
+            }
+            else {
+                startPage = currentPage - 5;
+                endPage = currentPage + 4;
+            }
+        }
+        // calculate start and end item indexes
+        var startIndex = (currentPage - 1) * pageSize;
+        var endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
+        // create an array of pages to ng-repeat in the pager control
+        var pages;
+        for (var n = 1; n < (totalPages + 1); n++) {
+            if (pages == undefined)
+                pages = [1];
+            else
+                pages.push(n);
+            console.log(totalPages + n);
+        }
+        ;
+        // return object with all pager properties required by the view
+        return {
+            totalItems: totalItems,
+            currentPage: currentPage,
+            pageSize: pageSize,
+            totalPages: totalPages,
+            startPage: startPage,
+            endPage: endPage,
+            startIndex: startIndex,
+            endIndex: endIndex,
+            pages: pages
+        };
+    };
     ContactService.prototype.handleError = function (error) {
-        // in a real world app, we may send the server to some remote logging infrastructure
-        // instead of just logging it to the console
         console.error(error);
         return Promise.reject(error.message || error);
-        // return Observable.throw(error.json().error || 'Server error');
     };
     ContactService = __decorate([
         core_1.Injectable(), 

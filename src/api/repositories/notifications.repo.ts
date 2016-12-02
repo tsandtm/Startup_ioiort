@@ -1,5 +1,5 @@
 import { RepoBase } from './repositories.base';
-import { Notifications } from '../models/notifications.model'
+import { Notifications,SentContact } from '../models/notifications.model'
 import { Pool, QueryResult } from 'pg';
 
 export class NotificationsRepo extends RepoBase {
@@ -9,7 +9,7 @@ export class NotificationsRepo extends RepoBase {
     }
 
     public getList(option): Promise<Notifications[]> {
-        let queryText = 'SELECT * FROM "n_Notifications" ORDER BY "NotifiID"ASC  ';
+        let queryText = 'SELECT * FROM test."n_Notifications" ORDER BY "NotifiID"ASC  ';
 
         console.info('Excute: ' + queryText);
         let pResult;
@@ -62,6 +62,34 @@ export class NotificationsRepo extends RepoBase {
                 notifications.SoLuong = result.rows[0].SoLuong;
                 return notifications;
             });
+    }
+    public getAllSendUser():Promise<SentContact[]>{
+        let queryText = 'SELECT * FROM test."n_Contacts_Notifications" ORDER BY "ContactID" ASC';
+
+        console.info('Excute: ' + queryText);
+        let pResult;
+            pResult = this._pgPool.query(queryText);
+
+
+        return pResult.then(result => {
+            let sentcontacts: SentContact[] = result.rows.map(r => {
+                let sentcontact = new SentContact();
+                sentcontact.NotifiID = r.NotifiID;
+                sentcontact.ContactID = r.ContactID;
+                sentcontact.TrangThai = r.TrangThai;
+                sentcontact.ThoiGianCanGoi = r.ThoiGianCanGoi;
+                sentcontact.LogLoi = r.LogLoi;           
+                sentcontact.SoLanGoi = r.SoLanGoi;
+                sentcontact.ThoiGianDaGoi = r.ThoiGianDaGoi;
+                return sentcontact;
+            });
+            return sentcontacts;
+        })
+            .catch(err => {
+                console.error(err.message);
+                return null;
+            });
+
     }
     public Edit(option): Promise<Notifications> {
         // let queryText = 'UPDATE test."n_Notifications" SET "NotifiID" = $1, "AppID" = $2 , "TieuDe" =$3, "NoiDung" = $4,"ThoiGianGui" = $5,"ThoiHanToiDa" = $6,"DoUuTien" = $7,"TrangThaiGoi" = $8,"SoLuong" = $9';

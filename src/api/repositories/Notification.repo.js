@@ -12,12 +12,11 @@ var NotificationRepo = (function (_super) {
         _super.call(this);
     }
     NotificationRepo.prototype.getList = function (option) {
-        var queryText = 'select * from test."Notifications" ';
-        console.info('Excute: ' + queryText);
+        var queryText = 'select * from test."n_Notifications" ';
         var pResult;
-        if (option) {
-            // pResult = this._pgPool.query(queryText + 'where "Notification_Tag" = ' + "'{$1}'" , [option.Notification_Tag])
-            pResult = this._pgPool.query(queryText + 'where "NotificationID" = $1', [option.Notification_Tag]);
+        if (option.Notification_Tag != undefined) {
+            pResult = this._pgPool.query(queryText + 'where "Notification_Tag" = ' + "'{" + option.Notification_Tag + "}'");
+            console.info(option.Notification_Tag);
         }
         else {
             pResult = this._pgPool.query(queryText);
@@ -25,15 +24,11 @@ var NotificationRepo = (function (_super) {
         return pResult.then(function (result) {
             var Notifications = result.rows.map(function (r) {
                 var notification = new Notification_model_1.Notification();
-                notification.NotificationID = r.NotificationID;
-                notification.Token = r.Token;
-                notification.Email = r.Email;
-                notification.TaiKhoan = r.TaiKhoan;
-                notification.Device = r.Device;
-                notification.PhoneNumber = r.PhoneNumber;
-                notification.NgayTao = r.NgayTao;
-                notification.FaceBook = r.FaceBook;
-                notification.Notification_Tag = r.Notification_Tag;
+                notification.TieuDe = r.TieuDe;
+                notification.TrangThaiGoi = r.TrangThaiGoi;
+                notification.ThoiGianGui = r.ThoiGianGui;
+                notification.SoLuong = r.SoLuong;
+                notification.ThoiHanToiDa = r.ThoiHanToiDa;
                 return notification;
             });
             return Notifications;
@@ -44,20 +39,16 @@ var NotificationRepo = (function (_super) {
         });
     };
     NotificationRepo.prototype.getOne = function (option) {
-        var queryText = 'select * from test.Notifications where "Notification_Tag" = $1';
+        var queryText = 'select * from test."n_Notifications" where "Notification_Tag" = $1';
         console.info('Excute: ' + queryText);
         return this._pgPool.query(queryText, [option.Notification_Tag])
             .then(function (result) {
             var notification = new Notification_model_1.Notification();
-            notification.NotificationID = result.rows[0].NotificationID;
-            notification.Token = result.rows[0].Token;
-            notification.Email = result.rows[0].Email;
-            notification.TaiKhoan = result.rows[0].TaiKhoan;
-            notification.Device = result.rows[0].Device;
-            notification.PhoneNumber = result.rows[0].PhoneNumber;
-            notification.NgayTao = result.rows[0].NgayTao;
-            notification.FaceBook = result.rows[0].FaceBook;
-            notification.Notification_Tag = result.rows[0].Notification_Tag;
+            notification.TieuDe = result.rows[0].TieuDe;
+            notification.TrangThaiGoi = result.rows[0].TrangThaiGoi;
+            notification.ThoiGianGui = result.rows[0].ThoiGianGui;
+            notification.SoLuong = result.rows[0].SoLuong;
+            notification.ThoiHanToiDa = result.rows[0].ThoiHanToiDa;
             return notification;
         });
     };

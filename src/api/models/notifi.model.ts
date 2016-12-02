@@ -10,13 +10,13 @@ export class Notifi {
     Trangthai:number;
     Soluong:number;
     SendUser:number[];
-    SendUserName:string[];
+    SendUserName:string;
     SendTag:number[];
-    SendTagName:string[];
+    SendTagName:string;
     DeniedUser:number[];
-    DeniedUserName:string[];
+    DeniedUserName:number[];
     DeniedTag:number[];
-    DeniedTagName:string[];
+    DeniedTagName:number[];
 }
 export class SLSend{
     NotifiID:number;
