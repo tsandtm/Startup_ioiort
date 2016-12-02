@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ViewContainerRef } from '@angular/core';
+import { Component, ViewEncapsulation, ViewContainerRef } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 
 import { Overlay, overlayConfigFactory } from 'angular2-modal';
@@ -20,41 +20,69 @@ import { ContactFilterPipe } from '../Contact-filter/Contact-filter.pipe'
     selector: 'Contact-list',
     templateUrl: '/Contacts/Contact-list/Contact-list.component.html',
     styleUrls: ['/assets/shop-homepage.css'],
-    providers: [
+    providers:
+    [
         ContactService,
         TagService,
         Modal
     ]
 })
-export class ContactListComponent implements OnInit {
+export class ContactListComponent {
     Contacts: Contact[];
     filter: string = '';
-    ContactDetail: Contact;
+    // ContactDetail: Contact;
     checkbox: boolean = false;
-    public Tags: Tag[];
+    Tags: Tag[];
+    pager: any = {};
+    itempages: Contact[];
 
     constructor(private contactService: ContactService, private tagService: TagService, public modal: Modal, private _router: Router, private _route: ActivatedRoute) {
     }
 
     loadGetAll() {
-        this.contactService.getContacts().then((result) => this.Contacts = result);
+        this.contactService.getContacts()
+            .then((result) => this.Contacts = result);
     }
 
-    ngOnInit() {
+    setPage(page: number): void {
+        if (this.Contacts != undefined) {
+            if (page < 1 || page > this.pager.totalPages) {
+                return;
+            }
+            
+            this.pager = this.contactService.getPager(this.Contacts.length, page);
+            // get current page of items
+            this.itempages = this.Contacts.slice(this.pager.startIndex, this.pager.endIndex + 1);
+            console.log(this.itempages);
+        }
+    }
+
+    runGetContacts() {
         this.getContacts()
             .then(() => {
-                return this.getTag();
+                this.getTag();
+                console.log(this.Contacts);
             })
-            .then(() => {
-                console.log(this.Tags);
+            .then((result) => {
+                this.setPage(1);
             })
             .catch((error) => {
-                console.log('error: ' + error);
+                console.log('error: ');
             });
     }
 
+    ngOnInit() {
+        this.runGetContacts();
+    }
+
     getView(ValueContactID: number) {
-        return this.modal.open(ModalContactUpdate, overlayConfigFactory({ ContactID: ValueContactID }, BSModalContext));
+        return this.modal.open(ModalContactUpdate, overlayConfigFactory({ ContactID: ValueContactID }, BSModalContext))
+            .then(d => d.result)
+            .then((r) => {
+                if (r == "ok") {
+                    this.runGetContacts()
+                }
+            });
     }
 
     checkAlllist() {
@@ -75,7 +103,10 @@ export class ContactListComponent implements OnInit {
     getTag(): Promise<Tag[]> {
         return this.tagService.getTags()
             .then((response) => {
+                let TagAll = new Tag();
+                TagAll.TagNameDisplay = "All";
                 this.Tags = response;
+                this.Tags.push(TagAll);
                 return this.Tags;
             })
             .catch((error) => {
@@ -84,10 +115,16 @@ export class ContactListComponent implements OnInit {
             });
     }
 
-    orderByTag(valueTag: number){
-        this.contactService.orderByTag(valueTag)
+    SearchByTag(Contact_TagName: string) {
+        this.contactService.SearchByTag(Contact_TagName)
             .then((result) => {
                 this.Contacts = result;
+                console.log('search: '+this.Contacts);
+                return this.Contacts;
+            })
+            .then((result) => {
+                console.log("vao ");
+                this.setPage(1);
             })
             .catch((error) => {
                 console.error(error);

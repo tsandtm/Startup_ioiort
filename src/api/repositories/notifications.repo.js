@@ -12,7 +12,7 @@ var NotificationsRepo = (function (_super) {
         _super.call(this);
     }
     NotificationsRepo.prototype.getList = function (option) {
-        var queryText = 'SELECT * FROM public."n_Notifications"ORDER BY "NotifiID"ASC  ';
+        var queryText = 'SELECT * FROM test."n_Notifications" ORDER BY "NotifiID"ASC  ';
         console.info('Excute: ' + queryText);
         var pResult;
         if (option) {
@@ -44,7 +44,7 @@ var NotificationsRepo = (function (_super) {
     };
     NotificationsRepo.prototype.getOne = function (option) {
         //  let queryText = 'SELECT "NotifiID", "AppID", "TieuDe", "NoiDung", "ThoiGianGui", "ThoiHanToiDa", "DoUuTien", "TrangThaiGoi", "SoLuong"FROM public."n_Notifications"; where NotifiID=id';
-        var queryText = 'SELECT "NotifiID", "AppID", "TieuDe", "NoiDung", "ThoiGianGui", "ThoiHanToiDa", "DoUuTien", "TrangThaiGoi", "SoLuong"FROM public."n_Notifications"; where id=$1';
+        var queryText = 'SELECT "NotifiID", "AppID", "TieuDe", "NoiDung", "ThoiGianGui", "ThoiHanToiDa", "DoUuTien", "TrangThaiGoi", "SoLuong"FROM test."n_Notifications"; where id=$1';
         console.info('Excute: ' + queryText);
         return this._pgPool.query(queryText, [option.id, option.TieuDe])
             .then(function (result) {

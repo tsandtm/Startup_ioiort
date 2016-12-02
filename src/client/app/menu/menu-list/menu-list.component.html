@@ -16,56 +16,69 @@
 	font-size: 25px !important;
 }	
 </style>	-->
-<div class="row">
-	<div class="cont">
-		<h1>Quản lý Notifications</h1>
-	</div>
-	<div class="col-sm-4 col-lg-4 col-md-4">
-		<div class="cus_thumbnail">
-			<span><i class="fa fa-cogs fa-6" ></i></span>
-			<div class="caption">
-				<h4><a [routerLink]="['/setting-list']">Setting</a>
-				</h4>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h2 style="text-align:center">Quản lý Notfication</h2>
+    </div>
+	<div class="panel-body" style="margin-top:40px">
+		<div class="col-sm-4 col-lg-4 col-md-4">
+			<div class="cus_thumbnail">
+				<a [routerLink]="['/setting-list']">
+					<img src="../assets/images/settings.png" style="height:150px;width:150px">
+				</a>
+				<div class="caption">
+					<h4><a [routerLink]="['/setting-list']">Setting</a>
+					</h4>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="col-sm-4 col-lg-4 col-md-4">
-		<div class="cus_thumbnail">
-			<span><i class="fa fa-book fa-6" aria-hidden="true"></i><a></a></span>
-			<div class="caption">
-				<h4><a [routerLink]="['/contact']">Contacts</a>
-				</h4>
+
+		<div class="col-sm-4 col-lg-4 col-md-4">
+			<div class="cus_thumbnail">
+				<a [routerLink]="['/contact']">
+					<img src="../assets/images/contacts.png" style="height:150px;width:150px">
+				</a>
+				<div class="caption">
+					<h4><a [routerLink]="['/Contact']">Contacts</a>
+					</h4>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="col-sm-4 col-lg-4 col-md-4">
-		<div class="cus_thumbnail">
-			<span><i class="fa fa-bar-chart fa-6" aria-hidden="true"></i></span>
-			<div class="caption">
-				<h4><a [routerLink]="['/Reports']">Report</a>
-				</h4>
+		<div class="col-sm-4 col-lg-4 col-md-4">
+			<div class="cus_thumbnail">
+				<a [routerLink]="['/Reports']">
+					<img src="../assets/images/reports.png" style="height:150px;width:150px">
+				</a>
+				<div class="caption">
+					<h4><a [routerLink]="['/Reports']">Report</a>
+					</h4>
+				</div>
 			</div>
 		</div>
-	</div>
-
-	<div class="col-sm-4 col-lg-4 col-md-4">
-		<div class="cus_thumbnail">
-			<span><i class="fa fa-commenting fa-6" aria-hidden="true"></i></span>
-			<div class="caption">
-				<h4><a [routerLink]="['/notification']">Notifications</a>
-				</h4>
+		<div class="col-sm-2 col-lg-2 col-md-2"></div>
+		<div class="col-sm-4 col-lg-4 col-md-4">
+			<div class="cus_thumbnail">
+				<a [routerLink]="['/notification']">
+					<img src="../assets/images/notifications.png" style="height:150px;width:150px">
+				</a>
+				<div class="caption">
+					<h4><a [routerLink]="['/notification']">Notifications</a>
+					</h4>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="col-sm-4 col-lg-4 col-md-4">
-		<div class="cus_thumbnail">
-			<span><i class="fa fa-tasks fa-6" aria-hidden="true"></i></span>
-			<div class="caption">
-				<h4><a href="#">Campaigns</a>
-				</h4>
+		<div class="col-sm-4 col-lg-4 col-md-4">
+			<div class="cus_thumbnail">
+				<a>
+					<img src="../assets/images/campaigns.png" style="height:150px;width:150px">
+				</a>
+				<div class="caption">
+					<h4><a href="#">Campaigns</a>
+					</h4>
+				</div>
 			</div>
 		</div>
 	</div>

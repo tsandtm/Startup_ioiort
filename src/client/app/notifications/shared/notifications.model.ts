@@ -17,3 +17,12 @@ export class Notifications{
     Send_UserDenieID:number[];
     Send_TagDenieID:number[];
 }
+export class SentContact {
+    ContactID:number;
+    NotifiID:number;
+    TrangThai:number;
+    ThoiGianCanGoi:Date;
+    LogLoi:string;
+    SoLanGoi:number;
+    ThoiGianDaGoi:Date;
+}

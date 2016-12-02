@@ -24,6 +24,7 @@ var NotifiRepo = (function (_super) {
             option.Trangthai,
             option.Soluong,
             option.SendUser,
+            option.SendUserName,
             option.SendTag,
             option.DeniedUser,
             option.DeniedTag,
@@ -112,7 +113,7 @@ var NotifiRepo = (function (_super) {
         });
     };
     NotifiRepo.prototype.getSL = function (option) {
-        var queryText = 'SELECT "NotifiID",COUNT(*) FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_User" OR A."Contact_Tag" && B."Send_Tag") AND (Array[A."ContactID"] && B."Send_UserDenie" OR A."Contact_Tag" && B."Send_TagDenie") = false GROUP BY "NotifiID"';
+        var queryText = 'SELECT "NotifiID",COUNT(*) FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_User" OR A."Contact_TagID" && B."Send_Tag") AND (Array[A."ContactID"] && B."Send_UserDenie" OR A."Contact_TagID" && B."Send_TagDenie") = false GROUP BY "NotifiID"';
         console.info('Excute: ' + queryText);
         var pResult;
         if (option.NotifiID == undefined) {
@@ -133,7 +134,7 @@ var NotifiRepo = (function (_super) {
         });
     };
     NotifiRepo.prototype.getSLDenied = function (option) {
-        var queryText = 'SELECT "NotifiID",COUNT(*) FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserDenie" OR A."Contact_Tag" && B."Send_TagDenie") = false GROUP BY "NotifiID"';
+        var queryText = 'SELECT "NotifiID",COUNT(*) FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserDenie" OR A."Contact_TagID" && B."Send_TagDenie") = false GROUP BY "NotifiID"';
         console.info('Excute: ' + queryText);
         var pResult;
         if (option.NotifiID == undefined) {
@@ -154,7 +155,7 @@ var NotifiRepo = (function (_super) {
         });
     };
     NotifiRepo.prototype.getslsend = function (option) {
-        var queryText = 'SELECT COUNT(*) FROM test."Contacts" A WHERE (Array[A."ContactID"] && $1 OR A."Contact_Tag" && $2) AND (Array[A."ContactID"] && $3 OR A."Contact_Tag" && $4) = false';
+        var queryText = 'SELECT COUNT(*) FROM test."Contacts" A WHERE (Array[A."ContactID"] && $1 OR A."Contact_TagID" && $2) AND (Array[A."ContactID"] && $3 OR A."Contact_TagID" && $4) = false';
         console.info('Excute: ' + queryText);
         return this._pgPool.query(queryText, [option.contact, option.tag, option.contactdenied, option.tagdenied])
             .then(function (result) {
@@ -168,7 +169,7 @@ var NotifiRepo = (function (_super) {
         });
     };
     NotifiRepo.prototype.getslsenddenied = function (option) {
-        var queryText = 'SELECT COUNT(*) FROM test."Contacts" A WHERE (Array[A."ContactID"] && $1 OR A."Contact_Tag" && $2) = false';
+        var queryText = 'SELECT COUNT(*) FROM test."Contacts" A WHERE (Array[A."ContactID"] && $1 OR A."Contact_TagID" && $2) = false';
         console.info('Excute: ' + queryText);
         return this._pgPool.query(queryText, [option.contactdenied, option.tagdenied])
             .then(function (result) {
@@ -182,7 +183,7 @@ var NotifiRepo = (function (_super) {
         });
     };
     NotifiRepo.prototype.getSentUser = function (option) {
-        var queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook" FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_User" OR A."Contact_Tag" && B."Send_Tag") AND (Array[A."ContactID"] && B."Send_UserDenie" OR A."Contact_Tag" && B."Send_TagDenie") = false';
+        var queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook" FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_User" OR A."Contact_TagID" && B."Send_Tag") AND (Array[A."ContactID"] && B."Send_UserDenie" OR A."Contact_TagID" && B."Send_TagDenie") = false';
         console.info('Excute: ' + queryText);
         var pResult;
         if (option.NotifiID == undefined) {
@@ -207,7 +208,7 @@ var NotifiRepo = (function (_super) {
         });
     };
     NotifiRepo.prototype.getSentUserDenied = function (option) {
-        var queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook" FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserDenie" OR A."Contact_Tag" && B."Send_TagDenie") = false';
+        var queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook" FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserDenie" OR A."Contact_TagID" && B."Send_TagDenie") = false';
         console.info('Excute: ' + queryText);
         var pResult;
         if (option.NotifiID == undefined) {

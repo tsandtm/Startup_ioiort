@@ -18,6 +18,7 @@ export class BarChartDemoComponent {
   datasets = [];
   ArrayReport: Report[];
   devices = [];
+  rp:Report;
   constructor(private reportService: ReportService) {
 
   }
@@ -63,11 +64,11 @@ export class BarChartDemoComponent {
           ld.listdevice.forEach(d => {
 
               for (let i = 0; i < this.devices.length; i++) {
-            console.log("Lan thu " +i +"Thiet bi "+ d.name +" Thiet bi dem dc"+ this.devices[i]);
-              if(!this.devices.find(f=>f == d.name)){
-                  d.name=this.devices[i];
-                  d.count=0;
-                  ld.listdevice.push(d);
+              if(this.devices[i] != d.name){
+                  this.rp=new Report();
+                  this.rp.name=this.devices[i];
+                  this.rp.count=0;
+                  ld.listdevice.push(this.rp);
               }
           }})
         
@@ -138,6 +139,7 @@ export class BarChartDemoComponent {
     } else {
       this.reportService.getDevice().then((result) => {
         this.listDevice = result;
+        console.log(this.listDevice);
         this.barChartLabels = this.getmonthlabel();
         this.createDataSets();
         this.barChartData = this.datasets;
@@ -148,6 +150,7 @@ export class BarChartDemoComponent {
   getmonthlabel() {
     let a: string[] = [];
     this.listDevice.forEach(r => {
+      //  console.log(JSON.stringify(r.date));
       a.push("Tháng " + r.date)
     })
     return a;

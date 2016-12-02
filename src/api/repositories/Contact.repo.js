@@ -12,15 +12,8 @@ var ContactRepo = (function (_super) {
         _super.call(this);
     }
     ContactRepo.prototype.getList = function (option) {
-        var queryText = 'select * from test."Contacts"';
+        var queryText = 'select * from test."Contacts" ORDER BY "ContactID" ASC';
         var pResult;
-        if (option.Contact_Tag != undefined) {
-            pResult = this._pgPool.query(queryText + 'where "Contact_Tag" = ' + "'{" + option.Contact_Tag + "}'");
-            console.info(option.Contact_Tag);
-        }
-        else {
-            pResult = this._pgPool.query(queryText);
-        }
         pResult = this._pgPool.query(queryText);
         return pResult.then(function (result) {
             var Contacts = result.rows.map(function (r) {
@@ -63,7 +56,7 @@ var ContactRepo = (function (_super) {
         });
     };
     ContactRepo.prototype.create = function (option) {
-        var queryText = 'INSERT INTO test."Contacts" ("ContactID", "Token", "Email", "TaiKhoan", "Device", "PhoneNumber", "NgayTao", "FaceBook", "Contact_TagID", "Contact_TagName") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)';
+        var queryText = 'INSERT INTO test."Contacts" ("ContactID", "Token", "Email", "TaiKhoan", "Device", "PhoneNumber", "NgayTao", "FaceBook", "Contact_TagID", "Contact_TagName") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)';
         return this._pgPool.query(queryText, [option.ContactID, option.Token, option.Email, option.TaiKhoan, option.Device, option.PhoneNumber, option.NgayTao, option.FaceBook, option.Contact_TagID, option.Contact_TagName])
             .then(function (result) {
             return option;
@@ -71,25 +64,30 @@ var ContactRepo = (function (_super) {
     };
     ContactRepo.prototype.update = function (option) {
         var queryText;
+        console.log(option.Contact_TagID);
         if (option.Contact_TagID.length != 0) {
             for (var i = 0; i < option.Contact_TagID.length; i++) {
                 option.Contact_TagID[i] = parseInt(option.Contact_TagID[i].toString(), 10);
             }
-            queryText = 'UPDATE test."Contacts" SET "Contact_Tag" = Array[' + option.Contact_TagID + '] WHERE "ContactID" = ' + option.ContactID;
+            queryText = 'UPDATE test."Contacts" SET "Contact_TagID" = \'{ ' + option.Contact_TagID + ' }\', "Contact_TagName" = \'{ ' + option.Contact_TagName + ' }\' WHERE "ContactID" = ' + option.ContactID;
         }
         else {
-            queryText = 'UPDATE test."Contacts" SET "Contact_Tag" = ' + "'{}'" + '{}' + ' WHERE "ContactID" = ' + option.ContactID;
+            queryText = 'UPDATE test."Contacts" SET "Contact_TagID" = \'{}\', "Contact_TagName" = \'{}\'  WHERE "ContactID" = ' + option.ContactID;
         }
         return this._pgPool.query(queryText)
             .then(function (result) {
             return option;
         });
     };
-    ContactRepo.prototype.orderByTag = function (option) {
-        option.Contact_Tag = parseInt(option.Contact_Tag, 10);
-        var queryText = 'select * from test."Contacts" order by "Contact_Tag" = Array[' + option.Contact_Tag + '] desc';
+    ContactRepo.prototype.SearchByTag = function (Contact_TagName) {
+        var queryText;
+        if (Contact_TagName == "All" || Contact_TagName == "all") {
+            queryText = 'select * from test."Contacts" ORDER BY "ContactID" ASC';
+        }
+        else {
+            queryText = 'select * from test."Contacts" where \'' + Contact_TagName + '\' = any("Contact_TagName")';
+        }
         var pResult = this._pgPool.query(queryText);
-
         return pResult.then(function (result) {
             var Contacts = result.rows.map(function (r) {
                 var contact = new Contact_model_1.Contact();
@@ -101,7 +99,6 @@ var ContactRepo = (function (_super) {
                 contact.PhoneNumber = r.PhoneNumber;
                 contact.NgayTao = r.NgayTao;
                 contact.FaceBook = r.FaceBook;
-                contact.Contact_Tag = r.Contact_Tag;
                 contact.Contact_TagID = r.Contact_TagID;
                 contact.Contact_TagName = r.Contact_TagName;
                 return contact;
@@ -111,24 +108,6 @@ var ContactRepo = (function (_super) {
             .catch(function (err) {
             console.error(err.message);
             return null;
-        });
-    };
-    ContactRepo.prototype.getOne = function (option) {
-        var queryText = 'select * from test.Contacts where "Contact_Tag" = $1';
-        console.info('Excute: ' + queryText);
-        return this._pgPool.query(queryText, [option.Contact_Tag])
-            .then(function (result) {
-            var contact = new Contact_model_1.Contact();
-            contact.ContactID = result.rows[0].ContactID;
-            contact.Token = result.rows[0].Token;
-            contact.Email = result.rows[0].Email;
-            contact.TaiKhoan = result.rows[0].TaiKhoan;
-            contact.Device = result.rows[0].Device;
-            contact.PhoneNumber = result.rows[0].PhoneNumber;
-            contact.NgayTao = result.rows[0].NgayTao;
-            contact.FaceBook = result.rows[0].FaceBook;
-            contact.Contact_Tag = result.rows[0].Contact_Tag;
-            return contact;
         });
     };
     return ContactRepo;

@@ -1,30 +1,52 @@
-<div class='panel-primary' *ngIf='setting'>
-    <div class="container">
-        <form>
-            <h3>Edit</h3>
-            <div class="form-group">
-                <label class="">App ID:</label>
-                <input type="text" class="form-control" name="appid" [(ngModel)]="setting.AppID" readonly>
-            </div>  
-            
-            <div class="form-group">
-                <label class="">Api key:</label>
-                <input type="text" class="form-control" name="apikey" [(ngModel)]="setting.APIKey">
-            </div>  
-            <div class="form-group">
-                <label class="">App name:</label>
-                <input type="text" class="form-control" name="appname" [(ngModel)]="setting.AppName">
-            </div>  
-            <div class="form-group">
-                <label class="">Trạng thái:</label>
-                <input type="checkbox" name="trangthai" [(ngModel)]="setting.IsActive" checked *ngIf='setting.IsActive==true'>
-                <input type="checkbox" name="trangthai" [(ngModel)]="setting.IsActive" *ngIf='setting.IsActive==false'>
-            </div>  
-
-            <div class="row"> 
+<div class='panel panel-primary' *ngIf='setting'>
+    <div class='panel-heading'>
+        <h3>{{pageTitle}}</h3>
+    </div>
+    <div class='panel-body'>
+        <div class="container">
+            <form>
+                <div class="form-group">
+                    <label class="">App ID:</label>
+                    <div class="container">
+                        <div class="row">
+                            <div class='col-sm-6'>
+                                <input type="text" class="form-control" name="appid" [(ngModel)]="setting.AppID" placeholder="App ID" readonly>
+                            </div>  
+                        </div>
+                    </div>
+                </div>  
+                <div class="form-group">
+                    <label class="">App Name:</label>
+                    <div class="container">
+                        <div class="row">
+                            <div class='col-sm-6'>
+                                <input type="text" class="form-control" name="appname" [(ngModel)]="setting.AppName" placeholder="App name">
+                            </div>  
+                        </div>
+                    </div>
+                </div>  
+                <div class="form-group">
+                    <label class="">API key:</label>
+                    <div class="container">
+                        <div class="row">
+                            <div class='col-sm-6'>
+                                <input type="text" class="form-control" name="apikey" [(ngModel)]="setting.APIKey" placeholder="Api key">
+                            </div>  
+                        </div>
+                    </div>
+                </div>          
+                <div class="form-group">
+                    <label class="">Trạng thái:</label>
+                    <input type="checkbox" name="trangthai" [(ngModel)]="setting.IsActive" checked *ngIf='setting.IsActive==true'>
+                    <input type="checkbox" name="trangthai" [(ngModel)]="setting.IsActive" *ngIf='setting.IsActive==false'>
+                </div>               
+            </form>
+        </div>   
+    </div>
+    <div class="panel-footer"> 
+        <div class="row" style="margin-left:10px">
             <button type="button" style="float:left;margin-right:10px" class="btn btn-success btn-lg" (click)='Edit()'>Save</button>
             <button type="button" style="float:left" class="btn btn-default btn-lg" (click)='Back()'>Back</button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>

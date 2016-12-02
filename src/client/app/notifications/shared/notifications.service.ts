@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { Notifications } from '../shared/notifications.model';
+import { Notifications,SentContact } from '../shared/notifications.model';
 
 @Injectable()
 export class NotificationsService {
@@ -26,6 +26,18 @@ export class NotificationsService {
             .catch(this.handleError);
             
     }
+    getAllSendUser():Promise<SentContact[]>{
+        return this._http.get('/api/getlistsenduser')
+            .toPromise()
+            .then(response => response.json() as SentContact[])
+            .catch(this.handleError);
+    }
+    getSendUser(id:number):Promise<SentContact[]>{
+        return this.getAllSendUser()
+            .then(slsend => slsend.filter(p => p.NotifiID === id))
+            .catch(this.handleError);
+    }
+
     getNotifications(id: number): Promise<Notifications> {
         return this.getList()
             .then(notifications => notifications.find(p => p.id === id))

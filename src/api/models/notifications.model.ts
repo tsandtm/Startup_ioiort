@@ -5,7 +5,7 @@ export class Notifications{
     AppID:number;
     TieuDe: string;
     NoiDung: string;
-    ThoiGianGui:Date;
+    ThoiGianGui:string;
     ThoiHanToiDa:Date;
     DoUuTien: number;
     TrangThaiGoi: number;
@@ -18,4 +18,13 @@ export class Notifications{
     Send_UserID:number[];
     Send_UserDenieID:number[];
     Send_TagDenieID:number[];
+}
+export class SentContact {
+    ContactID:number;
+    NotifiID:number;
+    TrangThai:number;
+    ThoiGianCanGoi:Date;
+    LogLoi:string;
+    SoLanGoi:number;
+    ThoiGianDaGoi:Date;
 }
