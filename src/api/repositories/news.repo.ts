@@ -10,7 +10,7 @@ export class ListNewsRepo extends RepoBase {
 
      public getList(option, limit: number, offset: number): Promise<ListNews[]> {
 
-        let queryText = 'SELECT "IDTinTuc", "User_DanhMucSite"."IDDanhMucSite", "TieuDe", "MoTa", "NoiDung", "ThoiGianDangTin", "URLNews", "URLThumbImage", "URLImage" FROM public."TinTuc" , public."User_DanhMucSite" where "TinTuc"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite" ORDER BY "TinTuc"."ThoiGianDangTin" DESC LIMIT $1 OFFSET $2';
+        let queryText = 'SELECT * FROM public."TinTuc" , public."User_DanhMucSite" where "ArrayDaXoa" is null AND "TinTuc"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite" ORDER BY "TinTuc"."ThoiGianDangTin" DESC LIMIT $1 OFFSET $2';
 
         console.info('Excute: ' + queryText);
         let pResult;
@@ -57,7 +57,7 @@ export class ListNewsRepo extends RepoBase {
         console.log(option)
         console.log(offset)
         console.log(limit)
-        let queryText = 'SELECT * FROM public."TinTuc",public."User_DanhMucSite" WHERE "ArrayDaXoa" is null AND "TinTuc"."IDDanhMucSite"="User_DanhMucSite"."IDDanhMucSite" ORDER BY "IDTinTuc" ASC LIMIT $1 OFFSET $2';
+        let queryText = 'SELECT "URLNews" FROM public."TinTuc",public."User_DanhMucSite" WHERE "ArrayDaXoa" is null AND "TinTuc"."IDDanhMucSite"="User_DanhMucSite"."IDDanhMucSite" ORDER BY "ThoiGianDangTin" DESC LIMIT $1 OFFSET $2';
 
         console.info('Excute: ' + queryText);
         let pResult;
