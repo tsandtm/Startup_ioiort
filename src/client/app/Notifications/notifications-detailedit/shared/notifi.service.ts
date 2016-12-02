@@ -28,6 +28,19 @@ export class NotifiService {
             .then(response => response.json() as InsertUser)
             .catch(this.handleError);
     }
+
+    getslsend(req): Promise<number> {
+        return this._http.post('/api/sl',req)
+            .toPromise()
+            .then(response => response.json() as number)
+            .catch(this.handleError);
+    }
+    getsldenied(req): Promise<number> {
+        return this._http.post('/api/sldenied',req)
+            .toPromise()
+            .then(response => response.json() as number)
+            .catch(this.handleError);
+    }
     getLastNotifi(): Promise<Notifi> {
         return this._http.get('/api/notifi')
             .toPromise()

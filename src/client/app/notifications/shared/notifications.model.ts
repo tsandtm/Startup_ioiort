@@ -3,9 +3,17 @@ export class Notifications{
     AppID:number;
     TieuDe: string;
     NoiDung: string;
-    ThoiGianGui:Date;
-    ThoiHanToiDa:Date;
+    ThoiGianGui:string;
+    ThoiHanToiDa:string;
     DoUuTien: number;
     TrangThaiGoi: number;
     SoLuong: number;
+    Send_TagName:string[];
+    Send_UserName:string[];
+    Send_UserDenieName:string[];
+    Send_TagDenieName:string[];
+    Send_TagID:number[];
+    Send_UserID:number[];
+    Send_UserDenieID:number[];
+    Send_TagDenieID:number[];
 }

@@ -1,7 +1,7 @@
-import {ModelBase} from './model.base';
 
 
-export class Notifications extends ModelBase {
+export class Notifications{
+    id:number;
     AppID:number;
     TieuDe: string;
     NoiDung: string;
@@ -10,4 +10,12 @@ export class Notifications extends ModelBase {
     DoUuTien: number;
     TrangThaiGoi: number;
     SoLuong: number;
+    Send_TagName:string[];
+    Send_UserName:string[];
+    Send_UserDenieName:string[];
+    Send_TagDenieName:string[];
+    Send_TagID:number[];
+    Send_UserID:number[];
+    Send_UserDenieID:number[];
+    Send_TagDenieID:number[];
 }
