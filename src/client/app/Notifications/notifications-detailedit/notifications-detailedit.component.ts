@@ -249,7 +249,15 @@ export class NotificationstDetailEditComponent implements OnInit{
     getNotifications(id: number) {
         
         this._notificationsService.getNotifications(id)
-            .then(notifications => this.notifications = notifications)
+            .then(notifications => {
+                this.notifications = notifications;
+                this.tieude = notifications.TieuDe;
+                this.Noidung = notifications.NoiDung;
+            })
     }
-
+    Edit(): void{        
+        this.notifications.TieuDe = this.tieude;
+        this.notifications.NoiDung = this.Noidung;
+        this._notificationsService.Edit(this.notifications).then(result=>this._router.navigate(['notification']));
+    }
 }

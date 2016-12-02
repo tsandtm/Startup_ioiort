@@ -1,6 +1,6 @@
 {
     "development": {
-        "database": "testdb",
+        "database": "Notification",
         "username": "postgres",
         "password": "123456",
         "config": {
