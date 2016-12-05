@@ -3,7 +3,7 @@ import { Router, Response, Request } from 'express';
 import path = require('path');
 // import các module tạo table
 import { TinTucRepo } from '../repositories/tintuc.repo';
-import{TinTuc} from '../models/tintuc.model';
+import { TinTuc } from '../models/tintuc.model';
 export class TinTucRouter {
 
     private router: Router;
@@ -20,20 +20,20 @@ export class TinTucRouter {
     public getRouter(): Router {
         this.router.route('/tintuc/:id?')
             .get(this.getAllBook)
-        this.router.route('/xoa')//asd
-        this.router.route('/xoa')
+        this.router.route('/xoa/:id?')
+            .get(this.tindaxoa)
             .post(this.deleteABook);
         this.router.route('/tintuc')
             .post(this.update);
         this.router.route('/xoatin')
-        .post(this.xoatin);
+            .post(this.xoatin);
         // this.router.route('/phuchoi')
         // .post(this.phuchoi);
         this.router.route('/daxem')
             .post(this.daxem);
-        this.router.route('/tinquantam')
+        this.router.route('/tinquantam/:id?')
             .get(this.getallquantam)
-        this.router.route('/tinchuadoc')
+        this.router.route('/tinchuadoc/:id?')
             .get(this.chuadoc);
         this.router.route('/tinnoibat/:id?')
             .get(this.tinnoibat);
@@ -41,9 +41,9 @@ export class TinTucRouter {
     }
     private getAllBook = (req: Request, res: Response) => {
         let limit = req.query.limit ? req.query.limit : "all";
-        let offset = req.query.offset ? req.query.offset: 0;
+        let offset = req.query.offset ? req.query.offset : 0;
 
-        this.tintucRepo.getList(null,limit,offset)
+        this.tintucRepo.getList(null, limit, offset)
             .then(result => {
                 res.status(200).json(result)
             })
@@ -51,12 +51,12 @@ export class TinTucRouter {
                 console.error(error.message);
                 res.status(500).send(error.message)
             })
-    } 
+    }
     private getallquantam = (req: Request, res: Response) => {
-        // let limit = req.query.limit ? req.query.limit : "all";
-        // let offset = req.query.offset ? req.query.offset: 0;
+        let limit = req.query.limit ? req.query.limit : "all";
+        let offset = req.query.offset ? req.query.offset : 0;
 
-        this.tintucRepo.quantam(null)
+        this.tintucRepo.quantam(null, limit, offset)
             .then(result => {
                 res.status(200).json(result)
             })
@@ -64,7 +64,7 @@ export class TinTucRouter {
                 console.error(error.message);
                 res.status(500).send(error.message)
             })
-    } 
+    }
     private chuadoc = (req: Request, res: Response) => {
         // let limit = req.query.limit ? req.query.limit : "all";
         // let offset = req.query.offset ? req.query.offset: 0;
@@ -77,11 +77,23 @@ export class TinTucRouter {
                 console.error(error.message);
                 res.status(500).send(error.message)
             })
-    } 
+    }
     private tinnoibat = (req: Request, res: Response) => {
         let limit = req.query.limit ? req.query.limit : "all";
-        let offset = req.query.offset ? req.query.offset: 0;
-        this.tintucRepo.TinNoiBat(null,limit,offset)
+        let offset = req.query.offset ? req.query.offset : 0;
+        this.tintucRepo.TinNoiBat(null, limit, offset)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            })
+    }
+    private tindaxoa = (req: Request, res: Response) => {
+        let limit = req.query.limit ? req.query.limit : "all";
+        let offset = req.query.offset ? req.query.offset : 0;
+        this.tintucRepo.TinDaXoa(null, limit, offset)
             .then(result => {
                 res.status(200).json(result)
             })
@@ -142,7 +154,7 @@ export class TinTucRouter {
                 res.status(500).send(error.message);
             });
     }
-     private deleteABook = (req: Request, res: Response) => {
+    private deleteABook = (req: Request, res: Response) => {
         let option = new TinTuc();
         option = req.body;
 
@@ -157,7 +169,7 @@ export class TinTucRouter {
     }
 
 
-//xai d======================================================
+    //xai d======================================================
     // private deleteABook = (req: Request, res: Response) => {
     //     console.log(req.body)
     //     this.tintucRepo.delete(req.params.id)

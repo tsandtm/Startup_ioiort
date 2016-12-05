@@ -74,6 +74,41 @@ export class TinTucRepo extends RepoBase {
                 return null;
             });
     }
+     public TinDaXoa(option, limit, offset): Promise<TinTuc[]> {
+        let queryText = `SELECT * FROM public."TinTuc",public."User_DanhMucSite" WHERE "ArrayDaXoa" is not null AND "TinTuc"."IDDanhMucSite"="User_DanhMucSite"."IDDanhMucSite" ORDER BY "ThoiGianDangTin" DESC NULLS LAST LIMIT ${limit} OFFSET ${offset}`;
+
+        console.info('Excute: ' + queryText);
+        let pResult;
+        if (option) {
+            pResult = this._pgPool.query(queryText, [option.id, option.name])
+        } else {
+            pResult = this._pgPool.query(queryText)
+        }
+        return pResult.then(result => {
+            let TinTucs: TinTuc[] = result.rows.map(r => {
+                let tintuc = new TinTuc();
+                tintuc.id = r.IDTinTuc;
+                tintuc.IDDanhMucSite = r.IDDanhMucSite;
+                tintuc.TieuDe = r.TieuDe;
+                tintuc.MoTa = r.MoTa;
+                tintuc.NoiDung = r.NoiDung;
+                tintuc.ThoiGianDangTin = r.ThoiGianDangTin;
+                tintuc.URLNews = r.URLNews;
+                tintuc.URLThumbImage = r.URLThumbImage;
+                tintuc.URLImage = r.URLImage;
+                tintuc.ArrayDaXem=r.ArrayDaXem;
+                tintuc.ArrayDaXoa=r.ArrayDaXoa;
+                tintuc.ArrayQuanTam=r.ArrayQuanTam;
+                // console.log(r.idtintuc)
+                return tintuc;
+            });
+            return TinTucs;
+        })
+            .catch(err => {
+                console.error(err.message);
+                return null;
+            });
+    }
     public xoatin(option):Promise<TinTuc>{
          console.log('option: ' + option);
         let queryText = `UPDATE public."TinTuc" Set "ArrayDaXoa"= "ArrayDaXoa" || ARRAY[1]::BIGINT[] WHERE "IDTinTuc"=${option.id}`;
@@ -164,8 +199,8 @@ export class TinTucRepo extends RepoBase {
                 return Promise.reject(error);
             });
     }
-    public quantam(option): Promise<TinTuc[]> {
-        let queryText = `SELECT * FROM public."TinTuc"  WHERE "ArrayQuanTam" is not null ORDER BY "IDTinTuc"`;
+    public quantam(option, limit, offset): Promise<TinTuc[]> {
+        let queryText = `SELECT * FROM public."TinTuc"  WHERE "ArrayQuanTam" is not null ORDER BY "IDTinTuc" LIMIT ${limit} OFFSET ${offset}`;
 
         console.info('Excute: ' + queryText);
         let pResult;
