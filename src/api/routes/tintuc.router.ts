@@ -20,14 +20,14 @@ export class TinTucRouter {
     public getRouter(): Router {
         this.router.route('/tintuc/:id?')
             .get(this.getAllBook)
+             .post(this.update);
         this.router.route('/tindaxoa/:id?')
             .get(this.lktindaxoa)
         this.router.route('/xoa')
             .post(this.deleteABook);
         this.router.route('/boxoa')
             .post(this.boxoa);
-        this.router.route('/tintuc')
-            .post(this.update);
+           
         this.router.route('/xoatin')
         .post(this.xoatin);
         this.router.route('/daxem')
@@ -70,7 +70,7 @@ export class TinTucRouter {
     private getAllBook = (req: Request, res: Response) => {
         let limit = req.query.limit ? req.query.limit : "all";
         let offset = req.query.offset ? req.query.offset: 0;
-
+        console.log(req.body)
         this.tintucRepo.getList(null,limit,offset)
             .then(result => {
                 res.status(200).json(result)
