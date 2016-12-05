@@ -33,7 +33,7 @@ export class TinTucRouter {
         this.router.route('/daxem')
             .post(this.daxem);
            
-        this.router.route('/tinquantam') /**api cua tin quan tam */
+        this.router.route('/tinquantam/:id?') /**api cua tin quan tam */
             .get(this.getallquantam)
         this.router.route('/tinchuadoc')
             .get(this.chuadoc);
@@ -70,7 +70,6 @@ export class TinTucRouter {
     private getAllBook = (req: Request, res: Response) => {
         let limit = req.query.limit ? req.query.limit : "all";
         let offset = req.query.offset ? req.query.offset: 0;
-        console.log(req.body)
         this.tintucRepo.getList(null,limit,offset)
             .then(result => {
                 res.status(200).json(result)
@@ -83,8 +82,8 @@ export class TinTucRouter {
     private getallquantam = (req: Request, res: Response) => {
         // let limit = req.query.limit ? req.query.limit : "all";
         // let offset = req.query.offset ? req.query.offset: 0;
-
-        this.tintucRepo.quantam(null)
+      
+        this.tintucRepo.quantam(req.params.id)
             .then(result => {
                 res.status(200).json(result)
             })
@@ -109,6 +108,7 @@ export class TinTucRouter {
     private tinnoibat = (req: Request, res: Response) => {
         let limit = req.query.limit ? req.query.limit : "all";
         let offset = req.query.offset ? req.query.offset: 0;
+       
         this.tintucRepo.TinNoiBat(null,limit,offset)
             .then(result => {
                 res.status(200).json(result)

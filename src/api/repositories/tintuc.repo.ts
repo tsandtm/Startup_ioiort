@@ -8,7 +8,7 @@ export class TinTucRepo extends RepoBase {
         super();
     }
     public getList(option, limit, offset): Promise<TinTuc[]> {
-        let queryText = `SELECT * FROM public."TinTuc",public."User_DanhMucSite" WHERE "ArrayDaXoa" is null AND "TinTuc"."IDDanhMucSite"="User_DanhMucSite"."IDDanhMucSite" ORDER BY "IDTinTuc" ASC LIMIT ${limit} OFFSET ${offset}`;
+        let queryText = `SELECT * FROM public."TinTuc",public."User_DanhMucSite" WHERE "ArrayDaXoa" is null AND "TinTuc"."IDDanhMucSite"="User_DanhMucSite"."IDDanhMucSite" AND "ArrayDaXem" is null ORDER BY "IDTinTuc" ASC LIMIT ${limit} OFFSET ${offset}`;
 
         console.info('Excute: ' + queryText);
         let pResult;
@@ -39,7 +39,7 @@ export class TinTucRepo extends RepoBase {
                 return null;
             });
     }
-     public lktindaxoa(option, limit, offset): Promise<TinTuc[]> {
+    public lktindaxoa(option, limit, offset): Promise<TinTuc[]> {
         let queryText = `SELECT * FROM public."TinTuc" WHERE "ArrayDaXoa" is not null ORDER BY "IDTinTuc" ASC LIMIT ${limit} OFFSET ${offset}`;
 
         console.info('Excute: ' + queryText);
@@ -104,9 +104,9 @@ export class TinTucRepo extends RepoBase {
                 tintuc.URLNews = r.URLNews;
                 tintuc.URLThumbImage = r.URLThumbImage;
                 tintuc.URLImage = r.URLImage;
-                tintuc.ArrayDaXem=r.ArrayDaXem;
-                tintuc.ArrayDaXoa=r.ArrayDaXoa;
-                tintuc.ArrayQuanTam=r.ArrayQuanTam;
+                tintuc.ArrayDaXem = r.ArrayDaXem;
+                tintuc.ArrayDaXoa = r.ArrayDaXoa;
+                tintuc.ArrayQuanTam = r.ArrayQuanTam;
                 // console.log(r.idtintuc)
                 return tintuc;
             });
@@ -117,8 +117,8 @@ export class TinTucRepo extends RepoBase {
                 return null;
             });
     }
-    public xoatin(option):Promise<TinTuc>{
-         console.log('option: ' + option);
+    public xoatin(option): Promise<TinTuc> {
+        console.log('option: ' + option);
         let queryText = `UPDATE public."TinTuc" Set "ArrayDaXoa"= "ArrayDaXoa" || ARRAY[1]::BIGINT[] WHERE "IDTinTuc"=${option.id}`;
         return this._pgPool.query(queryText)
             .then(result => {
@@ -195,7 +195,7 @@ export class TinTucRepo extends RepoBase {
     //         })
     // }
 
-     public delele(option): Promise<TinTuc> {
+    public delele(option): Promise<TinTuc> {
         console.log('option: ' + option);
         let queryText = `UPDATE public."TinTuc" Set "ArrayQuanTam"= null WHERE "IDTinTuc"=${option.id}`;
         return this._pgPool.query(queryText)
@@ -208,16 +208,14 @@ export class TinTucRepo extends RepoBase {
             });
     }
     public quantam(option): Promise<TinTuc[]> {
-        let queryText = `SELECT * FROM public."TinTuc"  WHERE "ArrayQuanTam" is not null ORDER BY "IDTinTuc"`;
-
-        console.info('Excute: ' + queryText);
+        let queryText = "";
         let pResult;
-
-        if (option) {
-            pResult = this._pgPool.query(queryText, [option.id, option.name])
-        } else {
-            pResult = this._pgPool.query(queryText)
-        }
+         (option === undefined) ?
+            queryText = `SELECT * FROM public."TinTuc"  WHERE "ArrayQuanTam" is not null ORDER BY "IDTinTuc"`
+            :queryText = `SELECT * FROM public."TinTuc" WHERE "ArrayQuanTam" is not null AND "IDTinTuc" = ${option} ORDER BY "IDTinTuc"`
+        
+        pResult = this._pgPool.query(queryText)
+        console.info('Excute: ' + queryText);
         return pResult.then(result => {
             let TinTucs: TinTuc[] = result.rows.map(r => {
                 let tintuc = new TinTuc();
@@ -273,7 +271,7 @@ export class TinTucRepo extends RepoBase {
                 return null;
             });
     }
-     public daxem(option): Promise<TinTuc> {
+    public daxem(option): Promise<TinTuc> {
         console.log('option: ' + option);
         let queryText = `UPDATE public."TinTuc" Set "ArrayDaXem"= "ArrayDaXem" || ARRAY[1]::BIGINT[] WHERE "IDTinTuc"=${option.id}`;
         return this._pgPool.query(queryText)
