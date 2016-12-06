@@ -5,3 +5,9 @@ var Notifications = (function () {
     return Notifications;
 }());
 exports.Notifications = Notifications;
+var SentContact = (function () {
+    function SentContact() {
+    }
+    return SentContact;
+}());
+exports.SentContact = SentContact;

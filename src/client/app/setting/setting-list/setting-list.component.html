@@ -22,8 +22,8 @@
                 <thead>
                     <tr>
                         <th>App Id</th>
-                        <th>Api key</th>
                         <th>App name</th>
+                        <th>Api key</th>                        
                         <th>Trạng thái</th>   
                         <th>Ngày tạo</th>                     
                         <th></th>
@@ -32,8 +32,8 @@
                 <tbody>
                     <tr *ngFor='let set of itempages | settingFilter:listFilter'> 
                         <td>{{ set.AppID }}</td>
-                        <td>{{ set.APIKey }}</td>
-                        <td>{{ set.AppName }}</td>      
+                        <td>{{ set.AppName }}</td>
+                        <td>{{ set.APIKey }}</td>                              
                         <td>{{ set.IsActive }}</td>
                         <td>{{ set.NgayTao }}</td>                  
                         <td>
@@ -46,8 +46,8 @@
             </table>
         </div>
     </div>
-    <div class="text-center panel-footer">            <!-- pager -->
-        <ul  class="pagination">
+    <div class="text-center panel-footer" *ngIf="pager.pages">            <!-- pager -->
+        <ul  class="pagination" *ngIf="pager.pages.length>1">
             <li [ngClass]="{disabled:pager.currentPage === 1}">
                 <a (click)="setPage(1)">First</a>
             </li>

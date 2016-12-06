@@ -20,7 +20,12 @@ export class SettingService{
             .catch(this.handleError);
             
     }
-    
+    getAllSettingPT(req): Promise<Setting[]> {
+        return this._http.get('/api/settingPT?so='+req)
+            .toPromise()
+            .then(response => response.json() as Setting[])
+            .catch(this.handleError); 
+    }
     Create(req): Promise<Setting[]> {
         return this._http.post('/api/setting',req)
             .toPromise()
@@ -45,8 +50,13 @@ export class SettingService{
             .then(setting => setting.find(p => p.AppID === id))
             .catch(this.handleError);
     }
-
-    getPager(totalItems: number, currentPage: number = 1, pageSize: number = 10) {
+    getCount(): Promise<number> {
+        return this._http.get('/api/settingcount')
+            .toPromise()
+            .then(response => response.json() as number)
+            .catch(this.handleError);
+    }
+    getPager(totalItems: number, currentPage: number = 1, pageSize: number = 15) {
         // calculate total pages
         var totalPages = Math.ceil(totalItems / pageSize);
 
@@ -81,7 +91,7 @@ export class SettingService{
                 pages=[1];
             else
                 pages.push(n);
-            console.log(totalPages+n);
+            console.log(n);
         };
         // return object with all pager properties required by the view
         return {

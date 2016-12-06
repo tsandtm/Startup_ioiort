@@ -15,6 +15,7 @@ var NotificationsListComponent = (function () {
         this._notificationsService = _notificationsService;
         this.pageTitle = 'Notifications List';
         this.listFilter = '';
+        this.listFilter1 = '';
     }
     NotificationsListComponent.prototype.ngOnInit = function () {
         var _this = this;

@@ -44,7 +44,7 @@ var SettingService = (function () {
     };
     SettingService.prototype.getOne = function (id) {
         return this.getAllSetting()
-            .then(function (products) { return products.find(function (p) { return p.AppID === id; }); })
+            .then(function (setting) { return setting.find(function (p) { return p.AppID === id; }); })
             .catch(this.handleError);
     };
     SettingService.prototype.getPager = function (totalItems, currentPage, pageSize) {
