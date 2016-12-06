@@ -22,17 +22,20 @@ export class SettingRouter {
         console.log('abc');
         this.router.route('/setting')
             .get(this.getAllSetting)
-            .post(this.Create);            
+            .post(this.Create);     
+        this.router.route('/settingPT')
+            .get(this.getAllSettingPT);       
         this.router.route("/settingedit")
             .post(this.Edit);
         this.router.route("/settingdelete")
             .post(this.Delete);
+        this.router.get('/settingcount',this.getcount);
         
         return this.router;
     }
 
     private getAllSetting = (req: Request, res: Response) => {
-        console.log('abc'+req.body);
+        console.log('abc'+req.body.id);
         this.settingRepo.getList(req.body)
             .then(result => {
                 res.status(200).json(result)
@@ -41,16 +44,29 @@ export class SettingRouter {
                 console.error(error.message);
                 res.status(500).send(error.message)
             });
-        // this.bookRepo.getList(null)
-        //     .then(result => {
-        //         res.status(200).json(result)
-        //     })
-        //     .catch(error => {
-        //         console.error(error.message);
-        //         res.status(500).send(error.message)
-        //     })
     }
-
+    private getAllSettingPT = (req: Request, res: Response) => {
+        console.log('abcs'+req.query.so);
+        this.settingRepo.getListPT(req.query.so)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            });
+    }
+    private getcount = (req: Request, res: Response) => {
+        console.log('abcs'+req.query.so);
+        this.settingRepo.getcount(req.query.so)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            });
+    }
     private Create = (req: Request, res: Response) => {
         this.settingRepo.Create(req.body)
             .then(result => {
