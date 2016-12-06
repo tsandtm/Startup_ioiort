@@ -50,6 +50,7 @@ var BarChartDemoComponent = (function () {
             _this.devices = _this.getlabeldonoughnut();
         });
         this.reportService.getDevice().then(function (result) {
+            _this.listDevice = [];
             _this.listDevice = result;
             _this.barChartLabels = _this.getmonthlabel();
             _this.createDataSets();
@@ -72,20 +73,35 @@ var BarChartDemoComponent = (function () {
     };
     BarChartDemoComponent.prototype.createDataSets = function () {
         var _this = this;
+        var e = [];
+        var a = [];
         this.listDevice.forEach(function (ld) {
             console.log("so thiet bi" + _this.devices.length + " so thiet bi moi thang " + ld.listdevice.length);
-            if (ld.listdevice.length < _this.devices.length) {
-                ld.listdevice.forEach(function (d) {
-                    for (var i = 0; i < _this.devices.length; i++) {
-                        if (_this.devices[i] != d.name) {
-                            _this.rp = new Report_model_1.Report();
-                            _this.rp.name = _this.devices[i];
-                            _this.rp.count = 0;
-                            ld.listdevice.push(_this.rp);
-                        }
-                    }
+            e = [];
+            console.log("mang e chay lai" + JSON.stringify(e));
+            ld.listdevice.forEach(function (r) {
+                e.push(r.name);
+            });
+            console.log("Mang e: " + JSON.stringify(e));
+            for (var j = 0; j < ld.listdevice.length; j++) {
+                console.log("devices trong vong for:" + JSON.stringify(_this.devices));
+                a = (_this.devices).filter(function (j) {
+                    return e.indexOf(j) < 0;
                 });
             }
+            console.log("Mang a: " + JSON.stringify(a));
+            if (a != []) {
+                for (var i = 0; i < a.length; i++) {
+                    _this.rp = new Report_model_1.Report();
+                    _this.rp.name = a[i];
+                    _this.rp.count = 0;
+                    ld.listdevice.push(_this.rp);
+                }
+            }
+            // if (ld.listdevice.length < this.devices.length) {
+            //   ld.listdevice.forEach(d => {
+            //   })
+            // }
             console.log("load tat ca" + JSON.stringify(ld));
             ld.listdevice.forEach(function (d) {
                 var index = _this.checkIfLabelExists(d.name);
@@ -242,7 +258,9 @@ var BarChartDemoComponent = (function () {
         }
         else {
             this.reportService.getDevice().then(function (result) {
+                _this.listDevice = [];
                 _this.listDevice = result;
+                console.log("result nam nay:" + JSON.stringify(_this.listDevice));
                 _this.barChartLabels = [];
                 _this.barChartLabels = _this.getmonthlabel();
                 _this.datasets = [];
