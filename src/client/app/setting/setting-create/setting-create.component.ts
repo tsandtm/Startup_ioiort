@@ -15,8 +15,8 @@ export class SettingCreateComponent {
     trangthai: boolean;
     setting: Setting;
     ngaytao: string;
-    appid:number;
-    alert:string;
+    alertname:string;
+    alertapi:string;
     setting1: Setting[];
     constructor(
         private settingservice:SettingService,
@@ -28,43 +28,69 @@ export class SettingCreateComponent {
         this.settingservice.getAllSetting().then(setting1 => this.setting1 = setting1);
     }
     Create(){
-        
-        this.getSetting(this.appid);
         var i = 0;
-        
+        var n = 1;
+        var t = 0;
         for(let s of this.setting1)
-        {
-            if(s.AppID==this.appid)
+        {        
+            if(this.apikey==s.APIKey&&i==0)
             {
-                i=1;
-                break;
+                 this.alertapi="API Key đã được sử dụng!!!!";
+                 i++;
             }
+            if(this.appname==s.AppName&&t==0)
+            {
+                this.alertname="AppName đã được sử dụng!!!!";
+                t++;
+            }
+            n=s.AppID+1;
         }
         if(i==0)
         {
-            this.alert='';
+            this.alertapi="";
+        }
+        if(t==0)
+        {
+            this.alertname="";  
+        }
+        console.log(this.apikey+''+this.appname+''+n);
+        if(this.appname==undefined||this.appname=="")
+        {
+            this.alertname="Chưa nhập AppName!!!!!";
+            i++;
+        }
+        if(this.apikey==undefined||this.apikey=="")
+        {
+            this.alertapi="Chưa nhập API Key!!!!!";
+            t++;
+        }          
+        if(i==0)
+        {
+            this.alertapi="";
+        }
+        if(t==0)
+        {
+            this.alertname="";  
+        }      
+        if(i==0&&t==0)
+        {
             if(this.trangthai==undefined)
             this.trangthai=false;        
             this.ngaytao = new Date().toLocaleDateString("en-US")+'';
             this.setting={
-                AppID: this.appid,
+                AppID: n,
                 APIKey: this.apikey,
                 IsActive: this.trangthai,
                 NgayTao: this.ngaytao,
                 AppName: this.appname,
             }
+            this.alertapi="";
+            this.alertname="";
             this.settingservice.Create(this.setting).then(result=>this._router.navigate(['setting-list']));
-        }
-        else if(i==1)
-        {
-            this.alert='AppID đã được sử dụng!!!!';
+
         }
     }
-    getSetting(id: number) {
-        this.settingservice.getOne(id)
-            .then(setting => this.setting = setting)
-        
-    }
+
     Back() {
         this._router.navigate(['setting-list']);
     }
