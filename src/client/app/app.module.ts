@@ -1,13 +1,13 @@
-import { NgModule} from '@angular/core';
-import { BrowserModule} from '@angular/platform-browser';
-import { LocationStrategy,HashLocationStrategy, PathLocationStrategy} from '@angular/common';
-import { FormsModule} from '@angular/forms';
-import { HttpModule} from '@angular/http';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { LocationStrategy, HashLocationStrategy, PathLocationStrategy } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { Ng2PaginationModule } from 'ng2-pagination';
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
-import { NotificationsModalContext} from './notifications/notifications-modal/notifications-modal.component';
+import { NotificationsModalContext } from './notifications/notifications-modal/notifications-modal.component';
 import { routing } from './app.routing.module';
 import { AppComponent } from './app.component';
 import { ProductListComponent } from './products/product-list/product-list.component';
@@ -18,15 +18,15 @@ import { ContactNotifiService } from './notification-send/shared/contact.service
 import { WelcomeComponent } from './home/welcome.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import { BarChartDemoComponent } from './Reports/Report/Report.component';
-import { ProductFilterPipe} from './products/product-filter/product-filter.pipe';
-import { StarComponent} from './shared/star.component';
+import { ProductFilterPipe } from './products/product-filter/product-filter.pipe';
+import { StarComponent } from './shared/star.component';
 import { MenuListComponent } from './menu/menu-list/menu-list.component';
-import { ContactsListComponent} from './contacts/contacts-list/contacts-list.component';
-import { ContactsService} from './contacts/shared/contacts.service';
-import { NotificationsListComponent} from './notifications/notifications-list/notifications-list.component';
-import { NotificationstDetailComponent} from './notifications/notifications-detail/notifications-detail.component';
+import { ContactsListComponent } from './contacts/contacts-list/contacts-list.component';
+import { ContactsService } from './contacts/shared/contacts.service';
+import { NotificationsListComponent } from './notifications/notifications-list/notifications-list.component';
+import { NotificationstDetailComponent } from './notifications/notifications-detail/notifications-detail.component';
 import { NotificationsService } from './notifications/shared/notifications.service';
-import { YeucaubanListComponent} from './yeucauban/yeucauban-list/yeucauban-list.component';
+import { YeucaubanListComponent } from './yeucauban/yeucauban-list/yeucauban-list.component';
 import { YeucaubanService } from './yeucauban/shared/yeucauban.service';
 import { NotifiSendComponent } from './notification-send/notification.component';
 import { ConfirmComponent } from './notification-send/confirm.component';
@@ -51,56 +51,56 @@ import { SettingDetailComponent } from './setting/setting-detail/setting-detail.
 import { SettingFilterPipe } from './setting/setting-filter/setting-filter.pipe';
 import { DateFilterPipe } from './notifications/notifications-filter/datefilter';
 import { InfiniteScrollModule } from 'angular2-infinite-scroll';
+import { RotatingPlaneComponent } from './spinner/rotating-plane.component';
+import { CircleComponent } from './spinner/circle';
 
 @NgModule({
     imports: [
         BrowserModule,
         routing,
         FormsModule,
-        HttpModule, 
+        HttpModule,
         Ng2PaginationModule,
         ChartsModule,
         TagInputModule,
         ModalModule.forRoot(),
         BootstrapModalModule,
         InfiniteScrollModule
-        ],
-    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},ProductService,ContactsService,ContactNotifiService,NotificationsService,YeucaubanService,ContactService,NotifiService,TagService,SettingService ],
+    ],
+    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, ProductService, ContactsService, ContactNotifiService, NotificationsService, YeucaubanService, ContactService, NotifiService, TagService, SettingService],
     declarations: [
-    AppComponent,
-    NotifiSendComponent,
-
-    SettingListComponent,
-    SettingCreateComponent,
-    SettingEditComponent,
-    SettingDeleteComponent,
-    SettingDetailComponent,
-    SettingFilterPipe,
-
-    WelcomeComponent,
-
-    NotificationsListComponent,
-    ProductDetailComponent,
-    ProductListComponent,
-    ProductFilterPipe,
-
-    BarChartDemoComponent,
-    MenuListComponent,
-    ContactsListComponent,
-    NotificationsListComponent,
-    NotificationstDetailComponent,
-    YeucaubanListComponent,
-    StarComponent,
-    ConfirmComponent,
-    ContactListComponent,
-    ContactDetailComponent,
-    ContactFilterPipe,
-    ModalContactUpdate,
-    NotificationsListComponent,
-    NotificationstDetailComponent,
-    NotificationstDetailEditComponent,
-    NotificationFilterPipe,
-    DateFilterPipe
+        AppComponent,
+        NotifiSendComponent,
+        CircleComponent,
+        SettingListComponent,
+        SettingCreateComponent,
+        SettingEditComponent,
+        SettingDeleteComponent,
+        SettingDetailComponent,
+        SettingFilterPipe,
+        WelcomeComponent,
+        NotificationsListComponent,
+        ProductDetailComponent,
+        ProductListComponent,
+        ProductFilterPipe,
+        BarChartDemoComponent,
+        MenuListComponent,
+        ContactsListComponent,
+        NotificationsListComponent,
+        NotificationstDetailComponent,
+        YeucaubanListComponent,
+        StarComponent,
+        ConfirmComponent,
+        ContactListComponent,
+        ContactDetailComponent,
+        ContactFilterPipe,
+        ModalContactUpdate,
+        NotificationsListComponent,
+        NotificationstDetailComponent,
+        NotificationstDetailEditComponent,
+        NotificationFilterPipe,
+        DateFilterPipe,
+        RotatingPlaneComponent
     ],
     bootstrap: [AppComponent],
     entryComponents: [ModalContactUpdate]

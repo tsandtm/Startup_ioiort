@@ -24,6 +24,12 @@ var SettingService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
+    SettingService.prototype.getAllSettingPT = function (req) {
+        return this._http.get('/api/settingPT?so=' + req)
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
     SettingService.prototype.Create = function (req) {
         return this._http.post('/api/setting', req)
             .toPromise()
@@ -47,9 +53,15 @@ var SettingService = (function () {
             .then(function (setting) { return setting.find(function (p) { return p.AppID === id; }); })
             .catch(this.handleError);
     };
+    SettingService.prototype.getCount = function () {
+        return this._http.get('/api/settingcount')
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
     SettingService.prototype.getPager = function (totalItems, currentPage, pageSize) {
         if (currentPage === void 0) { currentPage = 1; }
-        if (pageSize === void 0) { pageSize = 10; }
+        if (pageSize === void 0) { pageSize = 15; }
         // calculate total pages
         var totalPages = Math.ceil(totalItems / pageSize);
         var startPage, endPage;
@@ -83,7 +95,7 @@ var SettingService = (function () {
                 pages = [1];
             else
                 pages.push(n);
-            console.log(totalPages + n);
+            console.log(n);
         }
         ;
         // return object with all pager properties required by the view

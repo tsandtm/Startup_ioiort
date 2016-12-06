@@ -58,6 +58,7 @@ var setting_detail_component_1 = require('./setting/setting-detail/setting-detai
 var setting_filter_pipe_1 = require('./setting/setting-filter/setting-filter.pipe');
 var datefilter_1 = require('./notifications/notifications-filter/datefilter');
 var angular2_infinite_scroll_1 = require('angular2-infinite-scroll');
+var rotating_plane_component_1 = require('ng2-spin-kit-new/app/spinner/rotating-plane.component');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -106,7 +107,8 @@ var AppModule = (function () {
                 notifications_detail_component_1.NotificationstDetailComponent,
                 notifications_detailedit_component_1.NotificationstDetailEditComponent,
                 notifications_filter_pipe_1.NotificationFilterPipe,
-                datefilter_1.DateFilterPipe
+                datefilter_1.DateFilterPipe,
+                rotating_plane_component_1.RotatingPlaneComponent
             ],
             bootstrap: [app_component_1.AppComponent],
             entryComponents: [Contact_update_component_1.ModalContactUpdate]
