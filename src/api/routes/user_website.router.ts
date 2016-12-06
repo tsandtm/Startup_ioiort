@@ -54,7 +54,6 @@ export class UserWebsRouter {
 
         this.userwebsRepo.Delete({ idUser: req.query.idUser, idDanhMuc: req.query.idDanhMuc })
             .then(lnw => {
-
                 return res.status(200).json(lnw);
             })
             .catch(err => {

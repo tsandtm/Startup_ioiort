@@ -11,7 +11,7 @@ export class ListWebRepo extends RepoBase {
         console.log('Limit: ' + limit)
         console.log('Offset: ' + offset)
         let queryText = 'SELECT * FROM public."DanhMucSite" ORDER BY "IDDanhMucSite" ASC LIMIT $1 OFFSET $2';
-      
+
         console.info('Excute: ' + queryText);
         let pResult;
 
@@ -58,28 +58,11 @@ export class ListWebRepo extends RepoBase {
             });
     }
     public getList_User(option): Promise<ListWeb[]> {
-        let queryText = 'SELECT "DanhMucSite"."IDDanhMucSite", "DuongDan", "TenGoi", "MoTa", "SoLuongTinDuyetTim", "TempateCrawlTieuDe", "TempateCrawlMoTa", "TempateCrawlNoiDung", "TempateCrawlImage", "LinkRSS", "TenGoi_KoDau", "Icon" FROM public."DanhMucSite" , public."User_DanhMucSite" where "DanhMucSite"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite"';
-        console.info('Excute: ' + queryText);
+        let queryText = 'SELECT * FROM public."DanhMucSite" , public."User_DanhMucSite" where "DanhMucSite"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite" and "IDUser"=$1';
+        console.log("id " + option);
+        console.info('Excute: ' + queryText + `${option}`);
         let pResult;
-
-        if (option) {
-            pResult = this._pgPool.query(queryText,
-                [option.IDDanhMucSite,
-                option.DuongDan,
-                option.TenGoi,
-                option.MoTa,
-                option.SoLuongTinDuyetTim,
-                option.TempateCrawlTieuDe,
-                option.TempateCrawlMoTa,
-                option.TempateCrawlNoiDung,
-                option.TempateCrawlImage,
-                option.LinkRSS,
-                option.Icon,
-                option.TenGoi_KoDau
-                ])
-        } else {
-            pResult = this._pgPool.query(queryText)
-        }
+        pResult = this._pgPool.query(queryText, [option])
         return pResult.then(result => {
             let webs: ListWeb[] = result.rows.map(r => {
                 let web = new ListWeb();
