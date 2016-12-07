@@ -16,14 +16,13 @@ export class TinTucRouter {
         //this.model = model;
     }
 
-
     public getRouter(): Router {
         this.router.route('/tintuc/:id?')
             .get(this.getAllBook)
             .post(this.update);
         this.router.route('/tindaxoa/:id?')
             .get(this.lktindaxoa)
-        this.router.route('/xoa')
+        this.router.route('/xoa/:id?')
             .post(this.deleteABook);
         this.router.route('/boxoa')
             .post(this.boxoa);
@@ -33,19 +32,22 @@ export class TinTucRouter {
         this.router.route('/daxem')
             .post(this.daxem);
 
-        this.router.route('/tinquantam/:id?') /**api cua tin quan tam */
+        this.router.route('/tinquantam/:id/:idtintuc?') /**api cua tin quan tam */
+
             .get(this.getallquantam)
-        this.router.route('/tinchuadoc')
+        this.router.route('/tinchuadoc/:id?')
             .get(this.chuadoc);
         this.router.route('/tinnoibat/:id?')
             .get(this.tinnoibat);
+
         return this.router;
     }
     private lktindaxoa = (req: Request, res: Response) => {
+
         let limit = req.query.limit ? req.query.limit : "all";
         let offset = req.query.offset ? req.query.offset : 0;
 
-        this.tintucRepo.lktindaxoa(null, limit, offset)
+        this.tintucRepo.lktindaxoa(req.params.id, limit, offset)
             .then(result => {
                 res.status(200).json(result)
             })
@@ -55,10 +57,10 @@ export class TinTucRouter {
             })
     }
     private boxoa = (req: Request, res: Response) => {
-        let option = new TinTuc();
-        option = req.body;
+        // let option = new TinTuc();
+        // option = req.body;
 
-        this.tintucRepo.boxoa(option)
+        this.tintucRepo.boxoa(req.body.id,req.body.IDUser)
             .then((result) => {
                 res.status(200).json(result);
             })
@@ -70,7 +72,8 @@ export class TinTucRouter {
     private getAllBook = (req: Request, res: Response) => {
         let limit = req.query.limit ? req.query.limit : "all";
         let offset = req.query.offset ? req.query.offset : 0;
-        this.tintucRepo.getList(null, limit, offset)
+
+        this.tintucRepo.getList(req.params.id, limit, offset)
             .then(result => {
                 res.status(200).json(result)
             })
@@ -80,10 +83,10 @@ export class TinTucRouter {
             })
     }
     private getallquantam = (req: Request, res: Response) => {
-        // let limit = req.query.limit ? req.query.limit : "all";
-        // let offset = req.query.offset ? req.query.offset: 0;
+        let limit = req.query.limit ? req.query.limit : "all";
+        let offset = req.query.offset ? req.query.offset : 0;
 
-        this.tintucRepo.quantam(req.params.id)
+        this.tintucRepo.quantam(req.params, limit, offset)
             .then(result => {
                 res.status(200).json(result)
             })
@@ -109,7 +112,7 @@ export class TinTucRouter {
         let limit = req.query.limit ? req.query.limit : "all";
         let offset = req.query.offset ? req.query.offset : 0;
 
-        this.tintucRepo.TinNoiBat(null, limit, offset)
+        this.tintucRepo.TinNoiBat(req.params.id, limit, offset)
             .then(result => {
                 res.status(200).json(result)
             })
@@ -118,11 +121,14 @@ export class TinTucRouter {
                 res.status(500).send(error.message)
             })
     }
-    private xoatin = (req: Request, res: Response) => {
-        let option = new TinTuc();
-        option = req.body;
 
-        this.tintucRepo.xoatin(option)
+    private xoatin = (req: Request, res: Response) => {
+        // let option = new TinTuc();
+        // option = req.body;
+        console.log("id " + req.body.id);
+        console.log("IDUSER " + req.body.IDUser);
+
+        this.tintucRepo.xoatin(req.body.id, req.body.IDUser)
             .then((result) => {
                 res.status(200).json(result);
             })
@@ -131,24 +137,12 @@ export class TinTucRouter {
                 res.status(500).send(error.message);
             });
     }
-    //  private phuchoi = (req: Request, res: Response) => {
-    //     let option = new TinTuc();
-    //     option = req.body;
 
-    //     this.tintucRepo.phuchoi(option)
-    //         .then((result) => {
-    //             res.status(200).json(result);
-    //         })
-    //         .catch((error) => {
-    //             console.error(error.message);
-    //             res.status(500).send(error.message);
-    //         });
-    // }
     private update = (req: Request, res: Response) => {
-        let option = new TinTuc();
-        option = req.body;
+        // let option = new TinTuc();
+        // option = req.body;
 
-        this.tintucRepo.update(option)
+        this.tintucRepo.update(req.body.id, req.body.IDUser)
             .then((result) => {
                 res.status(200).json(result);
             })
@@ -161,7 +155,7 @@ export class TinTucRouter {
         let option = new TinTuc();
         option = req.body;
 
-        this.tintucRepo.daxem(option)
+        this.tintucRepo.daxem(req.body.id, req.body.IDUser)
             .then((result) => {
                 res.status(200).json(result);
             })
@@ -171,10 +165,8 @@ export class TinTucRouter {
             });
     }
     private deleteABook = (req: Request, res: Response) => {
-        let option = new TinTuc();
-        option = req.body;
 
-        this.tintucRepo.delele(option)
+        this.tintucRepo.delele(req.body.id, req.body.IDUser)
             .then((result) => {
                 res.status(200).json(result);
             })
