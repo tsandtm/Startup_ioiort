@@ -105,6 +105,7 @@ export class SettingService{
         var pages: number[];
         if(currentPage<=3)
         {
+<<<<<<< HEAD
             if(totalPages<5)
             {
                 for(var n:number=1;n<=totalPages;n++)
@@ -127,6 +128,16 @@ export class SettingService{
                     
                 };
             }
+=======
+            for(var n:number=1;n<=5;n++)
+            {
+                if(pages==undefined)
+                    pages=[n];
+                else
+                    pages.push(n);
+                
+            };
+>>>>>>> 42cf0e3a30a038d1a26a10d04630b8666c908461
         }
         else if(currentPage>=(totalPages-2))
         {
