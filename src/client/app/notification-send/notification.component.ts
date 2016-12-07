@@ -257,10 +257,6 @@ export class NotifiSendComponent implements OnInit{
                             };
                         },
                         processResults: function (data, params) {
-                        // parse the results into the format expected by Select2
-                        // since we are using custom formatting functions we do not need to
-                        // alter the remote JSON data, except to indicate that infinite
-                        // scrolling can be used
                         var i=1;
                             params.page = params.page || 0;
                             return {
@@ -296,10 +292,6 @@ export class NotifiSendComponent implements OnInit{
                             };
                         },
                         processResults: function (data, params) {
-                        // parse the results into the format expected by Select2
-                        // since we are using custom formatting functions we do not need to
-                        // alter the remote JSON data, except to indicate that infinite
-                        // scrolling can be used
                         var i=1;
                             params.page = params.page || 0;
                             return {
@@ -335,10 +327,6 @@ export class NotifiSendComponent implements OnInit{
                             };
                         },
                         processResults: function (data, params) {
-                        // parse the results into the format expected by Select2
-                        // since we are using custom formatting functions we do not need to
-                        // alter the remote JSON data, except to indicate that infinite
-                        // scrolling can be used
                         var i=1;
                             params.page = params.page || 0;
                             return {
@@ -358,6 +346,5 @@ export class NotifiSendComponent implements OnInit{
                     minimumInputLength: 1,
                     escapeMarkup: function (markup) { return markup; }, 
             });
-            		
     }
 }

@@ -20,7 +20,12 @@ export class SettingService{
             .catch(this.handleError);
             
     }
-    
+    getAllSettingPT(req): Promise<Setting[]> {
+        return this._http.get('/api/settingPT?so='+req)
+            .toPromise()
+            .then(response => response.json() as Setting[])
+            .catch(this.handleError); 
+    }
     Create(req): Promise<Setting[]> {
         return this._http.post('/api/setting',req)
             .toPromise()
@@ -45,8 +50,31 @@ export class SettingService{
             .then(setting => setting.find(p => p.AppID === id))
             .catch(this.handleError);
     }
-
-    getPager(totalItems: number, currentPage: number = 1, pageSize: number = 10) {
+    getCount(): Promise<number> {
+        return this._http.get('/api/settingcount')
+            .toPromise()
+            .then(response => response.json() as number)
+            .catch(this.handleError);
+    }
+    getAppName(req):Promise<Setting>{
+        return this._http.get('/api/settingAppName?so='+req)
+            .toPromise()
+            .then(response => response.json() as Setting)
+            .catch(this.handleError);
+    }
+    getAPI(req):Promise<Setting>{
+        return this._http.get('/api/settingAPI?so='+req)
+            .toPromise()
+            .then(response => response.json() as Setting)
+            .catch(this.handleError);
+    }
+    getAppID():Promise<number>{
+        return this._http.get('/api/settingAppID')
+            .toPromise()
+            .then(response => response.json() as number)
+            .catch(this.handleError);
+    }
+    getPager(totalItems: number, currentPage: number, pageSize: number = 15) {
         // calculate total pages
         var totalPages = Math.ceil(totalItems / pageSize);
 
@@ -75,14 +103,39 @@ export class SettingService{
 
         // create an array of pages to ng-repeat in the pager control
         var pages: number[];
-        for(var n:number=1;n<(totalPages+1);n++)
+        if(currentPage<=3)
         {
-            if(pages==undefined)
-                pages=[1];
-            else
-                pages.push(n);
-            console.log(totalPages+n);
-        };
+            for(var n:number=1;n<=5;n++)
+            {
+                if(pages==undefined)
+                    pages=[n];
+                else
+                    pages.push(n);
+                
+            };
+        }
+        else if(currentPage>=(totalPages-2))
+        {
+            for(var n:number=(totalPages-4);n<=totalPages;n++)
+            {
+                if(pages==undefined)
+                    pages=[n];
+                else
+                    pages.push(n);
+                
+            };
+        }
+        else
+        {
+            for(var n:number=currentPage-2;n<(currentPage+3);n++)
+            {
+                if(pages==undefined)
+                    pages=[n];
+                else
+                    pages.push(n);
+                
+            };
+        }
         // return object with all pager properties required by the view
         return {
             totalItems: totalItems,
