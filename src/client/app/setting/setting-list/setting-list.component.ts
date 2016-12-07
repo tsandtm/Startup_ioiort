@@ -9,10 +9,9 @@ import { SettingService } from '../shared/setting.service';
 export class SettingListComponent {
     pageTitle: string = 'Setting List';
     listFilter: string;
-    setting: Setting[];
     pager: any = {};
     itempages: Setting[];
-
+    id:number;
     // paged items
     constructor(
         // private $confirm: AngularConfirm.IConfirmModalFactory,
@@ -21,18 +20,21 @@ export class SettingListComponent {
 
     }
 
-    ngOnInit(): void {
-        this._SettingService.getAllSetting().then(setting => this.setting = setting)
-            .then(result => this.setPage(1));
+    ngOnInit(): void { 
+        this._SettingService.getCount().then(result=>this.id=result)
+        .then(result=>this.setPage(1));
     }
     setPage(page: number): void {
-        if (this.setting != undefined) {
-            if (page < 1 || page > this.pager.totalPages) {
-                return;
-            }
-            this.pager = this._SettingService.getPager(this.setting.length, page);
-            // get current page of items
-            this.itempages = this.setting.slice(this.pager.startIndex, this.pager.endIndex + 1);
+        if(this.id!=undefined)
+        {
+        console.log("abeeee"+this.id);
+        if (page < 1 || page > this.pager.totalPages) {
+            return;
+        }
+        this.pager = this._SettingService.getPager(this.id, page);
+        // get current page of items
+        this._SettingService.getAllSettingPT(this.pager.startIndex).then(itempages => this.itempages = itempages);
+        //.slice(this.pager.startIndex, this.pager.endIndex + 1);
         }
 
     }
