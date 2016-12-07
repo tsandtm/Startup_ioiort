@@ -36,14 +36,8 @@ export class ConfirmComponent implements OnInit {
         this._route.params.forEach((params: Params) => {
             let id = +params["id"];
             this.getNotifi(id).then(result=>{
-            if(this.notifi.SendTag.length==0 && this.notifi.SendUser.length==0){
-                this.getSLDenied(id);
-                this.getSentUserDenied(id);
-            }
-            else{
                 this.getSL(id);
                 this.getSentUser(id);
-            }
                 this.getAppkey(this.notifi.AppID);
             });
         })
@@ -71,18 +65,6 @@ export class ConfirmComponent implements OnInit {
     }
     getSL(id:number){
         this.notifiservice.getSL(id)
-        .then(sl=>{
-            this.sl=sl
-        })
-    }
-
-    getSentUserDenied(id: number) {
-        this.notifiservice.getSendUserDenied(id)
-            .then(sent => {
-            this.sentUser = sent})
-    }
-    getSLDenied(id:number){
-        this.notifiservice.getSLDenied(id)
         .then(sl=>{
             this.sl=sl
         })

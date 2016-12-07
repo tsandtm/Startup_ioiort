@@ -35,12 +35,6 @@ export class NotifiService {
             .then(response => response.json() as number)
             .catch(this.handleError);
     }
-    getsldenied(req): Promise<number> {
-        return this._http.post('/api/sldenied',req)
-            .toPromise()
-            .then(response => response.json() as number)
-            .catch(this.handleError);
-    }
 
     getLastNotifi(): Promise<Notifi> {
         return this._http.get('/api/notifi')
@@ -72,17 +66,6 @@ export class NotifiService {
             .then(slsend => slsend.find(p => p.NotifiID === id))
             .catch(this.handleError);
     }
-    getAllSLDenied():Promise<SLSend[]>{
-        return this._http.get('/api/sldenied')
-            .toPromise()
-            .then(response => response.json() as SLSend[])
-            .catch(this.handleError);
-    }
-    getSLDenied(id): Promise<SLSend> {
-        return this.getAllSLDenied()
-            .then(slsend => slsend.find(p => p.NotifiID === id))
-            .catch(this.handleError);
-    }
 
     getSend():Promise<SentUser[]>{
         return this._http.get('/api/sentuser')
@@ -92,18 +75,6 @@ export class NotifiService {
     }
     getSendUser(id):Promise<SentUser[]>{
         return this.getSend()
-            .then(slsend => slsend.filter(p => p.NotifiID === id))
-            .catch(this.handleError);
-    }
-
-    getSendDenied():Promise<SentUser[]>{
-        return this._http.get('/api/sentuserdenied')
-            .toPromise()
-            .then(response => response.json() as SentUser[])
-            .catch(this.handleError);
-    }
-    getSendUserDenied(id):Promise<SentUser[]>{
-        return this.getSendDenied()
             .then(slsend => slsend.filter(p => p.NotifiID === id))
             .catch(this.handleError);
     }

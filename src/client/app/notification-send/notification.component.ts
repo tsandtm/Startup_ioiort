@@ -1,4 +1,4 @@
-import { Component,OnInit,Input } from '@angular/core';
+import { Component,OnInit,Input,AfterViewInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Appkey } from './shared/app.model';
 import { Notifi } from './shared/notifi.model';
@@ -13,42 +13,19 @@ import { TagService } from './shared/tag.service';
     providers: [AppService,NotifiService,ContactNotifiService,TagService]
 })
 export class NotifiSendComponent implements OnInit{
-    optionsTag = {
-        placeholder: "+ Tag",
-        secondaryPlaceholder: "Tag",
-    }
-    optionsContact = {
-        placeholder: "+ Contact",
-        secondaryPlaceholder: "Contact",
-    }
-    optionsTagDenied = {
-        placeholder: "+ Tag Denied",
-        secondaryPlaceholder: "Tag Denied",
-    }
-    optionsContactDenied = {
-        placeholder: "+ Contact Denied",
-        secondaryPlaceholder: "Contact Denied",
-    }
     //Tag
-    ACTag = [];
-    ACTagItem = [];
     listIDTag=[];
     listNameTag=[];
     Tag:Tag[];
-    //Contact    
-    ACContact = [];
-    ACContactItem = [];
+    //Contact
+    countContact=0;
     listIDContact=[];
     listNameContact=[];
     Contact:Contact[];
     //TagDenied
-    ACTagDenied = [];
-    ACTagDeniedItem = [];
     listIDTagDenied=[];
     listNameTagDenied=[];
     //ContactDenied
-    ACContactDenied = [];
-    ACContactDeniedItem = [];
     listIDContactDenied=[];
     listNameContactDenied=[];
     //----//
@@ -88,84 +65,13 @@ export class NotifiSendComponent implements OnInit{
     private _route: ActivatedRoute) {
 
     }
-    public TagAdded(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        var name=item.slice(pos+1,item.length);
-        this.listIDTag.push(parseInt(num));
-        this.listNameTag.push(name);
+    loop(min,max){
+        var input=[];
+        for(var i=min;i<max;i++){
+            input.push(i);
+        }
+        return input;
     }
-    public TagRemoved(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        var name=item.slice(pos+1,item.length);
-        this.delPos(this.listIDTag,parseInt(num));
-        this.delPosstring(this.listNameTag,name);
-    }
-    public ContactAdded(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        var name=item.slice(pos+1,item.length);
-        this.listIDContact.push(parseInt(num));
-        this.listNameContact.push(name);
-    }
-    public ContactRemoved(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        var name=item.slice(pos+1,item.length);
-        this.delPos(this.listIDContact,parseInt(num));
-        this.delPosstring(this.listNameContact,name);
-    }
-    public TagDeniedAdded(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        var name=item.slice(pos+1,item.length);
-        this.listIDTagDenied.push(parseInt(num));
-        this.listNameTagDenied.push(name);
-    }
-    public TagDeniedRemoved(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        var name=item.slice(pos+1,item.length);
-        this.delPos(this.listIDTagDenied,parseInt(num));
-        this.delPosstring(this.listNameTagDenied,name);
-    }
-    public ContactDeniedAdded(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        var name=item.slice(pos+1,item.length);
-        this.listIDContactDenied.push(parseInt(num));
-        this.listNameContactDenied.push(name);
-    }
-    public ContactDeniedRemoved(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        var name=item.slice(pos+1,item.length);
-        this.delPos(this.listIDContactDenied,parseInt(num));
-        this.delPosstring(this.listNameContactDenied,name);
-    }
-    // public TagDeniedAdded(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.listIDTag.push(parseInt(num));
-    // }
-    // public TagDeniedRemoved(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.delPos(this.listIDTag,parseInt(num));
-    // }
-    // public ContactDeniedAdded(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.listIDContact.push(parseInt(num));
-    //     console.log(this.listIDContact.toString());
-    // }
-    // public ContactDeniedRemoved(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.delPos(this.listIDContact,parseInt(num));
-    //     console.log(this.listIDContact.toString());
-    // }
     delPos(ar:Array<number>,key:number){
         for(var i=0;i<=ar.length;i++){
             if(ar[i]==key){
@@ -180,34 +86,10 @@ export class NotifiSendComponent implements OnInit{
             }
         }
     }
-    loop(min,max){
-        var input=[];
-        for(var i=min;i<max;i++){
-            input.push(i);
-        }
-        return input;
-    }
     getNotifi() {
         this.notifiservice.getLastNotifi()
             .then(notifi => this.notifi = notifi)
     }
-    getTag(){
-        this.tagservice.getAllTag().then(tag=>{
-            this.Tag=tag;
-            this.Tag.forEach(element => {
-            this.ACTagItem.push(element.TagID+'.'+element.TagNameDisplay)
-        });
-    });
-    }
-    getContact(){
-        this.contactservice.getAllContact().then(contact=>{
-            this.Contact=contact;
-            this.Contact.forEach(element=>{
-                this.ACContactItem.push(element.ContactID+'.'+element.TaiKhoan)
-            });
-        });
-    }
-    
     sendnowclick(): void {
         this.sendnow = true;
         this.sendlater=false;
@@ -216,7 +98,20 @@ export class NotifiSendComponent implements OnInit{
         this.sendnow = false;
         this.sendlater=true;
     }
+        // var pos=item.indexOf('.');
+        // var num=item.slice(0,pos);
+        // var name=item.slice(pos+1,item.length);
+    LoadAll(){
+        console.log($(".js-data-example-ajaxTag").val());
+        console.log($(".js-data-example-ajaxContact").val());
+        console.log($(".js-data-example-ajaxTagDenied").val());
+        console.log($(".js-data-example-ajaxContactDenied").val());
+    }
     Create(){
+        this.listIDTag=$(".js-data-example-ajaxTag").val();
+        this.listIDContact=$(".js-data-example-ajaxContact").val();
+        this.listIDTagDenied=$(".js-data-example-ajaxTagDenied").val();
+        this.listIDContactDenied=$(".js-data-example-ajaxContactDenied").val();
         this.date=new Date(this.date);
         if(this.sendnow){
             this.date=new Date();
@@ -251,72 +146,33 @@ export class NotifiSendComponent implements OnInit{
         else{
             this.ThoiHan=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString(); 
         }
-        if(this.tieude == undefined || this.Noidung == undefined)
+        if(this.tieude == undefined || this.Noidung == undefined || this.listIDTag==null || this.listIDContact==null)
         {
             console.log(false);
             return false;
         }
         else{
-            if(this.listIDTag.length==0 && this.listIDContact.length==0)
-            {
-                this.getslsenddenied({contactdenied:this.listIDContactDenied,tagdenied:this.listIDTagDenied}).then(result=>{
-                    this.notifi={AppID:this.AppID,
-                    NotifiID:this.notifiID,
-                    TieuDe:this.tieude,
-                    Noidung:this.Noidung,
-                    DoUuTien:this.doUuTien,
-                    Trangthai:this.Trangthai,
-                    Soluong:result,
-                    Thoigiangui:this.Thoigiangui,
-                    ThoiHan:this.ThoiHan,
-                    SendTag:this.listIDTag,
-                    SendTagName:this.listNameTag,
-                    SendUser:this.listIDContact,
-                    SendUserName:this.listNameContact,
-                    DeniedTag:this.listIDTagDenied,
-                    DeniedTagName:this.listNameTagDenied,
-                    DeniedUser:this.listIDContactDenied,
-                    DeniedUserName:this.listNameContactDenied};
-                    this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
-                })
-            }
-            else{
-                this.getslsend({contact:this.listIDContact,tag:this.listIDTag,contactdenied:this.listIDContactDenied,tagdenied:this.listIDTagDenied}).then(result=>{
-                    this.notifi={AppID:this.AppID,
-                    NotifiID:this.notifiID,
-                    TieuDe:this.tieude,
-                    Noidung:this.Noidung,
-                    DoUuTien:this.doUuTien,
-                    Trangthai:this.Trangthai,
-                    Soluong:result,
-                    Thoigiangui:this.Thoigiangui,
-                    ThoiHan:this.ThoiHan,
-                    SendTag:this.listIDTag,
-                    SendTagName:this.listNameTag,
-                    SendUser:this.listIDContact,
-                    SendUserName:this.listNameContact,
-                    DeniedTag:this.listIDTagDenied,
-                    DeniedTagName:this.listNameTagDenied,
-                    DeniedUser:this.listIDContactDenied,
-                    DeniedUserName:this.listNameContactDenied};
-                    this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
-                })
-            }
+            this.getslsend({contact:this.listIDContact,tag:this.listIDTag,contactdenied:this.listIDContactDenied,tagdenied:this.listIDTagDenied}).then(result=>{
+                this.notifi={AppID:this.AppID,
+                NotifiID:this.notifiID,
+                TieuDe:this.tieude,
+                Noidung:this.Noidung,
+                DoUuTien:this.doUuTien,
+                Trangthai:this.Trangthai,
+                Soluong:result,
+                Thoigiangui:this.Thoigiangui,
+                ThoiHan:this.ThoiHan,
+                SendTag:this.listIDTag,
+                SendTagName:this.listNameTag,
+                SendUser:this.listIDContact,
+                SendUserName:this.listNameContact,
+                DeniedTag:this.listIDTagDenied,
+                DeniedTagName:this.listNameTagDenied,
+                DeniedUser:this.listIDContactDenied,
+                DeniedUserName:this.listNameContactDenied};
+                this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
+            })
         }
-        // this.notifi={AppID:this.AppID,
-        // NotifiID:this.notifiID,
-        // TieuDe:this.tieude,
-        // Noidung:this.Noidung,
-        // DoUuTien:this.doUuTien,
-        // Trangthai:this.Trangthai,
-        // Soluong:this.Soluong,
-        // Thoigiangui:this.Thoigiangui,
-        // ThoiHan:this.ThoiHan,
-        // SendTag:this.listIDTag,
-        // SendUser:this.listIDContact,
-        // DeniedTag:this.listIDTagDenied,
-        // DeniedUser:this.listIDContactDenied};
-        // this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
     }
 
 
@@ -326,19 +182,182 @@ export class NotifiSendComponent implements OnInit{
     getslsend(req):Promise<number>{
         return this.notifiservice.getslsend(req).then(result=>this.Soluong=result);
     }
-    getslsenddenied(req):Promise<number>{
-        return this.notifiservice.getsldenied(req).then(result=>this.Soluong=result);
+    getCountContact(id: number):Promise<number> {
+        return this.contactservice.getCount(id).then(result=>this.countContact=result);
     }
     ngOnInit(): void {
         this.loadGetAll();
         this.getNotifi();
-        this.getTag();
-        this.getContact();
         this.today=new Date();
         this.loophour=this.loop(1,24);
         this.loopminute=this.loop(0,60);
         this.loophourTH=this.loop(5,24);
         this.loopminuteTH=this.loop(5,60);
         this.loopdayTH=this.loop(5,28);
+    }
+    ngAfterViewInit()
+    {		
+        // this._route.queryParams.forEach((params: Params) => {
+        //     let id = +params["id"];
+        //     this.getCountContact(id).then(result=>{console.log(this.countContact)});
+        // })
+        // var count=this.countContact;
+        jQuery(".js-data-example-ajaxTag").select2({
+            placeholder:"Tag muốn gửi",
+                multiple: true,
+                allowClear: true, 
+                tokenSeparators: [","],
+                ajax: {
+                    url: "/api/Tag",
+                    dataType: 'json',
+                    delay: 500,
+                    data: function (params) {
+                        return {
+                            id: params.term, // search term
+                            page: params.page,
+                            };
+                        },
+                        processResults: function (data, params) {
+                        // parse the results into the format expected by Select2
+                        // since we are using custom formatting functions we do not need to
+                        // alter the remote JSON data, except to indicate that infinite
+                        // scrolling can be used
+                        var i=1;
+                            params.page = params.page || 0;
+                            return {
+                                results:
+                                $.map(data, function(obj) {
+                                    i+=10;
+                                    return { id: obj.TagID, text: obj.TagNameDisplay };
+                                }),
+                                pagination: {
+                                more: (params.page * 10) < i
+                                }
+                            };
+                        },
+                        cache: true
+                    },
+                    
+                    minimumInputLength: 1,
+                    escapeMarkup: function (markup) { return markup; }, 
+            });
+        jQuery(".js-data-example-ajaxTagDenied").select2({
+            placeholder:"Tag không muốn gửi",
+                multiple: true,
+                allowClear: true, 
+                tokenSeparators: [","],
+                ajax: {
+                    url: "/api/Tag",
+                    dataType: 'json',
+                    delay: 500,
+                    data: function (params) {
+                        return {
+                            id: params.term, // search term
+                            page: params.page,
+                            };
+                        },
+                        processResults: function (data, params) {
+                        // parse the results into the format expected by Select2
+                        // since we are using custom formatting functions we do not need to
+                        // alter the remote JSON data, except to indicate that infinite
+                        // scrolling can be used
+                        var i=1;
+                            params.page = params.page || 0;
+                            return {
+                                results:
+                                $.map(data, function(obj) {
+                                    i+=10;
+                                    return { id: obj.TagID, text: obj.TagNameDisplay };
+                                }),
+                                pagination: {
+                                more: (params.page * 10) < i
+                                }
+                            };
+                        },
+                        cache: true
+                    },
+                    
+                    minimumInputLength: 1,
+                    escapeMarkup: function (markup) { return markup; }, 
+            });
+            jQuery(".js-data-example-ajaxContact").select2({
+            placeholder:"User muốn gửi",
+                multiple: true,
+                allowClear: true, 
+                tokenSeparators: [","],
+                ajax: {
+                    url: "/api/Contactnotifi",
+                    dataType: 'json',
+                    delay: 500,
+                    data: function (params) {
+                        return {
+                            id: params.term, // search term
+                            page: params.page,
+                            };
+                        },
+                        processResults: function (data, params) {
+                        // parse the results into the format expected by Select2
+                        // since we are using custom formatting functions we do not need to
+                        // alter the remote JSON data, except to indicate that infinite
+                        // scrolling can be used
+                        var i=1;
+                            params.page = params.page || 0;
+                            return {
+                                results:
+                                $.map(data, function(obj) {
+                                    i+=10;
+                                    return { id: obj.ContactID, text: obj.ContactID+'.'+obj.TaiKhoan };
+                                }),
+                                pagination: {
+                                more: (params.page * 10) < i
+                                }
+                            };
+                        },
+                        cache: true
+                    },
+                    
+                    minimumInputLength: 1,
+                    escapeMarkup: function (markup) { return markup; }, 
+            });
+            jQuery(".js-data-example-ajaxContactDenied").select2({
+            placeholder:"User không muốn gửi",
+                multiple: true,
+                allowClear: true, 
+                tokenSeparators: [","],
+                ajax: {
+                    url: "/api/Contactnotifi",
+                    dataType: 'json',
+                    delay: 500,
+                    data: function (params) {
+                        return {
+                            id: params.term, // search term
+                            page: params.page,
+                            };
+                        },
+                        processResults: function (data, params) {
+                        // parse the results into the format expected by Select2
+                        // since we are using custom formatting functions we do not need to
+                        // alter the remote JSON data, except to indicate that infinite
+                        // scrolling can be used
+                        var i=1;
+                            params.page = params.page || 0;
+                            return {
+                                results:
+                                $.map(data, function(obj) {
+                                    i+=10;
+                                    return { id: obj.ContactID, text: obj.ContactID+'.'+obj.TaiKhoan };
+                                }),
+                                pagination: {
+                                more: (params.page * 10) < i
+                                }
+                            };
+                        },
+                        cache: true
+                    },
+                    
+                    minimumInputLength: 1,
+                    escapeMarkup: function (markup) { return markup; }, 
+            });
+            		
     }
 }

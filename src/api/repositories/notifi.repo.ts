@@ -156,29 +156,6 @@ export class NotifiRepo extends RepoBase {
             });
 
     }
-    public getSLDenied(option):Promise<SLSend[]>{
-        let queryText = 'SELECT "NotifiID",COUNT(*) FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserDenieID" OR A."Contact_TagID" && B."Send_TagDenieID") = false GROUP BY "NotifiID"';
-
-        console.info('Excute: ' + queryText);
-        let pResult;
-        if (option.NotifiID == undefined) {
-            pResult = this._pgPool.query(queryText)
-        }
-        return pResult.then(result => {
-            let slsends: SLSend[] = result.rows.map(r => {
-                let slsend = new SLSend();
-                slsend.NotifiID = r.NotifiID;
-                slsend.count = r.count;
-                return slsend;
-            });
-            return slsends;
-        })
-            .catch(err => {
-                console.error(err.message);
-                return null;
-            });
-
-    }
     public getslsend(option): Promise<number> {
         let queryText = 'SELECT COUNT(*) FROM test."Contacts" A WHERE (Array[A."ContactID"] && $1 OR A."Contact_TagID" && $2) AND (Array[A."ContactID"] && $3 OR A."Contact_TagID" && $4) = false';
 
@@ -195,24 +172,8 @@ export class NotifiRepo extends RepoBase {
                 return null;
             });
     }
-    public getslsenddenied(option): Promise<number> {
-        let queryText = 'SELECT COUNT(*) FROM test."Contacts" A WHERE (Array[A."ContactID"] && $1 OR A."Contact_TagID" && $2) = false';
-
-        console.info('Excute: ' + queryText);
-
-        return this._pgPool.query(queryText,[option.contactdenied,option.tagdenied])
-            .then(result => {
-                let slsend:number;
-                slsend = result.rows[0].count;
-                return slsend;
-            })
-            .catch(err => {
-                console.error(err.message);
-                return null;
-            });
-    }
     public getSentUser(option):Promise<SentUser[]>{
-        let queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook","Contact_TagName" FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserID" OR A."Contact_TagID" && B."Send_TagID") AND (Array[A."ContactID"] && B."Send_UserDenieID" OR A."Contact_TagID" && B."Send_TagDenieID") = false';
+        let queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook","Contact_TagName" FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserID" OR A."Contact_TagID" && B."Send_TagID") AND (Array[A."ContactID"] && B."Send_UserDenieID" OR A."Contact_TagID" && B."Send_TagDenieID") = false ORDER BY "ContactID" ASC LIMIT 10';
 
         console.info('Excute: ' + queryText);
         let pResult;
@@ -238,34 +199,6 @@ export class NotifiRepo extends RepoBase {
                 return null;
             });
     }
-    public getSentUserDenied(option):Promise<SentUser[]>{
-        let queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook","Contact_TagName" FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserDenieID" OR A."Contact_TagID" && B."Send_TagDenieID") = false';
-
-        console.info('Excute: ' + queryText);
-        let pResult;
-        if (option.NotifiID == undefined) {
-            pResult = this._pgPool.query(queryText)
-        }
-        return pResult.then(result => {
-            let sents: SentUser[] = result.rows.map(r => {
-                let sent = new SentUser();
-                sent.NotifiID=r.NotifiID;
-                sent.ContactID = r.ContactID;
-                sent.TaiKhoan = r.TaiKhoan;
-                sent.Device = r.Device;
-                sent.Email = r.Email;
-                sent.FaceBook = r.FaceBook;
-                sent.ContactTagName=r.Contact_TagName;
-                return sent;
-            });
-            return sents;
-        })
-            .catch(err => {
-                console.error(err.message);
-                return null;
-            });
-    }
-
     public getOneNoti(option): Promise<Notifi> {
         let queryText = 'select * from test."n_Notifications" where "NotifiID" = $1';
 

@@ -31,7 +31,7 @@
       'ng2-pagination': 'npm:ng2-pagination',
       'angular2-tag-input': 'npm:angular2-tag-input/dist/angular2-tag-input.bundle.js',
       'ng2-tag-input': 'npm:ng2-tag-input/dist/ng2-tag-input.bundle.js',
-      'socket.io-client': "npm:socket.io-client/socket.io.js"
+      'socket.io-client': "npm:socket.io-client/socket.io.js",
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {

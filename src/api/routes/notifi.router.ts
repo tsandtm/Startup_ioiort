@@ -34,17 +34,11 @@ export class NotifiRouter {
         .get(this.getSL)
         .post(this.getSLsend)
 
-        this.router.route("/sldenied")
-        .get(this.getSLDenied)
-        .post(this.getSLsenddenied)
 
         this.router.route("/sentuser")
         .get(this.getSentUser)
         .post(this.Insert)
         
-        this.router.route("/sentuserdenied")
-        .get(this.getSentUserDenied);
-
         
 
 
@@ -113,16 +107,6 @@ export class NotifiRouter {
                 res.status(500).send(error.message)
             });
     }
-    private getSLDenied = (req: Request, res: Response) => {
-        this.notifiRepo.getSLDenied(req.body)
-            .then(result => {
-                res.status(200).json(result)
-            })
-            .catch(error => {
-                console.error(error.message);
-                res.status(500).send(error.message)
-            });
-    }
     private getSLsend = (req: Request, res: Response) => {
         this.notifiRepo.getslsend(req.body)
             .then(result => {
@@ -133,28 +117,8 @@ export class NotifiRouter {
                 res.status(500).send(error.message)
             });
     }
-    private getSLsenddenied = (req: Request, res: Response) => {
-        this.notifiRepo.getslsenddenied(req.body)
-            .then(result => {
-                res.status(200).json(result)
-            })
-            .catch(error => {
-                console.error(error.message);
-                res.status(500).send(error.message)
-            });
-    }
     private getSentUser = (req: Request, res: Response) => {
         this.notifiRepo.getSentUser(req.body)
-            .then(result => {
-                res.status(200).json(result)
-            })
-            .catch(error => {
-                console.error(error.message);
-                res.status(500).send(error.message)
-            });
-    }
-    private getSentUserDenied = (req: Request, res: Response) => {
-        this.notifiRepo.getSentUserDenied(req.body)
             .then(result => {
                 res.status(200).json(result)
             })

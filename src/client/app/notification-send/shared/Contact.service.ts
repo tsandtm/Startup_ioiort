@@ -20,7 +20,12 @@ export class ContactNotifiService {
             .then(response => response.json() as Contact[])
             .catch(this.handleError);
     }
-
+    getCount(req): Promise<number> {
+        return this._http.get('/api/ContactCount',req)
+            .toPromise()
+            .then(response => response.json() as number)
+            .catch(this.handleError);
+    }
     // getProduct(id: number): Promise<Product> {
     //     // return this.getProducts()
     //     //     .map((products: Product[]) => products.find(p => p.productId === id))

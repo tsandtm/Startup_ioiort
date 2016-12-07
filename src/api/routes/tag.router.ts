@@ -4,7 +4,7 @@ import { Tag } from '../models/Tag.model'
 
 import path = require('path');
 // import các module tạo table
-import { TagRepo } from '../repositories/Tag.repo';
+import { TagRepo } from '../repositories/tag.repo';
 
 
 
@@ -25,7 +25,7 @@ export class TagRouter {
     }
 
     private getAllTag = (req: Request, res: Response) => {
-        this.tagRepo.getList()
+        this.tagRepo.getList(req.query)
             .then(result => {
                 res.status(200).json(result)
             })
