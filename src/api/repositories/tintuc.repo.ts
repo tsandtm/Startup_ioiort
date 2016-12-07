@@ -101,25 +101,29 @@ export class TinTucRepo extends RepoBase {
                 return null;
             });
     }
-    public boxoa(option): Promise<TinTuc> {
-        console.log('option: ' + option);
-        let queryText = `UPDATE public."TinTuc" Set "ArrayDaXoa"= null WHERE "IDTinTuc"=${option.id}`;
+    public boxoa(id, IDUser): Promise<TinTuc> {
+        console.log('id: ' + id);
+        console.log('id user: ' + IDUser);
+        let queryText = `UPDATE public."TinTuc" 
+        Set "ArrayDaXoa" = array_remove("ArrayDaXoa", ${IDUser}::bigint)
+        WHERE "IDTinTuc"= ${id}`;
         return this._pgPool.query(queryText)
             .then(result => {
-                return option;
+                return id;
             })
             .catch(error => {
                 console.error('Error: ', error);
                 return Promise.reject(error);
             });
     }
-    public xoatin(option): Promise<TinTuc> {
-        console.log('option: ' + option);
-        let queryText = `UPDATE public."TinTuc" Set "ArrayDaXoa"= "ArrayDaXoa" || ARRAY[1]::BIGINT[] 
-        WHERE "IDTinTuc"=${option.id}`;
+    public xoatin(id, IDUser): Promise<TinTuc> {
+        console.log('id: ' + id);
+        console.log('id user: ' + IDUser);
+        let queryText = `UPDATE public."TinTuc" Set "ArrayDaXoa"= "ArrayDaXoa" || ARRAY[${IDUser}]::BIGINT[] 
+        WHERE "IDTinTuc"=${id}`;
         return this._pgPool.query(queryText)
             .then(result => {
-                return option;
+                return id;
             })
             .catch(error => {
                 console.error('Error: ', error);
@@ -164,13 +168,14 @@ export class TinTucRepo extends RepoBase {
                 return tintuc;
             });
     }
-    public update(option): Promise<TinTuc> {
-        console.log('option: ' + option);
-        let queryText = `UPDATE public."TinTuc" Set "ArrayQuanTam"= "ArrayQuanTam" || ARRAY[1]::BIGINT[] 
-        WHERE "IDTinTuc"=${option.id}`;
+    public update(id, IDUser): Promise<TinTuc> {
+        console.log('id: ' + id);
+        console.log('id user: ' + IDUser);
+        let queryText = `UPDATE public."TinTuc" Set "ArrayQuanTam"= "ArrayQuanTam" || ARRAY[${IDUser}]::BIGINT[] 
+        WHERE "IDTinTuc"=${id}`;
         return this._pgPool.query(queryText)
             .then(result => {
-                return option;
+                return id;
             })
             .catch(error => {
                 console.error('Error: ', error);
@@ -193,12 +198,15 @@ export class TinTucRepo extends RepoBase {
     //         })
     // }
 
-    public delele(option): Promise<TinTuc> {
-        console.log('option: ' + option);
-        let queryText = `UPDATE public."TinTuc" Set "ArrayQuanTam"= null WHERE "IDTinTuc"=${option.id}`;
+    public delele(id, IDUser): Promise<TinTuc> {
+        console.log('id: ' + id);
+        console.log('id user: ' + IDUser);
+        let queryText = `UPDATE public."TinTuc" 
+        Set "ArrayQuanTam" = array_remove("ArrayQuanTam", ${IDUser}::bigint)
+        WHERE "IDTinTuc"= ${id}`;
         return this._pgPool.query(queryText)
             .then(result => {
-                return option;
+                return id;
             })
             .catch(error => {
                 console.error('Error: ', error);
@@ -206,32 +214,24 @@ export class TinTucRepo extends RepoBase {
             });
     }
     public quantam(option, limit, offset): Promise<TinTuc[]> {
-        let queryText = `SELECT "IDTinTuc","TieuDe","MoTa","ThoiGianDangTin","URLNews","URLThumbImage", ${option} = Any ("ArrayQuanTam"::bigint[]) 
+        let queryText = `SELECT "IDTinTuc","TieuDe","MoTa","ThoiGianDangTin","URLNews","URLThumbImage", 
+        ${option} = Any ("ArrayQuanTam"::bigint[]) 
         FROM public."TinTuc"  
-        WHERE "ArrayQuanTam" is not null and 2 = Any ("ArrayQuanTam"::bigint[]) is true 
-        ORDER BY "IDTinTuc" LIMIT ${limit} OFFSET ${offset}`;
+        WHERE "ArrayQuanTam" is not null and ${option} = Any ("ArrayQuanTam"::bigint[]) is true 
+        ORDER BY "ThoiGianDangTin" LIMIT ${limit} OFFSET ${offset}`;
 
         console.info('Excute: ' + queryText);
         let pResult;
-
-        if (option) {
-            pResult = this._pgPool.query(queryText, [option])
-        } else {
-            pResult = this._pgPool.query(queryText)
-        }
+        pResult = this._pgPool.query(queryText)
         return pResult.then(result => {
             let TinTucs: TinTuc[] = result.rows.map(r => {
                 let tintuc = new TinTuc();
                 tintuc.id = r.IDTinTuc;
-                tintuc.IDDanhMucSite = r.IDDanhMucSite;
                 tintuc.TieuDe = r.TieuDe;
                 tintuc.MoTa = r.MoTa;
-                tintuc.NoiDung = r.NoiDung;
                 tintuc.ThoiGianDangTin = r.ThoiGianDangTin;
                 tintuc.URLNews = r.URLNews;
                 tintuc.URLThumbImage = r.URLThumbImage;
-                tintuc.URLImage = r.URLImage;
-                // console.log(r.idtintuc)
                 return tintuc;
             });
             return TinTucs;
@@ -264,7 +264,6 @@ export class TinTucRepo extends RepoBase {
                 tintuc.URLNews = r.URLNews;
                 tintuc.URLThumbImage = r.URLThumbImage;
                 tintuc.URLImage = r.URLImage;
-                // console.log(r.idtintuc)
                 return tintuc;
             });
             return TinTucs;
@@ -274,13 +273,14 @@ export class TinTucRepo extends RepoBase {
                 return null;
             });
     }
-    public daxem(option): Promise<TinTuc> {
-        console.log('option: ' + option);
-        let queryText = `UPDATE public."TinTuc" Set "ArrayDaXem"= "ArrayDaXem" || ARRAY[1]::BIGINT[] 
-        WHERE "IDTinTuc"=${option.id}`;
+    public daxem(id, IDUser): Promise<TinTuc> {
+         console.log('id: ' + id);
+        console.log('id user: ' + IDUser);
+        let queryText = `UPDATE public."TinTuc" Set "ArrayDaXem"= "ArrayDaXem" || ARRAY[${IDUser}]::BIGINT[] 
+        WHERE "IDTinTuc"=${id}`;
         return this._pgPool.query(queryText)
             .then(result => {
-                return option;
+                return id;
             })
             .catch(error => {
                 console.error('Error: ', error);

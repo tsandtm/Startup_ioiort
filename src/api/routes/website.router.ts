@@ -40,9 +40,9 @@ export class WebsRouter {
     private getAllWebs = (req: Request, res: Response) => {
 
         console.log(req.query.limit);
-        console.log(req.query.skip);
+        console.log(req.query.offset);
 
-        this.websRepo.getList(null,req.query.limit, req.query.skip)
+        this.websRepo.getList(null,req.query.limit, req.query.offset)
             .then(lnw => {
                 res.status(200).json(lnw);
             })

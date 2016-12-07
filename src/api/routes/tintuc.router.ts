@@ -54,10 +54,10 @@ export class TinTucRouter {
             })
     }
     private boxoa = (req: Request, res: Response) => {
-        let option = new TinTuc();
-        option = req.body;
+        // let option = new TinTuc();
+        // option = req.body;
 
-        this.tintucRepo.boxoa(option)
+        this.tintucRepo.boxoa(req.body.id,req.body.IDUser)
             .then((result) => {
                 res.status(200).json(result);
             })
@@ -119,10 +119,12 @@ export class TinTucRouter {
     }
   
     private xoatin = (req: Request, res: Response) => {
-        let option = new TinTuc();
-        option = req.body;
+        // let option = new TinTuc();
+        // option = req.body;
+        console.log("id "+ req.body.id);
+        console.log("IDUSER "+req.body.IDUser);
 
-        this.tintucRepo.xoatin(option)
+        this.tintucRepo.xoatin(req.body.id,req.body.IDUser)
             .then((result) => {
                 res.status(200).json(result);
             })
@@ -131,24 +133,12 @@ export class TinTucRouter {
                 res.status(500).send(error.message);
             });
     }
-    //  private phuchoi = (req: Request, res: Response) => {
-    //     let option = new TinTuc();
-    //     option = req.body;
-
-    //     this.tintucRepo.phuchoi(option)
-    //         .then((result) => {
-    //             res.status(200).json(result);
-    //         })
-    //         .catch((error) => {
-    //             console.error(error.message);
-    //             res.status(500).send(error.message);
-    //         });
-    // }
+   
     private update = (req: Request, res: Response) => {
-        let option = new TinTuc();
-        option = req.body;
+        // let option = new TinTuc();
+        // option = req.body;
 
-        this.tintucRepo.update(option)
+        this.tintucRepo.update(req.body.id,req.body.IDUser)
             .then((result) => {
                 res.status(200).json(result);
             })
@@ -161,7 +151,7 @@ export class TinTucRouter {
         let option = new TinTuc();
         option = req.body;
 
-        this.tintucRepo.daxem(option)
+        this.tintucRepo.daxem(req.body.id,req.body.IDUser)
             .then((result) => {
                 res.status(200).json(result);
             })
@@ -171,10 +161,10 @@ export class TinTucRouter {
             });
     }
     private deleteABook = (req: Request, res: Response) => {
-        let option = new TinTuc();
-        option = req.body;
+        // let option = new TinTuc();
+        // option = req.body;
 
-        this.tintucRepo.delele(option)
+        this.tintucRepo.delele(req.body.id,req.body.IDUser)
             .then((result) => {
                 res.status(200).json(result);
             })
