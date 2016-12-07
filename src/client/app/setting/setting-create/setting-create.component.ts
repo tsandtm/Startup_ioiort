@@ -17,14 +17,9 @@ export class SettingCreateComponent {
     ngaytao: string;
     alertname:string;
     alertapi:string;
-    setting1: Setting;
-<<<<<<< HEAD
     n:number = 1;
     i:number;
     t:number;
-=======
-    n:number;
->>>>>>> 42cf0e3a30a038d1a26a10d04630b8666c908461
     constructor(
         private settingservice:SettingService,
         private _router: Router,
@@ -35,79 +30,15 @@ export class SettingCreateComponent {
         this.settingservice.getAppID().then(result=>this.n=result);
     }
     Create(){
-<<<<<<< HEAD
-        this.settingservice.getAPI(this.apikey).then(result=>this.setting1=result)
-        .then(result=>this.setAppName());
-        this.setting=new Setting();
-        this.settingservice.getAppName(this.appname).then(result=>this.setting1=result) 
-        .then(result=>this.setAPI());
-        console.log(this.apikey+''+this.appname+''+this.n);
-        if(this.appname==undefined||this.appname=="")
-        {
-            this.alertname="Chưa nhập AppName!!!!!";
-            this.i++;
-        }
-        if(this.apikey==undefined||this.apikey=="")
-        {
-            this.alertapi="Chưa nhập API Key!!!!!";
-            this.t++;
-        }          
-        if(this.i==0)
-        {
-            this.alertapi="";
-        }
-        if(this.t==0)
-        {
-            this.alertname="";  
-        }  
+        this.setting=undefined;
+        this.settingservice.getAPI(this.apikey).then(result=>this.setting=result)
+        .then(result=>this.setAPI()).then(result=>this.setAPINull());
+    
+        this.setting=undefined;
+        this.settingservice.getAppName(this.appname).then(result=>this.setting=result) 
+        .then(result=>this.setAppName()).then(result=>this.setAppNameNull());       
         if(this.i==0&&this.t==0)
         {
-=======
-        var i = 0;
-        var t = 0;
-        this.settingservice.getAPI(this.apikey).then(result=>this.setting1=result);
-        if(this.setting1!=undefined)
-        {
-            this.alertapi="API Key đã được sử dụng!!!!";
-            i++;
-        } 
-        this.setting=new Setting();
-        this.settingservice.getAppName(this.appname).then(result=>this.setting1=result);
-        if(this.setting1!=undefined)
-        {
-            this.alertname="AppName đã được sử dụng!!!!";
-            t++;
-        }     
-        if(i==0)
-        {
-            this.alertapi="";
-        }
-        if(t==0)
-        {
-            this.alertname="";  
-        }
-        console.log(this.apikey+''+this.appname+''+this.n);
-        if(this.appname==undefined||this.appname=="")
-        {
-            this.alertname="Chưa nhập AppName!!!!!";
-            i++;
-        }
-        if(this.apikey==undefined||this.apikey=="")
-        {
-            this.alertapi="Chưa nhập API Key!!!!!";
-            t++;
-        }          
-        if(i==0)
-        {
-            this.alertapi="";
-        }
-        if(t==0)
-        {
-            this.alertname="";  
-        }      
-        if(i==0&&t==0&&this.n!=undefined)
-        {
->>>>>>> 42cf0e3a30a038d1a26a10d04630b8666c908461
             if(this.trangthai==undefined)
             this.trangthai=false;        
             this.ngaytao = new Date().toLocaleDateString("en-US")+'';
@@ -118,15 +49,26 @@ export class SettingCreateComponent {
                 NgayTao: this.ngaytao,
                 AppName: this.appname,
             }
-            this.alertapi="";
-            this.alertname="";
             this.settingservice.Create(this.setting).then(result=>this._router.navigate(['setting-list']));
         }
-<<<<<<< HEAD
     }
-
-    setAppName(){
-        if(this.setting1!=undefined)
+    setAppNameNull(){
+        if(this.appname==undefined||this.appname=="")
+        {
+            this.alertname="Chưa nhập AppName!!!!!";
+            this.i=1;
+        }
+    }
+    setAPINull(){
+        if(this.apikey==undefined||this.apikey=="")
+        {
+            this.alertapi="Chưa nhập API Key!!!!!";
+            this.t=1;
+        }          
+ 
+    }
+    setAPI(){
+        if(this.setting!=undefined)
         {
             this.alertapi="API Key đã được sử dụng!!!!";
             this.i=1;
@@ -137,19 +79,17 @@ export class SettingCreateComponent {
             this.i=0;
         }
     }
-    setAPI(){
-        if(this.setting1!=undefined)
+    setAppName(){
+        if(this.setting!=undefined)
         {
             this.alertname="AppName đã được sử dụng!!!!";
-            this.t++;
+            this.t=1;
         }
         else
         {
             this.alertname="";
             this.t=0;
         }
-=======
->>>>>>> 42cf0e3a30a038d1a26a10d04630b8666c908461
     }
 
     Back() {
