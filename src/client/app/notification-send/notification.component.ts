@@ -1,4 +1,4 @@
-import { Component,OnInit,Input } from '@angular/core';
+import { Component,OnInit,Input,AfterViewInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Appkey } from './shared/app.model';
 import { Notifi } from './shared/notifi.model';
@@ -332,13 +332,47 @@ export class NotifiSendComponent implements OnInit{
     ngOnInit(): void {
         this.loadGetAll();
         this.getNotifi();
-        this.getTag();
-        this.getContact();
+        //this.getTag();
+        //this.getContact();
         this.today=new Date();
         this.loophour=this.loop(1,24);
         this.loopminute=this.loop(0,60);
         this.loophourTH=this.loop(5,24);
         this.loopminuteTH=this.loop(5,60);
         this.loopdayTH=this.loop(5,28);
+    }
+    ngAfterViewInit()
+    {		
+            jQuery(".js-data-example-ajax").select2({
+            ajax: {
+                url: "/api/Tag",
+                dataType: 'json',
+                delay: 500,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                        };
+                    },
+                    processResults: function (data, params) {
+                    // parse the results into the format expected by Select2
+                    // since we are using custom formatting functions we do not need to
+                    // alter the remote JSON data, except to indicate that infinite
+                    // scrolling can be used
+                        params.page = params.page || 1;
+                        return {
+                            results: $.map(data, function(obj) {
+                                return { id: obj.TagID, text: obj.TagNameDisplay };
+                            }),
+                            pagination: {
+                            more: (params.page * 30) < data.total_count
+                            }
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function (markup) { return markup; }, 
+                minimumInputLength: 1,
+        });		
     }
 }

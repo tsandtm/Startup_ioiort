@@ -19,7 +19,11 @@ input[type=date]::-webkit-inner-spin-button {
 						<h6><i>Chọn server thực hiện gửi</i></h6>
 					</div>
 					<p>(*) To:<p>
-					<div class="form-group">
+						
+						<select class="js-data-example-ajax" style="width: 100%">
+						<option value="3620194" selected="selected">select2/select2</option>
+						</select>
+					<!--<div class="form-group">
 						<tag-input name="tag"
 						[ngModel]="ACTag"
 						[placeholder]="optionsTag.placeholder"
@@ -70,7 +74,7 @@ input[type=date]::-webkit-inner-spin-button {
            				(onAdd)="ContactDeniedAdded($event)"
            				(onRemove)="ContactDeniedRemoved($event)">
 						</tag-input>
-					</div>  
+					</div>  -->
 			</div>
 			<div class="col-md-4">
 				<section>
