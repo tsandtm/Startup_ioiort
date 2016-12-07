@@ -23,9 +23,6 @@ export class SettingListComponent {
     ngOnInit(): void { 
         this._SettingService.getCount().then(result=>this.id=result)
         .then(result=>this.setPage(1));
-        
-        
-
     }
     setPage(page: number): void {
         if(this.id!=undefined)

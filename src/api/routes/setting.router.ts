@@ -30,7 +30,9 @@ export class SettingRouter {
         this.router.route("/settingdelete")
             .post(this.Delete);
         this.router.get('/settingcount',this.getcount);
-        
+        this.router.get('/settingAppName',this.getAppName);
+        this.router.get('/settingAPI',this.getAPI);
+        this.router.get('/settingAppID',this.getAppID);
         return this.router;
     }
 
@@ -56,9 +58,42 @@ export class SettingRouter {
                 res.status(500).send(error.message)
             });
     }
+    private getAppName = (req: Request, res: Response) => {
+        console.log('abcs'+req.query.so);
+        this.settingRepo.getAppName(req.query.so)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            });
+    }
+    private getAPI = (req: Request, res: Response) => {
+        console.log('abcs'+req.query.so);
+        this.settingRepo.getAPI(req.query.so)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            });
+    }
     private getcount = (req: Request, res: Response) => {
         console.log('abcs'+req.query.so);
-        this.settingRepo.getcount(req.query.so)
+        this.settingRepo.getcount()
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            });
+    }
+    private getAppID = (req: Request, res: Response) => {
+        console.log('abcs'+req.query.so);
+        this.settingRepo.getAppID()
             .then(result => {
                 res.status(200).json(result)
             })

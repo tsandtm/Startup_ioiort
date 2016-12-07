@@ -30,6 +30,7 @@ export class SettingRepo extends RepoBase {
                 return null;
         });
     }
+
     public getListPT(option): Promise<Setting[]> {
         let queryText = 'select * from "n_App" ORDER BY "AppID"ASC limit 15 offset $1';
 
@@ -53,13 +54,64 @@ export class SettingRepo extends RepoBase {
                 return null;
         });
     }
-    public getcount(option): Promise<number> {
+    public getAppName(option): Promise<Setting> {
+        let queryText = 'select * from "n_App" where "AppName" = $1';
+
+        console.info('Excute: ' + queryText+''+option);
+        
+        
+        return this._pgPool.query(queryText, [option])
+            .then(result => {
+                let set = new Setting();
+                set.AppID =  result.rows[0].AppID;
+                set.APIKey =  result.rows[0].APIKey;
+                set.AppName =  result.rows[0].AppName;
+                set.NgayTao = new Date(result.rows[0].NgayTao).toLocaleDateString().replace(/T.*/,'').split('-').reverse().join('/');
+                set.IsActive =  result.rows[0].IsActive;
+                return set;
+            })        
+            .catch(err => {
+                console.error(err.message);
+                return null;
+        });
+    }
+    public getAPI(option): Promise<Setting> {
+        let queryText = 'select * from "n_App" where "APIKey" = $1';
+
+        console.info('Excute: ' + queryText+''+option);
+        
+        return this._pgPool.query(queryText, [option])
+            .then(result => {
+                let set = new Setting();
+                set.AppID =  result.rows[0].AppID;
+                set.APIKey =  result.rows[0].APIKey;
+                set.AppName =  result.rows[0].AppName;
+                set.NgayTao = new Date(result.rows[0].NgayTao).toLocaleDateString().replace(/T.*/,'').split('-').reverse().join('/');
+                set.IsActive =  result.rows[0].IsActive;
+                return set;
+            })        
+            .catch(err => {
+                console.error(err.message);
+                return null;
+        });
+    }
+    public getcount(): Promise<number> {
         let queryText = 'SELECT count(*) as abc FROM "n_App"';    
         console.info('Excute: ' + queryText);
         return this._pgPool.query(queryText)
             .then(result => {
                 console.log(result.rows[0].abc);
                 return result.rows[0].abc;
+            });
+
+    }
+    public getAppID(): Promise<number> {
+        let queryText = 'SELECT "AppID" as abc FROM "n_App" order by "AppID" desc limit 1';    
+        console.info('Excute: ' + queryText);
+        return this._pgPool.query(queryText)
+            .then(result => {
+                console.log(result.rows[0].abc+1);
+                return result.rows[0].abc+1;
             });
 
     }
