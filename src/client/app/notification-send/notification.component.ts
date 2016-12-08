@@ -101,12 +101,6 @@ export class NotifiSendComponent implements OnInit{
         // var pos=item.indexOf('.');
         // var num=item.slice(0,pos);
         // var name=item.slice(pos+1,item.length);
-    LoadAll(){
-        console.log($(".js-data-example-ajaxTag").val());
-        console.log($(".js-data-example-ajaxContact").val());
-        console.log($(".js-data-example-ajaxTagDenied").val());
-        console.log($(".js-data-example-ajaxContactDenied").val());
-    }
     Create(){
         this.listIDTag=$(".js-data-example-ajaxTag").val();
         this.listIDContact=$(".js-data-example-ajaxContact").val();

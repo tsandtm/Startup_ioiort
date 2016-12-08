@@ -1,15 +1,11 @@
-
 <div *ngIf='Reports'>
-  <sk-circle [isRunning]= "true" [delay]="3000"></sk-circle>
 <!--<template ngFor #item [ngForOf]="Reports" #i="index" >-->
 <div>
   
   <input type="button" (click)='getdatabymonth(1)' value="Tháng trước">
   <input type="button" (click)='getdatabymonth(2)' value="Tháng này">
   <input type="button" (click)='getdatabymonth(3)' value="Năm này">
-  <sk-circle></sk-circle>
   <div style="display: block">
-     
     <canvas baseChart
             [datasets]="barChartData"
             [labels]="barChartLabels"
@@ -18,7 +14,6 @@
             [chartType]="barChartType"
             (chartHover)="chartHovered($event)"
             (chartClick)="chartClicked($event)"></canvas>
-           
   </div>
 </div>
 <!--</template>-->

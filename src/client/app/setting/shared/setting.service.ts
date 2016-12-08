@@ -105,14 +105,28 @@ export class SettingService{
         var pages: number[];
         if(currentPage<=3)
         {
-            for(var n:number=1;n<=5;n++)
+            if(totalPages<5)
             {
-                if(pages==undefined)
-                    pages=[n];
-                else
-                    pages.push(n);
-                
-            };
+                for(var n:number=1;n<=totalPages;n++)
+                {
+                    if(pages==undefined)
+                        pages=[n];
+                    else
+                        pages.push(n);
+                    
+                };
+            }
+            else
+            {
+                for(var n:number=1;n<=5;n++)
+                {
+                    if(pages==undefined)
+                        pages=[n];
+                    else
+                        pages.push(n);
+                    
+                };
+            }
         }
         else if(currentPage>=(totalPages-2))
         {

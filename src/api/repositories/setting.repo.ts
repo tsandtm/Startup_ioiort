@@ -8,7 +8,7 @@ export class SettingRepo extends RepoBase {
     }
 
     public getList(option): Promise<Setting[]> {
-        let queryText = 'select * from test."n_App" ORDER BY "AppID"ASC ';
+        let queryText = 'select * from test."n_App" ORDER BY "AppID" ASC ';
 
         console.info('Excute: ' + queryText);
         let pResult = this._pgPool.query(queryText);
