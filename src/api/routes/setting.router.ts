@@ -58,7 +58,7 @@ export class SettingRouter {
             });
     }
     private getAppName = (req: Request, res: Response) => {
-        console.log('abcs'+req.query.so+' APPNAME '+req.query.ten);
+        console.log('abcs'+req.query.so+' APPNAME '+req.query.id);
         this.settingRepo.getAppName(req.query)
             .then(result => {
                 res.status(200).json(result)
