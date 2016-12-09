@@ -15,7 +15,7 @@ var urlencodeParser = bodyParser.urlencoded({extended:false});
 
 var config = {
   user: 'postgres', //env var: PGUSER
-  database: 'test', //env var: PGDATABASE
+  database: 'testdb', //env var: PGDATABASE
   password: 'postgres', //env var: PGPASSWORD
   host: 'localhost', // Server hosting the postgres database
   port: 5432, //env var: PGPORT

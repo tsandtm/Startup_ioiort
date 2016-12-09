@@ -140,7 +140,7 @@ export class NotifiSendComponent implements OnInit{
         else{
             this.ThoiHan=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString(); 
         }
-        if(this.tieude == undefined || this.Noidung == undefined || this.listIDTag==null || this.listIDContact==null)
+        if(this.tieude == undefined || this.Noidung == undefined || (this.listIDTag==null && this.listIDContact==null))
         {
             console.log(false);
             return false;

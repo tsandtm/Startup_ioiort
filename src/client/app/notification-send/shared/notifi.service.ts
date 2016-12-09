@@ -67,15 +67,10 @@ export class NotifiService {
             .catch(this.handleError);
     }
 
-    getSend():Promise<SentUser[]>{
-        return this._http.get('/api/sentuser')
+    getSendUser(req):Promise<SentUser[]>{
+        return this._http.get('/api/sentuser/'+req)
             .toPromise()
             .then(response => response.json() as SentUser[])
-            .catch(this.handleError);
-    }
-    getSendUser(id):Promise<SentUser[]>{
-        return this.getSend()
-            .then(slsend => slsend.filter(p => p.NotifiID === id))
             .catch(this.handleError);
     }
     private handleError(error: Error): Promise<any> {
