@@ -1,7 +1,6 @@
 import { Router, Response, Request } from 'express';
 
 // import các module tạo table
-import { ILog } from '../models/log.model'
 import { LogRepo } from '../repositories/Log.repo/log.repo';
 
 

@@ -1,5 +1,4 @@
 import { RepoBase } from '../repositories.base';
-import { ILog } from '../../models/log.model'
 import { Pool, QueryResult } from 'pg';
 
 export class LogRepo extends RepoBase {

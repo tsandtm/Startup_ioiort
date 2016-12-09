@@ -13,10 +13,6 @@ app.use(express.static(path.join(__dirname, 'client')))
 // load các file trong thư mục app theo đường dẫn là /app, ở đây dùng để load file main.ts
 app.use('/app', express.static(path.join(__dirname, 'client')))
 
-
-
-
-
 // trả về index.html
 app.get('/', (req, res) => {
     res.sendFile('index.html');
