@@ -33,11 +33,11 @@ export class LogRouter {
         console.log(req.body)
         this.logrepo.InsertOne(req.body)
             .then(reuslt => {
-                console.log(`OK`)
+                // console.log(`OK`)
                 res.sendStatus(200)
                 return
             }).catch(err => {
-                console.log(err)
+                // console.log(err)
                 res.sendStatus(400)
             })
     }

@@ -24,10 +24,12 @@ export class LogRepo extends RepoBase {
 
         return this._pgPool.query(query)
             .then(result => {
-                return console.log(`Đã Insert`)
+                // return console.log(`Đã Insert`)
+                return
             })
             .catch(err => {
-                return console.log(err)
+                // return console.log(err)
+                return;
             })
     }
 }
