@@ -33,13 +33,16 @@
                     <tr *ngFor='let set of itempages | settingFilter:listFilter'> 
                         <td>{{ set.AppID }}</td>
                         <td>{{ set.AppName }}</td>
-                        <td>{{ set.APIKey }}</td>                              
-                        <td>{{ set.IsActive }}</td>
+                        <td>{{ set.APIKey }}</td>  
+                        <td>
+                            <input type="checkbox" name="trangthai" [(ngModel)]="set.IsActive" checked *ngIf='set.IsActive==true' disabled>
+                            <input type="checkbox" name="trangthai" [(ngModel)]="set.IsActive" *ngIf='set.IsActive==false' disabled>                             
+                        </td>
                         <td>{{ set.NgayTao }}</td>                  
                         <td>
-                            <a class="btn" [routerLink]="['/setting-detail', set.AppID]">Chi tiết</a>
-                            <a class="btn" [routerLink]="['/setting-edit',set.AppID]">Sửa</a>
-                            <a class="btn" [routerLink]="['/setting-delete',set.AppID]">Xóa</a>
+                            <a class="btn" [routerLink]="['/setting-detail', set.AppID,pager.currentPage]">Chi tiết</a>
+                            <a class="btn" [routerLink]="['/setting-edit',set.AppID,pager.currentPage]">Sửa</a>
+                            <a class="btn" [routerLink]="['/setting-delete',set.AppID,pager.currentPage]">Xóa</a>
                         </td>
                     </tr>    
                 </tbody>
