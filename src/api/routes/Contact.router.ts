@@ -33,13 +33,13 @@ export class ContactRouter {
             .post(this.update);
         this.router.route('/Contact/SearchByTag')
             .get(this.SearchByTag);
+        this.router.route('/ContactCount')
+            .get(this.getCountContact);
         return this.router;
     }
 
     private getAllContact = (req: Request, res: Response) => {
-        let option = new Contact();
-        option = req.query;
-        this.contactRepo.getList(option)
+        this.contactRepo.getList(req.query)
             .then(result => {
                 res.status(200).json(result)
             })
@@ -47,6 +47,16 @@ export class ContactRouter {
                 console.error(error.message);
                 res.status(500).send(error.message)
             })
+    }
+    private getCountContact = (req: Request, res: Response) => {
+        this.contactRepo.getCountContact(req.query)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            });
     }
 
     private getOne = (req: Request, res: Response) => {

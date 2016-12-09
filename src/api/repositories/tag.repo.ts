@@ -8,12 +8,15 @@ export class TagRepo extends RepoBase {
         super();
     }
 
-    public getList(): Promise<Tag[]> {
-        let queryText = 'select * from test."n_Tag"';
+    public getList(option): Promise<Tag[]> {
+        let queryText = 'select * from test."n_Tag" where lower("TagNameDisplay") like lower($1) ORDER BY "TagID" ASC LIMIT 10 OFFSET $2';
         let pResult;
-
-        pResult = this._pgPool.query(queryText)
-
+        if(option.page == undefined){
+            pResult = this._pgPool.query(queryText,['%'+option.id+'%',0])
+        }
+        else{
+            pResult = this._pgPool.query(queryText,['%'+option.id+'%',option.page*10])
+        }
         return pResult.then(result => {
             let Tags: Tag[] = result.rows.map(r => {
                 let tag = new Tag();

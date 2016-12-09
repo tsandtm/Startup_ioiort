@@ -57,8 +57,6 @@ var setting_delete_component_1 = require('./setting/setting-delete/setting-delet
 var setting_detail_component_1 = require('./setting/setting-detail/setting-detail.component');
 var setting_filter_pipe_1 = require('./setting/setting-filter/setting-filter.pipe');
 var datefilter_1 = require('./notifications/notifications-filter/datefilter');
-var angular2_infinite_scroll_1 = require('angular2-infinite-scroll');
-var rotating_plane_component_1 = require('ng2-spin-kit-new/app/spinner/rotating-plane.component');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -73,8 +71,7 @@ var AppModule = (function () {
                 ng2_charts_1.ChartsModule,
                 ng2_tag_input_1.TagInputModule,
                 angular2_modal_1.ModalModule.forRoot(),
-                bootstrap_1.BootstrapModalModule,
-                angular2_infinite_scroll_1.InfiniteScrollModule
+                bootstrap_1.BootstrapModalModule
             ],
             providers: [{ provide: common_1.LocationStrategy, useClass: common_1.HashLocationStrategy }, product_service_1.ProductService, contacts_service_1.ContactsService, contact_service_1.ContactNotifiService, notifications_service_1.NotificationsService, yeucauban_service_1.YeucaubanService, Contact_service_1.ContactService, notifi_service_1.NotifiService, tag_service_1.TagService, setting_service_1.SettingService],
             declarations: [
@@ -107,8 +104,7 @@ var AppModule = (function () {
                 notifications_detail_component_1.NotificationstDetailComponent,
                 notifications_detailedit_component_1.NotificationstDetailEditComponent,
                 notifications_filter_pipe_1.NotificationFilterPipe,
-                datefilter_1.DateFilterPipe,
-                rotating_plane_component_1.RotatingPlaneComponent
+                datefilter_1.DateFilterPipe
             ],
             bootstrap: [app_component_1.AppComponent],
             entryComponents: [Contact_update_component_1.ModalContactUpdate]

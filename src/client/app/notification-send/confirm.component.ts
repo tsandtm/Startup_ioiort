@@ -1,5 +1,5 @@
 
-import { Component,OnInit,Input,OnDestroy } from '@angular/core';
+import { Component,OnInit,Input,OnDestroy,AfterViewInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Appkey } from './shared/app.model';
@@ -36,14 +36,8 @@ export class ConfirmComponent implements OnInit {
         this._route.params.forEach((params: Params) => {
             let id = +params["id"];
             this.getNotifi(id).then(result=>{
-            if(this.notifi.SendTag.length==0 && this.notifi.SendUser.length==0){
-                this.getSLDenied(id);
-                this.getSentUserDenied(id);
-            }
-            else{
                 this.getSL(id);
                 this.getSentUser(id);
-            }
                 this.getAppkey(this.notifi.AppID);
             });
         })
@@ -67,22 +61,10 @@ export class ConfirmComponent implements OnInit {
     getSentUser(id: number) {
         this.notifiservice.getSendUser(id)
             .then(sent => {
-            this.sentUser = sent})
+            this.sentUser = sent;})
     }
     getSL(id:number){
         this.notifiservice.getSL(id)
-        .then(sl=>{
-            this.sl=sl
-        })
-    }
-
-    getSentUserDenied(id: number) {
-        this.notifiservice.getSendUserDenied(id)
-            .then(sent => {
-            this.sentUser = sent})
-    }
-    getSLDenied(id:number){
-        this.notifiservice.getSLDenied(id)
         .then(sl=>{
             this.sl=sl
         })
@@ -112,10 +94,10 @@ export class ConfirmComponent implements OnInit {
                 };
                 this.notifiservice.Insert(this.insertUser);
             });
-        this._router.navigate(['menu-list']);
+        this._router.navigate(['notification']);
     }
     SaveAsDraft(): void {
-        this._router.navigate(['menu-list']);
+        this._router.navigate(['notification']);
     }
     Finish():void{
         this.now=new Date();
@@ -127,5 +109,44 @@ export class ConfirmComponent implements OnInit {
             this.Update(1);
         }
         this.Insert();
+    }
+    ngAfterViewInit(){
+        $(".js-data-example-ajaxTest").select2({
+            placeholder:"Test",
+                allowClear: true, 
+                ajax: {
+                    url: "/api/Contactnotifi",
+                    dataType: 'json',
+                    delay: 500,
+                    data: function (params) {
+                        return {
+                            id: params.term, // search term
+                            page: params.page,
+                            };
+                        },
+                        processResults: function (data, params) {
+                        // parse the results into the format expected by Select2
+                        // since we are using custom formatting functions we do not need to
+                        // alter the remote JSON data, except to indicate that infinite
+                        // scrolling can be used
+                        var i=1;
+                            params.page = params.page || 0;
+                            return {
+                                results:
+                                $.map(data, function(obj) {
+                                    i+=10;
+                                    return { id: obj.TagID, text: obj.TagNameDisplay };
+                                }),
+                                pagination: {
+                                more: (params.page * 10) < i
+                                }
+                            };
+                        },
+                        cache: true
+                    },
+                    
+                    minimumInputLength: 1,
+                    escapeMarkup: function (markup) { return markup; }, 
+            });
     }
 }

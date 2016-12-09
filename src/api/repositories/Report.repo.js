@@ -23,6 +23,7 @@ var ReportRepo = (function (_super) {
                 ' group by "Device",date_part(\'month\',"NgayTao"),date_part(\'year\',"NgayTao")' +
                 ' order by date_part(\'month\',"NgayTao")';
             console.log(queryText);
+            console.log("repo" + option.month + "" + option.year);
             pResult = this._pgPool.query(queryText);
         }
         else {

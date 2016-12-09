@@ -71,7 +71,7 @@ export class NotificationsRepo extends RepoBase {
             });
     }
     public getAllSendUser():Promise<SentContact[]>{
-        let queryText = 'SELECT * FROM test."n_Contacts_Notifications" ORDER BY "ContactID" ASC';
+        let queryText = 'SELECT * FROM test."n_Contacts_Notifications" ORDER BY "ContactID" ASC LIMIT 10';
 
         console.info('Excute: ' + queryText);
         let pResult;

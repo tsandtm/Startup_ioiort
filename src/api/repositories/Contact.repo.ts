@@ -8,11 +8,15 @@ export class ContactRepo extends RepoBase {
         super();
     }
 
-    public getList(option: Contact): Promise<Contact[]> {
-        let queryText = 'select * from test."Contacts" ORDER BY "ContactID" ASC';
+    public getList(option): Promise<Contact[]> {
+        let queryText = 'select * from test."Contacts" where lower("TaiKhoan") like lower($1) ORDER BY "ContactID" ASC LIMIT 10 OFFSET $2';
         let pResult;
-        pResult = this._pgPool.query(queryText)
-
+        if(option.page == undefined){
+            pResult = this._pgPool.query(queryText,['%'+option.id+'%',0])
+        }
+        else{
+            pResult = this._pgPool.query(queryText,['%'+option.id+'%',option.page*10])
+        }
         return pResult.then(result => {
             let Contacts: Contact[] = result.rows.map(r => {
                 let contact = new Contact();
@@ -30,6 +34,22 @@ export class ContactRepo extends RepoBase {
             });
             return Contacts;
         })
+            .catch(err => {
+                console.error(err.message);
+                return null;
+            });
+    }
+    public getCountContact(option): Promise<number> {
+        let queryText = 'select count(*) from test."Contacts" where lower("TaiKhoan") like lower($1)';
+
+        console.info('Excute: ' + queryText);
+
+        return this._pgPool.query(queryText,[option.id])
+            .then(result => {
+                let count:number;
+                count = result.rows[0].count;
+                return count;
+            })
             .catch(err => {
                 console.error(err.message);
                 return null;

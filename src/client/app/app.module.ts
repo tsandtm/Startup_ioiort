@@ -50,7 +50,6 @@ import { SettingDeleteComponent } from './setting/setting-delete/setting-delete.
 import { SettingDetailComponent } from './setting/setting-detail/setting-detail.component';
 import { SettingFilterPipe } from './setting/setting-filter/setting-filter.pipe';
 import { DateFilterPipe } from './notifications/notifications-filter/datefilter';
-import { InfiniteScrollModule } from 'angular2-infinite-scroll';
 import { RotatingPlaneComponent } from './spinner/rotating-plane.component';
 import { CircleComponent } from './spinner/circle';
 
@@ -65,7 +64,6 @@ import { CircleComponent } from './spinner/circle';
         TagInputModule,
         ModalModule.forRoot(),
         BootstrapModalModule,
-        InfiniteScrollModule
     ],
     providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, ProductService, ContactsService, ContactNotifiService, NotificationsService, YeucaubanService, ContactService, NotifiService, TagService, SettingService],
     declarations: [
