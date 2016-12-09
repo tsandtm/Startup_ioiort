@@ -1,36 +1,26 @@
+<sk-circle [isRunning]="isRunning" ></sk-circle>
+<div *ngIf='isRunning == false'>
+  <!--<template ngFor #item [ngForOf]="Reports" #i="index" >-->
 
-<div *ngIf='Reports'>
-  <sk-circle [isRunning]= "true" [delay]="3000"></sk-circle>
-<!--<template ngFor #item [ngForOf]="Reports" #i="index" >-->
-<div>
-  
-  <input type="button" (click)='getdatabymonth(1)' value="Tháng trước">
-  <input type="button" (click)='getdatabymonth(2)' value="Tháng này">
-  <input type="button" (click)='getdatabymonth(3)' value="Năm này">
-  <sk-circle></sk-circle>
-  <div style="display: block">
-     
-    <canvas baseChart
-            [datasets]="barChartData"
-            [labels]="barChartLabels"
-            [options]="barChartOptions"
-            [legend]="barChartLegend"
-            [chartType]="barChartType"
-            (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)"></canvas>
-           
+  <div>
+    <input type="button" (click)='getdatabymonth(1)' value="Tháng trước">
+    <input type="button" (click)='getdatabymonth(2)' value="Tháng này">
+    <input type="button" (click)='getdatabymonth(3)' value="Năm này">
+
+    <div style="display: block">
+
+      <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+        [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+
+    </div>
   </div>
-</div>
-<!--</template>-->
+  <!--</template>-->
 
-<div style="display: block;width:300px;height:300px">
-  <canvas baseChart
-              [data]="doughnutChartData"
-              [labels]="doughnutChartLabels"
-              [chartType]="doughnutChartType"
-              (chartHover)="chartHovered($event)"
-              (chartClick)="chartClicked($event)"></canvas>
-              <h2 *ngFor="let item of c">{{item}}</h2>
-              <h2>{{testto}} Tổng thiết bị</h2>
-</div>
+  <div style="display: block;width:300px;height:300px">
+    <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)"
+      (chartClick)="chartClicked($event)"></canvas>
+    
+    <h2 *ngFor="let item of c">{{item}}</h2>
+    <h2>{{testto}} Tổng thiết bị</h2>
+  </div>
 </div>
