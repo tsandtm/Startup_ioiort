@@ -57,16 +57,18 @@ export class SettingRepo extends RepoBase {
     public getAppName(option): Promise<Setting> {
         let queryText;
         let pResult;
-        console.info('Excute: ' + queryText+''+option.so+option.id);
+        
         if(option.id==undefined)
         {
             queryText = 'select * from test."n_App" where "AppName" = $1';
             pResult = this._pgPool.query(queryText,[option.so]);
+            console.info('Excute2: ' + queryText+''+option.so+option.id);
         }
         else
         {
             queryText = 'select * from test."n_App" where "AppName" = $1 and "AppID"<>$2';
             pResult = this._pgPool.query(queryText,[option.so,option.id]);
+            console.info('Excute2: ' + queryText+''+option.so+option.id);
         }
         return pResult
             .then(result => {
@@ -90,13 +92,13 @@ export class SettingRepo extends RepoBase {
         if(option.id==undefined)
         {
             queryText = 'select * from test."n_App" where "APIKey" = $1';
-                console.info('Excute: ' + queryText+''+option.so);
+                console.info('Excute1: ' + queryText+''+option.so);
             pResult = this._pgPool.query(queryText,[option.so]);
         }
         else
         {
             queryText = 'select * from test."n_App" where "APIKey" = $1 and "AppID"<>$2';
-            console.info('Excute: ' + queryText+''+option.so+option.id);
+            console.info('Excute1: ' + queryText+''+option.so+option.id);
             pResult = this._pgPool.query(queryText,[option.so,option.id]);
         }
         return pResult

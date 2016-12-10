@@ -55,8 +55,8 @@ export class SettingEditComponent {
             if(this.i==0&&this.t==0)
             {
                 if(this.setting.IsActive==undefined)
-                this.setting.IsActive=false;        
-            this.settingservice.Edit(this.setting).then(result=>this._router.navigate(['setting-list']));
+                    this.setting.IsActive=false;        
+                this.settingservice.Edit(this.setting).then(result=>this._router.navigate(['setting-list']));
             }
         });
         });       
