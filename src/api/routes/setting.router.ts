@@ -47,8 +47,8 @@ export class SettingRouter {
             });
     }
     private getAllSettingPT = (req: Request, res: Response) => {
-        console.log('abcs'+req.query.so);
-        this.settingRepo.getListPT(req.query.so)
+        console.log('abcs'+req.query.so+req.query.id);
+        this.settingRepo.getListPT(req.query)
             .then(result => {
                 res.status(200).json(result)
             })
@@ -81,8 +81,8 @@ export class SettingRouter {
             });
     }
     private getcount = (req: Request, res: Response) => {
-        console.log('abcs'+req.query.so);
-        this.settingRepo.getcount()
+        console.log('abcs   '+req.query.so);
+        this.settingRepo.getcount(req.query.so)
             .then(result => {
                 res.status(200).json(result)
             })
