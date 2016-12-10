@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Notifi,SLSend,SentUser,UpdateData,InsertUser } from '../../notification-send/shared/notifi.model';
+import { Notifi,SentUser,UpdateData,InsertUser } from '../../notification-send/shared/notifi.model';
 import { Notifications,SentContact } from '../shared/notifications.model';
 import { NotificationsService } from '../shared/notifications.service';
 

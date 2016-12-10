@@ -176,7 +176,7 @@ export class SettingRepo extends RepoBase {
             });
     }
     public Edit(option): Promise<Setting> {
-        let queryText = 'UPDATE "n_App" SET "APIKey" = $1, "AppName" = $2 , "NgayTao" =$3 , "IsActive" = $4 where "AppID" = $5';
+        let queryText = 'UPDATE test."n_App" SET "APIKey" = $1, "AppName" = $2 , "NgayTao" =$3 , "IsActive" = $4 where "AppID" = $5';
 
         console.info('Excute: ' + queryText);
 

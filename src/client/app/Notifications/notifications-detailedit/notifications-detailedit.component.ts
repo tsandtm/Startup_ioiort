@@ -80,105 +80,6 @@ export class NotificationstDetailEditComponent implements OnInit{
     private _route: ActivatedRoute) {
 
     }
-    public TagAdded(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        var name=item.slice(pos+1,item.length);
-        this.listIDTag.push(parseInt(num));
-        this.listNameTag.push(name);
-
-    }
-    public TagRemoved(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        var name=item.slice(pos+1,item.length);
-        this.delPos(this.listIDTag,parseInt(num));
-        this.delPosstring(this.listNameTag,name);
-
-        console.log(this.ACTag)
-    }
-    public ContactAdded(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        var name=item.slice(pos+1,item.length);
-        this.listIDContact.push(parseInt(num));
-        this.listNameContact.push(name);
-        
-
-                console.log(this.ACContact)
-    }
-    public ContactRemoved(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        var name=item.slice(pos+1,item.length);
-        this.delPos(this.listIDContact,parseInt(num));
-        this.delPosstring(this.listNameContact,name);
-        
-
-                console.log(this.ACContact)
-    }
-    public TagDeniedAdded(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        var name=item.slice(pos+1,item.length);
-        this.listIDTagDenied.push(parseInt(num));
-        this.listNameTagDenied.push(name);
-        
-        console.log(this.listIDTagDenied)
-        console.log(this.listNameTagDenied)
-    }
-    public TagDeniedRemoved(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        var name=item.slice(pos+1,item.length);
-        this.delPos(this.listIDTagDenied,parseInt(num));
-        this.delPosstring(this.listNameTagDenied,name);
-        
-        console.log(this.listIDTagDenied)
-        console.log(this.listNameTagDenied)
-    }
-    public ContactDeniedAdded(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        var name=item.slice(pos+1,item.length);
-        this.listIDContactDenied.push(parseInt(num));
-        this.listNameContactDenied.push(name);
-        
-
-                console.log(this.ACContactDenied)
-    }
-    public ContactDeniedRemoved(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        var name=item.slice(pos+1,item.length);
-        this.delPos(this.listIDContactDenied,parseInt(num));
-        this.delPosstring(this.listNameContactDenied,name);
-        
-
-                console.log(this.ACContactDenied)
-    }
-    // public TagDeniedAdded(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.listIDTag.push(parseInt(num));
-    // }
-    // public TagDeniedRemoved(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.delPos(this.listIDTag,parseInt(num));
-    // }
-    // public ContactDeniedAdded(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.listIDContact.push(parseInt(num));
-    //     console.log(this.listIDContact.toString());
-    // }
-    // public ContactDeniedRemoved(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.delPos(this.listIDContact,parseInt(num));
-    //     console.log(this.listIDContact.toString());
-    // }
     delPos(ar:Array<number>,key:number){
         for(var i=0;i<=ar.length;i++){
             if(ar[i]==key){
@@ -203,23 +104,6 @@ export class NotificationstDetailEditComponent implements OnInit{
     getNotifi() {
         this.notifiservice.getLastNotifi()
             .then(notifi => this.notifi = notifi)
-    }
-    getTag(){
-        this.tagservice.getAllTag().then(tag=>{
-            this.Tag=tag;
-            this.Tag.forEach(element => {
-            this.ACTagItem.push(element.TagID+'.'+element.TagNameDisplay)
-        });
-    });
-    }
-    getContact(){
-        this.contactservice.getAllContact().then(contact=>{
-            this.Contact=contact;
-            this.Contact.forEach(element=>{
-                this.ACContactItem.push(element.ContactID+'.'+element.TaiKhoan)
-                console.log(element.ContactID);
-            });
-        });
     }
     
     sendnowclick(): void {
@@ -302,9 +186,6 @@ export class NotificationstDetailEditComponent implements OnInit{
      getslsend(req):Promise<number>{
         return this.notifiservice.getslsend(req).then(result=>this.Soluong=result);
     }
-    getslsenddenied(req):Promise<number>{
-        return this.notifiservice.getsldenied(req).then(result=>this.Soluong=result);
-    }
     Edit(): void{     
         this.date=new Date(this.date);
         if(this.sendnow){
@@ -336,25 +217,7 @@ export class NotificationstDetailEditComponent implements OnInit{
         } 
         if(this.listIDTag.length==0 && this.listIDContact.length==0)
         {
-            
-            this.getslsenddenied({contactdenied:this.listIDContactDenied,tagdenied:this.listIDTagDenied}).then(result=>{
-        this.notifications.AppID = this.AppID;
-        this.notifications.TieuDe = this.tieude;
-        this.notifications.NoiDung = this.Noidung;
-        this.notifications.DoUuTien = this.doUuTien;
-        this.notifications.ThoiHanToiDa = this.ThoiHan;
-        this.notifications.ThoiGianGui=this.Thoigiangui;
-        this.notifications.SoLuong=result;
-        this.notifications.Send_TagName =this.listNameTag;
-        this.notifications.Send_TagID=this.listIDTag;
-        this.notifications.Send_UserName=this.listNameContact;
-        this.notifications.Send_UserID=this.listIDContact;
-        this.notifications.Send_TagDenieName=this.listNameTagDenied;
-        this.notifications.Send_TagDenieID=this.listIDTagDenied;
-        this.notifications.Send_UserDenieName=this.listNameContactDenied;
-        this.notifications.Send_UserDenieID=this.listIDContactDenied;
-        this._notificationsService.Edit(this.notifications).then(result=>this._router.navigate(['confirm',this.notifications.id]));
-            })
+
         }
         else
         {
