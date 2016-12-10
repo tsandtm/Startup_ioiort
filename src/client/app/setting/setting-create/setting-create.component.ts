@@ -29,17 +29,26 @@ export class SettingCreateComponent {
     ngOnInit(): void { 
         this.settingservice.getAppID().then(result=>this.n=result);
     }
+<<<<<<< HEAD
     Create(){
         
         
         this.settingservice.getAPI(this.apikey).then(result=>{
+=======
+    Create(){  
+        this.settingservice.getAPI(this.apikey,null).then(result=>{
+>>>>>>> 712b384bbbf0fe0be44b2cec73809af5953b5e32
             this.setting=undefined;
             this.setting=result;
             this.i=0;
         })
         .then(result=>this.setAPI()).then(result=>this.setAPINull())
         .then(result=>{
+<<<<<<< HEAD
         this.settingservice.getAppName(this.appname).then(result=>{
+=======
+        this.settingservice.getAppName(this.appname,null).then(result=>{
+>>>>>>> 712b384bbbf0fe0be44b2cec73809af5953b5e32
             this.setting=undefined;
             this.setting=result;
             this.t=0;

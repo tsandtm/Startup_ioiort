@@ -48,7 +48,6 @@ import { SettingCreateComponent } from './setting/setting-create/setting-create.
 import { SettingEditComponent } from './setting/setting-edit/setting-edit.component';
 import { SettingDeleteComponent } from './setting/setting-delete/setting-delete.component';
 import { SettingDetailComponent } from './setting/setting-detail/setting-detail.component';
-import { SettingFilterPipe } from './setting/setting-filter/setting-filter.pipe';
 import { DateFilterPipe } from './notifications/notifications-filter/datefilter';
 import { RotatingPlaneComponent } from './spinner/rotating-plane.component';
 import { CircleComponent } from './spinner/circle';
@@ -75,7 +74,6 @@ import { CircleComponent } from './spinner/circle';
         SettingEditComponent,
         SettingDeleteComponent,
         SettingDetailComponent,
-        SettingFilterPipe,
         WelcomeComponent,
         NotificationsListComponent,
         ProductDetailComponent,

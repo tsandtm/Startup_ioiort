@@ -7,10 +7,12 @@
     <div class='panel-body'>
         <div class='row'>
             <div class='col-md-2'>Tìm kiếm:</div>
+            
             <div class='col-md-4'>
                 <input type='text' [(ngModel)]='listFilter'/>
+                <h6><i>Tìm kiếm theo tiêu đề</i></h6>
             </div>           
-            <input type="date" [(ngModel)]='dateValue'> <i class="fa fa-calendar" aria-hidden="true"></i>             
+            <input type="date" [(ngModel)]='dateValue'> <i class="fa fa-calendar" aria-hidden="true"></i><h6><i>Tìm kiếm theo thời gian gửi</i></h6>           
             <button style="float:right; margin-right:10px" type="button" [routerLink]="['/notifi-send']">New Mesenger</button>
         </div>
         <div class='row' *ngIf='listFilter'>
@@ -22,6 +24,7 @@
             <table class='table'>
                 <thead>
                     <tr>
+                        <th>STT</th>
                         <th>Tiêu Đề</th>
                         <th>Trạng thái</th>
                         <th>Thời gian gửi</th>
@@ -31,9 +34,15 @@
                     </tr>
                 </thead>
                 <tbody>
-            <tr *ngFor='let notification of notifications | paginate: {itemsPerPage: 5, currentPage: p} | notificationFilter:listFilter | dateFilter:dateValue '>
+            <tr *ngFor='let notification of notifications | paginate: {itemsPerPage: 25, currentPage: p} | notificationFilter:listFilter | dateFilter:dateValue '>
+                <td>{{notification.id}}</td>
                 <td>{{notification.TieuDe | lowercase}}</td>
-                <td>{{notification.TrangThaiGoi}}</td>
+                <td *ngIf='notification.TrangThaiGoi == 0'>
+                     Chờ gửi </td>
+                <td *ngIf='notification.TrangThaiGoi == 1'>
+                    Đã gửi </td>
+                <td *ngIf='notification.TrangThaiGoi == 2'>
+                    Lưu nháp </td>
                 <td>{{notification.ThoiGianGui|date:"dd/MM/yyyy" }}</td>
                 <td>{{notification.SoLuong}}</td>
                 <td>{{notification.ThoiHanToiDa | date:"dd/MM/yyyy"}}</td>

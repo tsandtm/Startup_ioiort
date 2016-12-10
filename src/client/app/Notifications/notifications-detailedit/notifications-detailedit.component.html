@@ -1,9 +1,4 @@
-<style>
-input[type=date]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    display: none;
-}
-</style>
+
 <h2><strong>{{pageTitle}}</strong></h2>
 <div class="container">
 	<form>
@@ -88,7 +83,11 @@ input[type=date]::-webkit-inner-spin-button {
 				</div>
 				<div class="form-inline" *ngIf='sendlater'>
 					<div class="form-group">
+<<<<<<< HEAD
 						<input type="date" class="form-control" name="date" min="{{today | date:'yyyy-MM-dd'}}" [(ngModel)]="newdate">
+=======
+						<input type="date" class="form-control" name="date" [(ngModel)]="date">
+>>>>>>> 712b384bbbf0fe0be44b2cec73809af5953b5e32
 						<h6><i>(*) Ngày</i></h6>
 					</div>
 					<div class="form-group">
@@ -159,6 +158,6 @@ input[type=date]::-webkit-inner-spin-button {
 				</div>
 			</div>
 		</div>
-		<button type="button" style="float:right" class="btn btn-success btn-lg" (click)='Create()'>Next>></button>
+		<button type="button" style="float:right" class="btn btn-success btn-lg" (click)='Edit()'>Next>></button>
 	</form>       
 </div>

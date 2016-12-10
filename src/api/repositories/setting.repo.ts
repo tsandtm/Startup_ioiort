@@ -32,10 +32,21 @@ export class SettingRepo extends RepoBase {
     }
 
     public getListPT(option): Promise<Setting[]> {
-        let queryText = 'select * from test."n_App" ORDER BY "AppID"ASC limit 15 offset $1';
+        let queryText;
+        let pResult;
+        if(option.id==undefined||option.id=='null'||option.id==null)
+        {
+            queryText = 'select * from test."n_App" ORDER BY "AppID"ASC limit 15 offset $1';
+            pResult = this._pgPool.query(queryText,[option.so]);
+        }
+        else
+        {
+            queryText = 'select * from test."n_App" where "AppName" like $1 ORDER BY "AppID"ASC limit 15 offset $2';
+            pResult = this._pgPool.query(queryText,['%'+option.id+'%',option.so]);
+        }
 
-        console.info('Excute: ' + queryText+''+option);
-        let pResult = this._pgPool.query(queryText,[option]);
+        console.info('Excute0: ' + queryText+''+option.so+' '+option.id);
+         
         
         return pResult.then(result => {
             let sets: Setting[] = result.rows.map(r => {
@@ -55,12 +66,22 @@ export class SettingRepo extends RepoBase {
         });
     }
     public getAppName(option): Promise<Setting> {
-        let queryText = 'select * from test."n_App" where "AppName" = $1';
-
-        console.info('Excute: ' + queryText+''+option);
+        let queryText;
+        let pResult;
         
-        
-        return this._pgPool.query(queryText, [option])
+        if(option.id==undefined)
+        {
+            queryText = 'select * from test."n_App" where "AppName" = $1';
+            pResult = this._pgPool.query(queryText,[option.so]);
+            console.info('Excute2: ' + queryText+''+option.so+option.id);
+        }
+        else
+        {
+            queryText = 'select * from test."n_App" where "AppName" = $1 and "AppID"<>$2';
+            pResult = this._pgPool.query(queryText,[option.so,option.id]);
+            console.info('Excute2: ' + queryText+''+option.so+option.id);
+        }
+        return pResult
             .then(result => {
                 let set = new Setting();
                 set.AppID =  result.rows[0].AppID;
@@ -76,11 +97,22 @@ export class SettingRepo extends RepoBase {
         });
     }
     public getAPI(option): Promise<Setting> {
-        let queryText = 'select * from test."n_App" where "APIKey" = $1';
+        let queryText;
+        let pResult;
 
-        console.info('Excute: ' + queryText+''+option);
-        
-        return this._pgPool.query(queryText, [option])
+        if(option.id==undefined)
+        {
+            queryText = 'select * from test."n_App" where "APIKey" = $1';
+                console.info('Excute1: ' + queryText+''+option.so);
+            pResult = this._pgPool.query(queryText,[option.so]);
+        }
+        else
+        {
+            queryText = 'select * from test."n_App" where "APIKey" = $1 and "AppID"<>$2';
+            console.info('Excute1: ' + queryText+''+option.so+option.id);
+            pResult = this._pgPool.query(queryText,[option.so,option.id,]);
+        }
+        return pResult
             .then(result => {
                 let set = new Setting();
                 set.AppID =  result.rows[0].AppID;
@@ -95,10 +127,22 @@ export class SettingRepo extends RepoBase {
                 return null;
         });
     }
-    public getcount(): Promise<number> {
-        let queryText = 'SELECT count(*) as abc FROM test."n_App"';    
+    public getcount(option): Promise<number> {
+        let queryText;
+        let pResult;
+        if(option==undefined||option=='null'||option==null)
+        {
+            queryText = 'SELECT count(*) as abc FROM test."n_App"';    
+            pResult = this._pgPool.query(queryText);
+        }
+        else
+        {
+            queryText = 'SELECT count(*) as abc FROM test."n_App" where "AppName" like $1 ';   
+            pResult = this._pgPool.query(queryText,['%'+option+'%']);
+            
+        }
         console.info('Excute: ' + queryText);
-        return this._pgPool.query(queryText)
+        return pResult
             .then(result => {
                 console.log(result.rows[0].abc);
                 return result.rows[0].abc;

@@ -50,9 +50,9 @@ const appRoutes: Route[] = [
 
     { path: 'setting-list',component: SettingListComponent },
     { path: 'setting-create', component: SettingCreateComponent },
-    { path: 'setting-edit/:id', component: SettingEditComponent },
-    { path: 'setting-detail/:id', component: SettingDetailComponent },
-    { path: 'setting-delete/:id', component: SettingDeleteComponent }
+    { path: 'setting-edit/:id/:id2', component: SettingEditComponent },
+    { path: 'setting-detail/:id/:id2', component: SettingDetailComponent },
+    { path: 'setting-delete/:id/:id2', component: SettingDeleteComponent }
 ]
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

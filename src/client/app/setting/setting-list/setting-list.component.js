@@ -24,19 +24,17 @@ var SettingListComponent = (function () {
     }
     SettingListComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this._SettingService.getCount().then(function (result) { return _this.id = result; })
+        this._SettingService.getAllSetting().then(function (setting) { return _this.setting = setting; })
             .then(function (result) { return _this.setPage(1); });
     };
     SettingListComponent.prototype.setPage = function (page) {
-        var _this = this;
-        if (this.id != undefined) {
-            console.log("abeeee" + this.id);
+        if (this.setting != undefined) {
             if (page < 1 || page > this.pager.totalPages) {
                 return;
             }
-            this.pager = this._SettingService.getPager(this.id, page);
+            this.pager = this._SettingService.getPager(this.setting.length, page);
             // get current page of items
-            this._SettingService.getAllSettingPT(this.pager.startIndex).then(function (itempages) { return _this.itempages = itempages; });
+            this.itempages = this.setting.slice(this.pager.startIndex, this.pager.endIndex + 1);
         }
     };
     SettingListComponent.prototype.Delete = function (s) {

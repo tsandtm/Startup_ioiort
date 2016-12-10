@@ -53,24 +53,30 @@
         <h2>Quản lý API key</h2>
     </div>
     <!-- Filter the Products   -->
+<<<<<<< HEAD
     <div id="loader" *ngIf="!itempages"></div>
     <div class='panel-body' *ngIf="itempages">
         <h4>Tìm kiếm được: {{id}} kết quả</h4>
+=======
+    
+    <div class='panel-body' >
+>>>>>>> 712b384bbbf0fe0be44b2cec73809af5953b5e32
         <div class='row'>
-            <div class='col-md-2' style="line-height:37px">Tìm kiếm:</div>
-            <div class='col-md-8'>
-                <input type='text' class="form-control" [(ngModel)]='listFilter' />
+            <div class='col-md-2 text-center' style="line-height:37px">Tìm kiếm:</div>
+            <div class='col-md-6'>
+                <input type='text' class="form-control" [(ngModel)]='listFilter'  (keyup)="find()"/>
             </div>
+            <div class='col-md-4'>
+                <a class="btn btn-primary text-center" [routerLink]="['/setting-create']">Thêm mới</a>
+            </div> 
         </div>
         <div class="row">
-            <div class='col-md-6'>
-                <a class="btn btn-primary" [routerLink]="['/setting-create']">Thêm mới</a>
-            </div>            
+            <h4 style="margin-left:20px">Tìm kiếm được {{id}} kết quả</h4>
         </div>
         <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
 
         <div class='table-responsive'>
-            <table class="table" *ngIf='itempages && itempages.length'>
+            <table class="table" >
                 <thead>
                     <tr>
                         <th>App Id</th>
@@ -81,17 +87,28 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr *ngFor='let set of itempages | settingFilter:listFilter'> 
+                <tbody *ngIf='!itempages||!itempages.length'>
+                    <tr>
+                        <div style="height:300px">
+                            <div id="loader" *ngIf="!itempages||!itempages.length"></div>
+                        </div>
+                    </tr>
+                </tbody>
+                <tbody *ngIf='itempages && itempages.length'>
+                    
+                    <tr *ngFor='let set of itempages'> 
                         <td>{{ set.AppID }}</td>
                         <td>{{ set.AppName }}</td>
-                        <td>{{ set.APIKey }}</td>                              
-                        <td>{{ set.IsActive }}</td>
+                        <td>{{ set.APIKey }}</td>  
+                        <td>
+                            <input type="checkbox" name="trangthai" [(ngModel)]="set.IsActive" checked *ngIf='set.IsActive==true' disabled>
+                            <input type="checkbox" name="trangthai" [(ngModel)]="set.IsActive" *ngIf='set.IsActive==false' disabled>                             
+                        </td>
                         <td>{{ set.NgayTao }}</td>                  
                         <td>
-                            <a class="btn" [routerLink]="['/setting-detail', set.AppID]">Chi tiết</a>
-                            <a class="btn" [routerLink]="['/setting-edit',set.AppID]">Sửa</a>
-                            <a class="btn" [routerLink]="['/setting-delete',set.AppID]">Xóa</a>
+                            <a class="btn" [routerLink]="['/setting-detail', set.AppID,pager.currentPage]">Chi tiết</a>
+                            <a class="btn" [routerLink]="['/setting-edit',set.AppID,pager.currentPage]">Sửa</a>
+                            <a class="btn" [routerLink]="['/setting-delete',set.AppID,pager.currentPage]">Xóa</a>
                         </td>
                     </tr>    
                 </tbody>
