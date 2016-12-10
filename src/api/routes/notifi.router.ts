@@ -30,7 +30,7 @@ export class NotifiRouter {
         .get(this.getAllNoti)
         .post(this.Update);
 
-        this.router.route("/sl")
+        this.router.route("/sl/:id?")
         .get(this.getSL)
         .post(this.getSLsend)
 
@@ -98,7 +98,7 @@ export class NotifiRouter {
             });
     }
     private getSL = (req: Request, res: Response) => {
-        this.notifiRepo.getSL(req.body)
+        this.notifiRepo.getSL(req.params)
             .then(result => {
                 res.status(200).json(result)
             })

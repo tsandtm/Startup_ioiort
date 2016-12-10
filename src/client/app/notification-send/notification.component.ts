@@ -98,18 +98,48 @@ export class NotifiSendComponent implements OnInit{
         this.sendnow = false;
         this.sendlater=true;
     }
+    Check(){
+        
+        this.date=new Date(this.date);
+        this.date.setHours(this.date.getHours()+parseInt(this.thoiHannum.toString()));
+        console.log(this.date.toLocaleTimeString());
+    }
         // var pos=item.indexOf('.');
         // var num=item.slice(0,pos);
         // var name=item.slice(pos+1,item.length);
     Create(){
-        this.listIDTag=$(".js-data-example-ajaxTag").val();
-        this.listIDContact=$(".js-data-example-ajaxContact").val();
-        this.listIDTagDenied=$(".js-data-example-ajaxTagDenied").val();
-        this.listIDContactDenied=$(".js-data-example-ajaxContactDenied").val();
+        if($(".js-data-example-ajaxTag").val()==null){
+            this.listIDTag=[]
+        }
+        else
+        {
+            this.listIDTag=$(".js-data-example-ajaxTag").val();
+        }
+        if($(".js-data-example-ajaxContact").val()==null){
+            this.listIDContact=[]
+        }
+        else
+        {
+            this.listIDContact=$(".js-data-example-ajaxContact").val();
+        }
+        if($(".js-data-example-ajaxTagDenied").val()==null){
+            this.listIDTagDenied=[]
+        }
+        else
+        {
+            this.listIDTagDenied=$(".js-data-example-ajaxTagDenied").val();
+        }
+        if($(".js-data-example-ajaxContactDenied").val()==null){
+            this.listIDContactDenied=[]
+        }
+        else
+        {
+            this.listIDContactDenied=$(".js-data-example-ajaxContactDenied").val();
+        }
         this.date=new Date(this.date);
         if(this.sendnow){
             this.date=new Date();
-            this.Thoigiangui=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString();      
+            this.Thoigiangui=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString();
         }
         else if(this.sendlater){
             this.Thoigiangui=this.date.toLocaleDateString('en-US')+' '+this.hour+":"+this.minute+":00";
@@ -163,7 +193,10 @@ export class NotifiSendComponent implements OnInit{
                 DeniedTag:this.listIDTagDenied,
                 DeniedTagName:this.listNameTagDenied,
                 DeniedUser:this.listIDContactDenied,
-                DeniedUserName:this.listNameContactDenied};
+                DeniedUserName:this.listNameContactDenied,
+                ThoiHanNum:this.thoiHannum,
+                ThoiHanDV:this.thoiHanDV,
+                SendLater:this.sendlater};
                 this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
             })
         }

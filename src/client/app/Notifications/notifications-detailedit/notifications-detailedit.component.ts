@@ -16,23 +16,6 @@ import { Notifications } from '../shared/notifications.model';
 })
 export class NotificationstDetailEditComponent implements OnInit{
     @Input() notifications: Notifications;
-    optionsTag = {
-        placeholder: "+ Tag",
-        secondaryPlaceholder: "Tag",
-    }
-    
-    optionsContact = {
-        placeholder: "+ Contact",
-        secondaryPlaceholder: "Contact",
-    }
-    optionsTagDenied = {
-        placeholder: "+ Tag Denied",
-        secondaryPlaceholder: "Tag Denied",
-    }
-    optionsContactDenied = {
-        placeholder: "+ Contact Denied",
-        secondaryPlaceholder: "Contact Denied",
-    }
     //Tag
     ACTag = [];
     listIDTag=[];
@@ -52,6 +35,7 @@ export class NotificationstDetailEditComponent implements OnInit{
     listIDContactDenied=[];
     listNameContactDenied=[];
     //----//
+    today:Date;
     sendnow: boolean = true;
     sendlater: boolean = false;
     Apps: Appkey[];
@@ -72,6 +56,7 @@ export class NotificationstDetailEditComponent implements OnInit{
             //2=Draft
     Soluong:number;
     date:Date;
+    newdate:string;
     hour:number=12;
     minute:number=0;
     loophour:number[];
@@ -156,13 +141,13 @@ export class NotificationstDetailEditComponent implements OnInit{
     ngOnInit(): void {
         this.loadGetAll();
         this.getNotifi();
+        this.today=new Date();
         this.loophour=this.loop(1,24);
         this.loopminute=this.loop(0,60);
         this.loophourTH=this.loop(5,24);
         this.loopminuteTH=this.loop(5,60);
         this.loopdayTH=this.loop(5,28);
         this._route.params.forEach((params: Params) => {
-            console.log(params["id"])
             let id = +params["id"];
             this.getNotifications(id);
         })
@@ -183,6 +168,20 @@ export class NotificationstDetailEditComponent implements OnInit{
                 this.listIDContactDenied=notifications.Send_UserDenieID;          
                 this.tieude = notifications.TieuDe;
                 this.Noidung = notifications.NoiDung;
+                this.sendnow=!notifications.SendLater;
+                this.sendlater=notifications.SendLater;
+                this.Thoigiangui=notifications.ThoiGianGui;
+                this.doUuTien=notifications.DoUuTien;
+                this.thoiHanDV=notifications.ThoiHanDV;
+                this.thoiHannum=notifications.ThoiHanNum;
+                this.date=new Date(notifications.ThoiGianGui);
+                this.date.setDate(this.date.getDate()+1);
+                this.newdate=this.date.toISOString().substring(0,10);   
+                console.log(this.date.toLocaleTimeString());
+                this.ACTag=[];
+                this.ACContact=[];
+                this.ACTagDenied=[];
+                this.ACContactDenied=[];
                 for(var i=0;i<this.listIDTag.length;i++)
                 {
                     this.ACTag.push(this.listIDTag[i]+'.'+this.listNameTag[i]);
@@ -198,14 +197,7 @@ export class NotificationstDetailEditComponent implements OnInit{
                   for(var i=0;i<this.listIDContactDenied.length;i++)
                 {
                     this.ACContactDenied.push(this.listIDContactDenied[i]+'.'+this.listNameContactDenied[i]);
-                }
-
-                console.log(this.ACTag)
-                console.log(this.ACContact)
-                console.log(this.ACTagDenied)
-                console.log(this.ACContactDenied)
-
-               
+                }               
 
             })
     }

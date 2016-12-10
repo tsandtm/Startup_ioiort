@@ -3,7 +3,7 @@ import { Component,OnInit,Input,OnDestroy,AfterViewInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Appkey } from './shared/app.model';
-import { Notifi,SLSend,SentUser,UpdateData,InsertUser } from './shared/notifi.model';
+import { Notifi,SentUser,UpdateData,InsertUser } from './shared/notifi.model';
 import { AppService } from './shared/app.service';
 import { NotifiService } from './shared/notifi.service';
 
@@ -15,7 +15,7 @@ import { PushService } from './shared/pushservice.service';
 })
 export class ConfirmComponent implements OnInit {
     @Input() notifi:Notifi;
-    @Input() sl:SLSend;
+    @Input() sl:number;
     @Input() sentUser:SentUser[];
     @Input() updatedata:UpdateData;
     appkey:Appkey;
@@ -33,6 +33,7 @@ export class ConfirmComponent implements OnInit {
 
     }
     ngOnInit() {
+        this.sl=0;
         this._route.params.forEach((params: Params) => {
             let id = +params["id"];
             this.getNotifi(id).then(result=>{
@@ -61,12 +62,15 @@ export class ConfirmComponent implements OnInit {
     getSentUser(id: number) {
         this.notifiservice.getSendUser(id)
             .then(sent => {
-            this.sentUser = sent;})
+            this.sentUser = sent;
+            console.log(this.sentUser);
+        })
     }
     getSL(id:number){
         this.notifiservice.getSL(id)
         .then(sl=>{
-            this.sl=sl
+            this.sl=sl;
+            console.log(this.sl);
         })
     }
     getAppkey(id:number){
@@ -111,7 +115,7 @@ export class ConfirmComponent implements OnInit {
         this.Insert();
     }
     ngAfterViewInit(){
-        $(".js-data-example-ajaxTest").select2({
+        jQuery(".js-data-example-ajax").select2({
             placeholder:"Test",
                 allowClear: true, 
                 ajax: {

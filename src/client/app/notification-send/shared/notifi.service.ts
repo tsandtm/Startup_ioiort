@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response,Request } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { Notifi,SLSend,SentUser,UpdateData,InsertUser } from './notifi.model';
+import { Notifi,SentUser,UpdateData,InsertUser } from './notifi.model';
 
 @Injectable()
 export class NotifiService {
@@ -55,15 +55,10 @@ export class NotifiService {
             .catch(this.handleError);
     }
 
-    getAllSL():Promise<SLSend[]>{
-        return this._http.get('/api/sl')
+    getSL(req):Promise<number>{
+        return this._http.get('/api/sl/'+req)
             .toPromise()
-            .then(response => response.json() as SLSend[])
-            .catch(this.handleError);
-    }
-    getSL(id): Promise<SLSend> {
-        return this.getAllSL()
-            .then(slsend => slsend.find(p => p.NotifiID === id))
+            .then(response => response.json() as number)
             .catch(this.handleError);
     }
 

@@ -1,4 +1,4 @@
-    <div class="container" *ngIf='notifi && sl && sentUser'>
+    <div class="container" *ngIf='notifi && sentUser'>
 		<h3>Confirm and Test</h3>
 		<hr/>
 		<div class="container">
@@ -20,7 +20,7 @@
 				<h4>Thông tin</h4>
 				<hr />
 				<div>
-					Số lượng user:{{sl.count}}
+					Số lượng user:{{sl}}
 					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
           				<span class="glyphicon glyphicon-list"></span></button>
 						<!-- Modal -->
@@ -69,13 +69,15 @@
 					Độ ưu tiên:{{Douutien}}<br/><br/>
 					Thời hạn:{{notifi.ThoiHan| date:'dd/MM/yyyy HH:mm:ss'}}<br/><br/>
 					</p>
-					<form class="form-inline" style="margin-top:180px">
-						<div class="form-group">
+					<!--<form class="form-inline" style="margin-top:180px">-->
+						<div class="form-group" style="margin-top:180px">
 						<p>Test Recipients</p>
-							<select class="js-data-example-ajaxTest" style="width: 100%"></select>
+							<select class="js-data-example-ajax" style="width: 100%">
+  								<option value="2" selected="selected">duplicate</option>
+							</select>
 						</div>
 						<button type="submit" class="btn btn-success" (click)='Push()'>Send</button>
-					</form>
+					<!--</form>-->
 					<hr />
 				</div>
 				<div style="float:right">
