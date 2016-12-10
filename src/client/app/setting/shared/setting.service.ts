@@ -20,8 +20,8 @@ export class SettingService{
             .catch(this.handleError);
             
     }
-    getAllSettingPT(req): Promise<Setting[]> {
-        return this._http.get('/api/settingPT?so='+req)
+    getAllSettingPT(req,req2): Promise<Setting[]> {
+        return this._http.get('/api/settingPT?so='+req+'&id='+req2)
             .toPromise()
             .then(response => response.json() as Setting[])
             .catch(this.handleError); 
@@ -46,12 +46,12 @@ export class SettingService{
     }
     
     getOne(id,id2): Promise<Setting> {
-        return this.getAllSettingPT(id2)
+        return this.getAllSettingPT(id2,null)
             .then(setting => setting.find(p => p.AppID === id))
             .catch(this.handleError);
     }
-    getCount(): Promise<number> {
-        return this._http.get('/api/settingcount')
+    getCount(req): Promise<number> {
+        return this._http.get('/api/settingcount?so='+req)
             .toPromise()
             .then(response => response.json() as number)
             .catch(this.handleError);
