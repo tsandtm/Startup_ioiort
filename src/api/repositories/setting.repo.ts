@@ -8,7 +8,7 @@ export class SettingRepo extends RepoBase {
     }
 
     public getList(option): Promise<Setting[]> {
-        let queryText = 'select * from "n_App" ORDER BY "AppID" ASC ';
+        let queryText = 'select * from test."n_App" ORDER BY "AppID" ASC ';
 
         console.info('Excute: ' + queryText);
         let pResult = this._pgPool.query(queryText);
@@ -36,12 +36,12 @@ export class SettingRepo extends RepoBase {
         let pResult;
         if(option.id==undefined||option.id=='null'||option.id==null||option.id=='undefined')
         {
-            queryText = 'select * from "n_App" ORDER BY "AppID"ASC limit 15 offset $1';
+            queryText = 'select * from test."n_App" ORDER BY "AppID"ASC limit 15 offset $1';
             pResult = this._pgPool.query(queryText,[option.so]);
         }
         else
         {
-            queryText = 'select * from "n_App" where "AppName" like $1 ORDER BY "AppID"ASC limit 15 offset $2';
+            queryText = 'select * from test."n_App" where "AppName" like $1 ORDER BY "AppID"ASC limit 15 offset $2';
             pResult = this._pgPool.query(queryText,['%'+option.id+'%',option.so]);
         }
 
@@ -71,13 +71,13 @@ export class SettingRepo extends RepoBase {
         
         if(option.id==undefined||option.id==null||option.id=='null')
         {
-            queryText = 'select * from "n_App" where "AppName" = $1';
+            queryText = 'select * from test."n_App" where "AppName" = $1';
             pResult = this._pgPool.query(queryText,[option.so]);
             console.info('Excute2: ' + queryText+''+option.so+option.id);
         }
         else
         {
-            queryText = 'select * from "n_App" where "AppName" = $1 and "AppID"<>$2';
+            queryText = 'select * from test."n_App" where "AppName" = $1 and "AppID"<>$2';
             pResult = this._pgPool.query(queryText,[option.so,option.id]);
             console.info('Excute2: ' + queryText+''+option.so+option.id);
         }
@@ -102,13 +102,13 @@ export class SettingRepo extends RepoBase {
 
         if(option.id==undefined||option.id==null||option.id=='null')
         {
-            queryText = 'select * from "n_App" where "APIKey" = $1';
+            queryText = 'select * from test."n_App" where "APIKey" = $1';
                 console.info('Excute1: ' + queryText+''+option.so);
             pResult = this._pgPool.query(queryText,[option.so]);
         }
         else
         {
-            queryText = 'select * from "n_App" where "APIKey" = $1 and "AppID"<>$2';
+            queryText = 'select * from test."n_App" where "APIKey" = $1 and "AppID"<>$2';
             console.info('Excute1: ' + queryText+''+option.so+option.id);
             pResult = this._pgPool.query(queryText,[option.so,option.id,]);
         }
@@ -132,12 +132,12 @@ export class SettingRepo extends RepoBase {
         let pResult;
         if(option==undefined||option=='null'||option==null)
         {
-            queryText = 'SELECT count(*) as abc FROM "n_App"';    
+            queryText = 'SELECT count(*) as abc from test."n_App"';    
             pResult = this._pgPool.query(queryText);
         }
         else
         {
-            queryText = 'SELECT count(*) as abc FROM "n_App" where "AppName" like $1 ';   
+            queryText = 'SELECT count(*) as abc from test."n_App" where "AppName" like $1 ';   
             pResult = this._pgPool.query(queryText,['%'+option+'%']);
             
         }
@@ -150,7 +150,7 @@ export class SettingRepo extends RepoBase {
 
     }
     public getAppID(): Promise<number> {
-        let queryText = 'SELECT "AppID" as abc FROM "n_App" order by "AppID" desc limit 1';    
+        let queryText = 'SELECT "AppID" as abc from test."n_App" order by "AppID" desc limit 1';    
         console.info('Excute: ' + queryText);
         return this._pgPool.query(queryText)
             .then(result => {
@@ -192,7 +192,7 @@ export class SettingRepo extends RepoBase {
             });
     }
     public Delete(option): Promise<Setting> {
-        let queryText = 'DELETE FROM "n_App" where "AppID" = $1';
+        let queryText = 'DELETE from test."n_App" where "AppID" = $1';
         console.info('Excute: ' + queryText);
         return this._pgPool.query(queryText, [option.AppID])
             .then(result => {
