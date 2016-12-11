@@ -1,0 +1,15 @@
+language: node_js
+node_js: node
+services: postgresql
+env:
+- NODE_ENV=test
+before_script:
+- npm install -g gulp-cli
+- gulp compile
+- npm run create-database
+- npm run create-schema
+- npm run create-mock-data
+after_script:
+- npm run drop-all
+notifications:
+  slack: nodejsapisecurity:sz840dPqzq2zgUnjlkSA9BRe

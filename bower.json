@@ -1,0 +1,21 @@
+{
+  "name": "nodejs-api-security",
+  "description": "",
+  "main": "./dist/server.js",
+  "authors": [
+    "hong-duc <duc961994@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/hong-duc/nodejs-api-security",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}

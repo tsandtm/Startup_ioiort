@@ -1,0 +1,45 @@
+{
+    "development": {
+        "database": "postgres",
+        "username": "postgres",
+        "password": "bebinh",
+        "config": {
+            "dialect": "postgres",
+            "define": {
+                "timestamps": false,
+                "schema": "public"
+            }
+        },
+        "host": "localhost",
+        "port": 5432,
+        "ssl": false,
+        "pool":{
+            "max": 20,
+            "min": 4
+        },
+        "idleTimeoutMillis": 2000,
+        "schema": "public"
+        
+    },
+    "test": {
+        "database": "travis_ci_test",
+        "username": "postgres",
+        "password": null,
+        "config": {
+            "dialect": "postgres",
+            "define": {
+                "timestamps": false,
+                "schema": "test"
+            }
+        },
+        "host": "localhost",
+        "port": 5432,
+        "ssl": false,
+        "pool":{
+            "max": 20,
+            "min": 4
+        },
+        "idleTimeoutMillis": 2000,
+        "schema": "test"
+    }
+}
