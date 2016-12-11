@@ -40,6 +40,9 @@ export class TinTucRouter {
         this.router.route('/tinnoibat/:id?')
             .get(this.tinnoibat);
 
+                //login bebinh
+        this.router.post('/getCountNews',this.GetCountNews)
+        // this.router.get('/countNews',this.countNews)
         return this.router;
     }
     private lktindaxoa = (req: Request, res: Response) => {
@@ -176,7 +179,12 @@ export class TinTucRouter {
             });
     }
 
-
+    //Login:bebinh them cai nay de dem list cua user
+    private GetCountNews=(req:Request,res:Response)=>
+    {   
+        let id=req.body.id;
+        this.tintucRepo.GetCountDSNews(id).then(result=>res.status(200).send(result)).catch(err=>res.status(500).send(err));
+    }
     //xai d======================================================
     // private deleteABook = (req: Request, res: Response) => {
     //     console.log(req.body)

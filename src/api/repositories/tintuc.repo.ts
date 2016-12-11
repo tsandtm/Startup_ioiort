@@ -282,4 +282,12 @@ export class TinTucRepo extends RepoBase {
             });
     }
 
+       //Login Bebinh
+   public GetCountDSNews(id:number)
+   {
+    let jqueryText='SELECT count("IDUser") FROM public."User_DanhMucSite" WHERE "IDUser"=$1;'
+    console.info('Excute:'+jqueryText);
+    return this._pgPool.query(jqueryText,[id]).then(result=>result.rows[0].count).catch(err=>err);
+   }
+
 }
