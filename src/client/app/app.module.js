@@ -56,6 +56,9 @@ var setting_edit_component_1 = require('./setting/setting-edit/setting-edit.comp
 var setting_delete_component_1 = require('./setting/setting-delete/setting-delete.component');
 var setting_detail_component_1 = require('./setting/setting-detail/setting-detail.component');
 var setting_filter_pipe_1 = require('./setting/setting-filter/setting-filter.pipe');
+var datefilter_1 = require('./notifications/notifications-filter/datefilter');
+//spinkit component
+var spinners_1 = require('ng2-spin-kit/dist/spinners');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -103,6 +106,8 @@ var AppModule = (function () {
                 notifications_detail_component_1.NotificationstDetailComponent,
                 notifications_detailedit_component_1.NotificationstDetailEditComponent,
                 notifications_filter_pipe_1.NotificationFilterPipe,
+                datefilter_1.DateFilterPipe,
+                spinners_1.FadingCircleComponent
             ],
             bootstrap: [app_component_1.AppComponent],
             entryComponents: [Contact_update_component_1.ModalContactUpdate]

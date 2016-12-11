@@ -9,23 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var contacts_service_1 = require('../shared/contacts.service');
-var ContactsListComponent = (function () {
-    function ContactsListComponent(_contactsService) {
-        this._contactsService = _contactsService;
-        this.pageTitle = 'Contacts List';
+var NotificationDateFilterPipe = (function () {
+    function NotificationDateFilterPipe() {
     }
-    ContactsListComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this._contactsService.getList()
-            .then(function (contacts) { return _this.contacts = contacts; });
+    NotificationDateFilterPipe.prototype.transform = function (value, filterBy) {
+        filterBy = filterBy ? new Date(filterBy).toISOString().replace(/T.*/, '').split('-').reverse().join('/') : null;
+        console.log(filterBy);
+        return filterBy ? value.filter(function (set) {
+            return set.ThoiGianGui.toString().indexOf(filterBy) !== -1;
+        }) : value;
     };
-    ContactsListComponent = __decorate([
-        core_1.Component({
-            templateUrl: '/contacts/contacts-list/contacts-list.component.html'
+    NotificationDateFilterPipe = __decorate([
+        core_1.Pipe({
+            name: 'notificationdateFilter'
         }), 
-        __metadata('design:paramtypes', [contacts_service_1.ContactsService])
-    ], ContactsListComponent);
-    return ContactsListComponent;
+        __metadata('design:paramtypes', [])
+    ], NotificationDateFilterPipe);
+    return NotificationDateFilterPipe;
 }());
-exports.ContactsListComponent = ContactsListComponent;
+exports.NotificationDateFilterPipe = NotificationDateFilterPipe;

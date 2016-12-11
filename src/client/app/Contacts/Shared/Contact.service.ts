@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Response, Headers, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { Contact } from './Contact.model';
@@ -8,16 +8,19 @@ import { Contact } from './Contact.model';
 export class ContactService {
     private _productUrl = 'api/products/products.json';
     constructor(private _http: Http) { }
-    getContacts(): Promise<Contact[]> {
-        return this._http.get('/api/Contact')
+
+
+    getContacts(PageNum: number): Promise<Contact[]> {
+        return this._http.get('/api/Contact?PageNum=' + PageNum)
             .toPromise()
             .then(response => response.json() as Contact[])
             .catch(this.handleError);
     }
 
-    getContact(ContactID: number): Promise<Contact> {
-        return this.getContacts()
-            .then(response => response.find(x => x.ContactID == ContactID))
+    getOneContact(ContactID: number): Promise<Contact> {
+        return this._http.get('/api/Contact/GetOne?ContactID=' + ContactID)
+            .toPromise()
+            .then(response => response.json() as Contact)
             .catch(this.handleError);
     }
 
@@ -37,14 +40,27 @@ export class ContactService {
             .catch(this.handleError);
     }
 
-    SearchByTag(Contact_TagName: string): Promise<Contact[]> {
-        return this._http.get('/api/Contact/SearchByTag?Contact_TagName=' + Contact_TagName)
+    SearchByTag(Contact_TagName: string, PageNum: number): Promise<Contact[]> {
+        return this._http.get('/api/Contact/SearchByTag?Contact_TagName=' + Contact_TagName + '&PageNum=' + PageNum)
             .toPromise()
             .then(response => response.json() as Contact[])
             .catch(this.handleError);
     }
 
-    getPager(totalItems: number, currentPage: number = 1, pageSize: number = 10) {
+    SearchByAccount(Account: string, PageNum: number): Promise<Contact[]> {
+        return this._http.get('/api/Contact/SearchByAccount?Account=' + Account + '&PageNum=' + PageNum)
+            .toPromise()
+            .then(response => response.json() as Contact[])
+            .catch(this.handleError);
+    }
+
+    GetPager(totalItems, currentPage, pageSize = 25) {
+        // default to first page
+        currentPage = currentPage || 1;
+
+        // default page size is 10
+        pageSize = pageSize || 10;
+
         // calculate total pages
         var totalPages = Math.ceil(totalItems / pageSize);
 
@@ -70,15 +86,17 @@ export class ContactService {
         // calculate start and end item indexes
         var startIndex = (currentPage - 1) * pageSize;
         var endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
+
         // create an array of pages to ng-repeat in the pager control
         var pages: number[];
-        for (var n: number = 1; n < (totalPages + 1); n++) {
+        for (var n: number = startPage; n < (endPage + 1); n++) {
             if (pages == undefined)
                 pages = [1];
             else
                 pages.push(n);
-            console.log(totalPages + n);
+            // console.log(totalPages + n);
         };
+
         // return object with all pager properties required by the view
         return {
             totalItems: totalItems,

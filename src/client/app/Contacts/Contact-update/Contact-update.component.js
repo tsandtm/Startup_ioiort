@@ -49,6 +49,7 @@ var ModalContactUpdate = (function () {
             return _this.getTag();
         })
             .then(function () {
+            console.log(_this.contact);
             for (var i = 0; i < _this.Tags.length; i++) {
                 for (var j = 0; j < _this.contact.Contact_TagID.length; j++) {
                     if (_this.Tags[i].TagID == _this.contact.Contact_TagID[j]) {
@@ -68,6 +69,7 @@ var ModalContactUpdate = (function () {
         return this.tagService.getTags()
             .then(function (response) {
             _this.Tags = response;
+            console.log(_this.Tags);
             return _this.Tags;
         })
             .catch(function (error) {
@@ -77,7 +79,7 @@ var ModalContactUpdate = (function () {
     };
     ModalContactUpdate.prototype.getContact = function (ContactID) {
         var _this = this;
-        return this.contactService.getContact(ContactID)
+        return this.contactService.getOneContact(ContactID)
             .then(function (response) {
             _this.contact = response;
             return _this.contact;

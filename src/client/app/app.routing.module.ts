@@ -10,19 +10,18 @@ import { NotifiSendComponent } from './notification-send/notification.component'
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import { BarChartDemoComponent } from './Reports/Report/Report.component';
 import { MenuListComponent } from './menu/menu-list/menu-list.component';
-import { ContactsListComponent} from './contacts/contacts-list/contacts-list.component';
 import { NotificationsListComponent} from './notifications/notifications-list/notifications-list.component';
 import { NotificationstDetailComponent} from './notifications/notifications-detail/notifications-detail.component';
 import { YeucaubanListComponent} from './yeucauban/yeucauban-list/yeucauban-list.component';
 import { ConfirmComponent } from './notification-send/confirm.component';
 import { ContactListComponent } from './Contacts/Contact-list/Contact-list.component';
-import { ContactDetailComponent } from './Contacts/Contact-detail/Contact-detail.component';
 import {NotificationstDetailEditComponent} from './notifications/notifications-detailedit/notifications-detailedit.component';
 import { SettingListComponent } from './setting/setting-list/setting-list.component';
 import { SettingCreateComponent } from './setting/setting-create/setting-create.component';
 import { SettingEditComponent } from './setting/setting-edit/setting-edit.component';
 import { SettingDeleteComponent } from './setting/setting-delete/setting-delete.component';
 import { SettingDetailComponent } from './setting/setting-detail/setting-detail.component';
+import { LoginComponent } from './login/login.component';
 
 const appRoutes: Route[] = [
     { path: '', redirectTo: 'menu-list', pathMatch: 'full' },
@@ -33,7 +32,6 @@ const appRoutes: Route[] = [
    // { path: 'products', component: ProductListComponent },
    // { path: 'product/:id', component: ProductDetailComponent},
     { path: 'menu-list', component: MenuListComponent },
-    { path: 'contact', component: ContactsListComponent },
     { path: 'notification', component: NotificationsListComponent },
     { path: 'notification-detail/:id', component: NotificationstDetailComponent },
     { path: 'yeucauban', component: YeucaubanListComponent },
@@ -43,7 +41,6 @@ const appRoutes: Route[] = [
     { path: 'products', component: ProductListComponent },
     { path: 'product/:id', component: ProductDetailComponent },
     { path: 'Contacts', component: ContactListComponent },
-    { path: 'Contacts/:ContactID', component: ContactDetailComponent},
    // { path: 'products', component: ProductListComponent },
    // { path: 'product/:id', component: ProductDetailComponent},
     { path: 'notification-detailedit/:id', component: NotificationstDetailEditComponent },
@@ -52,7 +49,8 @@ const appRoutes: Route[] = [
     { path: 'setting-create', component: SettingCreateComponent },
     { path: 'setting-edit/:id', component: SettingEditComponent },
     { path: 'setting-detail/:id', component: SettingDetailComponent },
-    { path: 'setting-delete/:id', component: SettingDeleteComponent }
+    { path: 'setting-delete/:id', component: SettingDeleteComponent },
+    { path: 'login', component: LoginComponent  }
 ]
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

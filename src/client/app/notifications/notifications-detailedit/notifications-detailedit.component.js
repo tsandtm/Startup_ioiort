@@ -231,7 +231,17 @@ var NotificationstDetailEditComponent = (function () {
     NotificationstDetailEditComponent.prototype.getNotifications = function (id) {
         var _this = this;
         this._notificationsService.getNotifications(id)
-            .then(function (notifications) { return _this.notifications = notifications; });
+            .then(function (notifications) {
+            _this.notifications = notifications;
+            _this.tieude = notifications.TieuDe;
+            _this.Noidung = notifications.NoiDung;
+        });
+    };
+    NotificationstDetailEditComponent.prototype.Edit = function () {
+        var _this = this;
+        this.notifications.TieuDe = this.tieude;
+        this.notifications.NoiDung = this.Noidung;
+        this._notificationsService.Edit(this.notifications).then(function (result) { return _this._router.navigate(['notification']); });
     };
     __decorate([
         core_1.Input(), 

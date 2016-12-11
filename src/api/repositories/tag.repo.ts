@@ -8,8 +8,8 @@ export class TagRepo extends RepoBase {
         super();
     }
 
-    public getList(): Promise<Tag[]> {
-        let queryText = 'select * from test."n_Tag"';
+    public getList(AccountID: string): Promise<Tag[]> {
+        let queryText = `select * from test."n_Tag" where "AccountID"= '${AccountID}'`;
         let pResult;
 
         pResult = this._pgPool.query(queryText)
@@ -28,6 +28,18 @@ export class TagRepo extends RepoBase {
             .catch(err => {
                 console.error(err.message);
                 return null;
+            });
+    }
+
+    public CreateTag(option: Tag): Promise<Tag[]> {
+        let queryText = 'INSERT INTO test."n_Tag" ("TagNameDisplay", "AccountID", "IsDefault") VALUES ($1,$2,$3)';
+        let pResult;
+
+        pResult = this._pgPool.query(queryText, [option.TagNameDisplay, option.AccountID, option.IsDefault]);
+
+        return pResult
+            .then(result => {
+                return option;
             });
     }
 

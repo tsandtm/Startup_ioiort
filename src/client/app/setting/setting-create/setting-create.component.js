@@ -18,19 +18,43 @@ var SettingCreateComponent = (function () {
         this._route = _route;
         this.pageTitle = 'Setting Create';
     }
+    SettingCreateComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.settingservice.getAllSetting().then(function (setting1) { return _this.setting1 = setting1; });
+    };
     SettingCreateComponent.prototype.Create = function () {
         var _this = this;
-        if (this.trangthai == undefined)
-            this.trangthai = false;
-        this.ngaytao = new Date().toLocaleDateString('en-US');
-        this.setting = {
-            AppID: this.appid,
-            APIKey: this.apikey,
-            IsActive: this.trangthai,
-            NgayTao: this.ngaytao,
-            AppName: this.appname,
-        };
-        this.settingservice.Create(this.setting).then(function (result) { return _this._router.navigate(['setting-list']); });
+        this.getSetting(this.appid);
+        var i = 0;
+        for (var _i = 0, _a = this.setting1; _i < _a.length; _i++) {
+            var s = _a[_i];
+            if (s.AppID == this.appid) {
+                i = 1;
+                break;
+            }
+        }
+        if (i == 0) {
+            this.alert = '';
+            if (this.trangthai == undefined)
+                this.trangthai = false;
+            this.ngaytao = new Date().toLocaleDateString() + '';
+            this.setting = {
+                AppID: this.appid,
+                APIKey: this.apikey,
+                IsActive: this.trangthai,
+                NgayTao: this.ngaytao,
+                AppName: this.appname,
+            };
+            this.settingservice.Create(this.setting).then(function (result) { return _this._router.navigate(['setting-list']); });
+        }
+        else {
+            this.alert = 'AppID đã được sử dụng!!!!';
+        }
+    };
+    SettingCreateComponent.prototype.getSetting = function (id) {
+        var _this = this;
+        this.settingservice.getOne(id)
+            .then(function (setting) { return _this.setting = setting; });
     };
     SettingCreateComponent.prototype.Back = function () {
         this._router.navigate(['setting-list']);

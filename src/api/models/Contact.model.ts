@@ -9,4 +9,5 @@ export class Contact {
     FaceBook: string;
     Contact_TagID: number[];
     Contact_TagName: string[];
+    Total: number;
 }

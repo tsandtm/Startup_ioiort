@@ -20,6 +20,16 @@ var NotificationsService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
+    NotificationsService.prototype.getAllNotifications = function () {
+        // return this._http.get('/api/book')
+        //     .map((response: Response) => <Product[]>response.json())
+        //     .do(data => console.log('All: ' + JSON.stringify(data)))
+        //     .catch(this.handleError);
+        return this._http.get('/api/notification')
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
     NotificationsService.prototype.getNotifications = function (id) {
         return this.getList()
             .then(function (notifications) { return notifications.find(function (p) { return p.id === id; }); })
@@ -33,6 +43,17 @@ var NotificationsService = (function () {
     NotificationsService.prototype.handleError = function (error) {
         console.error(error);
         return Promise.reject(error.message || error);
+    };
+    NotificationsService.prototype.getOne = function (id) {
+        return this.getAllNotifications()
+            .then(function (products) { return products.find(function (p) { return p.id === id; }); })
+            .catch(this.handleError);
+    };
+    NotificationsService.prototype.Edit = function (req) {
+        return this._http.post('/api/notificationedit', req)
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
     };
     NotificationsService = __decorate([
         core_1.Injectable(), 

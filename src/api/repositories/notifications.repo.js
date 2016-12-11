@@ -12,7 +12,7 @@ var NotificationsRepo = (function (_super) {
         _super.call(this);
     }
     NotificationsRepo.prototype.getList = function (option) {
-        var queryText = 'SELECT * FROM test."n_Notifications" ORDER BY "NotifiID"ASC  ';
+        var queryText = 'SELECT * FROM "n_Notifications" ORDER BY "NotifiID"ASC  ';
         console.info('Excute: ' + queryText);
         var pResult;
         if (option) {
@@ -28,7 +28,7 @@ var NotificationsRepo = (function (_super) {
                 notification.AppID = r.AppID;
                 notification.TieuDe = r.TieuDe;
                 notification.NoiDung = r.NoiDung;
-                notification.ThoiGianGui = r.ThoiGianGui;
+                notification.ThoiGianGui = new Date(r.ThoiGianGui).toLocaleDateString().replace(/T.*/, '').split('-').reverse().join('/');
                 notification.ThoiHanToiDa = r.ThoiHanToiDa;
                 notification.DoUuTien = r.DoUuTien;
                 notification.TrangThaiGoi = r.TrangThaiGoi;
@@ -44,7 +44,7 @@ var NotificationsRepo = (function (_super) {
     };
     NotificationsRepo.prototype.getOne = function (option) {
         //  let queryText = 'SELECT "NotifiID", "AppID", "TieuDe", "NoiDung", "ThoiGianGui", "ThoiHanToiDa", "DoUuTien", "TrangThaiGoi", "SoLuong"FROM public."n_Notifications"; where NotifiID=id';
-        var queryText = 'SELECT "NotifiID", "AppID", "TieuDe", "NoiDung", "ThoiGianGui", "ThoiHanToiDa", "DoUuTien", "TrangThaiGoi", "SoLuong"FROM test."n_Notifications"; where id=$1';
+        var queryText = 'SELECT "NotifiID", "AppID", "TieuDe", "NoiDung", "ThoiGianGui", "ThoiHanToiDa", "DoUuTien", "TrangThaiGoi", "SoLuong"FROM public."n_Notifications"; where id=$1';
         console.info('Excute: ' + queryText);
         return this._pgPool.query(queryText, [option.id, option.TieuDe])
             .then(function (result) {
@@ -60,6 +60,34 @@ var NotificationsRepo = (function (_super) {
             notifications.SoLuong = result.rows[0].SoLuong;
             return notifications;
         });
+    };
+    NotificationsRepo.prototype.Edit = function (option) {
+        // let queryText = 'UPDATE test."n_Notifications" SET "NotifiID" = $1, "AppID" = $2 , "TieuDe" =$3, "NoiDung" = $4,"ThoiGianGui" = $5,"ThoiHanToiDa" = $6,"DoUuTien" = $7,"TrangThaiGoi" = $8,"SoLuong" = $9';
+        console.log(JSON.stringify(option));
+        var queryText = 'UPDATE test."n_Notifications" SET "TieuDe" =$1, "NoiDung" = $2 WHERE "NotifiID"=$3';
+        console.info('Excute: ' + queryText);
+        return this._pgPool.query(queryText, [
+            option.TieuDe,
+            option.NoiDung,
+            option.id
+        ]).then(function (result) { return null; }).catch(function (error) {
+            console.error('Error: ', error);
+            return Promise.reject(error);
+        });
+        // return this._pgPool.query(queryText, [
+        //     option.NotifiID,
+        //     option.AppID,
+        //     option.TieuDe,
+        //     option.NoiDung,
+        //     option.ThoiGianGui,
+        //     option.ThoiHanToiDa,
+        //     option.DoUuTien,
+        //     option.TrangThaiGoi,
+        //     option.SoLuong,
+        // ])
+        //     .then(result => {
+        //         return null;
+        //     });
     };
     return NotificationsRepo;
 }(repositories_base_1.RepoBase));

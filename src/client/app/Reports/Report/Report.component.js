@@ -10,11 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var Report_service_1 = require('../Shared/Report.service');
+var Report_model_1 = require('../Shared/Report.model');
 // webpack html imports
 var BarChartDemoComponent = (function () {
     function BarChartDemoComponent(reportService) {
         this.reportService = reportService;
         this.datasets = [];
+        this.devices = [];
         this.testto = 0;
         this.a = [];
         this.b = [];
@@ -44,6 +46,10 @@ var BarChartDemoComponent = (function () {
     // }
     BarChartDemoComponent.prototype.loadGetAll = function () {
         var _this = this;
+        this.reportService.getAllDeviceforDougnut().then(function (result) {
+            _this.Reports = result;
+            _this.devices = _this.getlabeldonoughnut();
+        });
         this.reportService.getDevice().then(function (result) {
             _this.listDevice = result;
             _this.barChartLabels = _this.getmonthlabel();
@@ -67,9 +73,29 @@ var BarChartDemoComponent = (function () {
         });
     };
     BarChartDemoComponent.prototype.createDataSets = function () {
+        // for (let i = 0; i < this.devices.length; i++) {
         var _this = this;
         this.listDevice.forEach(function (ld) {
+            if (ld.listdevice.length < _this.devices.length) {
+                ld.listdevice.forEach(function (d) {
+                    for (var i = 0; i < _this.devices.length; i++) {
+                        if (_this.devices[i] != d.name) {
+                            _this.rp = new Report_model_1.Report();
+                            _this.rp.name = _this.devices[i];
+                            _this.rp.count = 0;
+                            ld.listdevice.push(_this.rp);
+                        }
+                    }
+                });
+            }
+            console.log(JSON.stringify(ld));
             ld.listdevice.forEach(function (d) {
+                // if(this.devices[i] != d.name)
+                // {
+                //   console.log("mang devices: " + this.devices[i]);
+                //     d.name=this.devices[i];
+                //     d.count=0;
+                // }
                 var index = _this.checkIfLabelExists(d.name);
                 if (index === -1) {
                     _this.datasets.push({ data: [d.count], label: d.name });
@@ -79,6 +105,7 @@ var BarChartDemoComponent = (function () {
                 }
             });
         });
+        // }
     };
     BarChartDemoComponent.prototype.checkIfLabelExists = function (label) {
         if (this.datasets.length === 0)
@@ -91,14 +118,14 @@ var BarChartDemoComponent = (function () {
         var month = date.getMonth();
         var year = date.getFullYear();
         var my = month + ";" + year;
-        console.log(month);
-        console.log(year);
-        console.log(my);
+        // console.log(month);
+        // console.log(year);
+        // console.log(my);
         if (id == 1) {
             month = date.getMonth();
             year = date.getFullYear();
             my = month + ";" + year;
-            console.log(my);
+            // console.log(my);
             this.reportService.getDevicebydate(my).then(function (result) {
                 _this.listDevice = result;
                 _this.barChartLabels = _this.getmonthlabel();
@@ -112,7 +139,6 @@ var BarChartDemoComponent = (function () {
             month = date.getMonth() + 1;
             year = date.getFullYear();
             my = month + ";" + year;
-            console.log(my);
             this.reportService.getDevicebydate(my).then(function (result) {
                 _this.listDevice = result;
                 _this.barChartLabels = _this.getmonthlabel();
@@ -168,8 +194,6 @@ var BarChartDemoComponent = (function () {
     };
     BarChartDemoComponent.prototype.gettotal = function () {
         var _this = this;
-        console.log('gettotal: ');
-        // let tong: number;
         this.loadAllDeviceforDougnut()
             .then(function () {
             for (var i = 0; i < _this.ArrayReport.length; i++) {

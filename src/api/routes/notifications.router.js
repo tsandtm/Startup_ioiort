@@ -19,6 +19,16 @@ var NotificationsRouter = (function () {
         this.createANotifications = function (req, res) {
             res.send('created');
         };
+        this.Edit = function (req, res) {
+            _this.notificationsRepo.Edit(req.body)
+                .then(function (result) {
+                res.status(200).json(result);
+            })
+                .catch(function (error) {
+                console.error(error.message);
+                res.status(500).send(error.message);
+            });
+        };
         this.router = express_1.Router();
         this.notificationsRepo = new notifications_repo_1.NotificationsRepo();
     }
@@ -26,6 +36,8 @@ var NotificationsRouter = (function () {
         this.router.route('/notification')
             .get(this.getAllNotifications)
             .get(this.createANotifications);
+        this.router.route("/notificationedit")
+            .post(this.Edit);
         return this.router;
     };
     return NotificationsRouter;

@@ -31,6 +31,15 @@ var TagRepo = (function (_super) {
             return null;
         });
     };
+    TagRepo.prototype.CreateTag = function (option) {
+        var queryText = 'INSERT INTO test."n_Tag" ("TagNameDisplay", "AccountID", "IsDefault") VALUES ($1,$2,$3)';
+        var pResult;
+        pResult = this._pgPool.query(queryText, [option.TagNameDisplay, option.AccountID, option.IsDefault]);
+        return pResult
+            .then(function (result) {
+            return option;
+        });
+    };
     return TagRepo;
 }(repositories_base_1.RepoBase));
 exports.TagRepo = TagRepo;
