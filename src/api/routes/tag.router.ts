@@ -4,7 +4,7 @@ import { Tag } from '../models/Tag.model'
 
 import path = require('path');
 // import các module tạo table
-import { TagRepo } from '../repositories/Tag.repo';
+import { TagRepo } from '../repositories/tag.repo';
 
 
 
@@ -19,6 +19,8 @@ export class TagRouter {
     }
 
     public getRouter(): Router {
+        this.router.route('/TagA')
+            .get(this.getAllTagA);
         this.router.route('/Tag')
             .get(this.getAllTag);
         this.router.route('/Tag/CreateTag')
@@ -36,7 +38,18 @@ export class TagRouter {
                 console.error(error.message);
                 res.status(500).send(error.message)
             })
+    }    
+    private getAllTagA = (req: Request, res: Response) => {
+        this.tagRepo.getList(req.query)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            })
     }
+
 
     private CreateTag = (req: Request, res: Response) => {
         let option = new Tag();

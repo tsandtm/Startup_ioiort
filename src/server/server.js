@@ -9,13 +9,13 @@ var server=http.createServer(app);
 server.listen(8000);
 var io = require("socket.io").listen(server);
 var pg = require('pg')  
-const conString = 'postgres://postgres:123456@localhost:5432/Appnhatro' 
+const conString = 'postgres://postgres:123456@localhost:5432/test' 
 var bodyParser = require('body-parser');
 var urlencodeParser = bodyParser.urlencoded({extended:false});
 
 var config = {
   user: 'postgres', //env var: PGUSER
-  database: 'Appnhatro', //env var: PGDATABASE
+  database: 'testdb', //env var: PGDATABASE
   password: 'postgres', //env var: PGPASSWORD
   host: 'localhost', // Server hosting the postgres database
   port: 5432, //env var: PGPORT

@@ -30,21 +30,15 @@ export class NotifiRouter {
         .get(this.getAllNoti)
         .post(this.Update);
 
-        this.router.route("/sl")
+        this.router.route("/sl/:id?")
         .get(this.getSL)
         .post(this.getSLsend)
 
-        this.router.route("/sldenied")
-        .get(this.getSLDenied)
-        .post(this.getSLsenddenied)
 
-        this.router.route("/sentuser")
+        this.router.route("/sentuser/:id?")
         .get(this.getSentUser)
         .post(this.Insert)
         
-        this.router.route("/sentuserdenied")
-        .get(this.getSentUserDenied);
-
         
 
 
@@ -104,17 +98,7 @@ export class NotifiRouter {
             });
     }
     private getSL = (req: Request, res: Response) => {
-        this.notifiRepo.getSL(req.body)
-            .then(result => {
-                res.status(200).json(result)
-            })
-            .catch(error => {
-                console.error(error.message);
-                res.status(500).send(error.message)
-            });
-    }
-    private getSLDenied = (req: Request, res: Response) => {
-        this.notifiRepo.getSLDenied(req.body)
+        this.notifiRepo.getSL(req.params)
             .then(result => {
                 res.status(200).json(result)
             })
@@ -133,28 +117,8 @@ export class NotifiRouter {
                 res.status(500).send(error.message)
             });
     }
-    private getSLsenddenied = (req: Request, res: Response) => {
-        this.notifiRepo.getslsenddenied(req.body)
-            .then(result => {
-                res.status(200).json(result)
-            })
-            .catch(error => {
-                console.error(error.message);
-                res.status(500).send(error.message)
-            });
-    }
     private getSentUser = (req: Request, res: Response) => {
-        this.notifiRepo.getSentUser(req.body)
-            .then(result => {
-                res.status(200).json(result)
-            })
-            .catch(error => {
-                console.error(error.message);
-                res.status(500).send(error.message)
-            });
-    }
-    private getSentUserDenied = (req: Request, res: Response) => {
-        this.notifiRepo.getSentUserDenied(req.body)
+        this.notifiRepo.getSentUser(req.params)
             .then(result => {
                 res.status(200).json(result)
             })

@@ -36,6 +36,55 @@ export class ContactRepo extends RepoBase {
                 return null;
             });
     }
+    
+    public getListA(option): Promise<Contact[]> {
+        let queryText = 'select * from test."Contacts" where lower("TaiKhoan") like lower($1) ORDER BY "ContactID" ASC LIMIT 10 OFFSET $2';
+        let pResult;
+        if(option.page == undefined){
+            pResult = this._pgPool.query(queryText,['%'+option.id+'%',0])
+        }
+        else{
+            pResult = this._pgPool.query(queryText,['%'+option.id+'%',option.page*10])
+        }
+        return pResult.then(result => {
+            let Contacts: Contact[] = result.rows.map(r => {
+                let contact = new Contact();
+                contact.ContactID = r.ContactID;
+                contact.Token = r.Token;
+                contact.Email = r.Email;
+                contact.TaiKhoan = r.TaiKhoan;
+                contact.Device = r.Device;
+                contact.PhoneNumber = r.PhoneNumber;
+                contact.NgayTao = r.NgayTao;
+                contact.FaceBook = r.FaceBook;
+                contact.Contact_TagID = r.Contact_TagID;
+                contact.Contact_TagName = r.Contact_TagName;
+                contact.Total = r.total;
+                return contact;
+            });
+            return Contacts;
+        })
+            .catch(err => {
+                console.error(err.message);
+                return null;
+            });
+    }
+    public getCountContact(option): Promise<number> {
+        let queryText = 'select count(*) from test."Contacts" where lower("TaiKhoan") like lower($1)';
+
+        console.info('Excute: ' + queryText);
+
+        return this._pgPool.query(queryText,[option.id])
+            .then(result => {
+                let count:number;
+                count = result.rows[0].count;
+                return count;
+            })
+            .catch(err => {
+                console.error(err.message);
+                return null;
+            });
+    }
 
     public getOne(option): Promise<Contact> {
         let queryText = 'select * from test."Contacts" where "ContactID" = $1';

@@ -15,7 +15,7 @@ export class ContactService {
         //     .map((response: Response) => <Product[]>response.json())
         //     .do(data => console.log('All: ' + JSON.stringify(data)))
         //     .catch(this.handleError);
-        return this._http.get('/api/Contact')
+        return this._http.get('/api/Contactnotifi')
             .toPromise()
             .then(response => response.json() as Contact[])
             .catch(this.handleError);

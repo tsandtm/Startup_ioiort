@@ -9,21 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var SettingFilterPipe = (function () {
-    function SettingFilterPipe() {
+var NotificationDateFilterPipe = (function () {
+    function NotificationDateFilterPipe() {
     }
-    SettingFilterPipe.prototype.transform = function (value, filterBy) {
-        filterBy = filterBy ? filterBy.toLocaleLowerCase() : null;
+    NotificationDateFilterPipe.prototype.transform = function (value, filterBy) {
+        filterBy = filterBy ? new Date(filterBy).toISOString().replace(/T.*/, '').split('-').reverse().join('/') : null;
+        console.log(filterBy);
         return filterBy ? value.filter(function (set) {
-            return set.AppName.toLocaleLowerCase().indexOf(filterBy) !== -1;
+            return set.ThoiGianGui.toString().indexOf(filterBy) !== -1;
         }) : value;
     };
-    SettingFilterPipe = __decorate([
+    NotificationDateFilterPipe = __decorate([
         core_1.Pipe({
-            name: 'settingFilter'
+            name: 'notificationdateFilter'
         }), 
         __metadata('design:paramtypes', [])
-    ], SettingFilterPipe);
-    return SettingFilterPipe;
+    ], NotificationDateFilterPipe);
+    return NotificationDateFilterPipe;
 }());
-exports.SettingFilterPipe = SettingFilterPipe;
+exports.NotificationDateFilterPipe = NotificationDateFilterPipe;

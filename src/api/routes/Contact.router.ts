@@ -20,7 +20,7 @@ export class ContactRouter {
     public getRouter(): Router {
 
         this.router.route('/Contactnotifi')
-            .get(this.getAllContact)
+            .get(this.getAllContactA)
         this.router.route('/Contact')
             .get(this.getAllContact);
         this.router.route('/Contact/GetOne')
@@ -31,6 +31,8 @@ export class ContactRouter {
             .get(this.SearchByTag);
         this.router.route('/Contact/SearchByAccount')
             .get(this.SearchByAccount)
+        this.router.route('/ContactCount')
+            .get(this.getCountContact);
         return this.router;
     }
 
@@ -45,6 +47,27 @@ export class ContactRouter {
                 console.error(error.message);
                 res.status(500).send(error.message)
             })
+    }
+
+    private getAllContactA = (req: Request, res: Response) => {
+        this.contactRepo.getList(req.query)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            })
+    }
+    private getCountContact = (req: Request, res: Response) => {
+        this.contactRepo.getCountContact(req.query)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            });
     }
 
     private getOne = (req: Request, res: Response) => {

@@ -16,42 +16,30 @@ import { Notifications } from '../shared/notifications.model';
 })
 export class NotificationstDetailEditComponent implements OnInit{
     @Input() notifications: Notifications;
-    optionsTag = {
-        placeholder: "+ Tag",
-        secondaryPlaceholder: "Tag",
-    }
-    
-    optionsContact = {
-        placeholder: "+ Contact",
-        secondaryPlaceholder: "Contact",
-    }
-    optionsTagDenied = {
-        placeholder: "+ Tag Denied",
-        secondaryPlaceholder: "Tag Denied",
-    }
-    optionsContactDenied = {
-        placeholder: "+ Contact Denied",
-        secondaryPlaceholder: "Contact Denied",
-    }
     //Tag
     ACTag = [];
     ACTagItem = [];
     listIDTag=[];
+    listNameTag=[];
     Tag:Tag[];
     //Contact    
     ACContact = [];
     ACContactItem = [];
     listIDContact=[];
+    listNameContact=[];
     Contact:Contact[];
     //TagDenied
     ACTagDenied = [];
     ACTagDeniedItem = [];
     listIDTagDenied=[];
+    listNameTagDenied=[];
     //ContactDenied
     ACContactDenied = [];
     ACContactDeniedItem = [];
     listIDContactDenied=[];
+    listNameContactDenied=[];
     //----//
+    today:Date;
     sendnow: boolean = true;
     sendlater: boolean = false;
     Apps: Appkey[];
@@ -66,11 +54,13 @@ export class NotificationstDetailEditComponent implements OnInit{
     ThoiHan:string;
     doUuTien:number=1;
     Trangthai:number=2;
+
             //0=Waiting
             //1=Complete
             //2=Draft
     Soluong:number;
     date:Date;
+    newdate:string;
     hour:number=12;
     minute:number=0;
     loophour:number[];
@@ -90,49 +80,14 @@ export class NotificationstDetailEditComponent implements OnInit{
     private _route: ActivatedRoute) {
 
     }
-    public TagAdded(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        this.listIDTag.push(parseInt(num));
-    }
-    public TagRemoved(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        this.delPos(this.listIDTag,parseInt(num));
-    }
-    public ContactAdded(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        this.listIDContact.push(parseInt(num));
-    }
-    public ContactRemoved(item:string) {
-        var pos=item.indexOf('.');
-        var num=item.slice(0,pos);
-        this.delPos(this.listIDContact,parseInt(num));
-    }
-    // public TagDeniedAdded(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.listIDTag.push(parseInt(num));
-    // }
-    // public TagDeniedRemoved(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.delPos(this.listIDTag,parseInt(num));
-    // }
-    // public ContactDeniedAdded(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.listIDContact.push(parseInt(num));
-    //     console.log(this.listIDContact.toString());
-    // }
-    // public ContactDeniedRemoved(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.delPos(this.listIDContact,parseInt(num));
-    //     console.log(this.listIDContact.toString());
-    // }
     delPos(ar:Array<number>,key:number){
+        for(var i=0;i<=ar.length;i++){
+            if(ar[i]==key){
+                ar.splice(i,1);
+            }
+        }
+    }
+    delPosstring(ar:Array<string>,key:string){
         for(var i=0;i<=ar.length;i++){
             if(ar[i]==key){
                 ar.splice(i,1);
@@ -150,22 +105,6 @@ export class NotificationstDetailEditComponent implements OnInit{
         this.notifiservice.getLastNotifi()
             .then(notifi => this.notifi = notifi)
     }
-    getTag(){
-        this.tagservice.getAllTag().then(tag=>{
-            this.Tag=tag;
-            this.Tag.forEach(element => {
-            this.ACTagItem.push(element.TagID+'.'+element.TagNameDisplay)
-        });
-    });
-    }
-    getContact(){
-        this.contactservice.getAllContact().then(contact=>{
-            this.Contact=contact;
-            this.Contact.forEach(element=>{
-                this.ACContactItem.push(element.ContactID+'.'+element.TaiKhoan)
-            });
-        });
-    }
     
     sendnowclick(): void {
         this.sendnow = true;
@@ -175,7 +114,79 @@ export class NotificationstDetailEditComponent implements OnInit{
         this.sendnow = false;
         this.sendlater=true;
     }
-    Create(){
+   
+
+
+    loadGetAll() {
+        this.appService.getApp().then( (result) => this.Apps = result);
+    }
+    ngOnInit(): void {
+        this.loadGetAll();
+        this.getNotifi();
+        this.today=new Date();
+        this.loophour=this.loop(1,24);
+        this.loopminute=this.loop(0,60);
+        this.loophourTH=this.loop(5,24);
+        this.loopminuteTH=this.loop(5,60);
+        this.loopdayTH=this.loop(5,28);
+        this._route.params.forEach((params: Params) => {
+            let id = +params["id"];
+            this.getNotifications(id);
+        })
+    }
+    getNotifications(id: number) {
+        
+        this._notificationsService.getNotifications(id)
+            .then(notifications => {
+                this.notifications = notifications;
+                
+                this.listNameTag = notifications.Send_TagName,
+                this.listNameContact = notifications.Send_UserName,
+                this.listNameTagDenied = notifications.Send_TagDenieName
+                this.listNameContactDenied = notifications.Send_UserDenieName,     
+                this.listIDTag = notifications.Send_TagID;
+                this.listIDContact = notifications.Send_UserID;
+                this.listIDTagDenied = notifications.Send_TagDenieID;
+                this.listIDContactDenied=notifications.Send_UserDenieID;          
+                this.tieude = notifications.TieuDe;
+                this.Noidung = notifications.NoiDung;
+                this.sendnow=!notifications.SendLater;
+                this.sendlater=notifications.SendLater;
+                this.Thoigiangui=notifications.ThoiGianGui;
+                this.doUuTien=notifications.DoUuTien;
+                this.thoiHanDV=notifications.ThoiHanDV;
+                this.thoiHannum=notifications.ThoiHanNum;
+                this.date=new Date(notifications.ThoiGianGui);
+                this.date.setDate(this.date.getDate()+1);
+                this.newdate=this.date.toISOString().substring(0,10);   
+                console.log(this.date.toLocaleTimeString());
+                this.ACTag=[];
+                this.ACContact=[];
+                this.ACTagDenied=[];
+                this.ACContactDenied=[];
+                for(var i=0;i<this.listIDTag.length;i++)
+                {
+                    this.ACTag.push(this.listIDTag[i]+'.'+this.listNameTag[i]);
+                }
+                  for(var i=0;i<this.listIDContact.length;i++)
+                {
+                    this.ACContact.push(this.listIDContact[i]+'.'+this.listNameContact[i]);
+                }
+                  for(var i=0;i<this.listIDTagDenied.length;i++)
+                {
+                    this.ACTagDenied.push(this.listIDTagDenied[i]+'.'+this.listNameTagDenied[i]);
+                }
+                  for(var i=0;i<this.listIDContactDenied.length;i++)
+                {
+                    this.ACContactDenied.push(this.listIDContactDenied[i]+'.'+this.listNameContactDenied[i]);
+                }               
+
+            })
+    }
+     getslsend(req):Promise<number>{
+        return this.notifiservice.getslsend(req).then(result=>this.Soluong=result);
+    }
+    Edit(): void{     
         this.date=new Date(this.date);
         if(this.sendnow){
             this.date=new Date();
@@ -197,67 +208,37 @@ export class NotificationstDetailEditComponent implements OnInit{
         if(this.thoiHanDV=="Minute"){
             this.date.setDate(this.date.getDate());
             this.date.setMinutes(this.date.getMinutes()+parseInt(this.thoiHannum.toString()));
-        }
-        if(this.notifi==null){
-            this.notifiID=1;
-        }
-        else{
-            this.notifiID=this.notifi.NotifiID+1;
-        }
+        }   
         if(this.sendlater){
             this.ThoiHan=this.date.toLocaleDateString('en-US')+' '+this.hour+":"+this.minute+":00";
         }
         else{
             this.ThoiHan=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString(); 
+        } 
+        if(this.listIDTag.length==0 && this.listIDContact.length==0)
+        {
+
         }
-        this.notifi={AppID:this.AppID,
-        NotifiID:this.notifiID,
-        TieuDe:this.tieude,
-        Noidung:this.Noidung,
-        DoUuTien:this.doUuTien,
-        Trangthai:this.Trangthai,
-        Soluong:1,
-        Thoigiangui:this.Thoigiangui,
-        ThoiHan:this.ThoiHan,
-        SendTag:this.listIDTag,
-        SendUser:this.listIDContact,
-        DeniedTag:this.listIDTagDenied,
-        DeniedUser:this.listIDContactDenied};
-        this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
-    }
-
-
-    loadGetAll() {
-        this.appService.getApp().then( (result) => this.Apps = result);
-    }
-    ngOnInit(): void {
-        this.loadGetAll();
-        this.getNotifi();
-        this.getTag();
-        this.getContact();
-        this.loophour=this.loop(1,24);
-        this.loopminute=this.loop(0,60);
-        this.loophourTH=this.loop(5,24);
-        this.loopminuteTH=this.loop(5,60);
-        this.loopdayTH=this.loop(5,28);
-        this._route.params.forEach((params: Params) => {
-            console.log(params["id"])
-            let id = +params["id"];
-            this.getNotifications(id);
-        })
-    }
-    getNotifications(id: number) {
-        
-        this._notificationsService.getNotifications(id)
-            .then(notifications => {
-                this.notifications = notifications;
-                this.tieude = notifications.TieuDe;
-                this.Noidung = notifications.NoiDung;
-            })
-    }
-    Edit(): void{        
+        else
+        {
+            
+            this.getslsend({contact:this.listIDContact,tag:this.listIDTag,contactdenied:this.listIDContactDenied,tagdenied:this.listIDTagDenied}).then(result=>{
+        this.notifications.AppID = this.AppID;
         this.notifications.TieuDe = this.tieude;
         this.notifications.NoiDung = this.Noidung;
-        this._notificationsService.Edit(this.notifications).then(result=>this._router.navigate(['notification']));
-    }
+        this.notifications.DoUuTien = this.doUuTien;
+        this.notifications.ThoiHanToiDa = this.ThoiHan;
+        this.notifications.ThoiGianGui=this.Thoigiangui;
+        this.notifications.SoLuong=result;
+        this.notifications.Send_TagName =this.listNameTag;
+        this.notifications.Send_TagID=this.listIDTag;
+        this.notifications.Send_UserName=this.listNameContact;
+        this.notifications.Send_UserID=this.listIDContact;
+        this.notifications.Send_TagDenieName=this.listNameTagDenied;
+        this.notifications.Send_TagDenieID=this.listIDTagDenied;
+        this.notifications.Send_UserDenieName=this.listNameContactDenied;
+        this.notifications.Send_UserDenieID=this.listIDContactDenied;
+        this._notificationsService.Edit(this.notifications).then(result=>this._router.navigate(['confirm',this.notifications.id]));
+            })
+    }}
 }

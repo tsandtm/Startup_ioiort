@@ -111,10 +111,10 @@ var ConfirmComponent = (function () {
             };
             _this.notifiservice.Insert(_this.insertUser);
         });
-        this._router.navigate(['welcome']);
+        this._router.navigate(['menu-list']);
     };
     ConfirmComponent.prototype.SaveAsDraft = function () {
-        this._router.navigate(['welcome']);
+        this._router.navigate(['menu-list']);
     };
     ConfirmComponent.prototype.Finish = function () {
         this.now = new Date();

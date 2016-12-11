@@ -316,14 +316,47 @@ var NotifiSendComponent = (function () {
     NotifiSendComponent.prototype.ngOnInit = function () {
         this.loadGetAll();
         this.getNotifi();
-        this.getTag();
-        this.getContact();
+        //this.getTag();
+        //this.getContact();
         this.today = new Date();
         this.loophour = this.loop(1, 24);
         this.loopminute = this.loop(0, 60);
         this.loophourTH = this.loop(5, 24);
         this.loopminuteTH = this.loop(5, 60);
         this.loopdayTH = this.loop(5, 28);
+    };
+    NotifiSendComponent.prototype.ngAfterViewInit = function () {
+        jQuery(".js-data-example-ajax").select2({
+            ajax: {
+                url: "/api/Tag",
+                dataType: 'json',
+                delay: 500,
+                data: function (params) {
+                    return {
+                        q: params.term,
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    // parse the results into the format expected by Select2
+                    // since we are using custom formatting functions we do not need to
+                    // alter the remote JSON data, except to indicate that infinite
+                    // scrolling can be used
+                    params.page = params.page || 1;
+                    return {
+                        results: $.map(data, function (obj) {
+                            return { id: obj.TagID, text: obj.TagNameDisplay };
+                        }),
+                        pagination: {
+                            more: (params.page * 30) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) { return markup; },
+            minimumInputLength: 1,
+        });
     };
     NotifiSendComponent = __decorate([
         core_1.Component({

@@ -15,55 +15,92 @@ export class SettingCreateComponent {
     trangthai: boolean;
     setting: Setting;
     ngaytao: string;
-    appid:number;
-    alert:string;
-    setting1: Setting[];
+    alertname:string;
+    alertapi:string;
+    n:number = 1;
+    i:number;
+    t:number;
     constructor(
         private settingservice:SettingService,
         private _router: Router,
         private _route: ActivatedRoute) {
 
     }
-    ngOnInit(): void {
-        this.settingservice.getAllSetting().then(setting1 => this.setting1 = setting1);
+    ngOnInit(): void { 
+        this.settingservice.getAppID().then(result=>this.n=result);
     }
-    Create(){
-        
-        this.getSetting(this.appid);
-        var i = 0;
-        for(let s of this.setting1)
-        {
-            if(s.AppID==this.appid)
+    Create(){  
+        this.settingservice.getAPI(this.apikey,null).then(result=>{
+            this.setting=undefined;
+            this.setting=result;
+            this.i=0;
+        })
+        .then(result=>this.setAPI()).then(result=>this.setAPINull())
+        .then(result=>{
+        this.settingservice.getAppName(this.appname,null).then(result=>{
+            this.setting=undefined;
+            this.setting=result;
+            this.t=0;
+        }) 
+        .then(result=>this.setAppName()).then(result=>this.setAppNameNull())       
+        .then(result=>{
+            if(this.i==0&&this.t==0)
             {
-                i=1;
-                break;
-            }            
-        }
-        if(i==0)
-        {
-            this.alert='';
-            if(this.trangthai==undefined)
-            this.trangthai=false;        
-            this.ngaytao = new Date().toLocaleDateString()+'';
-            this.setting={
-                AppID: this.appid,
-                APIKey: this.apikey,
-                IsActive: this.trangthai,
-                NgayTao: this.ngaytao,
-                AppName: this.appname,
-            }
+                if(this.trangthai==undefined)
+                this.trangthai=false;        
+                this.ngaytao = new Date().toLocaleDateString("en-US")+'';
+                this.setting={
+                    AppID: this.n,
+                    APIKey: this.apikey,
+                    IsActive: this.trangthai,
+                    NgayTao: this.ngaytao,
+                    AppName: this.appname,
+                }
             this.settingservice.Create(this.setting).then(result=>this._router.navigate(['setting-list']));
+            }
+        });
+        });
+    }
+    setAppNameNull(){
+        if(this.appname==undefined||this.appname=="")
+        {
+            this.alertname="Chưa nhập AppName!!!!!";
+            this.t=1;
+        }
+    }
+    setAPINull(){
+        if(this.apikey==undefined||this.apikey=="")
+        {
+            this.alertapi="Chưa nhập API Key!!!!!";
+            this.i=1;
+        }          
+ 
+    }
+    setAPI(){
+        if(this.setting!=undefined)
+        {
+            this.alertapi="API Key đã được sử dụng!!!!";
+            this.i=1;
+        } 
+        else
+        {
+            this.alertapi="";
+            this.i=0;
+        }
+    }
+    setAppName(){
+        if(this.setting!=undefined)
+        {
+            this.alertname="AppName đã được sử dụng!!!!";
+            this.t=1;
         }
         else
         {
-            this.alert='AppID đã được sử dụng!!!!';
+            this.alertname="";
+            this.t=0;
         }
     }
-    getSetting(id: number) {
-        this.settingservice.getOne(id)
-            .then(setting => this.setting = setting)
-        
-    }
+
     Back() {
         this._router.navigate(['setting-list']);
     }

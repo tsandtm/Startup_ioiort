@@ -1,5 +1,5 @@
 import { RepoBase } from './repositories.base';
-import { Notifi,SLSend,SentUser,UpdateData,InsertUser } from '../models/notifi.model'
+import { Notifi,SentUser,UpdateData,InsertUser } from '../models/notifi.model'
 import { Pool, QueryResult } from 'pg';
 
 export class NotifiRepo extends RepoBase {
@@ -9,7 +9,7 @@ export class NotifiRepo extends RepoBase {
     }
 
     public Create(option): Promise<Notifi> {
-        let queryText = 'INSERT INTO test."n_Notifications" values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)';
+        let queryText = 'INSERT INTO test."n_Notifications" values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20)';
 
         console.info('Excute: ' + queryText);
 
@@ -30,6 +30,9 @@ export class NotifiRepo extends RepoBase {
         option.DeniedUserName,
         option.DeniedTag,
         option.DeniedTagName,
+        option.ThoiHanNum,
+        option.ThoiHanDV,
+        option.SendLater
         ])
             .then(result => {
                 return null;
@@ -90,6 +93,9 @@ export class NotifiRepo extends RepoBase {
                 notifi.DeniedUserName = r.Send_UserDenieName;
                 notifi.DeniedTag = r.Send_TagDenieID;
                 notifi.DeniedTagName = r.Send_TagDenieName;
+                notifi.ThoiHanNum=r.ThoiHanNum;
+                notifi.ThoiHanDV=r.ThoiHanDV;
+                notifi.SendLater=r.SendLater;
                 return notifi;
             });
             return notifis;
@@ -125,6 +131,9 @@ export class NotifiRepo extends RepoBase {
                 notifi.DeniedUserName = result.rows[0].DeniedUserName;
                 notifi.DeniedTag = result.rows[0].DeniedTag;
                 notifi.DeniedTagName = result.rows[0].DeniedTagName;
+                notifi.ThoiHanNum=result.rows[0].ThoiHanNum;
+                notifi.ThoiHanDV=result.rows[0].ThoiHanDV;
+                notifi.SendLater=result.rows[0].SendLater;
                 return notifi;
             })
             .catch(err => {
@@ -133,46 +142,20 @@ export class NotifiRepo extends RepoBase {
             });
     }
 
-    public getSL(option):Promise<SLSend[]>{
-        let queryText = 'SELECT "NotifiID",COUNT(*) FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserID" OR A."Contact_TagID" && B."Send_TagID") AND (Array[A."ContactID"] && B."Send_UserDenieID" OR A."Contact_TagID" && B."Send_TagDenieID") = false GROUP BY "NotifiID"';
+    public getSL(option):Promise<number>{
+        let queryText = 'SELECT COUNT(*) FROM test."Contacts" A,test."n_Notifications" B WHERE "NotifiID"=$1 AND (Array[A."ContactID"] && B."Send_UserID" OR A."Contact_TagID" && B."Send_TagID") AND (Array[A."ContactID"] && B."Send_UserDenieID" OR A."Contact_TagID" && B."Send_TagDenieID") = false GROUP BY "NotifiID"';
 
         console.info('Excute: ' + queryText);
         let pResult;
-        if (option.NotifiID == undefined) {
-            pResult = this._pgPool.query(queryText)
-        }
+            pResult = this._pgPool.query(queryText,[option.id])
         return pResult.then(result => {
-            let slsends: SLSend[] = result.rows.map(r => {
-                let slsend = new SLSend();
-                slsend.NotifiID = r.NotifiID;
-                slsend.count = r.count;
-                return slsend;
-            });
-            return slsends;
-        })
-            .catch(err => {
-                console.error(err.message);
-                return null;
-            });
-
-    }
-    public getSLDenied(option):Promise<SLSend[]>{
-        let queryText = 'SELECT "NotifiID",COUNT(*) FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserDenieID" OR A."Contact_TagID" && B."Send_TagDenieID") = false GROUP BY "NotifiID"';
-
-        console.info('Excute: ' + queryText);
-        let pResult;
-        if (option.NotifiID == undefined) {
-            pResult = this._pgPool.query(queryText)
-        }
-        return pResult.then(result => {
-            let slsends: SLSend[] = result.rows.map(r => {
-                let slsend = new SLSend();
-                slsend.NotifiID = r.NotifiID;
-                slsend.count = r.count;
-                return slsend;
-            });
-            return slsends;
-        })
+                let sl:number;
+                if(result.rowCount==0)
+                    sl=0;
+                else
+                    sl = result.rows[0].count;
+                return sl;
+            })
             .catch(err => {
                 console.error(err.message);
                 return null;
@@ -195,30 +178,12 @@ export class NotifiRepo extends RepoBase {
                 return null;
             });
     }
-    public getslsenddenied(option): Promise<number> {
-        let queryText = 'SELECT COUNT(*) FROM test."Contacts" A WHERE (Array[A."ContactID"] && $1 OR A."Contact_TagID" && $2) = false';
-
-        console.info('Excute: ' + queryText);
-
-        return this._pgPool.query(queryText,[option.contactdenied,option.tagdenied])
-            .then(result => {
-                let slsend:number;
-                slsend = result.rows[0].count;
-                return slsend;
-            })
-            .catch(err => {
-                console.error(err.message);
-                return null;
-            });
-    }
     public getSentUser(option):Promise<SentUser[]>{
-        let queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook","Contact_TagName" FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserID" OR A."Contact_TagID" && B."Send_TagID") AND (Array[A."ContactID"] && B."Send_UserDenieID" OR A."Contact_TagID" && B."Send_TagDenieID") = false';
+        let queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook","Contact_TagName" FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserID" OR A."Contact_TagID" && B."Send_TagID") AND (Array[A."ContactID"] && B."Send_UserDenieID" OR A."Contact_TagID" && B."Send_TagDenieID") = false AND "NotifiID" = $1 ORDER BY "ContactID" ASC LIMIT 10 ';
 
         console.info('Excute: ' + queryText);
         let pResult;
-        if (option.NotifiID == undefined) {
-            pResult = this._pgPool.query(queryText)
-        }
+            pResult = this._pgPool.query(queryText,[option.id]);
         return pResult.then(result => {
             let sents: SentUser[] = result.rows.map(r => {
                 let sent = new SentUser();
@@ -238,34 +203,6 @@ export class NotifiRepo extends RepoBase {
                 return null;
             });
     }
-    public getSentUserDenied(option):Promise<SentUser[]>{
-        let queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook","Contact_TagName" FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserDenieID" OR A."Contact_TagID" && B."Send_TagDenieID") = false';
-
-        console.info('Excute: ' + queryText);
-        let pResult;
-        if (option.NotifiID == undefined) {
-            pResult = this._pgPool.query(queryText)
-        }
-        return pResult.then(result => {
-            let sents: SentUser[] = result.rows.map(r => {
-                let sent = new SentUser();
-                sent.NotifiID=r.NotifiID;
-                sent.ContactID = r.ContactID;
-                sent.TaiKhoan = r.TaiKhoan;
-                sent.Device = r.Device;
-                sent.Email = r.Email;
-                sent.FaceBook = r.FaceBook;
-                sent.ContactTagName=r.Contact_TagName;
-                return sent;
-            });
-            return sents;
-        })
-            .catch(err => {
-                console.error(err.message);
-                return null;
-            });
-    }
-
     public getOneNoti(option): Promise<Notifi> {
         let queryText = 'select * from test."n_Notifications" where "NotifiID" = $1';
 
@@ -291,6 +228,9 @@ export class NotifiRepo extends RepoBase {
                 notifi.DeniedUserName = result.rows[0].DeniedUserName;
                 notifi.DeniedTag = result.rows[0].DeniedTag;
                 notifi.DeniedTagName = result.rows[0].DeniedTagName;
+                notifi.ThoiHanNum=result.rows[0].ThoiHanNum;
+                notifi.ThoiHanDV=result.rows[0].ThoiHanDV;
+                notifi.SendLater=result.rows[0].SendLater;
                 return notifi;
             })
             .catch(err => {

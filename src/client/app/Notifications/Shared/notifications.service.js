@@ -30,6 +30,17 @@ var NotificationsService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
+    NotificationsService.prototype.getAllSendUser = function () {
+        return this._http.get('/api/getlistsenduser')
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    NotificationsService.prototype.getSendUser = function (id) {
+        return this.getAllSendUser()
+            .then(function (slsend) { return slsend.filter(function (p) { return p.NotifiID === id; }); })
+            .catch(this.handleError);
+    };
     NotificationsService.prototype.getNotifications = function (id) {
         return this.getList()
             .then(function (notifications) { return notifications.find(function (p) { return p.id === id; }); })

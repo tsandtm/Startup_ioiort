@@ -37,7 +37,7 @@ var SettingCreateComponent = (function () {
             this.alert = '';
             if (this.trangthai == undefined)
                 this.trangthai = false;
-            this.ngaytao = new Date().toLocaleDateString() + '';
+            this.ngaytao = new Date().toLocaleDateString("en-US") + '';
             this.setting = {
                 AppID: this.appid,
                 APIKey: this.apikey,
@@ -47,7 +47,7 @@ var SettingCreateComponent = (function () {
             };
             this.settingservice.Create(this.setting).then(function (result) { return _this._router.navigate(['setting-list']); });
         }
-        else {
+        else if (i == 1) {
             this.alert = 'AppID đã được sử dụng!!!!';
         }
     };

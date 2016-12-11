@@ -2,7 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Notifications } from '../shared/notifications.model';
+import { Notifi,SentUser,UpdateData,InsertUser } from '../../notification-send/shared/notifi.model';
+import { Notifications,SentContact } from '../shared/notifications.model';
 import { NotificationsService } from '../shared/notifications.service';
 
 
@@ -12,6 +13,7 @@ import { NotificationsService } from '../shared/notifications.service';
 export class NotificationstDetailComponent implements OnInit {
     pageTitle: string = '';
     @Input() notifications: Notifications;
+    @Input() sentUser: SentContact[];
     errorMessage: string;
 
     constructor(private _notificationsService: NotificationsService,
@@ -24,6 +26,7 @@ export class NotificationstDetailComponent implements OnInit {
             console.log(params["id"])
             let id = +params["id"];
             this.getNotifications(id);
+            this.getAllSentUser(id);
         })
     }
 
@@ -31,6 +34,12 @@ export class NotificationstDetailComponent implements OnInit {
         
         this._notificationsService.getNotifications(id)
             .then(notifications => this.notifications = notifications)
+    }
+
+    getAllSentUser(id: number) {
+        
+        this._notificationsService.getSendUser(id)
+            .then(sent => this.sentUser = sent)
     }
 
     onBack(): void {
