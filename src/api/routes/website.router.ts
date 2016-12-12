@@ -29,7 +29,7 @@ export class WebsRouter {
             .get(this.getAllWebs);
         // .put(this.updateShow);
         this.router.get('/getWebs/:id?', this.getList_User);
-
+        this.router.get('/GetList/:IDUser',this.GetList)
 
         // this.router.get('/countNews',this.countNews)
 
@@ -42,7 +42,7 @@ export class WebsRouter {
         console.log(req.query.limit);
         console.log(req.query.offset);
 
-        this.websRepo.getList(null,req.query.limit, req.query.offset)
+        this.websRepo.getList(null, req.query.limit, req.query.offset)
             .then(lnw => {
                 res.status(200).json(lnw);
             })
@@ -61,6 +61,18 @@ export class WebsRouter {
                 console.error(err);
                 return Promise.reject(err);
             })
+    }
+
+    /**
+     * req.params.IDUser
+     */
+    private GetList = (req: Request, res: Response) =>{
+        let limit = req.query.limit;
+        let offset = req.query.offset;
+        console.log(`${limit}_${offset}`)
+        this.websRepo.GetList(req.params.IDUser,limit,offset)
+            .then(result => res.status(200).json(result))
+            .catch(err => Promise.reject(err))
     }
 
     // private updateShow = (req: Request, res: Response) => {

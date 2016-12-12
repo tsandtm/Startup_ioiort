@@ -12,4 +12,5 @@ export class ListWeb{
     LinkRSS:string;
     Icon:string;
     TenGoi_KoDau:string;
+    GiaTri?:boolean;
 }
