@@ -30,6 +30,8 @@ import { YeucaubanListComponent} from './yeucauban/yeucauban-list/yeucauban-list
 import { YeucaubanService } from './yeucauban/shared/yeucauban.service';
 import { NotifiSendComponent } from './notification-send/notification.component';
 import { ConfirmComponent } from './notification-send/confirm.component';
+//waitting
+import { CircleComponent } from './notifications/spinner/circle';
 //import {RlTagInputModule} from 'angular2-tag-input';
 import { TagInputModule } from 'ng2-tag-input';
 import * as io from 'socket.io-client';
@@ -50,6 +52,7 @@ import { SettingDeleteComponent } from './setting/setting-delete/setting-delete.
 import { SettingDetailComponent } from './setting/setting-detail/setting-detail.component';
 import { SettingFilterPipe } from './setting/setting-filter/setting-filter.pipe';
 import { DateFilterPipe } from './notifications/notifications-filter/datefilter';
+import { FadingCircleComponent } from 'ng2-spin-kit/dist/spinners'
 
 @NgModule({
     imports: [
@@ -98,7 +101,10 @@ import { DateFilterPipe } from './notifications/notifications-filter/datefilter'
     NotificationstDetailComponent,
     NotificationstDetailEditComponent,
     NotificationFilterPipe,
-    DateFilterPipe
+    DateFilterPipe,
+    FadingCircleComponent,
+    //
+    CircleComponent
     ],
     bootstrap: [AppComponent],
     entryComponents: [ModalContactUpdate]

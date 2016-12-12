@@ -264,12 +264,14 @@ export class NotificationstDetailEditComponent implements OnInit{
         this._route.params.forEach((params: Params) => {
             console.log(params["id"])
             let id = +params["id"];
-            this.getNotifications(id);
+            let id2 = +params["id2"]-1;
+            this.getNotifications(id,id2);
         })
     }
-    getNotifications(id: number) {
+   
+    getNotifications(id: number,id2:number) {
         
-        this._notificationsService.getNotifications(id)
+        this._notificationsService.getNotifications(id,id2)
             .then(notifications => {
                 this.notifications = notifications;
                 

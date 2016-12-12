@@ -25,15 +25,20 @@ export class NotificationstDetailComponent implements OnInit {
         this._route.params.forEach((params: Params) => {
             console.log(params["id"])
             let id = +params["id"];
-            this.getNotifications(id);
+             console.log(params["id2"])
+            let id2 = +params["id2"]-1;
+            this.getNotifications(id,id2);
             this.getAllSentUser(id);
         })
     }
 
-    getNotifications(id: number) {
+    getNotifications(id: number,id2: number) {
         
-        this._notificationsService.getNotifications(id)
-            .then(notifications => this.notifications = notifications)
+        this._notificationsService.getNotifications(id,id2)
+            .then(notifications =>{
+                this.notifications = notifications;
+                console.log(notifications);
+            })
     }
 
     getAllSentUser(id: number) {

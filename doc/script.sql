@@ -47,6 +47,8 @@ Create table test."n_Notifications"
 	"Send_UserDenieName" Text[],
 	"Send_TagDenieID" Integer[],
 	"Send_TagDenieName" Text[],
+	"ThoiHanNum" Integer,
+	"ThoiHanDV" Text,
  primary key ("NotifiID")
 ) Without Oids;
 

@@ -4,4 +4,5 @@ export class Notification {
     ThoiGianGui: String;
     SoLuong: number;
     ThoiHanToiDa: String;
+    Total:number;
 }

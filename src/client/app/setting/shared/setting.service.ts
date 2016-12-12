@@ -85,14 +85,53 @@ export class SettingService{
 
         // create an array of pages to ng-repeat in the pager control
         var pages: number[];
-        for(var n:number=1;n<(totalPages+1);n++)
+        if(currentPage<=3)
         {
-            if(pages==undefined)
-                pages=[1];
+            if(totalPages<5)
+            {
+                for(var n:number=1;n<=totalPages;n++)
+                {
+                    if(pages==undefined)
+                        pages=[n];
+                    else
+                        pages.push(n);
+                    
+                };
+            }
             else
-                pages.push(n);
-            console.log(n);
-        };
+            {
+                for(var n:number=1;n<=5;n++)
+                {
+                    if(pages==undefined)
+                        pages=[n];
+                    else
+                        pages.push(n);
+                    
+                };
+            }
+        }
+        else if(currentPage>=(totalPages-2))
+        {
+            for(var n:number=(totalPages-4);n<=totalPages;n++)
+            {
+                if(pages==undefined)
+                    pages=[n];
+                else
+                    pages.push(n);
+                
+            };
+        }
+        else
+        {
+            for(var n:number=currentPage-2;n<(currentPage+3);n++)
+            {
+                if(pages==undefined)
+                    pages=[n];
+                else
+                    pages.push(n);
+                
+            };
+        }
         // return object with all pager properties required by the view
         return {
             totalItems: totalItems,
