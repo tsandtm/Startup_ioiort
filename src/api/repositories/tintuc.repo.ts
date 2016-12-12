@@ -10,13 +10,14 @@ export class TinTucRepo extends RepoBase {
     public getList(option, limit, offset): Promise<TinTuc[]> {
 
         console.log("id " + option);
-        let queryText = `SELECT "IDTinTuc","TieuDe","MoTa","ThoiGianDangTin","URLNews","URLThumbImage" FROM public."TinTuc",public."User_DanhMucSite" 
-        WHERE ${option} = Any ("ArrayDaXoa"::bigint[]) is null
-         AND "TinTuc"."IDDanhMucSite"="User_DanhMucSite"."IDDanhMucSite"  
-         AND "IDUser"=${option} 
-         AND ${option} = Any ("ArrayDaXem"::bigint[]) is null
+        let queryText = 
+        `SELECT "IDTinTuc","TieuDe","MoTa","ThoiGianDangTin","URLNews","URLThumbImage" FROM public."TinTuc",public."User_DanhMucSite" 
+         WHERE ${option} = Any ("ArrayDaXoa"::bigint[]) is null
+                AND "TinTuc"."IDDanhMucSite"="User_DanhMucSite"."IDDanhMucSite"  
+                AND "IDUser"=${option} 
+                AND ${option} = Any ("ArrayDaXem"::bigint[]) is null
          ORDER BY "ThoiGianDangTin" 
-         DESC LIMIT ${limit} OFFSET ${offset}`;
+         DESC LIMIT ${limit} OFFSET ${offset}`
 
         console.info('Excute: ' + queryText);
         let pResult;
@@ -24,7 +25,7 @@ export class TinTucRepo extends RepoBase {
         return pResult.then(result => {
             let TinTucs: TinTuc[] = result.rows.map(r => {
                 let tintuc = new TinTuc();
-                tintuc.id = r.IDTinTuc;
+                tintuc.IDTinTuc = r.IDTinTuc;
                 tintuc.IDDanhMucSite = r.IDDanhMucSite;
                 tintuc.TieuDe = r.TieuDe;
                 tintuc.MoTa = r.MoTa;
@@ -58,7 +59,7 @@ export class TinTucRepo extends RepoBase {
         return pResult.then(result => {
             let TinTucs: TinTuc[] = result.rows.map(r => {
                 let tintuc = new TinTuc();
-                tintuc.id = r.IDTinTuc;
+                tintuc.IDTinTuc = r.IDTinTuc;
                 tintuc.IDDanhMucSite = r.IDDanhMucSite;
                 tintuc.TieuDe = r.TieuDe;
                 tintuc.MoTa = r.MoTa;
@@ -94,7 +95,7 @@ export class TinTucRepo extends RepoBase {
         return pResult.then(result => {
             let TinTucs: TinTuc[] = result.rows.map(r => {
                 let tintuc = new TinTuc();
-                tintuc.id = r.IDTinTuc;
+                tintuc.IDTinTuc = r.IDTinTuc;
                 tintuc.IDDanhMucSite = r.IDDanhMucSite;
                 tintuc.TieuDe = r.TieuDe;
                 tintuc.MoTa = r.MoTa;
@@ -151,7 +152,7 @@ export class TinTucRepo extends RepoBase {
         return this._pgPool.query(queryText, [option.id, option.name])
             .then(result => {
                 let tintuc = new TinTuc();
-                tintuc.id = result.rows[0].IDTinTuc;
+                tintuc.IDTinTuc = result.rows[0].IDTinTuc;
                 tintuc.IDDanhMucSite = result.rows[0].IDDanhMucSite;
                 tintuc.TieuDe = result.rows[0].TieuDe;
                 tintuc.MoTa = result.rows[0].MoTa;
@@ -219,7 +220,7 @@ export class TinTucRepo extends RepoBase {
         return pResult.then(result => {
             let TinTucs: TinTuc[] = result.rows.map(r => {
                 let tintuc = new TinTuc();
-                tintuc.id = r.IDTinTuc;
+                tintuc.IDTinTuc = r.IDTinTuc;
                 tintuc.TieuDe = r.TieuDe;
                 tintuc.MoTa = r.MoTa;
                 tintuc.ThoiGianDangTin = r.ThoiGianDangTin;
@@ -248,7 +249,7 @@ export class TinTucRepo extends RepoBase {
         return pResult.then(result => {
             let TinTucs: TinTuc[] = result.rows.map(r => {
                 let tintuc = new TinTuc();
-                tintuc.id = r.IDTinTuc;
+                tintuc.IDTinTuc = r.IDTinTuc;
                 tintuc.IDDanhMucSite = r.IDDanhMucSite;
                 tintuc.TieuDe = r.TieuDe;
                 tintuc.MoTa = r.MoTa;

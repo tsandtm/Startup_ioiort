@@ -8,9 +8,10 @@ export class DanhMucRePo extends RepoBase {
         super();
     }
     public getList(option, limit: number, offset: number): Promise<DanhMuc[]> {
-        let queryText = 'SELECT * FROM public."DanhMucSite" ORDER BY "IDDanhMucSite" ASC LIMIT $1 OFFSET $2';
-           console.log('Limit: ' + limit)
-        console.log('Offset: ' + offset)
+        let queryText = `SELECT * 
+        FROM public."DanhMucSite" 
+        WHERE "ParentID" = ${-1}
+        ORDER BY "IDDanhMucSite" ASC LIMIT ${limit} OFFSET ${offset}`;
         console.info('Excute: ' + queryText);
         let pResult;
 
@@ -45,7 +46,11 @@ export class DanhMucRePo extends RepoBase {
             });
     }
     public getOne(option): Promise<DanhMuc> {
-        let queryText = 'SELECT * FROM public."DanhMucSite" WHERE IDDanhMucSite=$1';
+        let queryText = `SELECT * 
+        FROM public."DanhMucSite" 
+        WHERE IDDanhMucSite=$1 AND "ParentID" = ${-1}
+        ORDER BY "IDDanhMucSite" ASC
+        `;
 
         console.info('Excute: ' + queryText);
         return this._pgPool.query(queryText, [option.id, option.name])
@@ -67,7 +72,11 @@ export class DanhMucRePo extends RepoBase {
             });
     }
     public getList_User(option): Promise<DanhMuc[]> {
-        let queryText = 'SELECT "DanhMucSite"."IDDanhMucSite", "DuongDan", "TenGoi", "MoTa", "SoLuongTinDuyetTim", "TempateCrawlTieuDe", "TempateCrawlMoTa", "TempateCrawlNoiDung", "TempateCrawlImage", "LinkRSS", "TenGoi_KoDau", "Icon" FROM public."DanhMucSite" , public."User_DanhMucSite" where "DanhMucSite"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite"';
+        let queryText = `SELECT "DanhMucSite"."IDDanhMucSite", "DuongDan", "TenGoi", "MoTa", "SoLuongTinDuyetTim", "TempateCrawlTieuDe", "TempateCrawlMoTa", "TempateCrawlNoiDung", "TempateCrawlImage", "LinkRSS", "TenGoi_KoDau", "Icon" 
+        FROM public."DanhMucSite" , public."User_DanhMucSite" 
+        WHERE "DanhMucSite"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite" AND "ParentID" = ${-1}
+        ORDER BY "DanhMucSite"."IDDanhMucSite" ASC
+        `
         console.info('Excute: ' + queryText);
         let pResult;
 

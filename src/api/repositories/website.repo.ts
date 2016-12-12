@@ -19,91 +19,29 @@ FULL OUTER JOIN
         where "DanhMucSite"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite" and "IDUser"=1) AS BANG2
 ON (BANG1."IDDanhMucSite" = BANG2."IDDanhMucSite")
 	*/
-    public getList(option, limit: number, offset: number): Promise<ListWeb[]> {
-        console.log('Limit: ' + limit)
-        console.log('Offset: ' + offset)
-        let queryText = `SELECT "IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan","LinkRSS" 
-        FROM public."DanhMucSite" ORDER BY "IDDanhMucSite" ASC LIMIT ${limit} OFFSET ${offset}`;
-
-        console.info('Excute: ' + queryText);
-        let pResult;
-        pResult = this._pgPool.query(queryText);
-        return pResult.then(result => {
-            let webs: ListWeb[] = result.rows.map(r => {
-                let web = new ListWeb();
-                web.IDDanhMucSite = r.IDDanhMucSite;
-                web.DuongDan = r.DuongDan;
-                web.TenGoi = r.TenGoi;
-                web.TenGoi_KoDau = r.TenGoi_KoDau;
-                web.LinkRSS = r.LinkRSS;
-                web.Icon = r.Icon;
-                return web;
-            });
-            return webs;
-        })
-            .catch(err => {
-                console.error(err.message);
-                return null;
-            });
-    }
-    public getList_User(option): Promise<ListWeb[]> {
-        let queryText = `SELECT "User_DanhMucSite"."IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan","LinkRSS","IDUser" 
-        FROM public."DanhMucSite" , public."User_DanhMucSite" 
-        where "DanhMucSite"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite" and "IDUser"=${option}`;
-        console.log("id " + option);
-        console.info('Excute: ' + queryText + `${option}`);
-        let pResult;
-        pResult = this._pgPool.query(queryText);
-        return pResult.then(result => {
-            let webs: ListWeb[] = result.rows.map(r => {
-                let web = new ListWeb();
-                web.IDDanhMucSite = r.IDDanhMucSite;
-                web.DuongDan = r.DuongDan;
-                web.TenGoi = r.TenGoi;
-                web.TenGoi_KoDau = r.TenGoi_KoDau;
-                web.LinkRSS = r.LinkRSS;
-                web.Icon = r.Icon;
-                return web;
-            });
-            return webs;
-        })
-            .catch(err => {
-                console.error(err.message);
-                return;
-            });
-    }
-
-    public count(option): Promise<number> {
-        let queryText = 'select count(*) as abc from news';
-
-        console.info('Excute: ' + queryText);
-
-        return this._pgPool.query(queryText)
-            .then(result => {
-                return result.rows[0].abc
-            })
-    }
-
-
+    
     /**
      * GetList : Hàm trả về danh sách User nào đã chọn danh nào thì trả về giá trị là true còn lại false
      */
     public GetList(option,limit,offset) {
         let query = `
 SELECT  BANG1."IDDanhMucSite" = BANG2."IDDanhMucSite" IS NULL = FALSE AS giatri, BANG1."IDDanhMucSite",
-            BANG1."TenGoi",BANG1."TenGoi_KoDau",BANG1."Icon",BANG1."DuongDan",BANG1."LinkRSS"
+            BANG1."TenGoi",BANG1."TenGoi_KoDau",BANG1."Icon",BANG1."DuongDan"
 FROM 
-        (SELECT "IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan","LinkRSS" 
-                FROM public."DanhMucSite" ORDER BY "IDDanhMucSite" ASC LIMIT ${limit} OFFSET ${offset}) AS BANG1
+        (       SELECT "IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan"
+                FROM public."DanhMucSite" 
+                WHERE "ParentID"= ${-1}
+                ORDER BY "IDDanhMucSite" ASC LIMIT ${limit} OFFSET ${offset}    ) AS BANG1
 FULL OUTER JOIN 
-        (SELECT "User_DanhMucSite"."IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan","LinkRSS","IDUser" 
+        (       SELECT "User_DanhMucSite"."IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan","IDUser" 
                 FROM public."DanhMucSite" , public."User_DanhMucSite" 
-                where "DanhMucSite"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite" and "IDUser"= ${option}) AS BANG2
+                WHERE "DanhMucSite"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite" and "IDUser"= ${option}    ) AS BANG2
 ON (BANG1."IDDanhMucSite" = BANG2."IDDanhMucSite")
 
 WHERE
-        (BANG1."IDDanhMucSite",
-                    BANG1."TenGoi",BANG1."TenGoi_KoDau",BANG1."Icon",BANG1."DuongDan",BANG1."LinkRSS") is not null
+        (           BANG1."IDDanhMucSite",
+                    BANG1."TenGoi",BANG1."TenGoi_KoDau",BANG1."Icon",BANG1."DuongDan") is not null
+ORDER BY BANG1."IDDanhMucSite" ASC
                     `
         console.log(`Excute: ${query}`);
         return this._pgPool.query(query)

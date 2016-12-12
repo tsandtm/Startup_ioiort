@@ -33,7 +33,6 @@ export class TinTucRouter {
             .post(this.daxem);
 
         this.router.route('/tinquantam/:id/:idtintuc?') /**api cua tin quan tam */
-
             .get(this.getallquantam)
         this.router.route('/tinchuadoc/:id?')
             .get(this.chuadoc);
@@ -71,8 +70,7 @@ export class TinTucRouter {
     }
     private getAllBook = (req: Request, res: Response) => {
         let limit = req.query.limit ? req.query.limit : "all";
-        let offset = req.query.offset ? req.query.offset : 0;
-
+        let offset = req.query.offset === undefined ? req.query.offset : 0;
         this.tintucRepo.getList(req.params.id, limit, offset)
             .then(result => {
                 res.status(200).json(result)

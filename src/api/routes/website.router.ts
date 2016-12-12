@@ -26,9 +26,6 @@ export class WebsRouter {
     public getRouter(): Router {
 
         this.router.route('/website')
-            .get(this.getAllWebs);
-        // .put(this.updateShow);
-        this.router.get('/getWebs/:id?', this.getList_User);
         this.router.get('/GetList/:IDUser',this.GetList)
 
         // this.router.get('/countNews',this.countNews)
@@ -37,32 +34,7 @@ export class WebsRouter {
         return this.router;
     }
 
-    private getAllWebs = (req: Request, res: Response) => {
-
-        console.log(req.query.limit);
-        console.log(req.query.offset);
-
-        this.websRepo.getList(null, req.query.limit, req.query.offset)
-            .then(lnw => {
-                res.status(200).json(lnw);
-            })
-            .catch(err => {
-                console.error(err);
-                return Promise.reject(err);
-            })
-    }
-    private getList_User = (req: Request, res: Response) => {
-
-        this.websRepo.getList_User(req.params.id)
-            .then(lnw => {
-                res.status(200).json(lnw);
-            })
-            .catch(err => {
-                console.error(err);
-                return Promise.reject(err);
-            })
-    }
-
+    
     /**
      * req.params.IDUser
      */
