@@ -33,7 +33,7 @@ const appRoutes: Route[] = [
    // { path: 'product/:id', component: ProductDetailComponent},
     { path: 'menu-list', component: MenuListComponent },
     { path: 'notification', component: NotificationsListComponent },
-    { path: 'notification-detail/:id', component: NotificationstDetailComponent },
+    { path: 'notification-detail/:id/:id2', component: NotificationstDetailComponent },
     { path: 'yeucauban', component: YeucaubanListComponent },
     { path: 'notifi-send', component: NotifiSendComponent },
     { path: 'confirm/:id', component: ConfirmComponent },
@@ -43,7 +43,7 @@ const appRoutes: Route[] = [
     { path: 'Contacts', component: ContactListComponent },
    // { path: 'products', component: ProductListComponent },
    // { path: 'product/:id', component: ProductDetailComponent},
-    { path: 'notification-detailedit/:id', component: NotificationstDetailEditComponent },
+    { path: 'notification-detailedit/:id/:id2', component: NotificationstDetailEditComponent },
 
     { path: 'setting-list',component: SettingListComponent },
     { path: 'setting-create', component: SettingCreateComponent },

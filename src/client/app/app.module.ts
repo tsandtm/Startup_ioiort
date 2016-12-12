@@ -30,6 +30,8 @@ import { YeucaubanListComponent } from './yeucauban/yeucauban-list/yeucauban-lis
 import { YeucaubanService } from './yeucauban/shared/yeucauban.service';
 import { NotifiSendComponent } from './notification-send/notification.component';
 import { ConfirmComponent } from './notification-send/confirm.component';
+//waitting
+import { CircleComponent } from './notifications/spinner/circle';
 //import {RlTagInputModule} from 'angular2-tag-input';
 import { TagInputModule } from 'ng2-tag-input';
 import * as io from 'socket.io-client';
@@ -53,7 +55,6 @@ import { LoginService } from './login/Shared/login.service';
 //spinkit component
 import { FadingCircleComponent } from 'ng2-spin-kit/dist/spinners'
 import { RotatingPlaneComponent } from './spinner/rotating-plane.component';
-import { CircleComponent } from './spinner/circle';
 
 @NgModule({
     imports: [
@@ -67,7 +68,7 @@ import { CircleComponent } from './spinner/circle';
         ModalModule.forRoot(),
         BootstrapModalModule,
     ],
-    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, ProductService, ContactNotifiService, NotificationsService, YeucaubanService, ContactService, NotifiService, TagService, SettingService,LoginService],
+    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, ProductService, ContactsService, ContactNotifiService, NotificationsService, YeucaubanService, ContactService, NotifiService, TagService, SettingService,LoginService],
     declarations: [
         AppComponent,
         NotifiSendComponent,
@@ -77,15 +78,7 @@ import { CircleComponent } from './spinner/circle';
         SettingEditComponent,
         SettingDeleteComponent,
         SettingDetailComponent,
-
-
         WelcomeComponent,
-
-        NotificationsListComponent,
-        ProductDetailComponent, 
-        ProductListComponent,
-        ProductFilterPipe,
-
         BarChartDemoComponent,
         MenuListComponent,
         NotificationsListComponent,
@@ -96,7 +89,6 @@ import { CircleComponent } from './spinner/circle';
         ContactListComponent,
         // ContactDetailComponent,
         // ContactFilterPipe,
-        ModalContactUpdate,
         ModalContactUpdate,
         ModalTagCreate,
         NotificationsListComponent,

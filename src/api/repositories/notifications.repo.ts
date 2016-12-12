@@ -53,6 +53,28 @@ export class NotificationsRepo extends RepoBase {
                 return null;
             });
     }
+    public getcount(option): Promise<number> {
+        let queryText;
+        let pResult;
+        if(option==undefined||option=='null'||option==null)
+        {
+            queryText = 'select count(*) as abc FROM test."n_Notifications"'; 
+            pResult = this._pgPool.query(queryText);
+        }
+        else
+        {
+            queryText = 'select count(*) as abc FROM test."n_Notifications" where "TieuDe" like $1 ';   
+            pResult = this._pgPool.query(queryText,['%'+option+'%']);
+            
+        }
+        console.log(queryText+' '+option)
+        return pResult
+            .then(result => {
+                console.log(result.rows[0].abc);
+                return result.rows[0].abc;
+            });
+
+    }
     public getOne(option): Promise<Notifications> {
         //  let queryText = 'SELECT "NotifiID", "AppID", "TieuDe", "NoiDung", "ThoiGianGui", "ThoiHanToiDa", "DoUuTien", "TrangThaiGoi", "SoLuong"FROM public."n_Notifications"; where NotifiID=id';
         let queryText = 'SELECT "NotifiID", "AppID", "TieuDe", "NoiDung", "ThoiGianGui", "ThoiHanToiDa", "DoUuTien", "TrangThaiGoi", "SoLuong"FROM public."n_Notifications"; where id=$1';
@@ -101,6 +123,41 @@ export class NotificationsRepo extends RepoBase {
             });
 
     }    
+    public getListPT(option): Promise<Notifications[]> {
+        let queryText;
+        let pResult;
+        if(option.id==undefined||option.id=='null'||option.id==null||option.id=='undefined')
+        {
+            queryText = 'select *, (select count (*)  from test."n_Notifications") as total from test."n_Notifications" ORDER BY "NotifiID" ASC limit 25 offset $1';
+            pResult = this._pgPool.query(queryText,[option.so]);
+        }
+        else
+        {
+            queryText = 'select *, (select count (*)  from test."n_Notifications") as total from test."n_Notifications" WHERE "TieuDe" like $1 ORDER BY "NotifiID" ASC limit 25 offset $2';
+            pResult = this._pgPool.query(queryText,['%'+option.id+'%',option.so]);
+        }
+        console.log(queryText+''+option.so+option.id);
+
+
+        return pResult.then(result => {
+            let Nootifications: Notifications[] = result.rows.map(r => {
+                let notification = new Notifications();
+                notification.id=r.NotifiID;
+                notification.TieuDe = r.TieuDe;
+                notification.TrangThaiGoi = r.TrangThaiGoi;
+                notification.ThoiGianGui = r.ThoiGianGui;
+                notification.SoLuong = r.SoLuong;
+                notification.ThoiHanToiDa = r.ThoiHanToiDa;  
+                notification.Total=r.total;
+                return notification;
+            });
+            return Nootifications;
+        })
+            .catch(err => {
+                console.error(err.message);
+                return null;
+            });
+    }
     public Edit(option): Promise<Notifications> {
         // let queryText = 'UPDATE test."n_Notifications" SET "NotifiID" = $1, "AppID" = $2 , "TieuDe" =$3, "NoiDung" = $4,"ThoiGianGui" = $5,"ThoiHanToiDa" = $6,"DoUuTien" = $7,"TrangThaiGoi" = $8,"SoLuong" = $9';
         console.log(JSON.stringify(option));

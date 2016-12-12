@@ -25,10 +25,11 @@ export class NotificationsRouter {
             .get(this.createANotifications)
         this.router.route("/notificationedit")
             .post(this.Edit);
-     
-            
+        this.router.route("/notificationPT")
+            .get(this.getAllNotificationsPT);
+        this.router.get('/notificationcount',this.getcount);
         this.router.route('/getlistsenduser')
-            .get(this.getListSendContact)  
+            .get(this.getListSendContact)  ;
         return this.router;
     }
      private getAllNotifications = (req: Request, res: Response) => {
@@ -44,7 +45,30 @@ export class NotificationsRouter {
                 res.status(500).send(error.message)
             })
     }
-     
+    private getcount = (req: Request, res: Response) => {
+        console.log('abcs'+req.query.so);
+        this.notificationsRepo.getcount(req.query.so)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            });
+    }
+     private getAllNotificationsPT = (req: Request, res: Response) => {
+   
+      //  let object={ id: 1, ToKen: 'contact' };
+
+        this.notificationsRepo.getListPT(req.query)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            })
+    }
     private getListSendContact = (req: Request, res: Response) => {
         this.notificationsRepo.getAllSendUser()
             .then(result => {
