@@ -18,7 +18,9 @@ export class Notifications{
     Send_UserID:number[];
     Send_UserDenieID:number[];
     Send_TagDenieID:number[];
-    Total: number;
+    ThoiHanNum:number;
+    ThoiHanDV:string;
+    SendLater:boolean;
 }
 export class SentContact {
     ContactID:number;

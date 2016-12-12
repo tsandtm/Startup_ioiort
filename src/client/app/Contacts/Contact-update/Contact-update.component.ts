@@ -12,6 +12,7 @@ import { Tag } from '../Shared/Tag.model';
 //service
 import { ContactService } from '../Shared/Contact.service';
 import { TagService } from '../Shared/Tag.service';
+import { LoginService } from '../../login/Shared/login.service';
 
 
 // import { Tag } from 'C:/Nodejs/notifi/Startup_ioiort/src/client/app/Tags/Shared/Tag.model';
@@ -34,18 +35,16 @@ export class ModalContactUpdate implements CloseGuard, ModalComponent<ContactMod
     context: ContactModalContext;
     public wrongAnswer: boolean;
     public contact: Contact;
-    public postData: string;
     public Tags: Tag[];
-    public fills;
-    public TagUpdate: Tag[];
-    public TagCheckUpdate: Tag[];
+    SessionAccountID: string;
 
-    ngOnInit() {
+    LoadAll() {
         this.getContact(this.dialog.context.ContactID)
             .then(() => {
                 return this.getTag();
             })
             .then(() => {
+                console.log(this.contact);
                 for (let i = 0; i < this.Tags.length; i++) {
                     for (let j = 0; j < this.contact.Contact_TagID.length; j++) {
                         if (this.Tags[i].TagID == this.contact.Contact_TagID[j]) {
@@ -61,16 +60,39 @@ export class ModalContactUpdate implements CloseGuard, ModalComponent<ContactMod
             });
     }
 
-    constructor(public dialog: DialogRef<ContactModalContext>, private contactService: ContactService, private tagService: TagService, private _router: Router) {
+
+    ngOnInit() {
+         this.loginService.GetSession()
+            .then((response) => {
+                this.SessionAccountID = response._body;
+                return this.SessionAccountID;
+            })
+            .then((response) => {
+                console.log(this.SessionAccountID);
+                if (this.SessionAccountID == "error") {
+                    this._router.navigate(["login"]);
+                }
+                else {
+                    return this.SessionAccountID;
+                }
+            })
+            .then((response) => {
+                this.LoadAll();
+            })
+        this.LoadAll();
+    }
+
+    constructor(public dialog: DialogRef<ContactModalContext>, private contactService: ContactService, private tagService: TagService, private loginService: LoginService, private _router: Router) {
         this.context = dialog.context;
         this.wrongAnswer = true;
         dialog.setCloseGuard(this);
     }
 
     getTag(): Promise<Tag[]> {
-        return this.tagService.getTags()
+        return this.tagService.getTags(this.SessionAccountID)
             .then((response) => {
                 this.Tags = response;
+                console.log(this.Tags);
                 return this.Tags;
             })
             .catch((error) => {
@@ -80,7 +102,7 @@ export class ModalContactUpdate implements CloseGuard, ModalComponent<ContactMod
     }
 
     getContact(ContactID: number): Promise<Contact> {
-        return this.contactService.getContact(ContactID)
+        return this.contactService.getOneContact(ContactID)
             .then((response) => {
                 this.contact = response;
                 return this.contact;

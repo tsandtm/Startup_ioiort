@@ -11,8 +11,8 @@ var ContactRepo = (function (_super) {
     function ContactRepo() {
         _super.call(this);
     }
-    ContactRepo.prototype.getList = function (option) {
-        var queryText = 'select * from test."Contacts" ORDER BY "ContactID" ASC';
+    ContactRepo.prototype.getList = function (PageNum) {
+        var queryText = 'select *, (select count (*)  from test."Contacts") as total from test."Contacts" ORDER BY "ContactID" ASC limit 25 offset (' + PageNum + ') *25';
         var pResult;
         pResult = this._pgPool.query(queryText);
         return pResult.then(function (result) {
@@ -28,6 +28,7 @@ var ContactRepo = (function (_super) {
                 contact.FaceBook = r.FaceBook;
                 contact.Contact_TagID = r.Contact_TagID;
                 contact.Contact_TagName = r.Contact_TagName;
+                contact.Total = r.total;
                 return contact;
             });
             return Contacts;
@@ -50,18 +51,18 @@ var ContactRepo = (function (_super) {
             contact.PhoneNumber = result.rows[0].PhoneNumber;
             contact.NgayTao = result.rows[0].NgayTao;
             contact.FaceBook = result.rows[0].FaceBook;
-            contact.Contact_TagID = result.rows[0].Contact_Tag;
+            contact.Contact_TagID = result.rows[0].Contact_TagID;
             contact.Contact_TagName = result.rows[0].Contact_TagName;
             return contact;
         });
     };
-    ContactRepo.prototype.create = function (option) {
-        var queryText = 'INSERT INTO test."Contacts" ("ContactID", "Token", "Email", "TaiKhoan", "Device", "PhoneNumber", "NgayTao", "FaceBook", "Contact_TagID", "Contact_TagName") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)';
-        return this._pgPool.query(queryText, [option.ContactID, option.Token, option.Email, option.TaiKhoan, option.Device, option.PhoneNumber, option.NgayTao, option.FaceBook, option.Contact_TagID, option.Contact_TagName])
-            .then(function (result) {
-            return option;
-        });
-    };
+    // public create(option): Promise<Contact> {
+    //     let queryText = 'INSERT INTO test."Contacts" ("ContactID", "Token", "Email", "TaiKhoan", "Device", "PhoneNumber", "NgayTao", "FaceBook", "Contact_TagID", "Contact_TagName") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)';
+    //     return this._pgPool.query(queryText, [option.ContactID, option.Token, option.Email, option.TaiKhoan, option.Device, option.PhoneNumber, option.NgayTao, option.FaceBook, option.Contact_TagID, option.Contact_TagName])
+    //         .then(result => {
+    //             return option;
+    //         });
+    // }
     ContactRepo.prototype.update = function (option) {
         var queryText;
         console.log(option.Contact_TagID);
@@ -79,13 +80,16 @@ var ContactRepo = (function (_super) {
             return option;
         });
     };
-    ContactRepo.prototype.SearchByTag = function (Contact_TagName) {
+    ContactRepo.prototype.SearchByTag = function (Contact_TagName, PageNum) {
         var queryText;
         if (Contact_TagName == "All" || Contact_TagName == "all") {
-            queryText = 'select * from test."Contacts" ORDER BY "ContactID" ASC';
+            queryText = 'select * from test."Contacts" ORDER BY "ContactID" ASC LIMIT 25 offset (' + PageNum + ') *25';
         }
         else {
-            queryText = 'select * from test."Contacts" where \'' + Contact_TagName + '\' = any("Contact_TagName")';
+            console.log('tag: ' + Contact_TagName);
+            queryText = 'select *, (select count (*) from test."Contacts" where \'' + Contact_TagName + '\' = any("Contact_TagName")) as total from test."Contacts" where \'' + Contact_TagName + '\' = any("Contact_TagName") order by "ContactID" ASC limit 25 offset (' + PageNum + ') *25';
+            // queryText = 'select * from test."Contacts" where \'' + Contact_TagName + '\' = any("Contact_TagName")';
+            console.log('query: ' + queryText);
         }
         var pResult = this._pgPool.query(queryText);
         return pResult.then(function (result) {
@@ -101,6 +105,7 @@ var ContactRepo = (function (_super) {
                 contact.FaceBook = r.FaceBook;
                 contact.Contact_TagID = r.Contact_TagID;
                 contact.Contact_TagName = r.Contact_TagName;
+                contact.Total = r.total;
                 return contact;
             });
             return Contacts;

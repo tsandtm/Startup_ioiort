@@ -8,9 +8,9 @@ var ContactRouter = (function () {
     function ContactRouter() {
         var _this = this;
         this.getAllContact = function (req, res) {
-            var option = new Contact_model_1.Contact();
-            option = req.query;
-            _this.contactRepo.getList(option)
+            var PageNum;
+            PageNum = req.query.PageNum;
+            _this.contactRepo.getList(PageNum)
                 .then(function (result) {
                 res.status(200).json(result);
             })
@@ -30,19 +30,19 @@ var ContactRouter = (function () {
                 res.status(500).send(error.message);
             });
         };
-        this.create = function (req, res) {
-            var option = new Contact_model_1.Contact();
-            option = req.body;
-            console.log(option);
-            _this.contactRepo.create(option)
-                .then(function (result) {
-                res.status(200).json(result);
-            })
-                .catch(function (error) {
-                console.error(error.message);
-                res.status(500).send(error.message);
-            });
-        };
+        // private create = (req: Request, res: Response) => {
+        //     let option = new Contact();
+        //     option = req.body;
+        //     console.log(option);
+        //     this.contactRepo.create(option)
+        //         .then((result) => {
+        //             res.status(200).json(result);
+        //         })
+        //         .catch((error) => {
+        //             console.error(error.message);
+        //             res.status(500).send(error.message);
+        //         });
+        // }
         this.update = function (req, res) {
             var option = new Contact_model_1.Contact();
             option = req.body;
@@ -57,7 +57,8 @@ var ContactRouter = (function () {
         };
         this.SearchByTag = function (req, res) {
             var Contact_TagName = req.query.Contact_TagName;
-            _this.contactRepo.SearchByTag(Contact_TagName)
+            var PageNum = req.query.PageNum;
+            _this.contactRepo.SearchByTag(Contact_TagName, PageNum)
                 .then(function (result) {
                 res.status(200).json(result);
             })
@@ -72,14 +73,10 @@ var ContactRouter = (function () {
     ContactRouter.prototype.getRouter = function () {
         this.router.route('/Contactnotifi')
             .get(this.getAllContact);
-        // .post(this.createAContact)
-        // .delete(this.deleteAContact);
         this.router.route('/Contact')
             .get(this.getAllContact);
         this.router.route('/Contact/GetOne')
             .get(this.getOne);
-        this.router.route('/Contact/Create')
-            .post(this.create);
         this.router.route('/Contact/Update')
             .post(this.update);
         this.router.route('/Contact/SearchByTag')

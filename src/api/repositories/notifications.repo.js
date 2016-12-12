@@ -12,7 +12,7 @@ var NotificationsRepo = (function (_super) {
         _super.call(this);
     }
     NotificationsRepo.prototype.getList = function (option) {
-        var queryText = 'SELECT * FROM test."n_Notifications" ORDER BY "NotifiID"ASC  ';
+        var queryText = 'SELECT * FROM "n_Notifications" ORDER BY "NotifiID"ASC  ';
         console.info('Excute: ' + queryText);
         var pResult;
         if (option) {
@@ -69,6 +69,7 @@ var NotificationsRepo = (function (_super) {
             return notifications;
         });
     };
+
     NotificationsRepo.prototype.getAllSendUser = function () {
         var queryText = 'SELECT * FROM test."n_Contacts_Notifications" ORDER BY "ContactID" ASC';
         console.info('Excute: ' + queryText);

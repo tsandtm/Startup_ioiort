@@ -17,10 +17,9 @@ export class Notifi {
     DeniedUserName:number[];
     DeniedTag:number[];
     DeniedTagName:number[];
-}
-export class SLSend{
-    NotifiID:number;
-    count:number;
+    ThoiHanNum:number;
+    ThoiHanDV:string;
+    SendLater:boolean;
 }
 export class SentUser{
     NotifiID:number;

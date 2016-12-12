@@ -15,17 +15,23 @@ var ContactService = (function () {
         this._http = _http;
         this._productUrl = 'api/products/products.json';
     }
-    ContactService.prototype.getContacts = function () {
-        return this._http.get('/api/Contact')
+    ContactService.prototype.getContacts = function (PageNum) {
+        return this._http.get('/api/Contact?PageNum=' + PageNum)
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    ContactService.prototype.getContact = function (ContactID) {
-        return this.getContacts()
-            .then(function (response) { return response.find(function (x) { return x.ContactID == ContactID; }); })
+    ContactService.prototype.getOneContact = function (ContactID) {
+        return this._http.get('/api/Contact/GetOne?ContactID=' + ContactID)
+            .toPromise()
+            .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
+    // getContact(ContactID: number): Promise<Contact> {
+    //     return this.getContacts(0, )
+    //         .then(response => response.find(x => x.ContactID == ContactID))
+    //         .catch(this.handleError);
+    // }
     ContactService.prototype.updateContact = function (valueID, valueTagID, valueTagName) {
         var params = JSON.stringify({ ContactID: valueID, Contact_TagID: valueTagID, Contact_TagName: valueTagName });
         var headers = new http_1.Headers();
@@ -41,15 +47,18 @@ var ContactService = (function () {
         })
             .catch(this.handleError);
     };
-    ContactService.prototype.SearchByTag = function (Contact_TagName) {
-        return this._http.get('/api/Contact/SearchByTag?Contact_TagName=' + Contact_TagName)
+    ContactService.prototype.SearchByTag = function (Contact_TagName, PageNum) {
+        return this._http.get('/api/Contact/SearchByTag?Contact_TagName=' + Contact_TagName + '&PageNum=' + PageNum)
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    ContactService.prototype.getPager = function (totalItems, currentPage, pageSize) {
-        if (currentPage === void 0) { currentPage = 1; }
-        if (pageSize === void 0) { pageSize = 10; }
+    ContactService.prototype.GetPager = function (totalItems, currentPage, pageSize) {
+        if (pageSize === void 0) { pageSize = 25; }
+        // default to first page
+        currentPage = currentPage || 1;
+        // default page size is 10
+        pageSize = pageSize || 10;
         // calculate total pages
         var totalPages = Math.ceil(totalItems / pageSize);
         var startPage, endPage;
@@ -78,12 +87,11 @@ var ContactService = (function () {
         var endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
         // create an array of pages to ng-repeat in the pager control
         var pages;
-        for (var n = 1; n < (totalPages + 1); n++) {
+        for (var n = startPage; n < (endPage + 1); n++) {
             if (pages == undefined)
                 pages = [1];
             else
                 pages.push(n);
-            console.log(totalPages + n);
         }
         ;
         // return object with all pager properties required by the view
@@ -99,6 +107,52 @@ var ContactService = (function () {
             pages: pages
         };
     };
+    // getPager(totalItems: number, currentPage: number = 1, pageSize: number = 25) {
+    //     // calculate total pages
+    //     var totalPages = Math.ceil(totalItems / pageSize);
+    //     var startPage, endPage;
+    //     if (totalPages <= 25) {
+    //         // less than 10 total pages so show all
+    //         startPage = 1;
+    //         endPage = totalPages;
+    //     } else {
+    //         // more than 10 total pages so calculate start and end pages
+    //         if (currentPage <= 6) {
+    //             startPage = 1;
+    //             endPage = 10;
+    //         } else if (currentPage + 4 >= totalPages) {
+    //             startPage = totalPages - 9;
+    //             endPage = totalPages;
+    //         } else {
+    //             startPage = currentPage - 5;
+    //             endPage = currentPage + 4;
+    //         }
+    //     }
+    //     // calculate start and end item indexes
+    //     var startIndex = (currentPage - 1) * pageSize;
+    //     var endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
+    //     // create an array of pages to ng-repeat in the pager control
+    //     var pages: number[];
+    //     for (var n: number = 1; n < (totalPages + 1); n++) {
+    //         if (pages == undefined)
+    //             pages = [1];
+    //         else
+    //             pages.push(n);
+    //         console.log(totalPages + n);
+    //     };
+    //     // return object with all pager properties required by the view
+    //     return {
+    //         totalItems: totalItems,
+    //         currentPage: currentPage,
+    //         pageSize: pageSize,
+    //         totalPages: totalPages,
+    //         startPage: startPage,
+    //         endPage: endPage,
+    //         startIndex: startIndex,
+    //         endIndex: endIndex,
+    //         pages: pages
+    //     };
+    // }
     ContactService.prototype.handleError = function (error) {
         console.error(error);
         return Promise.reject(error.message || error);

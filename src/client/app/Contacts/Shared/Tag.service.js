@@ -24,6 +24,21 @@ var TagService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
+    TagService.prototype.CreateTag = function (valueTagNameDisplay, valueAccountID, valueIsDefault) {
+        var params = JSON.stringify({ TagNameDisplay: valueTagNameDisplay, AccountID: valueAccountID, IsDefault: valueIsDefault });
+        var headers = new http_1.Headers();
+        console.log('params: ' + params);
+        headers.append('Content-Type', 'application/json');
+        return this._http.post('/api/Tag/CreateTag', params, {
+            headers: headers,
+            body: params
+        })
+            .toPromise()
+            .then(function (response) {
+            return response;
+        })
+            .catch(this.handleError);
+    };
     TagService.prototype.handleError = function (error) {
         // in a real world app, we may send the server to some remote logging infrastructure
         // instead of just logging it to the console

@@ -41,6 +41,9 @@ export class NotificationsRepo extends RepoBase {
                 notification.Send_UserID=r.Send_UserID;
                 notification.Send_TagDenieID=r.Send_TagDenieID;
                 notification.Send_UserDenieID=r.Send_UserDenieID;
+                notification.ThoiHanNum=r.ThoiHanNum;
+                notification.ThoiHanDV=r.ThoiHanDV;
+                notification.SendLater=r.SendLater;
                 return notification;
             });
             return notifications;
@@ -93,7 +96,7 @@ export class NotificationsRepo extends RepoBase {
             });
     }
     public getAllSendUser():Promise<SentContact[]>{
-        let queryText = 'SELECT * FROM test."n_Contacts_Notifications" ORDER BY "ContactID" ASC';
+        let queryText = 'SELECT * FROM test."n_Contacts_Notifications" ORDER BY "ContactID" ASC LIMIT 10';
 
         console.info('Excute: ' + queryText);
         let pResult;

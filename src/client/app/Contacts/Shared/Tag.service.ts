@@ -9,14 +9,27 @@ export class TagService {
 
     constructor(private _http: Http) { }
 
-    getTags(): Promise<Tag[]> {
-        // return this._http.get('/api/book')
-        //     .map((response: Response) => <Product[]>response.json())
-        //     .do(data => console.log('All: ' + JSON.stringify(data)))
-        //     .catch(this.handleError);
-        return this._http.get('/api/Tag')
+    getTags(AccountID: string): Promise<Tag[]> {
+        console.log("gettags: "+AccountID);
+        return this._http.get('/api/Tag?AccountID=' +AccountID)
             .toPromise()
             .then(response => response.json() as Tag[])
+            .catch(this.handleError);
+    }
+
+    CreateTag(valueTagNameDisplay: string, valueAccountID: string, valueIsDefault: boolean): Promise<any> {
+        let params = JSON.stringify({ TagNameDisplay: valueTagNameDisplay, AccountID: valueAccountID, IsDefault: valueIsDefault });
+        let headers = new Headers();
+        console.log('params: ' + params);
+        headers.append('Content-Type', 'application/json');
+        return this._http.post('/api/Tag/CreateTag', params, {
+            headers: headers,
+            body: params
+        })
+            .toPromise()
+            .then((response) => {
+                return response;
+            })
             .catch(this.handleError);
     }
 

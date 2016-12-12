@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response,Request } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { Notifi,SLSend,SentUser,UpdateData,InsertUser } from './notifi.model';
+import { Notifi,SentUser,UpdateData,InsertUser } from './notifi.model';
 
 @Injectable()
 export class NotifiService {
@@ -35,12 +35,6 @@ export class NotifiService {
             .then(response => response.json() as number)
             .catch(this.handleError);
     }
-    getsldenied(req): Promise<number> {
-        return this._http.post('/api/sldenied',req)
-            .toPromise()
-            .then(response => response.json() as number)
-            .catch(this.handleError);
-    }
 
     getLastNotifi(): Promise<Notifi> {
         return this._http.get('/api/notifi')
@@ -61,50 +55,17 @@ export class NotifiService {
             .catch(this.handleError);
     }
 
-    getAllSL():Promise<SLSend[]>{
-        return this._http.get('/api/sl')
+    getSL(req):Promise<number>{
+        return this._http.get('/api/sl/'+req)
             .toPromise()
-            .then(response => response.json() as SLSend[])
-            .catch(this.handleError);
-    }
-    getSL(id): Promise<SLSend> {
-        return this.getAllSL()
-            .then(slsend => slsend.find(p => p.NotifiID === id))
-            .catch(this.handleError);
-    }
-    getAllSLDenied():Promise<SLSend[]>{
-        return this._http.get('/api/sldenied')
-            .toPromise()
-            .then(response => response.json() as SLSend[])
-            .catch(this.handleError);
-    }
-    getSLDenied(id): Promise<SLSend> {
-        return this.getAllSLDenied()
-            .then(slsend => slsend.find(p => p.NotifiID === id))
+            .then(response => response.json() as number)
             .catch(this.handleError);
     }
 
-    getSend():Promise<SentUser[]>{
-        return this._http.get('/api/sentuser')
+    getSendUser(req):Promise<SentUser[]>{
+        return this._http.get('/api/sentuser/'+req)
             .toPromise()
             .then(response => response.json() as SentUser[])
-            .catch(this.handleError);
-    }
-    getSendUser(id):Promise<SentUser[]>{
-        return this.getSend()
-            .then(slsend => slsend.filter(p => p.NotifiID === id))
-            .catch(this.handleError);
-    }
-
-    getSendDenied():Promise<SentUser[]>{
-        return this._http.get('/api/sentuserdenied')
-            .toPromise()
-            .then(response => response.json() as SentUser[])
-            .catch(this.handleError);
-    }
-    getSendUserDenied(id):Promise<SentUser[]>{
-        return this.getSendDenied()
-            .then(slsend => slsend.filter(p => p.NotifiID === id))
             .catch(this.handleError);
     }
     private handleError(error: Error): Promise<any> {
