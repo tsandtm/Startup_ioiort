@@ -24,7 +24,7 @@ export class DanhMucRePo extends RepoBase {
             let DanhMucs: DanhMuc[] = result.rows.map(r => {
                 console.log(r);
                 let d = new DanhMuc();
-                d.id = r.IDDanhMucSite;
+                d.IDDanhMucSite = r.IDDanhMucSite;
                 d.DuongDan=r.DuongDan;
                 d.MoTa=r.MoTa;
                 d.TenGoi=r.TenGoi;
@@ -56,7 +56,7 @@ export class DanhMucRePo extends RepoBase {
         return this._pgPool.query(queryText, [option.id, option.name])
             .then(result => {
                 let tintuc = new DanhMuc();
-                tintuc.id = result.rows[0].IDDanhMucSite;
+                tintuc.IDDanhMucSite = result.rows[0].IDDanhMucSite;
                 tintuc.DuongDan = result.rows[0].DuongDan;
                 tintuc.TenGoi=result.rows[0].TenGoi;
                 tintuc.MoTa=result.rows[0].MoTa;
@@ -101,7 +101,7 @@ export class DanhMucRePo extends RepoBase {
         return pResult.then(result => {
             let webs: DanhMuc[] = result.rows.map(r => {
                 let web = new DanhMuc();
-                web.id = r.IDDanhMucSite;
+                web.IDDanhMucSite = r.IDDanhMucSite;
                 web.DuongDan = r.DuongDan;
                 web.TenGoi = r.TenGoi;
                 web.MoTa = r.MoTa;
@@ -122,49 +122,5 @@ export class DanhMucRePo extends RepoBase {
                 return;
             });
     }
-    
-    // create(TinTuc){
-        // var IDTinTuc=TinTuc.id;
-        // var IDDanhMucSite=TinTuc.IDDanhMucSite;
-        // var TieuDe=TinTuc.TieuDe;
-        // var MoTa=TinTuc.MoTa;
-        // var NoiDung=TinTuc.NoiDung;
-        // var URLThumbImage=TinTuc.URLThumbImage;
-        // var URLNews=TinTuc.URLNews;
-        // var URLImage=TinTuc.URLImage;
-//     public create(option):Promise<TinTuc>{
-//         let queryText='INSERT INTO public."TinTuc" ("IDTinTuc", "IDDanhMucSite", "TieuDe", "MoTa", "NoiDung", "URLNews", "URLThumbImage", "URLImage", "ThoiGianDangTin") VALUES (IDTinTuc=$1,IDDanhMucSite=$2, MoTa=$3, NoiDung=&4, ?, ?, ?, ?, ?);'
-//         return this._pgPool.query(queryText)
-//         .then(result=>{
-//             let tin=new TinTuc();
-//             tin.
-//         })
-// }
 
-
-
-    // public delete(id: number): Promise<TinTuc>{
-    //     let queryText = 'DELETE FROM public."TinTuc" WHERE "IDTinTuc"=$1';
-
-    //     return this._pgPool.query(queryText,[id])
-    //             .then(result => {
-    //                 let tin = new TinTuc();
-    //                 tin.id = id;
-    //                 console.log(result.rows[0]);
-    //                 return tin;
-    //             }).catch(error => {
-    //                 console.error('Error: ',error);
-    //                 return Promise.reject(error);
-    //             })
-    // }
-    // public edit(id:number):Promise<TinTuc>{
-    //     let queryText='UPDATE public."TinTuc" set '
-    // }
-    // public getDelete(option): Promise<TinTuc>{
-    //     let queryText='DELETE FROM pu    blic."TinTuc" WHERE IDTinTuc=id';
-    //     return this._pgPool.query(queryText)
-    //     .then(result=>{})
-    // }
-    // public getDelete(option):Promise<TinTuc>{
-    //     let queryText='SELECT * FROM public."TinTuc" WHERE IDTinTuc=id';
 }
