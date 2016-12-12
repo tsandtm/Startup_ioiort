@@ -29,6 +29,7 @@ export class NotifiSendComponent implements OnInit{
     listIDContactDenied=[];
     listNameContactDenied=[];
     //----//
+    bool:boolean=true;
     sendnow: boolean = true;
     sendlater: boolean = false;
     Apps: Appkey[];
@@ -99,50 +100,95 @@ export class NotifiSendComponent implements OnInit{
         this.sendlater=true;
     }
     Check(){
-        
-        this.date=new Date(this.date);
-        this.date.setHours(this.date.getHours()+parseInt(this.thoiHannum.toString()));
-        console.log(this.date.toLocaleTimeString());
+        // console.log(this.thoiHannum);
+        this.listNameTag=[];
+        this.listIDTag=$(".js-data-example-ajaxContact").val();
+        for(var i = 0;i<this.listIDTag.length;i++){
+            var item=$(".js-data-example-ajaxContact").select2('data')[i].text;
+            var pos=item.indexOf('.');
+            var name=item.slice(pos+1,item.length);
+            this.listNameTag.push(name);
+        }
+        console.log(this.listNameTag);
     }
         // var pos=item.indexOf('.');
         // var num=item.slice(0,pos);
         // var name=item.slice(pos+1,item.length);
     Create(){
+        this.listNameTag=[];
+        this.listNameContact=[];
+        this.listNameTagDenied=[];
+        this.listNameContactDenied=[];
         if($(".js-data-example-ajaxTag").val()==null){
-            this.listIDTag=[]
+            this.listIDTag=[];
         }
         else
         {
             this.listIDTag=$(".js-data-example-ajaxTag").val();
+            for(var i = 0;i<this.listIDTag.length;i++){
+                this.listNameTag.push($(".js-data-example-ajaxTag").select2('data')[i].text)
+            }
         }
         if($(".js-data-example-ajaxContact").val()==null){
-            this.listIDContact=[]
+            this.listIDContact=[];
         }
         else
         {
             this.listIDContact=$(".js-data-example-ajaxContact").val();
+            for(var i = 0;i<this.listIDContact.length;i++){
+                var item=$(".js-data-example-ajaxContact").select2('data')[i].text;
+                var pos=item.indexOf('.');
+                var name=item.slice(pos+1,item.length);
+                this.listNameContact.push(name);
+            }
         }
         if($(".js-data-example-ajaxTagDenied").val()==null){
-            this.listIDTagDenied=[]
+            this.listIDTagDenied=[];
         }
         else
         {
             this.listIDTagDenied=$(".js-data-example-ajaxTagDenied").val();
+            for(var i = 0;i<this.listIDTagDenied.length;i++){
+                this.listNameTagDenied.push($(".js-data-example-ajaxTagDenied").select2('data')[i].text)
+            }
         }
         if($(".js-data-example-ajaxContactDenied").val()==null){
-            this.listIDContactDenied=[]
+            this.listIDContactDenied=[];
         }
         else
         {
             this.listIDContactDenied=$(".js-data-example-ajaxContactDenied").val();
+            for(var i = 0;i<this.listIDContactDenied.length;i++){
+                var item=$(".js-data-example-ajaxContactDenied").select2('data')[i].text;
+                var pos=item.indexOf('.');
+                var name=item.slice(pos+1,item.length);
+                this.listNameContactDenied.push(name);
+            }
         }
         this.date=new Date(this.date);
         if(this.sendnow){
             this.date=new Date();
             this.Thoigiangui=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString();
+            if(this.thoiHanDV=="Hour"){
+                this.date.setDate(this.date.getDate());
+                this.date.setHours(this.date.getHours()+parseInt(this.thoiHannum.toString()));
+            }
+            if(this.thoiHanDV=="Minute"){
+                this.date.setDate(this.date.getDate());
+                this.date.setMinutes(this.date.getMinutes()+parseInt(this.thoiHannum.toString()));
+            }
         }
         else if(this.sendlater){
+            this.date=new Date(this.date);
             this.Thoigiangui=this.date.toLocaleDateString('en-US')+' '+this.hour+":"+this.minute+":00";
+            this.date.setHours(this.hour);
+            this.date.setMinutes(this.minute);
+            if(this.thoiHanDV=="Hour"){
+                this.date.setHours(this.date.getHours()+parseInt(this.thoiHannum.toString()));
+            }
+            if(this.thoiHanDV=="Minute"){
+                this.date.setMinutes(this.date.getMinutes()+parseInt(this.thoiHannum.toString()));
+            }
         }
         if(this.thoiHanDV=="Week"){
             this.date.setDate(this.date.getDate()+(7*this.thoiHannum));
@@ -150,27 +196,15 @@ export class NotifiSendComponent implements OnInit{
         if(this.thoiHanDV=="Day"){
             this.date.setDate(this.date.getDate()+parseInt(this.thoiHannum.toString()));
         }
-        if(this.thoiHanDV=="Hour"){
-            this.date.setDate(this.date.getDate());
-            this.date.setHours(this.date.getHours()+parseInt(this.thoiHannum.toString()));
-        }
-        if(this.thoiHanDV=="Minute"){
-            this.date.setDate(this.date.getDate());
-            this.date.setMinutes(this.date.getMinutes()+parseInt(this.thoiHannum.toString()));
-        }
+
         if(this.notifi==null){
             this.notifiID=1;
         }
         else{
             this.notifiID=this.notifi.NotifiID+1;
         }
-        if(this.sendlater){
-            this.ThoiHan=this.date.toLocaleDateString('en-US')+' '+this.hour+":"+this.minute+":00";
-        }
-        else{
-            this.ThoiHan=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString(); 
-        }
-        if(this.tieude == undefined || this.Noidung == undefined || (this.listIDTag==null && this.listIDContact==null))
+        this.ThoiHan=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString(); 
+        if(this.tieude == undefined || this.Noidung == undefined || (this.listIDTag==null && this.listIDContact==null) || this.date==undefined)
         {
             console.log(false);
             return false;
@@ -235,7 +269,7 @@ export class NotifiSendComponent implements OnInit{
                 allowClear: true, 
                 tokenSeparators: [","],
                 ajax: {
-                    url: "/api/Tag",
+                    url: "/api/TagA",
                     dataType: 'json',
                     delay: 500,
                     data: function (params) {
@@ -274,7 +308,7 @@ export class NotifiSendComponent implements OnInit{
                 allowClear: true, 
                 tokenSeparators: [","],
                 ajax: {
-                    url: "/api/Tag",
+                    url: "/api/TagA",
                     dataType: 'json',
                     delay: 500,
                     data: function (params) {

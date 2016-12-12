@@ -40,7 +40,7 @@ export class TagRouter {
             })
     }    
     private getAllTagA = (req: Request, res: Response) => {
-        this.tagRepo.getList(req.query)
+        this.tagRepo.getListA(req.query)
             .then(result => {
                 res.status(200).json(result)
             })

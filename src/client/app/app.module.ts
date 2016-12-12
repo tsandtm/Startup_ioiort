@@ -21,11 +21,8 @@ import { BarChartDemoComponent } from './Reports/Report/Report.component';
 import { ProductFilterPipe } from './products/product-filter/product-filter.pipe';
 import { StarComponent } from './shared/star.component';
 import { MenuListComponent } from './menu/menu-list/menu-list.component';
-<<<<<<< HEAD
-=======
-import { ContactsListComponent } from './contacts/contacts-list/contacts-list.component';
-import { ContactsService } from './contacts/shared/contacts.service';
->>>>>>> 205dde2a92aa1d9124a7518d553d22fcfd90b6c5
+// import { ContactsListComponent } from './contacts/contacts-list/contacts-list.component';
+// import { ContactsService } from './contacts/shared/contacts.service';
 import { NotificationsListComponent } from './notifications/notifications-list/notifications-list.component';
 import { NotificationstDetailComponent } from './notifications/notifications-detail/notifications-detail.component';
 import { NotificationsService } from './notifications/shared/notifications.service';
@@ -68,30 +65,19 @@ import { CircleComponent } from './spinner/circle';
         ChartsModule,
         TagInputModule,
         ModalModule.forRoot(),
-<<<<<<< HEAD
-        BootstrapModalModule
-    ],
-    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, ProductService, ContactNotifiService, NotificationsService, YeucaubanService, ContactService, NotifiService, TagService, SettingService, LoginService],
-    declarations: [
-        AppComponent,
-        NotifiSendComponent,
-
-=======
         BootstrapModalModule,
     ],
-    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, ProductService, ContactsService, ContactNotifiService, NotificationsService, YeucaubanService, ContactService, NotifiService, TagService, SettingService],
+    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, ProductService, ContactNotifiService, NotificationsService, YeucaubanService, ContactService, NotifiService, TagService, SettingService,LoginService],
     declarations: [
         AppComponent,
         NotifiSendComponent,
         CircleComponent,
->>>>>>> 205dde2a92aa1d9124a7518d553d22fcfd90b6c5
         SettingListComponent,
         SettingCreateComponent,
         SettingEditComponent,
         SettingDeleteComponent,
         SettingDetailComponent,
-<<<<<<< HEAD
-        SettingFilterPipe,
+
 
         WelcomeComponent,
 
@@ -102,43 +88,26 @@ import { CircleComponent } from './spinner/circle';
 
         BarChartDemoComponent,
         MenuListComponent,
-=======
-        WelcomeComponent,
-        NotificationsListComponent,
-        ProductDetailComponent,
-        ProductListComponent,
-        ProductFilterPipe,
-        BarChartDemoComponent,
-        MenuListComponent,
-        ContactsListComponent,
->>>>>>> 205dde2a92aa1d9124a7518d553d22fcfd90b6c5
         NotificationsListComponent,
         NotificationstDetailComponent,
         YeucaubanListComponent,
         StarComponent,
         ConfirmComponent,
         ContactListComponent,
-<<<<<<< HEAD
+        // ContactDetailComponent,
+        // ContactFilterPipe,
+        ModalContactUpdate,
         ModalContactUpdate,
         ModalTagCreate,
-=======
-        ContactDetailComponent,
-        ContactFilterPipe,
-        ModalContactUpdate,
->>>>>>> 205dde2a92aa1d9124a7518d553d22fcfd90b6c5
         NotificationsListComponent,
         NotificationstDetailComponent,
         NotificationstDetailEditComponent,
         NotificationFilterPipe,
         DateFilterPipe,
-<<<<<<< HEAD
+        RotatingPlaneComponent,
         FadingCircleComponent,
         LoginComponent
-    ], 
-=======
-        RotatingPlaneComponent
     ],
->>>>>>> 205dde2a92aa1d9124a7518d553d22fcfd90b6c5
     bootstrap: [AppComponent],
     entryComponents: [ModalContactUpdate, ModalTagCreate]
 

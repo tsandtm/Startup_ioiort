@@ -1,4 +1,3 @@
-
 import { Component,OnInit,Input,OnDestroy,AfterViewInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -112,10 +111,10 @@ export class ConfirmComponent implements OnInit {
         else{
             this.Update(1);
         }
-        this.Insert();
     }
-    ngAfterViewInit(){
-        jQuery(".js-data-example-ajax").select2({
+    ngAfterViewInit()
+    {
+        $(".js-data-example-ajax").select2({
             placeholder:"Test",
                 allowClear: true, 
                 ajax: {
@@ -139,7 +138,7 @@ export class ConfirmComponent implements OnInit {
                                 results:
                                 $.map(data, function(obj) {
                                     i+=10;
-                                    return { id: obj.TagID, text: obj.TagNameDisplay };
+                                    return { id: obj.ContactID, text: obj.TaiKhoan };
                                 }),
                                 pagination: {
                                 more: (params.page * 10) < i
