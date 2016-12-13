@@ -11,11 +11,11 @@ export class TinTucRepo extends RepoBase {
 
         console.log("id " + option);
         let queryText = 
-        `SELECT "IDTinTuc","TieuDe","MoTa","ThoiGianDangTin","URLNews","URLThumbImage" FROM public."TinTuc",public."User_DanhMucSite" 
+        `SELECT "IDTinTuc","TieuDe","MoTa","ThoiGianDangTin","URLNews","URLThumbImage",${option} = Any ("ArrayDaXem"::bigint[]) IS NULL = FALSE AS ChuaXem FROM public."TinTuc",public."User_DanhMucSite" 
          WHERE ${option} = Any ("ArrayDaXoa"::bigint[]) is null
                 AND "TinTuc"."IDDanhMucSite"="User_DanhMucSite"."IDDanhMucSite"  
                 AND "IDUser"=${option} 
-                AND ${option} = Any ("ArrayDaXem"::bigint[]) is null
+                AND ${option} = Any ("ArrayDaXem"::bigint[]) is not true
          ORDER BY "ThoiGianDangTin" 
          DESC LIMIT ${limit} OFFSET ${offset}`
 
@@ -46,42 +46,42 @@ export class TinTucRepo extends RepoBase {
             });
     }
 
-    public TinNoiBat(option, limit, offset): Promise<TinTuc[]> {
-        let queryText = `SELECT "IDTinTuc","TieuDe","MoTa","ThoiGianDangTin","URLNews","URLThumbImage" , "ArrayDaXem"
-        FROM public."TinTuc",public."User_DanhMucSite" 
-        WHERE ${option} = Any ("ArrayDaXoa"::bigint[]) is null
-        AND "TinTuc"."IDDanhMucSite"="User_DanhMucSite"."IDDanhMucSite" 
-        and "IDUser"=${option}
-        ORDER BY cardinality("ArrayDaXem") DESC NULLS LAST LIMIT ${limit} OFFSET ${offset}`;
+    // public TinNoiBat(option, limit, offset): Promise<TinTuc[]> {
+    //     let queryText = `SELECT "IDTinTuc","TieuDe","MoTa","ThoiGianDangTin","URLNews","URLThumbImage" , "ArrayDaXem"
+    //     FROM public."TinTuc",public."User_DanhMucSite" 
+    //     WHERE ${option} = Any ("ArrayDaXoa"::bigint[]) is null
+    //     AND "TinTuc"."IDDanhMucSite"="User_DanhMucSite"."IDDanhMucSite" 
+    //     and "IDUser"=${option}
+    //     ORDER BY cardinality("ArrayDaXem") DESC NULLS LAST LIMIT ${limit} OFFSET ${offset}`;
 
-        console.info('Excute: ' + queryText);
-        let pResult;
-        pResult = this._pgPool.query(queryText)
-        return pResult.then(result => {
-            let TinTucs: TinTuc[] = result.rows.map(r => {
-                let tintuc = new TinTuc();
-                tintuc.IDTinTuc = r.IDTinTuc;
-                tintuc.IDDanhMucSite = r.IDDanhMucSite;
-                tintuc.TieuDe = r.TieuDe;
-                tintuc.MoTa = r.MoTa;
-                tintuc.NoiDung = r.NoiDung;
-                tintuc.ThoiGianDangTin = r.ThoiGianDangTin;
-                tintuc.URLNews = r.URLNews;
-                tintuc.URLThumbImage = r.URLThumbImage;
-                tintuc.URLImage = r.URLImage;
-                tintuc.ArrayDaXem = r.ArrayDaXem;
-                tintuc.ArrayDaXoa = r.ArrayDaXoa;
-                tintuc.ArrayQuanTam = r.ArrayQuanTam;
-                // console.log(r.idtintuc)
-                return tintuc;
-            });
-            return TinTucs;
-        })
-            .catch(err => {
-                console.error(err.message);
-                return null;
-            });
-    }
+    //     console.info('Excute: ' + queryText);
+    //     let pResult;
+    //     pResult = this._pgPool.query(queryText)
+    //     return pResult.then(result => {
+    //         let TinTucs: TinTuc[] = result.rows.map(r => {
+    //             let tintuc = new TinTuc();
+    //             tintuc.IDTinTuc = r.IDTinTuc;
+    //             tintuc.IDDanhMucSite = r.IDDanhMucSite;
+    //             tintuc.TieuDe = r.TieuDe;
+    //             tintuc.MoTa = r.MoTa;
+    //             tintuc.NoiDung = r.NoiDung;
+    //             tintuc.ThoiGianDangTin = r.ThoiGianDangTin;
+    //             tintuc.URLNews = r.URLNews;
+    //             tintuc.URLThumbImage = r.URLThumbImage;
+    //             tintuc.URLImage = r.URLImage;
+    //             tintuc.ArrayDaXem = r.ArrayDaXem;
+    //             tintuc.ArrayDaXoa = r.ArrayDaXoa;
+    //             tintuc.ArrayQuanTam = r.ArrayQuanTam;
+    //             // console.log(r.idtintuc)
+    //             return tintuc;
+    //         });
+    //         return TinTucs;
+    //     })
+    //         .catch(err => {
+    //             console.error(err.message);
+    //             return null;
+    //         });
+    // }
 
     public lktindaxoa(option, limit, offset): Promise<TinTuc[]> {
         // 2 = Any ("ArrayDaXoa"::bigint[]) so sanh trong mảng có IDUser là 2 hay ko, có trả về true ko thì false
@@ -270,10 +270,10 @@ export class TinTucRepo extends RepoBase {
     }
 
     public daxem(id, IDUser): Promise<TinTuc> {
-        console.log('id: ' + id);
-        console.log('id user: ' + IDUser);
+        // console.log('id: ' + id);
+        // console.log('id user: ' + IDUser);
         let queryText = `UPDATE public."TinTuc" Set "ArrayDaXem"= "ArrayDaXem" || ARRAY[${IDUser}]::BIGINT[]
-        WHERE "IDTinTuc"=${id}`;
+        WHERE "IDTinTuc"=${id} and ${IDUser} = Any ("ArrayDaXem"::bigint[]) is not true `;
         return this._pgPool.query(queryText)
             .then(result => {
                 return id;
