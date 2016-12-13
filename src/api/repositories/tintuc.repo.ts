@@ -269,10 +269,10 @@ export class TinTucRepo extends RepoBase {
     }
 
     public daxem(id, IDUser): Promise<TinTuc> {
-        console.log('id: ' + id);
-        console.log('id user: ' + IDUser);
+        // console.log('id: ' + id);
+        // console.log('id user: ' + IDUser);
         let queryText = `UPDATE public."TinTuc" Set "ArrayDaXem"= "ArrayDaXem" || ARRAY[${IDUser}]::BIGINT[]
-        WHERE "IDTinTuc"=${id}`;
+        WHERE "IDTinTuc"=${id} and ${IDUser} = Any ("ArrayDaXem"::bigint[]) is not true `;
         return this._pgPool.query(queryText)
             .then(result => {
                 return id;
