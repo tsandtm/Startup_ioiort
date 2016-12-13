@@ -36,8 +36,7 @@ export class TinTucRouter {
             .get(this.getallquantam)
         this.router.route('/tinchuadoc/:id?')
             .get(this.chuadoc);
-        this.router.route('/tinnoibat/:id?')
-            .get(this.tinnoibat);
+   
 
         return this.router;
     }
@@ -106,19 +105,19 @@ export class TinTucRouter {
                 res.status(500).send(error.message)
             })
     }
-    private tinnoibat = (req: Request, res: Response) => {
-        let limit = req.query.limit ? req.query.limit : "all";
-        let offset = req.query.offset ? req.query.offset : 0;
+    // private tinnoibat = (req: Request, res: Response) => {
+    //     let limit = req.query.limit ? req.query.limit : "all";
+    //     let offset = req.query.offset ? req.query.offset : 0;
 
-        this.tintucRepo.TinNoiBat(req.params.id, limit, offset)
-            .then(result => {
-                res.status(200).json(result)
-            })
-            .catch(error => {
-                console.error(error.message);
-                res.status(500).send(error.message)
-            })
-    }
+    //     this.tintucRepo.TinNoiBat(req.params.id, limit, offset)
+    //         .then(result => {
+    //             res.status(200).json(result)
+    //         })
+    //         .catch(error => {
+    //             console.error(error.message);
+    //             res.status(500).send(error.message)
+    //         })
+    // }
 
     private xoatin = (req: Request, res: Response) => {
         // let option = new TinTuc();

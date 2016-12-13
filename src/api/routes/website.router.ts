@@ -27,6 +27,8 @@ export class WebsRouter {
 
         this.router.route('/website')
         this.router.get('/GetList/:IDUser',this.GetList)
+        this.router.get('/getName',this.getName)
+        
 
         // this.router.get('/countNews',this.countNews)
 
@@ -47,16 +49,16 @@ export class WebsRouter {
             .catch(err => Promise.reject(err))
     }
 
-    // private updateShow = (req: Request, res: Response) => {
-
-    //     this.websRepo.UpdateShow(req.query.id, req.body)
-    //         .then(result => {
-    //             res.status(200).json({ show: true });
-    //         })
-    //         .catch(err => {
-    //             console.error(err);
-    //             return Promise.reject(err);
-    //         })
-    // }
+    private getName = (req: Request, res: Response) => {
+        console.log("string " + req.query.string)
+        this.websRepo.getName(req.query.string,req.query.IDUser)
+            .then(result => {
+                res.status(200).json(result);
+            })
+            .catch(err => {
+                console.error(err);
+                return Promise.reject(err);
+            })
+    }
 
 }
