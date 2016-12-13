@@ -25,6 +25,8 @@ export class WebsRouter {
     public getRouter(): Router {
 
         this.router.get('/GetList/:IDUser',this.GetList)
+        this.router.get('/getName',this.getName)
+        
 
 
 
@@ -45,6 +47,17 @@ export class WebsRouter {
             .catch(err => Promise.reject(err))
     }
 
-  
+
+    private getName = (req: Request, res: Response) => {
+        console.log("string " + req.query.string)
+        this.websRepo.getName(req.query.string,req.query.IDUser)
+            .then(result => {
+                res.status(200).json(result);
+            })
+            .catch(err => {
+                console.error(err);
+                return Promise.reject(err);
+            })
+    }
 
 }

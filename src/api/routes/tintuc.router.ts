@@ -33,6 +33,10 @@ export class TinTucRouter {
             .post(this.daxem);
 
         this.router.route('/tinquantam/:id/:idtintuc?') /**api cua tin quan tam */
+            .get(this.getallquantam)
+        // this.router.route('/tinchuadoc/:id?')
+        //     .get(this.chuadoc);
+   
         return this.router;
     }
     private lktindaxoa = (req: Request, res: Response) => {
@@ -87,20 +91,19 @@ export class TinTucRouter {
                 res.status(500).send(error.message)
             })
     }
-    private chuadoc = (req: Request, res: Response) => {
-        // let limit = req.query.limit ? req.query.limit : "all";
-        // let offset = req.query.offset ? req.query.offset: 0;
+    // private chuadoc = (req: Request, res: Response) => {
+    //     // let limit = req.query.limit ? req.query.limit : "all";
+    //     // let offset = req.query.offset ? req.query.offset: 0;
 
-        this.tintucRepo.chuadoc(null)
-            .then(result => {
-                res.status(200).json(result)
-            })
-            .catch(error => {
-                console.error(error.message);
-                res.status(500).send(error.message)
-            })
-    }
-    
+    //     this.tintucRepo.chuadoc(null)
+    //         .then(result => {
+    //             res.status(200).json(result)
+    //         })
+    //         .catch(error => {
+    //             console.error(error.message);
+    //             res.status(500).send(error.message)
+    //         })
+    // }
     private xoatin = (req: Request, res: Response) => {
         // let option = new TinTuc();
         // option = req.body;
