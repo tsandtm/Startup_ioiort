@@ -8,7 +8,9 @@
         "removeComments": false,
         "noLib": false,
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
+        "emitDecoratorMetadata": true,
+        "outDir": "dist/",
+        "sourceMap": true
     },
     "include":[
         "src/**/*"

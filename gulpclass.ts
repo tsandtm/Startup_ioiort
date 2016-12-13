@@ -34,11 +34,7 @@ export class Gulpfile {
     jsDest: string = 'dist';
     filesToMove: string[] = [
         './src/config/**/*.*',
-        './src/client/index.html',
         './src/systemjs.config.js',
-        './src/client/app/**/*.html',
-        './src/client/app/**/*.css',
-        './src/client/app/assets/**/*.*',
         './src/api/json/**/*.json'
     ];
 
@@ -87,35 +83,18 @@ export class Gulpfile {
             }
         });
 
-        gulp.watch('src/client/**/*.html',['move',bs.reload])
-        gulp.watch('src/client/**/*.css',['move',bs.reload])
-        gulp.watch(['src/client/**/*.ts'], ['compile',bs.reload]);
         gulp.watch(['src/api/**/*.ts'], ['compile',bs.reload]);
 
         done();
     }
 
-    @Task('', ['compile'])
-    test(done) {
-        let stdout = '';
-        let stderr = '';
-        let child = childp.exec('npm test', { cwd: process.cwd() });
-
-        child.stdout.on('data', (data) => {
-            stdout += data;
-        });
-
-        child.stderr.on('data', (data) => {
-            stderr += data;
-        })
-
-        child.on('close', (code) => {
-            gutil.log('exit with code', code);
-            gutil.log(gutil.colors.blue(stdout));
-            gutil.log(gutil.colors.red(stderr));
-            done();
-        })
+    @Task()
+    watch(done){
+        gulp.watch(['src/api/**/*.ts'], ['compile']);
+        done();
     }
+
+   
 
     /**
      * task này phụ thuộc vào 2 task clean và compile
@@ -147,6 +126,6 @@ export class Gulpfile {
      */
     @SequenceTask()
     default() {
-        return ['compile','nodemon','serve'];
+        return ['compile','nodemon','watch'];
     }
 } 
