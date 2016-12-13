@@ -1,4 +1,5 @@
 
+
 export class TinTuc {
     IDTinTuc: number
     IDDanhMucSite: number;
@@ -13,3 +14,4 @@ export class TinTuc {
     ArrayDaXoa: number;
     ArrayQuanTam: number;
 }
+

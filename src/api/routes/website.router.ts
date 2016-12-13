@@ -19,16 +19,14 @@ export class WebsRouter {
         this.router = Router();
         this.websRepo = new ListWebRepo();
 
-        //this.model = model;
     }
 
 
     public getRouter(): Router {
 
-        this.router.route('/website')
         this.router.get('/GetList/:IDUser',this.GetList)
 
-        // this.router.get('/countNews',this.countNews)
+
 
 
         return this.router;
@@ -47,16 +45,6 @@ export class WebsRouter {
             .catch(err => Promise.reject(err))
     }
 
-    // private updateShow = (req: Request, res: Response) => {
-
-    //     this.websRepo.UpdateShow(req.query.id, req.body)
-    //         .then(result => {
-    //             res.status(200).json({ show: true });
-    //         })
-    //         .catch(err => {
-    //             console.error(err);
-    //             return Promise.reject(err);
-    //         })
-    // }
+  
 
 }

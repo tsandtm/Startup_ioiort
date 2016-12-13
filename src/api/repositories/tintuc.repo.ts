@@ -26,6 +26,7 @@ export class TinTucRepo extends RepoBase {
             let TinTucs: TinTuc[] = result.rows.map(r => {
                 let tintuc = new TinTuc();
                 tintuc.IDTinTuc = r.IDTinTuc;
+
                 tintuc.IDDanhMucSite = r.IDDanhMucSite;
                 tintuc.TieuDe = r.TieuDe;
                 tintuc.MoTa = r.MoTa;
@@ -282,5 +283,4 @@ export class TinTucRepo extends RepoBase {
                 return Promise.reject(error);
             });
     }
-
 }

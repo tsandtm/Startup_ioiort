@@ -77,6 +77,7 @@ export class DanhMucRePo extends RepoBase {
         WHERE "DanhMucSite"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite" AND "ParentID" = ${-1}
         ORDER BY "DanhMucSite"."IDDanhMucSite" ASC
         `
+
         console.info('Excute: ' + queryText);
         let pResult;
 
@@ -102,6 +103,7 @@ export class DanhMucRePo extends RepoBase {
             let webs: DanhMuc[] = result.rows.map(r => {
                 let web = new DanhMuc();
                 web.IDDanhMucSite = r.IDDanhMucSite;
+
                 web.DuongDan = r.DuongDan;
                 web.TenGoi = r.TenGoi;
                 web.MoTa = r.MoTa;
@@ -123,4 +125,5 @@ export class DanhMucRePo extends RepoBase {
             });
     }
 
+  
 }

@@ -33,12 +33,6 @@ export class TinTucRouter {
             .post(this.daxem);
 
         this.router.route('/tinquantam/:id/:idtintuc?') /**api cua tin quan tam */
-            .get(this.getallquantam)
-        this.router.route('/tinchuadoc/:id?')
-            .get(this.chuadoc);
-        this.router.route('/tinnoibat/:id?')
-            .get(this.tinnoibat);
-
         return this.router;
     }
     private lktindaxoa = (req: Request, res: Response) => {
@@ -173,7 +167,6 @@ export class TinTucRouter {
                 res.status(500).send(error.message);
             });
     }
-
 
     //xai d======================================================
     // private deleteABook = (req: Request, res: Response) => {
