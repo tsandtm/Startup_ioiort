@@ -29,7 +29,8 @@ SELECT  BANG1."IDDanhMucSite" = BANG2."IDDanhMucSite" IS NULL = FALSE AS giatri,
             BANG1."TenGoi",BANG1."TenGoi_KoDau",BANG1."Icon",BANG1."DuongDan"
 FROM 
         (       SELECT "IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan"
-                FROM public."DanhMucSite" 
+                FROM public."DanhMucSite"
+                WHERE "ParentID" = ${-1} 
                 ORDER BY "IDDanhMucSite" ASC LIMIT ${limit} OFFSET ${offset}    ) AS BANG1
 FULL OUTER JOIN 
         (       SELECT "User_DanhMucSite"."IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan","IDUser" 
