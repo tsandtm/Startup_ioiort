@@ -24,7 +24,31 @@
 					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
           				<span class="glyphicon glyphicon-list"></span></button>
 						<!-- Modal -->
-						<div id="myModal" class="modal fade" role="dialog">
+						
+					<p><br/>
+					Ngày gửi:{{notifi.Thoigiangui| date:'dd/MM/yyyy HH:mm:ss' }}<br/><br/>
+					Độ ưu tiên:{{Douutien}}<br/><br/>
+					Thời hạn:{{notifi.ThoiHan| date:'dd/MM/yyyy HH:mm:ss'}}<br/><br/>
+					</p>
+					<!--<form class="form-inline" style="margin-top:180px">-->
+						<div class="form-group" style="margin-top:180px">
+						<p>Test Recipients</p>
+						</div>
+						<button type="submit" class="btn btn-success" (click)='Push()'>Send</button>
+					<!--</form>-->
+					<hr />
+				</div>
+				<div style="float:right">
+				<button type="submit" class="btn btn-success" (click)='Check()'>Check</button>
+				<button type="submit" class="btn btn-success" (click)='SaveAsDraft()'>Save As Draft</button>
+				<button type="submit" class="btn btn-success" (click)='Finish()'>Finish</button>
+				</div>
+			</div>
+		</div>
+    </div>
+
+							<select class="js-data-example-ajax" style="width: 100%"></select>
+							<div id="myModal" class="modal fade" role="dialog">
 						<div class="modal-dialog">
 
 							<!-- Modal content-->
@@ -33,7 +57,14 @@
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 								<h4 class="modal-title">List Sent User</h4>
 							</div>
+							
 							<div class="modal-body">
+								<div class='row'>
+									<div class='col-md-2 text-center' style="line-height:37px">Tìm kiếm:</div>
+									<div class='col-md-6'>
+										<input type='text' class="form-control" [(ngModel)]='listFilter'  (keyup)="find()"/>
+									</div>
+								</div>
 								<table class="table">
 									<thead>
 									<tr>
@@ -58,32 +89,28 @@
 								</table>
 							</div>
 							<div class="modal-footer">
+								<div class="text-center panel-footer" *ngIf="pager.pages">            <!-- pager -->
+									<ul  class="pagination" *ngIf="pager.pages.length>1">
+										<li [ngClass]="{disabled:pager.currentPage === 1}">
+											<a (click)="setPage(listFilter,1)">First</a>
+										</li>
+										<li [ngClass]="{disabled:pager.currentPage === 1}">
+											<a (click)="setPage(listFilter,pager.currentPage - 1)">Previous</a>
+										</li>
+										<li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+											<a (click)="setPage(listFilter,page)">{{page}}</a>
+										</li>
+										<li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+											<a (click)="setPage(listFilter,pager.currentPage + 1)">Next</a>
+										</li>
+										<li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+											<a (click)="setPage(listFilter,pager.totalPages)">Last</a>
+										</li>
+									</ul>
+								</div>
 								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 							</div>
 							</div>
 
 						</div>
 						</div>
-					<p><br/>
-					Ngày gửi:{{notifi.Thoigiangui| date:'dd/MM/yyyy HH:mm:ss' }}<br/><br/>
-					Độ ưu tiên:{{Douutien}}<br/><br/>
-					Thời hạn:{{notifi.ThoiHan| date:'dd/MM/yyyy HH:mm:ss'}}<br/><br/>
-					</p>
-					<!--<form class="form-inline" style="margin-top:180px">-->
-						<div class="form-group" style="margin-top:180px">
-						<p>Test Recipients</p>
-						</div>
-						<button type="submit" class="btn btn-success" (click)='Push()'>Send</button>
-					<!--</form>-->
-					<hr />
-				</div>
-				<div style="float:right">
-				<button type="submit" class="btn btn-success" (click)='Check()'>Check</button>
-				<button type="submit" class="btn btn-success" (click)='SaveAsDraft()'>Save As Draft</button>
-				<button type="submit" class="btn btn-success" (click)='Finish()'>Finish</button>
-				</div>
-			</div>
-		</div>
-    </div>
-
-							<select class="js-data-example-ajax" style="width: 100%"></select>

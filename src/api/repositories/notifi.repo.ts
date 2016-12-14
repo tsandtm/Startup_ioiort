@@ -143,11 +143,20 @@ export class NotifiRepo extends RepoBase {
     }
 
     public getSL(option):Promise<number>{
-        let queryText = 'SELECT COUNT(*) FROM test."Contacts" A,test."n_Notifications" B WHERE "NotifiID"=$1 AND (Array[A."ContactID"] && B."Send_UserID" OR A."Contact_TagID" && B."Send_TagID") AND (Array[A."ContactID"] && B."Send_UserDenieID" OR A."Contact_TagID" && B."Send_TagDenieID") = false GROUP BY "NotifiID"';
-
-        console.info('Excute: ' + queryText);
+        let queryText;
         let pResult;
+        if(option.tk==undefined||option.tk=='null'||option.tk==null||option.tk=='undefined')
+        {
+            queryText = 'SELECT COUNT(*) FROM test."Contacts" A,test."n_Notifications" B WHERE "NotifiID"=$1 AND (Array[A."ContactID"] && B."Send_UserID" OR A."Contact_TagID" && B."Send_TagID") AND (Array[A."ContactID"] && B."Send_UserDenieID" OR A."Contact_TagID" && B."Send_TagDenieID") = false GROUP BY "NotifiID"';
             pResult = this._pgPool.query(queryText,[option.id])
+        }
+        else
+        {
+            queryText = 'SELECT COUNT(*) FROM test."Contacts" A,test."n_Notifications" B WHERE "NotifiID"=$1 AND "TaiKhoan" like $2 AND (Array[A."ContactID"] && B."Send_UserID" OR A."Contact_TagID" && B."Send_TagID") AND (Array[A."ContactID"] && B."Send_UserDenieID" OR A."Contact_TagID" && B."Send_TagDenieID") = false GROUP BY "NotifiID"';
+            pResult = this._pgPool.query(queryText,[option.id,'%'+option.tk+'%'])
+        }
+        console.info('Excute: ' + queryText+option.id+' '+'%'+option.tk+'%');
+            
         return pResult.then(result => {
                 let sl:number;
                 if(result.rowCount==0)
@@ -179,11 +188,21 @@ export class NotifiRepo extends RepoBase {
             });
     }
     public getSentUser(option):Promise<SentUser[]>{
-        let queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook","Contact_TagName" FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserID" OR A."Contact_TagID" && B."Send_TagID") AND (Array[A."ContactID"] && B."Send_UserDenieID" OR A."Contact_TagID" && B."Send_TagDenieID") = false AND "NotifiID" = $1 ORDER BY "ContactID" ASC LIMIT 10 OFFSET $2';
-
-        console.info('Excute: ' + queryText);
+        let queryText;
         let pResult;
-            pResult = this._pgPool.query(queryText,[option.id]);
+        if(option.tk==undefined||option.tk=='null'||option.tk==null||option.tk=='undefined')
+        {
+            queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook","Contact_TagName" FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserID" OR A."Contact_TagID" && B."Send_TagID") AND (Array[A."ContactID"] && B."Send_UserDenieID" OR A."Contact_TagID" && B."Send_TagDenieID") = false AND "NotifiID" = $1 ORDER BY "ContactID" ASC LIMIT 10 OFFSET $2';
+            pResult = this._pgPool.query(queryText,[option.id,option.so]);
+        }
+        else
+        {
+            queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook","Contact_TagName" FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserID" OR A."Contact_TagID" && B."Send_TagID") AND (Array[A."ContactID"] && B."Send_UserDenieID" OR A."Contact_TagID" && B."Send_TagDenieID") = false AND "NotifiID" = $1 and "TaiKhoan" like $2 ORDER BY "ContactID" ASC LIMIT 10 OFFSET $3';
+            pResult = this._pgPool.query(queryText,[option.id,'%'+option.tk+'%',option.so]);
+        }
+        console.info('Excute: ' + queryText+'%'+option.tk+'%');
+
+            
         return pResult.then(result => {
             let sents: SentUser[] = result.rows.map(r => {
                 let sent = new SentUser();

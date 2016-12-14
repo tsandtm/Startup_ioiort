@@ -55,15 +55,15 @@ export class NotifiService {
             .catch(this.handleError);
     }
 
-    getSL(req):Promise<number>{
-        return this._http.get('/api/sl/'+req)
+    getSL(req,req2):Promise<number>{
+        return this._http.get('/api/sl?id='+req+'&tk='+req2)
             .toPromise()
             .then(response => response.json() as number)
             .catch(this.handleError);
     }
 
-    getSendUser(req):Promise<SentUser[]>{
-        return this._http.get('/api/sentuser/'+req)
+    getSendUser(req,req2,req3):Promise<SentUser[]>{
+        return this._http.get('/api/sentuser?id='+req+'&so='+req2+'&tk='+req3)
             .toPromise()
             .then(response => response.json() as SentUser[])
             .catch(this.handleError);
@@ -75,5 +75,94 @@ export class NotifiService {
         return Promise.reject(error.message || error);
         // return Observable.throw(error.json().error || 'Server error');
 
+    }
+    getPager(totalItems: number, currentPage: number, pageSize: number = 15) {
+        // calculate total pages
+        var totalPages = Math.ceil(totalItems / pageSize);
+
+        var startPage, endPage;
+        if (totalPages <= 10) {
+            // less than 10 total pages so show all
+            startPage = 1;
+            endPage = totalPages;
+        } else {
+            // more than 10 total pages so calculate start and end pages
+            if (currentPage <= 6) {
+                startPage = 1;
+                endPage = 10;
+            } else if (currentPage + 4 >= totalPages) {
+                startPage = totalPages - 9;
+                endPage = totalPages;
+            } else {
+                startPage = currentPage - 5;
+                endPage = currentPage + 4;
+            }
+        }
+
+        // calculate start and end item indexes
+        var startIndex = (currentPage - 1) * pageSize;
+        var endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
+
+        // create an array of pages to ng-repeat in the pager control
+        var pages: number[];
+        if(currentPage<=3)
+        {
+            if(totalPages<5)
+            {
+                for(var n:number=1;n<=totalPages;n++)
+                {
+                    if(pages==undefined)
+                        pages=[n];
+                    else
+                        pages.push(n);
+                    
+                };
+            }
+            else
+            {
+                for(var n:number=1;n<=5;n++)
+                {
+                    if(pages==undefined)
+                        pages=[n];
+                    else
+                        pages.push(n);
+                    
+                };
+            }
+        }
+        else if(currentPage>=(totalPages-2))
+        {
+            for(var n:number=(totalPages-4);n<=totalPages;n++)
+            {
+                if(pages==undefined)
+                    pages=[n];
+                else
+                    pages.push(n);
+                
+            };
+        }
+        else
+        {
+            for(var n:number=currentPage-2;n<(currentPage+3);n++)
+            {
+                if(pages==undefined)
+                    pages=[n];
+                else
+                    pages.push(n);
+                
+            };
+        }
+        // return object with all pager properties required by the view
+        return {
+            totalItems: totalItems,
+            currentPage: currentPage,
+            pageSize: pageSize,
+            totalPages: totalPages,
+            startPage: startPage,
+            endPage: endPage,
+            startIndex: startIndex,
+            endIndex: endIndex,
+            pages: pages
+        };
     }
 }

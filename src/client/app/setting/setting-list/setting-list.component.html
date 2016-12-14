@@ -53,7 +53,6 @@
         <h2>Quản lý API key</h2>
     </div>
     <!-- Filter the Products   -->
-    <div id="loader" *ngIf="!itempages"></div>
     
     <div class='panel-body' >
         <div class='row'>
@@ -113,19 +112,19 @@
     <div class="text-center panel-footer" *ngIf="pager.pages">            <!-- pager -->
         <ul  class="pagination" *ngIf="pager.pages.length>1">
             <li [ngClass]="{disabled:pager.currentPage === 1}">
-                <a (click)="setPage(1)">First</a>
+                <a (click)="setPage(listFilter,1)">First</a>
             </li>
             <li [ngClass]="{disabled:pager.currentPage === 1}">
-                <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+                <a (click)="setPage(listFilter,pager.currentPage - 1)">Previous</a>
             </li>
             <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
                 <a (click)="setPage(listFilter,page)">{{page}}</a>
             </li>
             <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                <a (click)="setPage(pager.currentPage + 1)">Next</a>
+                <a (click)="setPage(listFilter,pager.currentPage + 1)">Next</a>
             </li>
             <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                <a (click)="setPage(pager.totalPages)">Last</a>
+                <a (click)="setPage(listFilter,pager.totalPages)">Last</a>
             </li>
         </ul>
     </div>

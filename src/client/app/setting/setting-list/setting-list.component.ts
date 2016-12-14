@@ -41,11 +41,13 @@ export class SettingListComponent {
     }
     find():void{
         //console.log(this.listFilter+" aaabbb");
+        this.id=undefined;
+        console.log(this.listFilter);
         this.itempages=undefined;
         this._SettingService.getCount(this.listFilter).then(result=>
         {
             this.id=result;
-            this.setPage(this.listFilter,1);
+            this.pager = this._SettingService.getPager(this.id, 1);
             this._SettingService.getAllSettingPT(this.pager.startIndex,this.listFilter).then(itempages => this.itempages = itempages);        
             
         });
