@@ -77,7 +77,7 @@ ON (BANG1."IDDanhMucSite" = BANG2."IDDanhMucSite")
 WHERE
         (           BANG1."IDDanhMucSite",
                     BANG1."TenGoi",BANG1."TenGoi_KoDau",BANG1."Icon",BANG1."DuongDan") is not null and
-                    lower(BANG1."TenGoi") like '%${option}%' or lower(BANG1."TenGoi_KoDau") like '%${option}%'
+                    lower(BANG1."TenGoi") like lower('%${option}%') or lower(BANG1."TenGoi_KoDau") like lower('%${option}%')
 ORDER BY BANG1."IDDanhMucSite" ASC
 `;
 
