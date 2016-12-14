@@ -17,7 +17,7 @@ export abstract class PgPool{
                 ssl: config.ssl,
                 max: config.pool.max,
                 min: config.pool.min,
-                idleTimeoutMillis: config.idleTimeoutMillis
+                idleTimeoutMillis: config.idleTimeoutMillis,
             });
 
             this._pgPool.on('error', (err, client) => {

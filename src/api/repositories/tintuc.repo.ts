@@ -10,14 +10,17 @@ export class TinTucRepo extends RepoBase {
     public getList(option, limit, offset): Promise<TinTuc[]> {
 
         console.log("id " + option);
-        let queryText = 
-        `SELECT "IDTinTuc","TieuDe","MoTa","ThoiGianDangTin","URLNews","URLThumbImage",${option} = Any ("ArrayDaXem"::bigint[]) IS NULL = FALSE AS ChuaXem FROM public."TinTuc",public."User_DanhMucSite" 
-         WHERE ${option} = Any ("ArrayDaXoa"::bigint[]) is null
-                AND "TinTuc"."IDDanhMucSite"="User_DanhMucSite"."IDDanhMucSite"  
+        let queryText =
+            `SELECT c."IDTinTuc",c."TieuDe",c."MoTa",c."ThoiGianDangTin",c."URLNews",c."URLThumbImage",
+	                ${option} = ANY (c."ArrayDaXem"::bigint[]) IS NULL = FALSE AS ChuaXem 
+        FROM public."User_DanhMucSite" AS a
+        INNER JOIN public."DanhMucSite" AS b ON a."IDDanhMucSite" =b."ParentID"
+        INNER JOIN public."TinTuc" c ON c."IDDanhMucSite"=b."IDDanhMucSite"
+        WHERE ${option} = Any ("ArrayDaXoa"::bigint[]) is null 
                 AND "IDUser"=${option} 
                 AND ${option} = Any ("ArrayDaXem"::bigint[]) is not true
-         ORDER BY "ThoiGianDangTin" 
-         DESC LIMIT ${limit} OFFSET ${offset}`
+        ORDER BY "ThoiGianDangTin" 
+        DESC LIMIT ${limit} OFFSET ${offset}`
 
         console.info('Excute: ' + queryText);
         let pResult;
@@ -198,9 +201,9 @@ export class TinTucRepo extends RepoBase {
     }
 
     public quantam(option, limit, offset): Promise<TinTuc[]> {
-        let queryText = "";
+        let queryText =
         (!option.idtintuc) ?
-            queryText = `SELECT "IDTinTuc","TieuDe","MoTa","ThoiGianDangTin","URLNews","URLThumbImage",
+          `SELECT "IDTinTuc","TieuDe","MoTa","ThoiGianDangTin","URLNews","URLThumbImage",
         ${option.id} = Any ("ArrayQuanTam"::bigint[])
         FROM public."TinTuc"
         WHERE "ArrayQuanTam" is not null 
@@ -209,8 +212,8 @@ export class TinTucRepo extends RepoBase {
 
             :
 
-            queryText = `SELECT "IDTinTuc"
-             FROM public."TinTuc" 
+        `SELECT "IDTinTuc"
+        FROM public."TinTuc" 
         WHERE "ArrayQuanTam" is not null AND "IDTinTuc" = ${option.idtintuc} 
         AND ${option.id} = Any ("ArrayQuanTam"::bigint[]) is true
         ORDER BY "ThoiGianDangTin" LIMIT ${limit} OFFSET ${offset}`
