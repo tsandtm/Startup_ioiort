@@ -20,16 +20,42 @@ input[type=date]::-webkit-inner-spin-button {
 					</div>
 					<p>(*) To:<p>
 						<div class="form-group">
-							<select class="js-data-example-ajaxTag" style="width: 100%"></select>
+							<select class="js-data-example-ajaxTag" style="width: 100%" multiple="multiple">   
+								<!--<option value="1" selected="selected">Phong1</option>
+								<option value="2" selected="selected">Phong2</option>-->							
+								<option *ngFor='let item of ACTag'
+								[value]="item.id"
+								[selected]='1==1'
+								>{{item.text}}
+								</option>
+							</select>
 						</div>
 						<div class="form-group">
-							<select class="js-data-example-ajaxContact" style="width: 100%"></select>
+							<select class="js-data-example-ajaxContact" style="width: 100%">
+								<option *ngFor='let item of ACContact'
+								[value]="item.id"
+								[selected]='1==1'
+								>{{item.text}}
+								</option>
+							</select>
 						</div>
 						<div class="form-group">
-							<select class="js-data-example-ajaxTagDenied" style="width: 100%"></select>
+							<select class="js-data-example-ajaxTagDenied" style="width: 100%">
+								<option *ngFor='let item of ACTagDenied'
+								[value]="item.id"
+								[selected]='1==1'
+								>{{item.text}}
+								</option>
+							</select>
 						</div>
 						<div class="form-group">
-							<select class="js-data-example-ajaxContactDenied" style="width: 100%"></select>
+							<select class="js-data-example-ajaxContactDenied" style="width: 100%">
+								<option *ngFor='let item of ACContactDenied'
+								[value]="item.id"
+								[selected]='1==1'
+								>{{item.text}}
+								</option>
+							</select>
 						</div>
 			</div>
 			<div class="col-md-4">

@@ -37,7 +37,11 @@ export class NotificationsService {
             .then(slsend => slsend.filter(p => p.NotifiID === id))
             .catch(this.handleError);
     }
-
+    getNotificationsA(id: number): Promise<Notifications> {
+        return this.getList()
+            .then(notifications => notifications.find(p => p.id === id))
+            .catch(this.handleError);
+    }    
     getNotifications(id: number,id2?:number): Promise<Notifications> {
         return this. getAllSettingPT(id2,null)
             .then(notifications => notifications.find(p => p.id === id))
@@ -164,7 +168,6 @@ export class NotificationsService {
     }
     
      getAllSettingPT(req,req2): Promise<Notifications[]> {
-         
         return this._http.get('/api/notificationPT?so='+req+'&id='+req2)
             .toPromise()
             .then(response => response.json() as Notifications[])

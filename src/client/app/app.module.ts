@@ -68,7 +68,7 @@ import { RotatingPlaneComponent } from './spinner/rotating-plane.component';
         ModalModule.forRoot(),
         BootstrapModalModule,
     ],
-    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, ProductService, ContactsService, ContactNotifiService, NotificationsService, YeucaubanService, ContactService, NotifiService, TagService, SettingService,LoginService],
+    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, ProductService, ContactNotifiService, NotificationsService, YeucaubanService, ContactService, NotifiService, TagService, SettingService,LoginService],
     declarations: [
         AppComponent,
         NotifiSendComponent,
@@ -87,6 +87,9 @@ import { RotatingPlaneComponent } from './spinner/rotating-plane.component';
         StarComponent,
         ConfirmComponent,
         ContactListComponent,
+        ProductListComponent,
+        ProductDetailComponent,
+        ProductFilterPipe,
         // ContactDetailComponent,
         // ContactFilterPipe,
         ModalContactUpdate,

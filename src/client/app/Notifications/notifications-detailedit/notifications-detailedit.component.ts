@@ -132,27 +132,16 @@ export class NotificationstDetailEditComponent implements OnInit{
             this.getNotifications(id);
         })
     }
-    Check(){
-        console.log($(".js-data-example-ajaxTag").val());
-        console.log($(".js-data-example-ajaxTagDenied").val());
-        console.log($(".js-data-example-ajaxContact").val());
-        console.log($(".js-data-example-ajaxContactDenied").val());
 
-        console.log(this.ACTag);
-        console.log(this.ACContact);
-        console.log(this.ACTagDenied);
-        console.log(this.ACContactDenied);
-    }
     getNotifications(id: number) {
         
-        this._notificationsService.getNotifications(id)
+        this._notificationsService.getNotificationsA(id)
             .then(notifications => {
                 this.notifications = notifications;
-                
-                this.listNameTag = notifications.Send_TagName,
-                this.listNameContact = notifications.Send_UserName,
-                this.listNameTagDenied = notifications.Send_TagDenieName
-                this.listNameContactDenied = notifications.Send_UserDenieName,     
+                this.listNameTag = notifications.Send_TagName;
+                this.listNameContact = notifications.Send_UserName;
+                this.listNameTagDenied = notifications.Send_TagDenieName;
+                this.listNameContactDenied = notifications.Send_UserDenieName;
                 this.listIDTag = notifications.Send_TagID;
                 this.listIDContact = notifications.Send_UserID;
                 this.listIDTagDenied = notifications.Send_TagDenieID;
@@ -176,21 +165,27 @@ export class NotificationstDetailEditComponent implements OnInit{
                 this.ACContactDenied=[];
                 for(var i=0;i<this.listIDTag.length;i++)
                 {
-                    var obj={id:this.listIDTag[i],text:this.listNameTag[i]}
-                    var json=JSON.stringify(obj);
+                    let obj={id:this.listIDTag[i],text:this.listNameTag[i]}
+                    var json=JSON.parse(JSON.stringify(obj));
                     this.ACTag.push(json);
                 }
                   for(var i=0;i<this.listIDContact.length;i++)
                 {
-                    this.ACContact.push(this.listIDContact[i]+'.'+this.listNameContact[i]);
+                    let obj={id:this.listIDContact[i],text:this.listIDContact[i]+"."+this.listNameContact[i]}
+                    var json=JSON.parse(JSON.stringify(obj));
+                    this.ACContact.push(json);
                 }
                   for(var i=0;i<this.listIDTagDenied.length;i++)
                 {
-                    this.ACTagDenied.push(this.listNameTagDenied[i]);
+                    let obj={id:this.listIDTagDenied[i],text:this.listNameTagDenied[i]}
+                    var json=JSON.parse(JSON.stringify(obj));
+                    this.ACTagDenied.push(json);
                 }
                   for(var i=0;i<this.listIDContactDenied.length;i++)
                 {
-                    this.ACContactDenied.push(this.listIDContactDenied[i]+'.'+this.listNameContactDenied[i]);
+                    let obj={id:this.listIDContactDenied[i],text:this.listIDContactDenied[i]+"."+this.listNameContactDenied[i]}
+                    var json=JSON.parse(JSON.stringify(obj));
+                    this.ACContactDenied.push(json);
                 }               
 
             })
@@ -198,6 +193,7 @@ export class NotificationstDetailEditComponent implements OnInit{
      getslsend(req):Promise<number>{
         return this.notifiservice.getslsend(req).then(result=>this.Soluong=result);
     }
+    
     Edit(){
         this.listNameTag=[];
         this.listNameContact=[];
@@ -210,7 +206,7 @@ export class NotificationstDetailEditComponent implements OnInit{
         {
             this.listIDTag=$(".js-data-example-ajaxTag").val();
             for(var i = 0;i<this.listIDTag.length;i++){
-                this.listNameTag.push($(".js-data-example-ajaxTag").select2('data')[i].text)
+                this.listNameTag.push(this.listIDTag[i])
             }
         }
         if($(".js-data-example-ajaxContact").val()==null){
@@ -220,7 +216,7 @@ export class NotificationstDetailEditComponent implements OnInit{
         {
             this.listIDContact=$(".js-data-example-ajaxContact").val();
             for(var i = 0;i<this.listIDContact.length;i++){
-                var item=$(".js-data-example-ajaxContact").select2('data')[i].text;
+                var item=this.listIDContact[i];
                 var pos=item.indexOf('.');
                 var name=item.slice(pos+1,item.length);
                 this.listNameContact.push(name);
@@ -233,7 +229,7 @@ export class NotificationstDetailEditComponent implements OnInit{
         {
             this.listIDTagDenied=$(".js-data-example-ajaxTagDenied").val();
             for(var i = 0;i<this.listIDTagDenied.length;i++){
-                this.listNameTagDenied.push($(".js-data-example-ajaxTagDenied").select2('data')[i].text)
+                this.listNameTagDenied.push(this.listIDTagDenied[i])
             }
         }
         if($(".js-data-example-ajaxContactDenied").val()==null){
@@ -243,7 +239,7 @@ export class NotificationstDetailEditComponent implements OnInit{
         {
             this.listIDContactDenied=$(".js-data-example-ajaxContactDenied").val();
             for(var i = 0;i<this.listIDContactDenied.length;i++){
-                var item=$(".js-data-example-ajaxContactDenied").select2('data')[i].text;
+                var item=this.listIDContactDenied[i];
                 var pos=item.indexOf('.');
                 var name=item.slice(pos+1,item.length);
                 this.listNameContactDenied.push(name);
@@ -282,7 +278,7 @@ export class NotificationstDetailEditComponent implements OnInit{
             this.date.setDate(this.date.getDate()+parseInt(this.thoiHannum.toString()));
         }
         this.ThoiHan=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString(); 
-        if(this.tieude == undefined || this.Noidung == undefined || (this.listIDTag==null && this.listIDContact==null) || this.date==undefined)
+        if(this.tieude == "" || this.Noidung == "" || (this.listIDTag.length==0 && this.listIDContact.length==0) || this.date==undefined)
         {
             console.log(false);
             return false;
@@ -311,6 +307,21 @@ export class NotificationstDetailEditComponent implements OnInit{
         this._notificationsService.Edit(this.notifications).then(result=>this._router.navigate(['confirm',this.notifications.id]));
             })
     }}
+        Check(){            
+        // this.listIDTag=$(".js-data-example-ajaxTag").val();
+        //     for(var i = 0;i<this.listIDTag.length;i++){
+        //         this.listNameTag.push(this.listIDTag[i])
+        //     }
+
+        // this.listIDContact=$(".js-data-example-ajaxContact").val();
+        //     for(var i = 0;i<this.listIDContact.length;i++){
+        //         var item=$(".js-data-example-ajaxContact").select2('data')[i].text;
+        //         var pos=item.indexOf('.');
+        //         var name=item.slice(pos+1,item.length);
+        //         this.listNameContact.push(name);
+        //     }
+        //     console.log("Check Contact: "+this.listNameContact)
+    }
     ngAfterViewInit()
     {		   
         // this._route.queryParams.forEach((params: Params) => {
@@ -319,14 +330,9 @@ export class NotificationstDetailEditComponent implements OnInit{
         // })
         // var count=this.countContact;        
 
-        var sample=[{id:"1",text:"Phong1"},{id:"2",text:"Phong2"}]
         this._route.queryParams.forEach((params: Params) => {
             this.getNotifications(this.id);
         })
-        console.log(sample);
-        $('.js-data-example-ajaxTag').select2({
-            data: [{id:"1",text:"Phong1"},{id:"2",text:"Phong2"}]
-        });
         jQuery(".js-data-example-ajaxTag").select2({
             placeholder:"Tag muốn gửi",
                 multiple: true,

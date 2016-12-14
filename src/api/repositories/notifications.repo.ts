@@ -142,13 +142,26 @@ export class NotificationsRepo extends RepoBase {
         return pResult.then(result => {
             let Nootifications: Notifications[] = result.rows.map(r => {
                 let notification = new Notifications();
-                notification.id=r.NotifiID;
+                notification.id = r.NotifiID;
+                notification.AppID = r.AppID;
                 notification.TieuDe = r.TieuDe;
-                notification.TrangThaiGoi = r.TrangThaiGoi;
+                notification.NoiDung = r.NoiDung;
                 notification.ThoiGianGui = r.ThoiGianGui;
+                notification.ThoiHanToiDa = r.ThoiHanToiDa;
+                notification.DoUuTien = r.DoUuTien;
+                notification.TrangThaiGoi = r.TrangThaiGoi;
                 notification.SoLuong = r.SoLuong;
-                notification.ThoiHanToiDa = r.ThoiHanToiDa;  
-                notification.Total=r.total;
+                notification.Send_TagName=r.Send_TagName;
+                notification.Send_UserName=r.Send_UserName;
+                notification.Send_TagDenieName=r.Send_TagDenieName;
+                notification.Send_UserDenieName=r.Send_UserDenieName;
+                notification.Send_TagID=r.Send_TagID;
+                notification.Send_UserID=r.Send_UserID;
+                notification.Send_TagDenieID=r.Send_TagDenieID;
+                notification.Send_UserDenieID=r.Send_UserDenieID;
+                notification.ThoiHanNum=r.ThoiHanNum;
+                notification.ThoiHanDV=r.ThoiHanDV;
+                notification.SendLater=r.SendLater;
                 return notification;
             });
             return Nootifications;

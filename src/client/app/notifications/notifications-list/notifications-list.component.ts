@@ -28,7 +28,7 @@ export class NotificationsListComponent {
         this._notificationsService.getAllSettingPT(0,null)
             .then((result) => {
                 this.notifications = result;
-                this.Total = this.notifications[0].Total;
+                // this.Total = this.notifications[0].Total;
                 return this.notifications;
             })
             .then((result) => {

@@ -100,16 +100,7 @@ export class NotifiSendComponent implements OnInit{
         this.sendlater=true;
     }
     Check(){
-        // console.log(this.thoiHannum);
-        this.listNameTag=[];
-        this.listIDTag=$(".js-data-example-ajaxContact").val();
-        for(var i = 0;i<this.listIDTag.length;i++){
-            var item=$(".js-data-example-ajaxContact").select2('data')[i].text;
-            var pos=item.indexOf('.');
-            var name=item.slice(pos+1,item.length);
-            this.listNameTag.push(name);
-        }
-        console.log(this.listNameTag);
+        console.log(this.thoiHannum);
     }
         // var pos=item.indexOf('.');
         // var num=item.slice(0,pos);
@@ -204,7 +195,7 @@ export class NotifiSendComponent implements OnInit{
             this.notifiID=this.notifi.NotifiID+1;
         }
         this.ThoiHan=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString(); 
-        if(this.tieude == undefined || this.Noidung == undefined || (this.listIDTag==null && this.listIDContact==null) || this.date==undefined)
+        if(this.tieude == undefined || this.Noidung == undefined || (this.listIDTag.length==0 && this.listIDContact.length==0) || this.date==undefined)
         {
             console.log(false);
             return false;
@@ -256,13 +247,17 @@ export class NotifiSendComponent implements OnInit{
         this.loopminuteTH=this.loop(5,60);
         this.loopdayTH=this.loop(5,28);
     }
+    changeTHDV(value){
+        this.thoiHanDV=value;
+        jQuery("#ThoiHannum").val(1).change();
+        this.thoiHannum=1;
+    }
     ngAfterViewInit()
     {		
         // this._route.queryParams.forEach((params: Params) => {
         //     let id = +params["id"];
         //     this.getCountContact(id).then(result=>{console.log(this.countContact)});
         // })
-        // var count=this.countContact;
         jQuery(".js-data-example-ajaxTag").select2({
             placeholder:"Tag muốn gửi",
                 multiple: true,
