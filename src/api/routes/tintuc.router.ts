@@ -22,6 +22,8 @@ export class TinTucRouter {
             .post(this.update);
         this.router.route('/tindaxoa/:id?')
             .get(this.lktindaxoa)
+        this.router.route('/tindaxem/:id?')
+            .get(this.DaXem)
         this.router.route('/xoa/:id?')
             .post(this.deleteABook);
         this.router.route('/boxoa')
@@ -34,9 +36,7 @@ export class TinTucRouter {
 
         this.router.route('/tinquantam/:id/:idtintuc?') /**api cua tin quan tam */
             .get(this.getallquantam)
-        // this.router.route('/tinchuadoc/:id?')
-        //     .get(this.chuadoc);
-   
+
         return this.router;
     }
     private lktindaxoa = (req: Request, res: Response) => {
@@ -53,11 +53,26 @@ export class TinTucRouter {
                 res.status(500).send(error.message)
             })
     }
+    private DaXem = (req: Request, res: Response) => {
+
+        let limit = req.query.limit ? req.query.limit : "all";
+        let offset = req.query.offset ? req.query.offset : 0;
+
+        this.tintucRepo.TinDaXem(req.params.id, limit, offset)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            })
+    }
+
     private boxoa = (req: Request, res: Response) => {
         // let option = new TinTuc();
         // option = req.body;
 
-        this.tintucRepo.boxoa(req.body.id,req.body.IDUser)
+        this.tintucRepo.boxoa(req.body.id, req.body.IDUser)
             .then((result) => {
                 res.status(200).json(result);
             })
@@ -91,19 +106,7 @@ export class TinTucRouter {
                 res.status(500).send(error.message)
             })
     }
-    // private chuadoc = (req: Request, res: Response) => {
-    //     // let limit = req.query.limit ? req.query.limit : "all";
-    //     // let offset = req.query.offset ? req.query.offset: 0;
-
-    //     this.tintucRepo.chuadoc(null)
-    //         .then(result => {
-    //             res.status(200).json(result)
-    //         })
-    //         .catch(error => {
-    //             console.error(error.message);
-    //             res.status(500).send(error.message)
-    //         })
-    // }
+   
     private xoatin = (req: Request, res: Response) => {
         // let option = new TinTuc();
         // option = req.body;

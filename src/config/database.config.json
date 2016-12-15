@@ -1,6 +1,6 @@
 {
     "development": {
-        "database": "postgres",
+        "database": "News",
         "username": "postgres",
         "password": "123",
         "config": {
@@ -10,7 +10,7 @@
                 "schema": "public"
             }
         },
-        "host": "localhost",
+        "host": "118.69.219.50",
         "port": 5432,
         "ssl": false,
         "pool":{

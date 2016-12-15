@@ -12,11 +12,12 @@ export class TinTucRepo extends RepoBase {
         console.log("id " + option);
         let queryText =
             `SELECT c."IDTinTuc",c."TieuDe",c."MoTa",c."ThoiGianDangTin",c."URLNews",c."URLThumbImage",
-	                ${option} = ANY (c."ArrayDaXem"::bigint[]) IS NULL = FALSE AS ChuaXem 
+
+            ${option} = ANY (c."ArrayDaXem"::bigint[]) IS NULL = FALSE AS ChuaXem 
         FROM public."User_DanhMucSite" AS a
         INNER JOIN public."DanhMucSite" AS b ON a."IDDanhMucSite" =b."ParentID"
         INNER JOIN public."TinTuc" c ON c."IDDanhMucSite"=b."IDDanhMucSite"
-        WHERE ${option} = Any ("ArrayDaXoa"::bigint[]) is null 
+        WHERE ${option} = Any ("ArrayDaXoa"::bigint[]) is null
                 AND "IDUser"=${option} 
                 AND ${option} = Any ("ArrayDaXem"::bigint[]) is not true
         ORDER BY "ThoiGianDangTin" 
@@ -117,9 +118,42 @@ export class TinTucRepo extends RepoBase {
                 return null;
             });
     }
+
+    public TinDaXem(option, limit, offset): Promise<TinTuc[]> {
+        // 2 = Any ("ArrayDaXoa"::bigint[]) so sanh trong mảng có IDUser là 2 hay ko, có trả về true ko thì false
+        let queryText = `SELECT "IDTinTuc","TieuDe","MoTa","ThoiGianDangTin","URLNews","URLThumbImage", ${option} = Any ("ArrayDaXem"::bigint[])
+        FROM public."TinTuc"
+        WHERE "ArrayDaXem" is not null and  ${option} = Any ("ArrayDaXem"::bigint[]) is true
+        ORDER BY "ThoiGianDangTin" DESC LIMIT ${limit} OFFSET ${offset}`;
+
+        console.info('Excute: ' + queryText);
+        let pResult;
+        pResult = this._pgPool.query(queryText)
+        return pResult.then(result => {
+            let TinTucs: TinTuc[] = result.rows.map(r => {
+                let tintuc = new TinTuc();
+                tintuc.IDTinTuc = r.IDTinTuc;
+                tintuc.IDDanhMucSite = r.IDDanhMucSite;
+                tintuc.TieuDe = r.TieuDe;
+                tintuc.MoTa = r.MoTa;
+                tintuc.NoiDung = r.NoiDung;
+                tintuc.ThoiGianDangTin = r.ThoiGianDangTin;
+                tintuc.URLNews = r.URLNews;
+                tintuc.URLThumbImage = r.URLThumbImage;
+                tintuc.URLImage = r.URLImage;
+                return tintuc;
+            });
+            return TinTucs;
+        })
+            .catch(err => {
+                console.error(err.message);
+                return null;
+            });
+    }
+
     public boxoa(id, IDUser): Promise<TinTuc> {
-        console.log('id: ' + id);
-        console.log('id user: ' + IDUser);
+        console.log('id tin bo xoa: ' + id);
+        console.log('id user bo xoa: ' + IDUser);
         let queryText = `UPDATE public."TinTuc"
         Set "ArrayDaXoa" = array_remove("ArrayDaXoa", ${IDUser}::bigint)
         WHERE "IDTinTuc"= ${id}`;
@@ -202,17 +236,17 @@ export class TinTucRepo extends RepoBase {
 
     public quantam(option, limit, offset): Promise<TinTuc[]> {
         let queryText =
-        (!option.idtintuc) ?
-          `SELECT "IDTinTuc","TieuDe","MoTa","ThoiGianDangTin","URLNews","URLThumbImage",
+            (!option.idtintuc) ?
+                `SELECT "IDTinTuc","TieuDe","MoTa","ThoiGianDangTin","URLNews","URLThumbImage",
         ${option.id} = Any ("ArrayQuanTam"::bigint[])
         FROM public."TinTuc"
         WHERE "ArrayQuanTam" is not null 
         AND ${option.id} = Any ("ArrayQuanTam"::bigint[]) is true
         ORDER BY "ThoiGianDangTin" LIMIT ${limit} OFFSET ${offset}`
 
-            :
+                :
 
-        `SELECT "IDTinTuc"
+                `SELECT "IDTinTuc"
         FROM public."TinTuc" 
         WHERE "ArrayQuanTam" is not null AND "IDTinTuc" = ${option.idtintuc} 
         AND ${option.id} = Any ("ArrayQuanTam"::bigint[]) is true
