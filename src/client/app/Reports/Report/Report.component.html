@@ -1,3 +1,11 @@
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li><a href="index.htm">Home</a></li>
+        <li class='active'><a [routerLink]="['Reports']">Reports</a></li>
+    </ol>
+    
+</div><br><br>
+
 <sk-circle [isRunning]="isRunning" ></sk-circle>
 <div *ngIf='isRunning == false'>
   <!--<template ngFor #item [ngForOf]="Reports" #i="index" >-->
@@ -18,8 +26,9 @@
 
   <div style="display: block;width:300px;height:300px">
     <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)"
-      (chartClick)="chartClicked($event)"></canvas>
-    <h2 *ngFor="let item of c">{{item}}</h2>
-    <h2>{{testto}} Tổng thiết bị</h2>
+      (chartClick)="chartClicked($event)"></canvas> 
   </div>
+  
 </div>
+<h2 *ngFor="let item of c">{{item}}</h2>
+    <h2>{{testto}} Tổng thiết bị</h2>

@@ -9,7 +9,7 @@ export class NotificationsRepo extends RepoBase {
     }
 
     public getList(option): Promise<Notifications[]> {
-        let queryText = 'SELECT * FROM test."n_Notifications" ORDER BY "NotifiID"ASC  ';
+        let queryText = 'SELECT * FROM public."n_Notifications" ORDER BY "NotifiID"ASC  ';
 
         console.info('Excute: ' + queryText);
         let pResult;
@@ -71,7 +71,7 @@ export class NotificationsRepo extends RepoBase {
             });
     }
     public getAllSendUser():Promise<SentContact[]>{
-        let queryText = 'SELECT * FROM test."n_Contacts_Notifications" ORDER BY "ContactID" ASC LIMIT 10';
+        let queryText = 'SELECT * FROM public."n_Contacts_Notifications" ORDER BY "ContactID" ASC LIMIT 10';
 
         console.info('Excute: ' + queryText);
         let pResult;
@@ -101,7 +101,7 @@ export class NotificationsRepo extends RepoBase {
     public Edit(option): Promise<Notifications> {
         // let queryText = 'UPDATE test."n_Notifications" SET "NotifiID" = $1, "AppID" = $2 , "TieuDe" =$3, "NoiDung" = $4,"ThoiGianGui" = $5,"ThoiHanToiDa" = $6,"DoUuTien" = $7,"TrangThaiGoi" = $8,"SoLuong" = $9';
         console.log(JSON.stringify(option));
-        let queryText = 'UPDATE test."n_Notifications" SET "AppID"=$1,"TieuDe" =$2, "NoiDung" = $3,"DoUuTien"=$4,"ThoiHanToiDa"=$5,"ThoiGianGui"=$6,"Send_TagID"=$7,"Send_TagName"=$8,"Send_UserName"=$9,"Send_UserID"=$10,"Send_TagDenieName"=$11,"Send_TagDenieID"=$12,"Send_UserDenieName"=$13,"Send_UserDenieID"=$14,"SoLuong"=$15 WHERE "NotifiID"=$16';
+        let queryText = 'UPDATE public."n_Notifications" SET "AppID"=$1,"TieuDe" =$2, "NoiDung" = $3,"DoUuTien"=$4,"ThoiHanToiDa"=$5,"ThoiGianGui"=$6,"Send_TagID"=$7,"Send_TagName"=$8,"Send_UserName"=$9,"Send_UserID"=$10,"Send_TagDenieName"=$11,"Send_TagDenieID"=$12,"Send_UserDenieName"=$13,"Send_UserDenieID"=$14,"SoLuong"=$15 WHERE "NotifiID"=$16';
 
         console.info('Excute: ' + queryText);
 

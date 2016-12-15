@@ -3,17 +3,26 @@
 
 <head>
 
-	<title>Angular QuickStart</title>
+	<title>Admin</title>
 	<base href=".">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="/css/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-	<link href="/css/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-	<link href="/css/bootstrap/dist/css/select2.min.css" rel="stylesheet">
-	
-	<link href="/css/shop-homepage.css" rel="stylesheet">
-	<link href="/css/font-awesome/css/font-awesome.css" rel="stylesheet">
-
+	<!--<link href="/css/bootstrap/dist/css/bootstrap.css" rel="stylesheet">-->
+	<link href="/assets/bootstrap/dist/css/select2.css" rel="stylesheet">
+	<!--<link href="/css/shop-homepage.css" rel="stylesheet">
+	<link href="/css/font-awesome/css/font-awesome.css" rel="stylesheet">-->
+	<!-- Them layout admin -->
+	<!--<link href="/css/bootstrap/dist/css/ie8.css" rel="stylesheet">-->
+	<link href="/assets/bootstrap/dist/css/styles.css?=121" rel="stylesheet">
+	<!--<link href="/css/bootstrap/dist/css/styles.min.css" rel="stylesheet">-->
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600' rel='stylesheet'>
+	<link href='/css/bootstrap/dist/css/demo/variations/default.css' rel='stylesheet' media='all' id='styleswitcher'>
+	<link href='/css/bootstrap/dist/css/demo/variations/default.css' rel='stylesheet' media='all' id='headerswitcher'>
+	<link rel='stylesheet' href='/css/bootstrap/dist/css/plugins/form-daterangepicker/daterangepicker-bs3.css' />
+	<link rel='stylesheet' href='/css/bootstrap/dist/css/plugins/fullcalendar/fullcalendar.css' />
+	<link rel='stylesheet' href='/css/bootstrap/dist/css/plugins/form-markdown/css/bootstrap-markdown.min.css' />
+	<link rel='stylesheet' href='/css/bootstrap/dist/css/plugins/codeprettifier/prettify.css' />
+	<link rel='stylesheet' href='/css/bootstrap/dist/css/plugins/form-toggle/toggles.css' />
 	<!--<link rel="stylesheet" href="styles.css">-->
 	<!-- 1. Load libraries -->
 	<!-- Polyfill(s) for older browsers -->
@@ -22,22 +31,42 @@
 	<script src="/scripts/Reflect.js"></script>
 	<script src="/scripts/system.src.js"></script>
 	<!-- Polyfill(s) for older browsers -->
-
 	<script src="/scripts/jquery/dist/jquery.js"></script>
 	<script src="/scripts/jquery/dist/jquery-ui.min.js"></script>
 	<script src="/scripts/jquery/dist/jquery-1.10.1.min.js"></script>
 	<script src="/scripts/jquery/dist/select2.min.js"></script>
 	<script src="/scripts/jquery/dist/socket.io.js"></script>
 	<script src="/scripts/bootstrap/dist/js/bootstrap.js"></script>
-	 
-	 <!--chartjs -->
+	<!--chartjs -->
 	<script src="/scripts/chart.js/dist/Chart.js"></script>
-
 	<!-- 2. Configure SystemJS -->
 	<script src="/scripts/systemjs.config.js"></script>
+
 	<script>
       System.import('app').catch(function(err){ console.error(err); });
     </script>
+	<!-- them js cho layout -->
+	<script type='text/javascript' src='/scripts/jquery/js/jquery-1.10.2.min.js'></script>
+	<script type='text/javascript' src='/scripts/jquery/js/jqueryui-1.10.3.min.js'></script>
+	<script type='text/javascript' src='/scripts/jquery/js/bootstrap.min.js'></script>
+	<script type='text/javascript' src='/scripts/jquery/js/enquire.js'></script>
+	<script type='text/javascript' src='/scripts/jquery/js/jquery.cookie.js'></script>
+	<script type='text/javascript' src='/scripts/jquery/js/jquery.nicescroll.min.js'></script>
+	<script type='text/javascript' src='/scripts/jquery/plugins/codeprettifier/prettify.js'></script>
+	<script type='text/javascript' src='/scripts/jquery/plugins/easypiechart/jquery.easypiechart.min.js'></script>
+	<script type='text/javascript' src='/scripts/jquery/plugins/sparklines/jquery.sparklines.min.js'></script>
+	<script type='text/javascript' src='/scripts/jquery/plugins/form-toggle/toggle.min.js'></script>
+	<script type='text/javascript' src='/scripts/jquery/plugins/fullcalendar/fullcalendar.min.js'></script>
+	<script type='text/javascript' src='/scripts/jquery/plugins/form-daterangepicker/daterangepicker.min.js'></script>
+	<script type='text/javascript' src='/scripts/jquery/plugins/form-daterangepicker/moment.min.js'></script>
+	<script type='text/javascript' src='/scripts/jquery/plugins/charts-flot/jquery.flot.min.js'></script>
+	<script type='text/javascript' src='/scripts/jquery/plugins/charts-flot/jquery.flot.resize.min.js'></script>
+	<script type='text/javascript' src='/scripts/jquery/plugins/charts-flot/jquery.flot.orderBars.min.js'></script>
+	<script type='text/javascript' src='/scripts/jquery/plugins/pulsate/jQuery.pulsate.min.js'></script>
+	<script type='text/javascript' src='/scripts/jquery/demo/demo-index.js'></script>
+	<script type='text/javascript' src='/scripts/jquery/js/placeholdr.js'></script>
+	<script type='text/javascript' src='/scripts/jquery/js/application.js'></script>
+	<script type='text/javascript' src='/scripts/jquery/demo/demo.js'></script>
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>

@@ -5,3 +5,22 @@ li {
 div.panel-heading {
    font-size: x-large; 
 }
+/*.breadcrumbs {
+position: relative;
+}
+
+.breadcrumbs .breadcrumb {
+background:transparent;
+margin-bottom: 75px;
+padding-left: 0;
+}
+
+.breadcrumbs .breadcrumb li a {
+background:#FE980F;
+color: #FFFFFF;
+padding: 3px 7px;
+}
+
+.breadcrumbs .breadcrumb > li + li:before {
+content: " ";
+}*/

@@ -12,9 +12,14 @@ var ContactRepo = (function (_super) {
         _super.call(this);
     }
     ContactRepo.prototype.getList = function (option) {
-        var queryText = 'select * from test."Contacts" ORDER BY "ContactID" ASC';
+        var queryText = 'select * from test."Contacts" where lower("TaiKhoan") like lower($1) ORDER BY "ContactID" ASC LIMIT 10 OFFSET $2';
         var pResult;
-        pResult = this._pgPool.query(queryText);
+        if (option.page == undefined) {
+            pResult = this._pgPool.query(queryText, ['%' + option.id + '%', 0]);
+        }
+        else {
+            pResult = this._pgPool.query(queryText, ['%' + option.id + '%', option.page * 10]);
+        }
         return pResult.then(function (result) {
             var Contacts = result.rows.map(function (r) {
                 var contact = new Contact_model_1.Contact();
@@ -31,6 +36,20 @@ var ContactRepo = (function (_super) {
                 return contact;
             });
             return Contacts;
+        })
+            .catch(function (err) {
+            console.error(err.message);
+            return null;
+        });
+    };
+    ContactRepo.prototype.getCountContact = function (option) {
+        var queryText = 'select count(*) from test."Contacts" where lower("TaiKhoan") like lower($1)';
+        console.info('Excute: ' + queryText);
+        return this._pgPool.query(queryText, [option.id])
+            .then(function (result) {
+            var count;
+            count = result.rows[0].count;
+            return count;
         })
             .catch(function (err) {
             console.error(err.message);

@@ -70,7 +70,7 @@ var NotificationsRepo = (function (_super) {
         });
     };
     NotificationsRepo.prototype.getAllSendUser = function () {
-        var queryText = 'SELECT * FROM test."n_Contacts_Notifications" ORDER BY "ContactID" ASC';
+        var queryText = 'SELECT * FROM test."n_Contacts_Notifications" ORDER BY "ContactID" ASC LIMIT 10';
         console.info('Excute: ' + queryText);
         var pResult;
         pResult = this._pgPool.query(queryText);

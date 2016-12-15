@@ -12,7 +12,7 @@ var SettingRepo = (function (_super) {
         _super.call(this);
     }
     SettingRepo.prototype.getList = function (option) {
-        var queryText = 'select * from "n_App" ORDER BY "AppID"ASC ';
+        var queryText = 'select * from test."n_App" ORDER BY "AppID" ASC ';
         console.info('Excute: ' + queryText);
         var pResult = this._pgPool.query(queryText);
         return pResult.then(function (result) {
@@ -33,7 +33,7 @@ var SettingRepo = (function (_super) {
         });
     };
     SettingRepo.prototype.getListPT = function (option) {
-        var queryText = 'select * from "n_App" ORDER BY "AppID"ASC limit 15 offset $1';
+        var queryText = 'select * from test."n_App" ORDER BY "AppID"ASC limit 15 offset $1';
         console.info('Excute: ' + queryText + '' + option);
         var pResult = this._pgPool.query(queryText, [option]);
         return pResult.then(function (result) {
@@ -53,8 +53,44 @@ var SettingRepo = (function (_super) {
             return null;
         });
     };
-    SettingRepo.prototype.getcount = function (option) {
-        var queryText = 'SELECT count(*) as abc FROM "n_App"';
+    SettingRepo.prototype.getAppName = function (option) {
+        var queryText = 'select * from test."n_App" where "AppName" = $1';
+        console.info('Excute: ' + queryText + '' + option);
+        return this._pgPool.query(queryText, [option])
+            .then(function (result) {
+            var set = new setting_model_1.Setting();
+            set.AppID = result.rows[0].AppID;
+            set.APIKey = result.rows[0].APIKey;
+            set.AppName = result.rows[0].AppName;
+            set.NgayTao = new Date(result.rows[0].NgayTao).toLocaleDateString().replace(/T.*/, '').split('-').reverse().join('/');
+            set.IsActive = result.rows[0].IsActive;
+            return set;
+        })
+            .catch(function (err) {
+            console.error(err.message);
+            return null;
+        });
+    };
+    SettingRepo.prototype.getAPI = function (option) {
+        var queryText = 'select * from test."n_App" where "APIKey" = $1';
+        console.info('Excute: ' + queryText + '' + option);
+        return this._pgPool.query(queryText, [option])
+            .then(function (result) {
+            var set = new setting_model_1.Setting();
+            set.AppID = result.rows[0].AppID;
+            set.APIKey = result.rows[0].APIKey;
+            set.AppName = result.rows[0].AppName;
+            set.NgayTao = new Date(result.rows[0].NgayTao).toLocaleDateString().replace(/T.*/, '').split('-').reverse().join('/');
+            set.IsActive = result.rows[0].IsActive;
+            return set;
+        })
+            .catch(function (err) {
+            console.error(err.message);
+            return null;
+        });
+    };
+    SettingRepo.prototype.getcount = function () {
+        var queryText = 'SELECT count(*) as abc FROM test."n_App"';
         console.info('Excute: ' + queryText);
         return this._pgPool.query(queryText)
             .then(function (result) {
@@ -62,8 +98,17 @@ var SettingRepo = (function (_super) {
             return result.rows[0].abc;
         });
     };
+    SettingRepo.prototype.getAppID = function () {
+        var queryText = 'SELECT "AppID" as abc FROM test."n_App" order by "AppID" desc limit 1';
+        console.info('Excute: ' + queryText);
+        return this._pgPool.query(queryText)
+            .then(function (result) {
+            console.log(result.rows[0].abc + 1);
+            return result.rows[0].abc + 1;
+        });
+    };
     SettingRepo.prototype.Create = function (option) {
-        var queryText = 'INSERT INTO "n_App" values($1,$2,$3,$4,$5)';
+        var queryText = 'INSERT INTO test."n_App" values($1,$2,$3,$4,$5)';
         console.log('Excute: ' + option.isactive);
         return this._pgPool.query(queryText, [
             option.AppID,
@@ -77,7 +122,7 @@ var SettingRepo = (function (_super) {
         });
     };
     SettingRepo.prototype.Edit = function (option) {
-        var queryText = 'UPDATE "n_App" SET "APIKey" = $1, "AppName" = $2 , "NgayTao" =$3 , "IsActive" = $4 where "AppID" = $5';
+        var queryText = 'UPDATE test."n_App" SET "APIKey" = $1, "AppName" = $2 , "NgayTao" =$3 , "IsActive" = $4 where "AppID" = $5';
         console.info('Excute: ' + queryText);
         return this._pgPool.query(queryText, [
             option.APIKey,
@@ -91,7 +136,7 @@ var SettingRepo = (function (_super) {
         });
     };
     SettingRepo.prototype.Delete = function (option) {
-        var queryText = 'DELETE FROM "n_App" where "AppID" = $1';
+        var queryText = 'DELETE FROM test."n_App" where "AppID" = $1';
         console.info('Excute: ' + queryText);
         return this._pgPool.query(queryText, [option.AppID])
             .then(function (result) {

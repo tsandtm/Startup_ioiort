@@ -43,22 +43,18 @@ var NotificationstDetailEditComponent = (function () {
         };
         //Tag
         this.ACTag = [];
-        this.ACTagItem = [];
         this.listIDTag = [];
         this.listNameTag = [];
         //Contact    
         this.ACContact = [];
-        this.ACContactItem = [];
         this.listIDContact = [];
         this.listNameContact = [];
         //TagDenied
         this.ACTagDenied = [];
-        this.ACTagDeniedItem = [];
         this.listIDTagDenied = [];
         this.listNameTagDenied = [];
         //ContactDenied
         this.ACContactDenied = [];
-        this.ACContactDeniedItem = [];
         this.listIDContactDenied = [];
         this.listNameContactDenied = [];
         //----//
@@ -73,71 +69,6 @@ var NotificationstDetailEditComponent = (function () {
         this.minute = 0;
         this.pageTitle = 'Notification';
     }
-    NotificationstDetailEditComponent.prototype.TagAdded = function (item) {
-        var pos = item.indexOf('.');
-        var num = item.slice(0, pos);
-        var name = item.slice(pos + 1, item.length);
-        this.listIDTag.push(parseInt(num));
-        this.listNameTag.push(name);
-    };
-    NotificationstDetailEditComponent.prototype.TagRemoved = function (item) {
-        var pos = item.indexOf('.');
-        var num = item.slice(0, pos);
-        var name = item.slice(pos + 1, item.length);
-        this.delPos(this.listIDTag, parseInt(num));
-        this.delPosstring(this.listNameTag, name);
-        console.log(this.ACTag);
-    };
-    NotificationstDetailEditComponent.prototype.ContactAdded = function (item) {
-        var pos = item.indexOf('.');
-        var num = item.slice(0, pos);
-        var name = item.slice(pos + 1, item.length);
-        this.listIDContact.push(parseInt(num));
-        this.listNameContact.push(name);
-        console.log(this.ACContact);
-    };
-    NotificationstDetailEditComponent.prototype.ContactRemoved = function (item) {
-        var pos = item.indexOf('.');
-        var num = item.slice(0, pos);
-        var name = item.slice(pos + 1, item.length);
-        this.delPos(this.listIDContact, parseInt(num));
-        this.delPosstring(this.listNameContact, name);
-        console.log(this.ACContact);
-    };
-    NotificationstDetailEditComponent.prototype.TagDeniedAdded = function (item) {
-        var pos = item.indexOf('.');
-        var num = item.slice(0, pos);
-        var name = item.slice(pos + 1, item.length);
-        this.listIDTagDenied.push(parseInt(num));
-        this.listNameTagDenied.push(name);
-        console.log(this.listIDTagDenied);
-        console.log(this.listNameTagDenied);
-    };
-    NotificationstDetailEditComponent.prototype.TagDeniedRemoved = function (item) {
-        var pos = item.indexOf('.');
-        var num = item.slice(0, pos);
-        var name = item.slice(pos + 1, item.length);
-        this.delPos(this.listIDTagDenied, parseInt(num));
-        this.delPosstring(this.listNameTagDenied, name);
-        console.log(this.listIDTagDenied);
-        console.log(this.listNameTagDenied);
-    };
-    NotificationstDetailEditComponent.prototype.ContactDeniedAdded = function (item) {
-        var pos = item.indexOf('.');
-        var num = item.slice(0, pos);
-        var name = item.slice(pos + 1, item.length);
-        this.listIDContactDenied.push(parseInt(num));
-        this.listNameContactDenied.push(name);
-        console.log(this.ACContactDenied);
-    };
-    NotificationstDetailEditComponent.prototype.ContactDeniedRemoved = function (item) {
-        var pos = item.indexOf('.');
-        var num = item.slice(0, pos);
-        var name = item.slice(pos + 1, item.length);
-        this.delPos(this.listIDContactDenied, parseInt(num));
-        this.delPosstring(this.listNameContactDenied, name);
-        console.log(this.ACContactDenied);
-    };
     // public TagDeniedAdded(item:string) {
     //     var pos=item.indexOf('.');
     //     var num=item.slice(0,pos);
@@ -186,25 +117,6 @@ var NotificationstDetailEditComponent = (function () {
         this.notifiservice.getLastNotifi()
             .then(function (notifi) { return _this.notifi = notifi; });
     };
-    NotificationstDetailEditComponent.prototype.getTag = function () {
-        var _this = this;
-        this.tagservice.getAllTag().then(function (tag) {
-            _this.Tag = tag;
-            _this.Tag.forEach(function (element) {
-                _this.ACTagItem.push(element.TagID + '.' + element.TagNameDisplay);
-            });
-        });
-    };
-    NotificationstDetailEditComponent.prototype.getContact = function () {
-        var _this = this;
-        this.contactservice.getAllContact().then(function (contact) {
-            _this.Contact = contact;
-            _this.Contact.forEach(function (element) {
-                _this.ACContactItem.push(element.ContactID + '.' + element.TaiKhoan);
-                console.log(element.ContactID);
-            });
-        });
-    };
     NotificationstDetailEditComponent.prototype.sendnowclick = function () {
         this.sendnow = true;
         this.sendlater = false;
@@ -221,8 +133,6 @@ var NotificationstDetailEditComponent = (function () {
         var _this = this;
         this.loadGetAll();
         this.getNotifi();
-        this.getTag();
-        this.getContact();
         this.loophour = this.loop(1, 24);
         this.loopminute = this.loop(0, 60);
         this.loophourTH = this.loop(5, 24);
@@ -306,24 +216,6 @@ var NotificationstDetailEditComponent = (function () {
             this.ThoiHan = this.date.toLocaleDateString('en-US') + ' ' + this.date.toLocaleTimeString();
         }
         if (this.listIDTag.length == 0 && this.listIDContact.length == 0) {
-            this.getslsenddenied({ contactdenied: this.listIDContactDenied, tagdenied: this.listIDTagDenied }).then(function (result) {
-                _this.notifications.AppID = _this.AppID;
-                _this.notifications.TieuDe = _this.tieude;
-                _this.notifications.NoiDung = _this.Noidung;
-                _this.notifications.DoUuTien = _this.doUuTien;
-                _this.notifications.ThoiHanToiDa = _this.ThoiHan;
-                _this.notifications.ThoiGianGui = _this.Thoigiangui;
-                _this.notifications.SoLuong = result;
-                _this.notifications.Send_TagName = _this.listNameTag;
-                _this.notifications.Send_TagID = _this.listIDTag;
-                _this.notifications.Send_UserName = _this.listNameContact;
-                _this.notifications.Send_UserID = _this.listIDContact;
-                _this.notifications.Send_TagDenieName = _this.listNameTagDenied;
-                _this.notifications.Send_TagDenieID = _this.listIDTagDenied;
-                _this.notifications.Send_UserDenieName = _this.listNameContactDenied;
-                _this.notifications.Send_UserDenieID = _this.listIDContactDenied;
-                _this._notificationsService.Edit(_this.notifications).then(function (result) { return _this._router.navigate(['confirm', _this.notifications.id]); });
-            });
         }
         else {
             this.getslsend({ contact: this.listIDContact, tag: this.listIDTag, contactdenied: this.listIDContactDenied, tagdenied: this.listIDTagDenied }).then(function (result) {
@@ -345,6 +237,149 @@ var NotificationstDetailEditComponent = (function () {
                 _this._notificationsService.Edit(_this.notifications).then(function (result) { return _this._router.navigate(['confirm', _this.notifications.id]); });
             });
         }
+    };
+    NotificationstDetailEditComponent.prototype.ngAfterViewInit = function () {
+        // this._route.queryParams.forEach((params: Params) => {
+        //     let id = +params["id"];
+        //     this.getCountContact(id).then(result=>{console.log(this.countContact)});
+        // })
+        // var count=this.countContact;
+        jQuery(".js-data-example-ajaxTag").select2({
+            placeholder: "Tag muốn gửi",
+            multiple: true,
+            allowClear: true,
+            tokenSeparators: [","],
+            ajax: {
+                url: "/api/Tag",
+                dataType: 'json',
+                delay: 500,
+                data: function (params) {
+                    return {
+                        id: params.term,
+                        page: params.page,
+                    };
+                },
+                processResults: function (data, params) {
+                    // parse the results into the format expected by Select2
+                    // since we are using custom formatting functions we do not need to
+                    // alter the remote JSON data, except to indicate that infinite
+                    // scrolling can be used
+                    var i = 1;
+                    params.page = params.page || 0;
+                    return {
+                        results: $.map(data, function (obj) {
+                            i += 10;
+                            return { id: obj.TagID, text: obj.TagNameDisplay };
+                        }),
+                        pagination: {
+                            more: (params.page * 10) < i
+                        }
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 1,
+            escapeMarkup: function (markup) { return markup; },
+        });
+        jQuery(".js-data-example-ajaxTagDenied").select2({
+            placeholder: "Tag không muốn gửi",
+            multiple: true,
+            allowClear: true,
+            tokenSeparators: [","],
+            ajax: {
+                url: "/api/Tag",
+                dataType: 'json',
+                delay: 500,
+                data: function (params) {
+                    return {
+                        id: params.term,
+                        page: params.page,
+                    };
+                },
+                processResults: function (data, params) {
+                    var i = 1;
+                    params.page = params.page || 0;
+                    return {
+                        results: $.map(data, function (obj) {
+                            i += 10;
+                            return { id: obj.TagID, text: obj.TagNameDisplay };
+                        }),
+                        pagination: {
+                            more: (params.page * 10) < i
+                        }
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 1,
+            escapeMarkup: function (markup) { return markup; },
+        });
+        jQuery(".js-data-example-ajaxContact").select2({
+            placeholder: "User muốn gửi",
+            multiple: true,
+            allowClear: true,
+            tokenSeparators: [","],
+            ajax: {
+                url: "/api/Contactnotifi",
+                dataType: 'json',
+                delay: 500,
+                data: function (params) {
+                    return {
+                        id: params.term,
+                        page: params.page,
+                    };
+                },
+                processResults: function (data, params) {
+                    var i = 1;
+                    params.page = params.page || 0;
+                    return {
+                        results: $.map(data, function (obj) {
+                            i += 10;
+                            return { id: obj.ContactID, text: obj.ContactID + '.' + obj.TaiKhoan };
+                        }),
+                        pagination: {
+                            more: (params.page * 10) < i
+                        }
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 1,
+            escapeMarkup: function (markup) { return markup; },
+        });
+        jQuery(".js-data-example-ajaxContactDenied").select2({
+            placeholder: "User không muốn gửi",
+            multiple: true,
+            allowClear: true,
+            tokenSeparators: [","],
+            ajax: {
+                url: "/api/Contactnotifi",
+                dataType: 'json',
+                delay: 500,
+                data: function (params) {
+                    return {
+                        id: params.term,
+                        page: params.page,
+                    };
+                },
+                processResults: function (data, params) {
+                    var i = 1;
+                    params.page = params.page || 0;
+                    return {
+                        results: $.map(data, function (obj) {
+                            i += 10;
+                            return { id: obj.ContactID, text: obj.ContactID + '.' + obj.TaiKhoan };
+                        }),
+                        pagination: {
+                            more: (params.page * 10) < i
+                        }
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 1,
+            escapeMarkup: function (markup) { return markup; },
+        });
     };
     __decorate([
         core_1.Input(), 

@@ -66,16 +66,6 @@ var NotifiRouter = (function () {
                 res.status(500).send(error.message);
             });
         };
-        this.getSLDenied = function (req, res) {
-            _this.notifiRepo.getSLDenied(req.body)
-                .then(function (result) {
-                res.status(200).json(result);
-            })
-                .catch(function (error) {
-                console.error(error.message);
-                res.status(500).send(error.message);
-            });
-        };
         this.getSLsend = function (req, res) {
             _this.notifiRepo.getslsend(req.body)
                 .then(function (result) {
@@ -86,28 +76,8 @@ var NotifiRouter = (function () {
                 res.status(500).send(error.message);
             });
         };
-        this.getSLsenddenied = function (req, res) {
-            _this.notifiRepo.getslsenddenied(req.body)
-                .then(function (result) {
-                res.status(200).json(result);
-            })
-                .catch(function (error) {
-                console.error(error.message);
-                res.status(500).send(error.message);
-            });
-        };
         this.getSentUser = function (req, res) {
-            _this.notifiRepo.getSentUser(req.body)
-                .then(function (result) {
-                res.status(200).json(result);
-            })
-                .catch(function (error) {
-                console.error(error.message);
-                res.status(500).send(error.message);
-            });
-        };
-        this.getSentUserDenied = function (req, res) {
-            _this.notifiRepo.getSentUserDenied(req.body)
+            _this.notifiRepo.getSentUser(req.params)
                 .then(function (result) {
                 res.status(200).json(result);
             })
@@ -130,14 +100,9 @@ var NotifiRouter = (function () {
         this.router.route("/sl")
             .get(this.getSL)
             .post(this.getSLsend);
-        this.router.route("/sldenied")
-            .get(this.getSLDenied)
-            .post(this.getSLsenddenied);
-        this.router.route("/sentuser")
+        this.router.route("/sentuser/:id?")
             .get(this.getSentUser)
             .post(this.Insert);
-        this.router.route("/sentuserdenied")
-            .get(this.getSentUserDenied);
         return this.router;
     };
     return NotifiRouter;

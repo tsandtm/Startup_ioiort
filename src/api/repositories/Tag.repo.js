@@ -11,10 +11,15 @@ var TagRepo = (function (_super) {
     function TagRepo() {
         _super.call(this);
     }
-    TagRepo.prototype.getList = function () {
-        var queryText = 'select * from test."n_Tag"';
+    TagRepo.prototype.getList = function (option) {
+        var queryText = 'select * from test."n_Tag" where lower("TagNameDisplay") like lower($1) ORDER BY "TagID" ASC LIMIT 10 OFFSET $2';
         var pResult;
-        pResult = this._pgPool.query(queryText);
+        if (option.page == undefined) {
+            pResult = this._pgPool.query(queryText, ['%' + option.id + '%', 0]);
+        }
+        else {
+            pResult = this._pgPool.query(queryText, ['%' + option.id + '%', option.page * 10]);
+        }
         return pResult.then(function (result) {
             var Tags = result.rows.map(function (r) {
                 var tag = new Tag_model_1.Tag();

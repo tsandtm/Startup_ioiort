@@ -59,8 +59,25 @@ var SettingService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
+    SettingService.prototype.getAppName = function (req) {
+        return this._http.get('/api/settingAppName?so=' + req)
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    SettingService.prototype.getAPI = function (req) {
+        return this._http.get('/api/settingAPI?so=' + req)
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    SettingService.prototype.getAppID = function () {
+        return this._http.get('/api/settingAppID')
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
     SettingService.prototype.getPager = function (totalItems, currentPage, pageSize) {
-        if (currentPage === void 0) { currentPage = 1; }
         if (pageSize === void 0) { pageSize = 15; }
         // calculate total pages
         var totalPages = Math.ceil(totalItems / pageSize);
@@ -90,14 +107,44 @@ var SettingService = (function () {
         var endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
         // create an array of pages to ng-repeat in the pager control
         var pages;
-        for (var n = 1; n < (totalPages + 1); n++) {
-            if (pages == undefined)
-                pages = [1];
-            else
-                pages.push(n);
-            console.log(n);
+        if (currentPage <= 3) {
+            if (totalPages < 5) {
+                for (var n = 1; n <= totalPages; n++) {
+                    if (pages == undefined)
+                        pages = [n];
+                    else
+                        pages.push(n);
+                }
+                ;
+            }
+            else {
+                for (var n = 1; n <= 5; n++) {
+                    if (pages == undefined)
+                        pages = [n];
+                    else
+                        pages.push(n);
+                }
+                ;
+            }
         }
-        ;
+        else if (currentPage >= (totalPages - 2)) {
+            for (var n = (totalPages - 4); n <= totalPages; n++) {
+                if (pages == undefined)
+                    pages = [n];
+                else
+                    pages.push(n);
+            }
+            ;
+        }
+        else {
+            for (var n = currentPage - 2; n < (currentPage + 3); n++) {
+                if (pages == undefined)
+                    pages = [n];
+                else
+                    pages.push(n);
+            }
+            ;
+        }
         // return object with all pager properties required by the view
         return {
             totalItems: totalItems,

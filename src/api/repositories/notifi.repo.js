@@ -144,27 +144,6 @@ var NotifiRepo = (function (_super) {
             return null;
         });
     };
-    NotifiRepo.prototype.getSLDenied = function (option) {
-        var queryText = 'SELECT "NotifiID",COUNT(*) FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserDenieID" OR A."Contact_TagID" && B."Send_TagDenieID") = false GROUP BY "NotifiID"';
-        console.info('Excute: ' + queryText);
-        var pResult;
-        if (option.NotifiID == undefined) {
-            pResult = this._pgPool.query(queryText);
-        }
-        return pResult.then(function (result) {
-            var slsends = result.rows.map(function (r) {
-                var slsend = new notifi_model_1.SLSend();
-                slsend.NotifiID = r.NotifiID;
-                slsend.count = r.count;
-                return slsend;
-            });
-            return slsends;
-        })
-            .catch(function (err) {
-            console.error(err.message);
-            return null;
-        });
-    };
     NotifiRepo.prototype.getslsend = function (option) {
         var queryText = 'SELECT COUNT(*) FROM test."Contacts" A WHERE (Array[A."ContactID"] && $1 OR A."Contact_TagID" && $2) AND (Array[A."ContactID"] && $3 OR A."Contact_TagID" && $4) = false';
         console.info('Excute: ' + queryText);
@@ -179,53 +158,11 @@ var NotifiRepo = (function (_super) {
             return null;
         });
     };
-    NotifiRepo.prototype.getslsenddenied = function (option) {
-        var queryText = 'SELECT COUNT(*) FROM test."Contacts" A WHERE (Array[A."ContactID"] && $1 OR A."Contact_TagID" && $2) = false';
-        console.info('Excute: ' + queryText);
-        return this._pgPool.query(queryText, [option.contactdenied, option.tagdenied])
-            .then(function (result) {
-            var slsend;
-            slsend = result.rows[0].count;
-            return slsend;
-        })
-            .catch(function (err) {
-            console.error(err.message);
-            return null;
-        });
-    };
     NotifiRepo.prototype.getSentUser = function (option) {
-        var queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook","Contact_TagName" FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserID" OR A."Contact_TagID" && B."Send_TagID") AND (Array[A."ContactID"] && B."Send_UserDenieID" OR A."Contact_TagID" && B."Send_TagDenieID") = false';
+        var queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook","Contact_TagName" FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserID" OR A."Contact_TagID" && B."Send_TagID") AND (Array[A."ContactID"] && B."Send_UserDenieID" OR A."Contact_TagID" && B."Send_TagDenieID") = false AND "NotifiID" = $1 ORDER BY "ContactID" ASC LIMIT 10 ';
         console.info('Excute: ' + queryText);
         var pResult;
-        if (option.NotifiID == undefined) {
-            pResult = this._pgPool.query(queryText);
-        }
-        return pResult.then(function (result) {
-            var sents = result.rows.map(function (r) {
-                var sent = new notifi_model_1.SentUser();
-                sent.NotifiID = r.NotifiID;
-                sent.ContactID = r.ContactID;
-                sent.TaiKhoan = r.TaiKhoan;
-                sent.Device = r.Device;
-                sent.Email = r.Email;
-                sent.FaceBook = r.FaceBook;
-                sent.ContactTagName = r.Contact_TagName;
-                return sent;
-            });
-            return sents;
-        })
-            .catch(function (err) {
-            console.error(err.message);
-            return null;
-        });
-    };
-    NotifiRepo.prototype.getSentUserDenied = function (option) {
-        var queryText = 'SELECT "NotifiID","ContactID","TaiKhoan","Device","Email","FaceBook","Contact_TagName" FROM test."Contacts" A,test."n_Notifications" B WHERE (Array[A."ContactID"] && B."Send_UserDenieID" OR A."Contact_TagID" && B."Send_TagDenieID") = false';
-        console.info('Excute: ' + queryText);
-        var pResult;
-        if (option.NotifiID == undefined) {
-            pResult = this._pgPool.query(queryText);
-        }
+        pResult = this._pgPool.query(queryText, [option.id]);
         return pResult.then(function (result) {
             var sents = result.rows.map(function (r) {
                 var sent = new notifi_model_1.SentUser();

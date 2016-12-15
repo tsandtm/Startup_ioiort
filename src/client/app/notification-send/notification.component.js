@@ -22,40 +22,17 @@ var NotifiSendComponent = (function () {
         this.contactservice = contactservice;
         this._router = _router;
         this._route = _route;
-        this.optionsTag = {
-            placeholder: "+ Tag",
-            secondaryPlaceholder: "Tag",
-        };
-        this.optionsContact = {
-            placeholder: "+ Contact",
-            secondaryPlaceholder: "Contact",
-        };
-        this.optionsTagDenied = {
-            placeholder: "+ Tag Denied",
-            secondaryPlaceholder: "Tag Denied",
-        };
-        this.optionsContactDenied = {
-            placeholder: "+ Contact Denied",
-            secondaryPlaceholder: "Contact Denied",
-        };
         //Tag
-        this.ACTag = [];
-        this.ACTagItem = [];
         this.listIDTag = [];
         this.listNameTag = [];
-        //Contact    
-        this.ACContact = [];
-        this.ACContactItem = [];
+        //Contact
+        this.countContact = 0;
         this.listIDContact = [];
         this.listNameContact = [];
         //TagDenied
-        this.ACTagDenied = [];
-        this.ACTagDeniedItem = [];
         this.listIDTagDenied = [];
         this.listNameTagDenied = [];
         //ContactDenied
-        this.ACContactDenied = [];
-        this.ACContactDeniedItem = [];
         this.listIDContactDenied = [];
         this.listNameContactDenied = [];
         //----//
@@ -70,84 +47,13 @@ var NotifiSendComponent = (function () {
         this.minute = 0;
         this.pageTitle = 'Notification';
     }
-    NotifiSendComponent.prototype.TagAdded = function (item) {
-        var pos = item.indexOf('.');
-        var num = item.slice(0, pos);
-        var name = item.slice(pos + 1, item.length);
-        this.listIDTag.push(parseInt(num));
-        this.listNameTag.push(name);
+    NotifiSendComponent.prototype.loop = function (min, max) {
+        var input = [];
+        for (var i = min; i < max; i++) {
+            input.push(i);
+        }
+        return input;
     };
-    NotifiSendComponent.prototype.TagRemoved = function (item) {
-        var pos = item.indexOf('.');
-        var num = item.slice(0, pos);
-        var name = item.slice(pos + 1, item.length);
-        this.delPos(this.listIDTag, parseInt(num));
-        this.delPosstring(this.listNameTag, name);
-    };
-    NotifiSendComponent.prototype.ContactAdded = function (item) {
-        var pos = item.indexOf('.');
-        var num = item.slice(0, pos);
-        var name = item.slice(pos + 1, item.length);
-        this.listIDContact.push(parseInt(num));
-        this.listNameContact.push(name);
-    };
-    NotifiSendComponent.prototype.ContactRemoved = function (item) {
-        var pos = item.indexOf('.');
-        var num = item.slice(0, pos);
-        var name = item.slice(pos + 1, item.length);
-        this.delPos(this.listIDContact, parseInt(num));
-        this.delPosstring(this.listNameContact, name);
-    };
-    NotifiSendComponent.prototype.TagDeniedAdded = function (item) {
-        var pos = item.indexOf('.');
-        var num = item.slice(0, pos);
-        var name = item.slice(pos + 1, item.length);
-        this.listIDTagDenied.push(parseInt(num));
-        this.listNameTagDenied.push(name);
-    };
-    NotifiSendComponent.prototype.TagDeniedRemoved = function (item) {
-        var pos = item.indexOf('.');
-        var num = item.slice(0, pos);
-        var name = item.slice(pos + 1, item.length);
-        this.delPos(this.listIDTagDenied, parseInt(num));
-        this.delPosstring(this.listNameTagDenied, name);
-    };
-    NotifiSendComponent.prototype.ContactDeniedAdded = function (item) {
-        var pos = item.indexOf('.');
-        var num = item.slice(0, pos);
-        var name = item.slice(pos + 1, item.length);
-        this.listIDContactDenied.push(parseInt(num));
-        this.listNameContactDenied.push(name);
-    };
-    NotifiSendComponent.prototype.ContactDeniedRemoved = function (item) {
-        var pos = item.indexOf('.');
-        var num = item.slice(0, pos);
-        var name = item.slice(pos + 1, item.length);
-        this.delPos(this.listIDContactDenied, parseInt(num));
-        this.delPosstring(this.listNameContactDenied, name);
-    };
-    // public TagDeniedAdded(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.listIDTag.push(parseInt(num));
-    // }
-    // public TagDeniedRemoved(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.delPos(this.listIDTag,parseInt(num));
-    // }
-    // public ContactDeniedAdded(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.listIDContact.push(parseInt(num));
-    //     console.log(this.listIDContact.toString());
-    // }
-    // public ContactDeniedRemoved(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.delPos(this.listIDContact,parseInt(num));
-    //     console.log(this.listIDContact.toString());
-    // }
     NotifiSendComponent.prototype.delPos = function (ar, key) {
         for (var i = 0; i <= ar.length; i++) {
             if (ar[i] == key) {
@@ -162,35 +68,10 @@ var NotifiSendComponent = (function () {
             }
         }
     };
-    NotifiSendComponent.prototype.loop = function (min, max) {
-        var input = [];
-        for (var i = min; i < max; i++) {
-            input.push(i);
-        }
-        return input;
-    };
     NotifiSendComponent.prototype.getNotifi = function () {
         var _this = this;
         this.notifiservice.getLastNotifi()
             .then(function (notifi) { return _this.notifi = notifi; });
-    };
-    NotifiSendComponent.prototype.getTag = function () {
-        var _this = this;
-        this.tagservice.getAllTag().then(function (tag) {
-            _this.Tag = tag;
-            _this.Tag.forEach(function (element) {
-                _this.ACTagItem.push(element.TagID + '.' + element.TagNameDisplay);
-            });
-        });
-    };
-    NotifiSendComponent.prototype.getContact = function () {
-        var _this = this;
-        this.contactservice.getAllContact().then(function (contact) {
-            _this.Contact = contact;
-            _this.Contact.forEach(function (element) {
-                _this.ACContactItem.push(element.ContactID + '.' + element.TaiKhoan);
-            });
-        });
     };
     NotifiSendComponent.prototype.sendnowclick = function () {
         this.sendnow = true;
@@ -200,8 +81,15 @@ var NotifiSendComponent = (function () {
         this.sendnow = false;
         this.sendlater = true;
     };
+    // var pos=item.indexOf('.');
+    // var num=item.slice(0,pos);
+    // var name=item.slice(pos+1,item.length);
     NotifiSendComponent.prototype.Create = function () {
         var _this = this;
+        this.listIDTag = $(".js-data-example-ajaxTag").val();
+        this.listIDContact = $(".js-data-example-ajaxContact").val();
+        this.listIDTagDenied = $(".js-data-example-ajaxTagDenied").val();
+        this.listIDContactDenied = $(".js-data-example-ajaxContactDenied").val();
         this.date = new Date(this.date);
         if (this.sendnow) {
             this.date = new Date();
@@ -236,70 +124,32 @@ var NotifiSendComponent = (function () {
         else {
             this.ThoiHan = this.date.toLocaleDateString('en-US') + ' ' + this.date.toLocaleTimeString();
         }
-        if (this.tieude == undefined || this.Noidung == undefined) {
+        if (this.tieude == undefined || this.Noidung == undefined || (this.listIDTag == null && this.listIDContact == null)) {
             console.log(false);
             return false;
         }
         else {
-            if (this.listIDTag.length == 0 && this.listIDContact.length == 0) {
-                this.getslsenddenied({ contactdenied: this.listIDContactDenied, tagdenied: this.listIDTagDenied }).then(function (result) {
-                    _this.notifi = { AppID: _this.AppID,
-                        NotifiID: _this.notifiID,
-                        TieuDe: _this.tieude,
-                        Noidung: _this.Noidung,
-                        DoUuTien: _this.doUuTien,
-                        Trangthai: _this.Trangthai,
-                        Soluong: result,
-                        Thoigiangui: _this.Thoigiangui,
-                        ThoiHan: _this.ThoiHan,
-                        SendTag: _this.listIDTag,
-                        SendTagName: _this.listNameTag,
-                        SendUser: _this.listIDContact,
-                        SendUserName: _this.listNameContact,
-                        DeniedTag: _this.listIDTagDenied,
-                        DeniedTagName: _this.listNameTagDenied,
-                        DeniedUser: _this.listIDContactDenied,
-                        DeniedUserName: _this.listNameContactDenied };
-                    _this.notifiservice.Create(_this.notifi).then(function (result) { return _this._router.navigate(['confirm', _this.notifi.NotifiID]); });
-                });
-            }
-            else {
-                this.getslsend({ contact: this.listIDContact, tag: this.listIDTag, contactdenied: this.listIDContactDenied, tagdenied: this.listIDTagDenied }).then(function (result) {
-                    _this.notifi = { AppID: _this.AppID,
-                        NotifiID: _this.notifiID,
-                        TieuDe: _this.tieude,
-                        Noidung: _this.Noidung,
-                        DoUuTien: _this.doUuTien,
-                        Trangthai: _this.Trangthai,
-                        Soluong: result,
-                        Thoigiangui: _this.Thoigiangui,
-                        ThoiHan: _this.ThoiHan,
-                        SendTag: _this.listIDTag,
-                        SendTagName: _this.listNameTag,
-                        SendUser: _this.listIDContact,
-                        SendUserName: _this.listNameContact,
-                        DeniedTag: _this.listIDTagDenied,
-                        DeniedTagName: _this.listNameTagDenied,
-                        DeniedUser: _this.listIDContactDenied,
-                        DeniedUserName: _this.listNameContactDenied };
-                    _this.notifiservice.Create(_this.notifi).then(function (result) { return _this._router.navigate(['confirm', _this.notifi.NotifiID]); });
-                });
-            }
+            this.getslsend({ contact: this.listIDContact, tag: this.listIDTag, contactdenied: this.listIDContactDenied, tagdenied: this.listIDTagDenied }).then(function (result) {
+                _this.notifi = { AppID: _this.AppID,
+                    NotifiID: _this.notifiID,
+                    TieuDe: _this.tieude,
+                    Noidung: _this.Noidung,
+                    DoUuTien: _this.doUuTien,
+                    Trangthai: _this.Trangthai,
+                    Soluong: result,
+                    Thoigiangui: _this.Thoigiangui,
+                    ThoiHan: _this.ThoiHan,
+                    SendTag: _this.listIDTag,
+                    SendTagName: _this.listNameTag,
+                    SendUser: _this.listIDContact,
+                    SendUserName: _this.listNameContact,
+                    DeniedTag: _this.listIDTagDenied,
+                    DeniedTagName: _this.listNameTagDenied,
+                    DeniedUser: _this.listIDContactDenied,
+                    DeniedUserName: _this.listNameContactDenied };
+                _this.notifiservice.Create(_this.notifi).then(function (result) { return _this._router.navigate(['confirm', _this.notifi.NotifiID]); });
+            });
         }
-        // this.notifi={AppID:this.AppID,
-        // NotifiID:this.notifiID,
-        // TieuDe:this.tieude,
-        // Noidung:this.Noidung,
-        // DoUuTien:this.doUuTien,
-        // Trangthai:this.Trangthai,
-        // Soluong:this.Soluong,
-        // Thoigiangui:this.Thoigiangui,
-        // ThoiHan:this.ThoiHan,
-        // SendTag:this.listIDTag,
-        // SendUser:this.listIDContact,
-        // DeniedTag:this.listIDTagDenied,
-        // DeniedUser:this.listIDContactDenied};
-        // this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
     };
     NotifiSendComponent.prototype.loadGetAll = function () {
         var _this = this;
@@ -309,15 +159,13 @@ var NotifiSendComponent = (function () {
         var _this = this;
         return this.notifiservice.getslsend(req).then(function (result) { return _this.Soluong = result; });
     };
-    NotifiSendComponent.prototype.getslsenddenied = function (req) {
+    NotifiSendComponent.prototype.getCountContact = function (id) {
         var _this = this;
-        return this.notifiservice.getsldenied(req).then(function (result) { return _this.Soluong = result; });
+        return this.contactservice.getCount(id).then(function (result) { return _this.countContact = result; });
     };
     NotifiSendComponent.prototype.ngOnInit = function () {
         this.loadGetAll();
         this.getNotifi();
-        //this.getTag();
-        //this.getContact();
         this.today = new Date();
         this.loophour = this.loop(1, 24);
         this.loopminute = this.loop(0, 60);
@@ -326,15 +174,24 @@ var NotifiSendComponent = (function () {
         this.loopdayTH = this.loop(5, 28);
     };
     NotifiSendComponent.prototype.ngAfterViewInit = function () {
-        jQuery(".js-data-example-ajax").select2({
+        // this._route.queryParams.forEach((params: Params) => {
+        //     let id = +params["id"];
+        //     this.getCountContact(id).then(result=>{console.log(this.countContact)});
+        // })
+        // var count=this.countContact;
+        jQuery(".js-data-example-ajaxTag").select2({
+            placeholder: "Tag muốn gửi",
+            multiple: true,
+            allowClear: true,
+            tokenSeparators: [","],
             ajax: {
                 url: "/api/Tag",
                 dataType: 'json',
                 delay: 500,
                 data: function (params) {
                     return {
-                        q: params.term,
-                        page: params.page
+                        id: params.term,
+                        page: params.page,
                     };
                 },
                 processResults: function (data, params) {
@@ -342,20 +199,121 @@ var NotifiSendComponent = (function () {
                     // since we are using custom formatting functions we do not need to
                     // alter the remote JSON data, except to indicate that infinite
                     // scrolling can be used
-                    params.page = params.page || 1;
+                    var i = 1;
+                    params.page = params.page || 0;
                     return {
                         results: $.map(data, function (obj) {
+                            i += 10;
                             return { id: obj.TagID, text: obj.TagNameDisplay };
                         }),
                         pagination: {
-                            more: (params.page * 30) < data.total_count
+                            more: (params.page * 10) < i
                         }
                     };
                 },
                 cache: true
             },
-            escapeMarkup: function (markup) { return markup; },
             minimumInputLength: 1,
+            escapeMarkup: function (markup) { return markup; },
+        });
+        jQuery(".js-data-example-ajaxTagDenied").select2({
+            placeholder: "Tag không muốn gửi",
+            multiple: true,
+            allowClear: true,
+            tokenSeparators: [","],
+            ajax: {
+                url: "/api/Tag",
+                dataType: 'json',
+                delay: 500,
+                data: function (params) {
+                    return {
+                        id: params.term,
+                        page: params.page,
+                    };
+                },
+                processResults: function (data, params) {
+                    var i = 1;
+                    params.page = params.page || 0;
+                    return {
+                        results: $.map(data, function (obj) {
+                            i += 10;
+                            return { id: obj.TagID, text: obj.TagNameDisplay };
+                        }),
+                        pagination: {
+                            more: (params.page * 10) < i
+                        }
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 1,
+            escapeMarkup: function (markup) { return markup; },
+        });
+        jQuery(".js-data-example-ajaxContact").select2({
+            placeholder: "User muốn gửi",
+            multiple: true,
+            allowClear: true,
+            tokenSeparators: [","],
+            ajax: {
+                url: "/api/Contactnotifi",
+                dataType: 'json',
+                delay: 500,
+                data: function (params) {
+                    return {
+                        id: params.term,
+                        page: params.page,
+                    };
+                },
+                processResults: function (data, params) {
+                    var i = 1;
+                    params.page = params.page || 0;
+                    return {
+                        results: $.map(data, function (obj) {
+                            i += 10;
+                            return { id: obj.ContactID, text: obj.ContactID + '.' + obj.TaiKhoan };
+                        }),
+                        pagination: {
+                            more: (params.page * 10) < i
+                        }
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 1,
+            escapeMarkup: function (markup) { return markup; },
+        });
+        jQuery(".js-data-example-ajaxContactDenied").select2({
+            placeholder: "User không muốn gửi",
+            multiple: true,
+            allowClear: true,
+            tokenSeparators: [","],
+            ajax: {
+                url: "/api/Contactnotifi",
+                dataType: 'json',
+                delay: 500,
+                data: function (params) {
+                    return {
+                        id: params.term,
+                        page: params.page,
+                    };
+                },
+                processResults: function (data, params) {
+                    var i = 1;
+                    params.page = params.page || 0;
+                    return {
+                        results: $.map(data, function (obj) {
+                            i += 10;
+                            return { id: obj.ContactID, text: obj.ContactID + '.' + obj.TaiKhoan };
+                        }),
+                        pagination: {
+                            more: (params.page * 10) < i
+                        }
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 1,
+            escapeMarkup: function (markup) { return markup; },
         });
     };
     NotifiSendComponent = __decorate([

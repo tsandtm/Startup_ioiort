@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "AppID": 1,
+    "TieuDe": "Tin nhắn",
+    "NoiDung": "bạn có 1 tin nhắn mới",
+    "ThoiGianGui": "2016-11-17T17:00:00.000Z",
+    "ThoiHanToiDa": "2016-11-24T17:00:00.000Z",
+    "DoUuTien": 1,
+    "TrangThaiGoi": 1,
+    "SoLuong": 100
+  },
+  {
+    "id": 2,
+    "AppID": 2,
+    "TieuDe": "abc",
+    "NoiDung": "ádasdasdasdasdas",
+    "ThoiGianGui": "2016-10-24T17:00:00.000Z",
+    "ThoiHanToiDa": "2016-11-10T17:00:00.000Z",
+    "DoUuTien": 3,
+    "TrangThaiGoi": 2,
+    "SoLuong": 300
+  },
+  {
+    "id": 4,
+    "AppID": 4,
+    "TieuDe": "\r",
+    "NoiDung": null,
+    "ThoiGianGui": null,
+    "ThoiHanToiDa": null,
+    "DoUuTien": null,
+    "TrangThaiGoi": null,
+    "SoLuong": null
+  }
+]

@@ -39,12 +39,6 @@ var NotifiService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    NotifiService.prototype.getsldenied = function (req) {
-        return this._http.post('/api/sldenied', req)
-            .toPromise()
-            .then(function (response) { return response.json(); })
-            .catch(this.handleError);
-    };
     NotifiService.prototype.getLastNotifi = function () {
         return this._http.get('/api/notifi')
             .toPromise()
@@ -73,37 +67,10 @@ var NotifiService = (function () {
             .then(function (slsend) { return slsend.find(function (p) { return p.NotifiID === id; }); })
             .catch(this.handleError);
     };
-    NotifiService.prototype.getAllSLDenied = function () {
-        return this._http.get('/api/sldenied')
+    NotifiService.prototype.getSendUser = function (req) {
+        return this._http.get('/api/sentuser/' + req)
             .toPromise()
             .then(function (response) { return response.json(); })
-            .catch(this.handleError);
-    };
-    NotifiService.prototype.getSLDenied = function (id) {
-        return this.getAllSLDenied()
-            .then(function (slsend) { return slsend.find(function (p) { return p.NotifiID === id; }); })
-            .catch(this.handleError);
-    };
-    NotifiService.prototype.getSend = function () {
-        return this._http.get('/api/sentuser')
-            .toPromise()
-            .then(function (response) { return response.json(); })
-            .catch(this.handleError);
-    };
-    NotifiService.prototype.getSendUser = function (id) {
-        return this.getSend()
-            .then(function (slsend) { return slsend.filter(function (p) { return p.NotifiID === id; }); })
-            .catch(this.handleError);
-    };
-    NotifiService.prototype.getSendDenied = function () {
-        return this._http.get('/api/sentuserdenied')
-            .toPromise()
-            .then(function (response) { return response.json(); })
-            .catch(this.handleError);
-    };
-    NotifiService.prototype.getSendUserDenied = function (id) {
-        return this.getSendDenied()
-            .then(function (slsend) { return slsend.filter(function (p) { return p.NotifiID === id; }); })
             .catch(this.handleError);
     };
     NotifiService.prototype.handleError = function (error) {

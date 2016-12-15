@@ -8,9 +8,17 @@ var ContactRouter = (function () {
     function ContactRouter() {
         var _this = this;
         this.getAllContact = function (req, res) {
-            var option = new Contact_model_1.Contact();
-            option = req.query;
-            _this.contactRepo.getList(option)
+            _this.contactRepo.getList(req.query)
+                .then(function (result) {
+                res.status(200).json(result);
+            })
+                .catch(function (error) {
+                console.error(error.message);
+                res.status(500).send(error.message);
+            });
+        };
+        this.getCountContact = function (req, res) {
+            _this.contactRepo.getCountContact(req.query)
                 .then(function (result) {
                 res.status(200).json(result);
             })
@@ -84,6 +92,8 @@ var ContactRouter = (function () {
             .post(this.update);
         this.router.route('/Contact/SearchByTag')
             .get(this.SearchByTag);
+        this.router.route('/ContactCount')
+            .get(this.getCountContact);
         return this.router;
     };
     return ContactRouter;

@@ -1,3 +1,11 @@
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li><a href="index.htm">Home</a></li>
+        <li class='active'><a [routerLink]="['notification']">Notification</a></li>
+		<li  class='active'>Notification-detail</li>
+    </ol>
+    
+</div><br><br>
 <div *ngIf='notifications'>
     <!--<div class='panel-heading' style='font-size:large; text-align:center'>
        <h1>{{pageTitle + ' ' + notifications.TieuDe}}</h1>

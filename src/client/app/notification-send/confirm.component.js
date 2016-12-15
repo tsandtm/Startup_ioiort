@@ -27,14 +27,8 @@ var ConfirmComponent = (function () {
         this._route.params.forEach(function (params) {
             var id = +params["id"];
             _this.getNotifi(id).then(function (result) {
-                if (_this.notifi.SendTag.length == 0 && _this.notifi.SendUser.length == 0) {
-                    _this.getSLDenied(id);
-                    _this.getSentUserDenied(id);
-                }
-                else {
-                    _this.getSL(id);
-                    _this.getSentUser(id);
-                }
+                _this.getSL(id);
+                _this.getSentUser(id);
                 _this.getAppkey(_this.notifi.AppID);
             });
         });
@@ -69,20 +63,6 @@ var ConfirmComponent = (function () {
             _this.sl = sl;
         });
     };
-    ConfirmComponent.prototype.getSentUserDenied = function (id) {
-        var _this = this;
-        this.notifiservice.getSendUserDenied(id)
-            .then(function (sent) {
-            _this.sentUser = sent;
-        });
-    };
-    ConfirmComponent.prototype.getSLDenied = function (id) {
-        var _this = this;
-        this.notifiservice.getSLDenied(id)
-            .then(function (sl) {
-            _this.sl = sl;
-        });
-    };
     ConfirmComponent.prototype.getAppkey = function (id) {
         var _this = this;
         this.appService.getAppkey(id).then(function (key) { return _this.appkey = key; });
@@ -111,10 +91,10 @@ var ConfirmComponent = (function () {
             };
             _this.notifiservice.Insert(_this.insertUser);
         });
-        this._router.navigate(['menu-list']);
+        this._router.navigate(['notification']);
     };
     ConfirmComponent.prototype.SaveAsDraft = function () {
-        this._router.navigate(['menu-list']);
+        this._router.navigate(['notification']);
     };
     ConfirmComponent.prototype.Finish = function () {
         this.now = new Date();
@@ -126,6 +106,43 @@ var ConfirmComponent = (function () {
             this.Update(1);
         }
         this.Insert();
+    };
+    ConfirmComponent.prototype.ngAfterViewInit = function () {
+        $(".js-data-example-ajaxTest").select2({
+            placeholder: "Test",
+            allowClear: true,
+            ajax: {
+                url: "/api/Contactnotifi",
+                dataType: 'json',
+                delay: 500,
+                data: function (params) {
+                    return {
+                        id: params.term,
+                        page: params.page,
+                    };
+                },
+                processResults: function (data, params) {
+                    // parse the results into the format expected by Select2
+                    // since we are using custom formatting functions we do not need to
+                    // alter the remote JSON data, except to indicate that infinite
+                    // scrolling can be used
+                    var i = 1;
+                    params.page = params.page || 0;
+                    return {
+                        results: $.map(data, function (obj) {
+                            i += 10;
+                            return { id: obj.TagID, text: obj.TagNameDisplay };
+                        }),
+                        pagination: {
+                            more: (params.page * 10) < i
+                        }
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 1,
+            escapeMarkup: function (markup) { return markup; },
+        });
     };
     __decorate([
         core_1.Input(), 

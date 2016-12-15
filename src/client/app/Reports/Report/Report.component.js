@@ -19,6 +19,7 @@ var BarChartDemoComponent = (function () {
         this.datasetsthangnay = [];
         this.datasets = [];
         this.devices = [];
+        this.isRunning = true;
         this.testto = 0;
         this.a = [];
         this.b = [];
@@ -68,6 +69,7 @@ var BarChartDemoComponent = (function () {
             _this.doughnutChartLabels = _this.getlabeldonoughnut();
             _this.gettotal();
             _this.getpercent();
+            _this.isRunning = false;
         });
     };
     BarChartDemoComponent.prototype.createDataSets = function () {

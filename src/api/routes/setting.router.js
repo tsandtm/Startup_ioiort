@@ -28,9 +28,42 @@ var SettingRouter = (function () {
                 res.status(500).send(error.message);
             });
         };
+        this.getAppName = function (req, res) {
+            console.log('abcs' + req.query.so);
+            _this.settingRepo.getAppName(req.query.so)
+                .then(function (result) {
+                res.status(200).json(result);
+            })
+                .catch(function (error) {
+                console.error(error.message);
+                res.status(500).send(error.message);
+            });
+        };
+        this.getAPI = function (req, res) {
+            console.log('abcs' + req.query.so);
+            _this.settingRepo.getAPI(req.query.so)
+                .then(function (result) {
+                res.status(200).json(result);
+            })
+                .catch(function (error) {
+                console.error(error.message);
+                res.status(500).send(error.message);
+            });
+        };
         this.getcount = function (req, res) {
             console.log('abcs' + req.query.so);
-            _this.settingRepo.getcount(req.query.so)
+            _this.settingRepo.getcount()
+                .then(function (result) {
+                res.status(200).json(result);
+            })
+                .catch(function (error) {
+                console.error(error.message);
+                res.status(500).send(error.message);
+            });
+        };
+        this.getAppID = function (req, res) {
+            console.log('abcs' + req.query.so);
+            _this.settingRepo.getAppID()
                 .then(function (result) {
                 res.status(200).json(result);
             })
@@ -85,6 +118,9 @@ var SettingRouter = (function () {
         this.router.route("/settingdelete")
             .post(this.Delete);
         this.router.get('/settingcount', this.getcount);
+        this.router.get('/settingAppName', this.getAppName);
+        this.router.get('/settingAPI', this.getAPI);
+        this.router.get('/settingAppID', this.getAppID);
         return this.router;
     };
     return SettingRouter;

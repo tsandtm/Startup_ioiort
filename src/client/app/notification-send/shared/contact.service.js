@@ -25,6 +25,12 @@ var ContactNotifiService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
+    ContactNotifiService.prototype.getCount = function (req) {
+        return this._http.get('/api/ContactCount', req)
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
     // getProduct(id: number): Promise<Product> {
     //     // return this.getProducts()
     //     //     .map((products: Product[]) => products.find(p => p.productId === id))
