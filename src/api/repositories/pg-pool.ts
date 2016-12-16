@@ -17,6 +17,7 @@ export abstract class PgPool{
                 ssl: config.ssl,
                 max: config.pool.max,
                 min: config.pool.min,
+                host:config.host,
                 idleTimeoutMillis: config.idleTimeoutMillis
             });
 
