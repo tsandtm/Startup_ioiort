@@ -20,7 +20,7 @@ export class LogRepo extends RepoBase {
     '${option.UngDung}',
     '${option.TieuDeLog}'
     );`;
-    
+
 
         return this._pgPool.query(query)
             .then(result => {
@@ -31,5 +31,19 @@ export class LogRepo extends RepoBase {
                 // return console.log(err)
                 return;
             })
+    }
+
+    public GetListbyName(option): Promise<any> {
+        let limit = option.limit ? option.limit : 100;
+        let offset = option.offset ? option.offset : 0;
+        let date = option.NgayTao ? option.NgayTao : new Date().getDate()
+        let TieuDeLog = option.TieuDeLog ? option.TieuDeLog : null
+        let query = ` SELECT *
+                        FROM public."Log"
+                        WHERE  "TieuDeLog" like '%${TieuDeLog}%' AND date_part('day', public."Log"."NgayTao") = ${date}
+                        Limit ${limit} offset ${offset}`
+        return this._pgPool.query(query)
+            .then(result => Promise.resolve(result.rows))
+            .catch(err => Promise.reject(err))
     }
 }

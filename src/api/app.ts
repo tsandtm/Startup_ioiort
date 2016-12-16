@@ -18,20 +18,17 @@ app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With,Content-Type, Accept, Authorization');
   next();
-  // res.setHeader("Access-Control-Allow-Origin", "*");
-  // res.setHeader("Access-Control-Allow-Credentials", "true");
-  // res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  // res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-
 });
 
 
 // import router
 
 import { LogRouter } from './routes/log.router'
+import { AboutRouter } from './routes/about.router'
 // sử dụng các router được định nghĩa từ các modules
 
 // import router
 
-app.use('/log',new LogRouter().GetRouter())
+app.use('/log', new LogRouter().GetRouter())
+app.use('/',new AboutRouter().GetRouter())
 export default app;
