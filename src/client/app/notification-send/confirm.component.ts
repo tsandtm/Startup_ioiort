@@ -47,6 +47,11 @@ export class ConfirmComponent implements OnInit {
         })
     }
     Push(){
+        this.token=$(".js-data-example-ajax").val();
+        // console.log(this.appkey.APIKey);
+        // console.log(this.token);
+        // console.log(this.notifi.TieuDe);
+        // console.log(this.notifi.Noidung);
         this.pushservice.sendMessage(this.appkey.APIKey,this.token,this.notifi.TieuDe,this.notifi.Noidung);
     }
 
@@ -119,21 +124,7 @@ export class ConfirmComponent implements OnInit {
         this.notifiservice.Update(this.updatedata);
         })
     }
-    Insert(){
-            this.sentUser.forEach(element => {
-                this.insertUser={
-                    ContactID:element.ContactID,
-                    NotifiID:element.NotifiID,
-                    TrangThai:null,
-                    ThoiGianDaGoi:null,
-                    ThoiGianCanGoi:null,
-                    LogLoi:null,
-                    SoLanGoi:null
-                };
-                this.notifiservice.Insert(this.insertUser);
-            });
-        this._router.navigate(['notification']);
-    }
+
     SaveAsDraft(): void {
         this._router.navigate(['notification']);
     }
@@ -146,6 +137,7 @@ export class ConfirmComponent implements OnInit {
         else{
             this.Update(1);
         }
+        this._router.navigate(['notification']);
     }
     ngAfterViewInit()
     {
@@ -173,7 +165,7 @@ export class ConfirmComponent implements OnInit {
                                 results:
                                 $.map(data, function(obj) {
                                     i+=10;
-                                    return { id: obj.ContactID, text: obj.TaiKhoan };
+                                    return { id: obj.Token, text: obj.TaiKhoan };
                                 }),
                                 pagination: {
                                 more: (params.page * 10) < i
