@@ -79,7 +79,7 @@ input[type=date]::-webkit-inner-spin-button {
 				</div>
 				<div class="form-inline" *ngIf='sendlater'>
 					<div class="form-group">
-						<input type="date" class="form-control" name="date" min="{{today | date:'yyyy-MM-dd'}}" [(ngModel)]="date">
+						<input #Date type="date" class="form-control" name="date" min="{{today | date:'yyyy-MM-dd'}}" [(ngModel)]="date">
 						<h6><i>(*) Ngày</i></h6>
 					</div>
 					<div class="form-group">
@@ -112,7 +112,7 @@ input[type=date]::-webkit-inner-spin-button {
 						<h6><i>Độ ưu tiên</i></h6>
 					 </div>
 					<div class="form-group">
-						<select #ThoiHannum class="form-control" (change)='thoiHannum = ThoiHannum.value'>
+						<select #ThoiHannum id="ThoiHannum" class="form-control" (change)='thoiHannum = ThoiHannum.value;'>
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -139,7 +139,7 @@ input[type=date]::-webkit-inner-spin-button {
 						<h6><i>Thời hạn tối đa</i></h6>
 					</div>
 					<div class="form-group">
-						<select #ThoiHanDV class="form-control" (change)='thoiHanDV = ThoiHanDV.value;'>
+						<select #ThoiHanDV id="ThoiHanDV" class="form-control" (change)='changeTHDV(ThoiHanDV.value)'>
 							<option value="Week">Week</option>
 							<option value="Day">Day</option>
 							<option value="Hour">Hour</option>
@@ -151,5 +151,6 @@ input[type=date]::-webkit-inner-spin-button {
 			</div>
 		</div>
 		<button type="button" style="float:right" class="btn btn-success btn-lg" (click)='Create()'>Next>></button>
+		<button type="button" style="float:right" class="btn btn-success btn-lg" (click)='Check()'>Check>></button>
 	</form>       
 </div>

@@ -35,7 +35,7 @@ export class NotifiRouter {
         .post(this.getSLsend)
 
 
-        this.router.route("/sentuser/:id?")
+        this.router.route("/sentuser")
         .get(this.getSentUser)
         .post(this.Insert)
         
@@ -98,7 +98,7 @@ export class NotifiRouter {
             });
     }
     private getSL = (req: Request, res: Response) => {
-        this.notifiRepo.getSL(req.body)
+        this.notifiRepo.getSL(req.query)
             .then(result => {
                 res.status(200).json(result)
             })
@@ -118,7 +118,7 @@ export class NotifiRouter {
             });
     }
     private getSentUser = (req: Request, res: Response) => {
-        this.notifiRepo.getSentUser(req.params)
+        this.notifiRepo.getSentUser(req.query)
             .then(result => {
                 res.status(200).json(result)
             })

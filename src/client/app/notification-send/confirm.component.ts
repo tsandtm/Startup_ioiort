@@ -1,9 +1,8 @@
-
 import { Component,OnInit,Input,OnDestroy,AfterViewInit } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Appkey } from './shared/app.model';
-import { Notifi,SLSend,SentUser,UpdateData,InsertUser } from './shared/notifi.model';
+import { Notifi,SentUser,UpdateData,InsertUser } from './shared/notifi.model';
 import { AppService } from './shared/app.service';
 import { NotifiService } from './shared/notifi.service';
 
@@ -15,7 +14,7 @@ import { PushService } from './shared/pushservice.service';
 })
 export class ConfirmComponent implements OnInit {
     @Input() notifi:Notifi;
-    @Input() sl:SLSend;
+    @Input() sl:number;
     @Input() sentUser:SentUser[];
     @Input() updatedata:UpdateData;
     appkey:Appkey;
@@ -23,8 +22,11 @@ export class ConfirmComponent implements OnInit {
     Douutien:string;
     date:Date;
     now:Date;
-    
+    pager: any = {};
     token:string;
+    iduser:number;
+    sltk:number;
+    listFilter: string;
     constructor(private appService: AppService,
     private notifiservice:NotifiService,
     private pushservice:PushService,
@@ -33,11 +35,13 @@ export class ConfirmComponent implements OnInit {
 
     }
     ngOnInit() {
+        this.sl=0;
         this._route.params.forEach((params: Params) => {
             let id = +params["id"];
+            this.iduser=id;
             this.getNotifi(id).then(result=>{
-                this.getSL(id);
-                this.getSentUser(id);
+                this.getSL(id,null);
+                this.getSentUser(null,id);
                 this.getAppkey(this.notifi.AppID);
             });
         })
@@ -47,6 +51,7 @@ export class ConfirmComponent implements OnInit {
     }
 
     getNotifi(id: number):Promise<void> {
+        
         return this.notifiservice.getOne(id)          
             .then(notifi => {
                 this.notifi = notifi;
@@ -58,15 +63,48 @@ export class ConfirmComponent implements OnInit {
                 }
             })
     }
-    getSentUser(id: number) {
-        this.notifiservice.getSendUser(id)
+    getSentUser(find:string,id: number) {
+        this.pager =this.notifiservice.getPager(this.sltk,1);
+
+        this.notifiservice.getSendUser(id,this.pager.startIndex,find)
             .then(sent => {
-            this.sentUser = sent;})
+            this.sentUser = sent;
+            console.log(this.sentUser);
+        })
     }
-    getSL(id:number){
-        this.notifiservice.getSL(id)
+    setPage(find:string,page: number): void {
+        console.log("abeeee"+this.sl);
+        if (page < 1 || page > this.pager.totalPages) {
+            return;
+        }
+        this.pager = this.notifiservice.getPager(this.sltk, page)
+        // get current page of items
+       
+        this.notifiservice.getSendUser(this.iduser,this.pager.startIndex,find).then(sent => {
+            this.sentUser = sent;
+            console.log(this.sentUser);
+        });      
+    }
+    find():void{
+        //console.log(this.listFilter+" aaabbb");
+        this.sentUser=undefined;
+        this.notifiservice.getSL(this.iduser,this.listFilter).then(result=>
+        {
+            this.sltk=result;
+            console.log(this.sltk);
+            this.pager = this.notifiservice.getPager(this.sltk, 1);
+            
+            this.notifiservice.getSendUser(this.iduser,this.pager.startIndex,this.listFilter).then(itempages => this.sentUser = itempages); 
+                   
+        });
+    }
+    getSL(id:number,find:string,){
+        this.notifiservice.getSL(id,find)
         .then(sl=>{
-            this.sl=sl
+            this.sl=sl;
+            this.sltk=sl;
+            console.log(this.sl);
+            this.pager =this.notifiservice.getPager(this.sltk,1);
         })
     }
     getAppkey(id:number){
@@ -108,10 +146,10 @@ export class ConfirmComponent implements OnInit {
         else{
             this.Update(1);
         }
-        this.Insert();
     }
-    ngAfterViewInit(){
-        $(".js-data-example-ajaxTest").select2({
+    ngAfterViewInit()
+    {
+        $(".js-data-example-ajax").select2({
             placeholder:"Test",
                 allowClear: true, 
                 ajax: {
@@ -135,7 +173,7 @@ export class ConfirmComponent implements OnInit {
                                 results:
                                 $.map(data, function(obj) {
                                     i+=10;
-                                    return { id: obj.TagID, text: obj.TagNameDisplay };
+                                    return { id: obj.ContactID, text: obj.TaiKhoan };
                                 }),
                                 pagination: {
                                 more: (params.page * 10) < i

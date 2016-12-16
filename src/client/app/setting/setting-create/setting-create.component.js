@@ -25,6 +25,7 @@ var SettingCreateComponent = (function () {
     };
     SettingCreateComponent.prototype.Create = function () {
         var _this = this;
+<<<<<<< HEAD
         this.setting = undefined;
         this.settingservice.getAPI(this.apikey).then(function (result) { return _this.setting = result; })
             .then(function (result) { return _this.setAPI(); }).then(function (result) { return _this.setAPINull(); });
@@ -32,17 +33,35 @@ var SettingCreateComponent = (function () {
         this.settingservice.getAppName(this.appname).then(function (result) { return _this.setting = result; })
             .then(function (result) { return _this.setAppName(); }).then(function (result) { return _this.setAppNameNull(); });
         if (this.i == 0 && this.t == 0) {
+=======
+        this.getSetting(this.appid);
+        var i = 0;
+        for (var _i = 0, _a = this.setting1; _i < _a.length; _i++) {
+            var s = _a[_i];
+            if (s.AppID == this.appid) {
+                i = 1;
+                break;
+            }
+        }
+        if (i == 0) {
+            this.alert = '';
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd
             if (this.trangthai == undefined)
                 this.trangthai = false;
             this.ngaytao = new Date().toLocaleDateString("en-US") + '';
             this.setting = {
+<<<<<<< HEAD
                 AppID: this.n,
+=======
+                AppID: this.appid,
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd
                 APIKey: this.apikey,
                 IsActive: this.trangthai,
                 NgayTao: this.ngaytao,
                 AppName: this.appname,
             };
             this.settingservice.Create(this.setting).then(function (result) { return _this._router.navigate(['setting-list']); });
+<<<<<<< HEAD
         }
     };
     SettingCreateComponent.prototype.setAppNameNull = function () {
@@ -75,7 +94,17 @@ var SettingCreateComponent = (function () {
         else {
             this.alertname = "";
             this.t = 0;
+=======
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd
         }
+        else if (i == 1) {
+            this.alert = 'AppID đã được sử dụng!!!!';
+        }
+    };
+    SettingCreateComponent.prototype.getSetting = function (id) {
+        var _this = this;
+        this.settingservice.getOne(id)
+            .then(function (setting) { return _this.setting = setting; });
     };
     SettingCreateComponent.prototype.Back = function () {
         this._router.navigate(['setting-list']);

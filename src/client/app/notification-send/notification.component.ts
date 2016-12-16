@@ -29,6 +29,7 @@ export class NotifiSendComponent implements OnInit{
     listIDContactDenied=[];
     listNameContactDenied=[];
     //----//
+    bool:boolean=true;
     sendnow: boolean = true;
     sendlater: boolean = false;
     Apps: Appkey[];
@@ -98,21 +99,87 @@ export class NotifiSendComponent implements OnInit{
         this.sendnow = false;
         this.sendlater=true;
     }
+    Check(){
+        console.log(this.thoiHannum);
+    }
         // var pos=item.indexOf('.');
         // var num=item.slice(0,pos);
         // var name=item.slice(pos+1,item.length);
     Create(){
-        this.listIDTag=$(".js-data-example-ajaxTag").val();
-        this.listIDContact=$(".js-data-example-ajaxContact").val();
-        this.listIDTagDenied=$(".js-data-example-ajaxTagDenied").val();
-        this.listIDContactDenied=$(".js-data-example-ajaxContactDenied").val();
+        this.listNameTag=[];
+        this.listNameContact=[];
+        this.listNameTagDenied=[];
+        this.listNameContactDenied=[];
+        if($(".js-data-example-ajaxTag").val()==null){
+            this.listIDTag=[];
+        }
+        else
+        {
+            this.listIDTag=$(".js-data-example-ajaxTag").val();
+            for(var i = 0;i<this.listIDTag.length;i++){
+                this.listNameTag.push($(".js-data-example-ajaxTag").select2('data')[i].text)
+            }
+        }
+        if($(".js-data-example-ajaxContact").val()==null){
+            this.listIDContact=[];
+        }
+        else
+        {
+            this.listIDContact=$(".js-data-example-ajaxContact").val();
+            for(var i = 0;i<this.listIDContact.length;i++){
+                var item=$(".js-data-example-ajaxContact").select2('data')[i].text;
+                var pos=item.indexOf('.');
+                var name=item.slice(pos+1,item.length);
+                this.listNameContact.push(name);
+            }
+        }
+        if($(".js-data-example-ajaxTagDenied").val()==null){
+            this.listIDTagDenied=[];
+        }
+        else
+        {
+            this.listIDTagDenied=$(".js-data-example-ajaxTagDenied").val();
+            for(var i = 0;i<this.listIDTagDenied.length;i++){
+                this.listNameTagDenied.push($(".js-data-example-ajaxTagDenied").select2('data')[i].text)
+            }
+        }
+        if($(".js-data-example-ajaxContactDenied").val()==null){
+            this.listIDContactDenied=[];
+        }
+        else
+        {
+            this.listIDContactDenied=$(".js-data-example-ajaxContactDenied").val();
+            for(var i = 0;i<this.listIDContactDenied.length;i++){
+                var item=$(".js-data-example-ajaxContactDenied").select2('data')[i].text;
+                var pos=item.indexOf('.');
+                var name=item.slice(pos+1,item.length);
+                this.listNameContactDenied.push(name);
+            }
+        }
         this.date=new Date(this.date);
         if(this.sendnow){
             this.date=new Date();
-            this.Thoigiangui=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString();      
+            this.Thoigiangui=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString();
+            if(this.thoiHanDV=="Hour"){
+                this.date.setDate(this.date.getDate());
+                this.date.setHours(this.date.getHours()+parseInt(this.thoiHannum.toString()));
+            }
+            if(this.thoiHanDV=="Minute"){
+                this.date.setDate(this.date.getDate());
+                this.date.setMinutes(this.date.getMinutes()+parseInt(this.thoiHannum.toString()));
+            }
         }
         else if(this.sendlater){
+            this.date=new Date(this.date);
             this.Thoigiangui=this.date.toLocaleDateString('en-US')+' '+this.hour+":"+this.minute+":00";
+            this.date.setHours(this.hour);
+            this.date.setMinutes(this.minute);
+            if(this.thoiHanDV=="Hour"){
+                this.date.setHours(this.date.getHours()+parseInt(this.thoiHannum.toString()));
+            }
+            if(this.thoiHanDV=="Minute"){
+                this.date.setMinutes(this.date.getMinutes()+parseInt(this.thoiHannum.toString()));
+            }
         }
         if(this.thoiHanDV=="Week"){
             this.date.setDate(this.date.getDate()+(7*this.thoiHannum));
@@ -120,27 +187,15 @@ export class NotifiSendComponent implements OnInit{
         if(this.thoiHanDV=="Day"){
             this.date.setDate(this.date.getDate()+parseInt(this.thoiHannum.toString()));
         }
-        if(this.thoiHanDV=="Hour"){
-            this.date.setDate(this.date.getDate());
-            this.date.setHours(this.date.getHours()+parseInt(this.thoiHannum.toString()));
-        }
-        if(this.thoiHanDV=="Minute"){
-            this.date.setDate(this.date.getDate());
-            this.date.setMinutes(this.date.getMinutes()+parseInt(this.thoiHannum.toString()));
-        }
+
         if(this.notifi==null){
             this.notifiID=1;
         }
         else{
             this.notifiID=this.notifi.NotifiID+1;
         }
-        if(this.sendlater){
-            this.ThoiHan=this.date.toLocaleDateString('en-US')+' '+this.hour+":"+this.minute+":00";
-        }
-        else{
-            this.ThoiHan=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString(); 
-        }
-        if(this.tieude == undefined || this.Noidung == undefined || (this.listIDTag==null && this.listIDContact==null))
+        this.ThoiHan=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString(); 
+        if(this.tieude == undefined || this.Noidung == undefined || (this.listIDTag.length==0 && this.listIDContact.length==0) || this.date==undefined)
         {
             console.log(false);
             return false;
@@ -163,7 +218,10 @@ export class NotifiSendComponent implements OnInit{
                 DeniedTag:this.listIDTagDenied,
                 DeniedTagName:this.listNameTagDenied,
                 DeniedUser:this.listIDContactDenied,
-                DeniedUserName:this.listNameContactDenied};
+                DeniedUserName:this.listNameContactDenied,
+                ThoiHanNum:this.thoiHannum,
+                ThoiHanDV:this.thoiHanDV,
+                SendLater:this.sendlater};
                 this.notifiservice.Create(this.notifi).then(result=>this._router.navigate(['confirm',this.notifi.NotifiID]));
             })
         }
@@ -189,20 +247,24 @@ export class NotifiSendComponent implements OnInit{
         this.loopminuteTH=this.loop(5,60);
         this.loopdayTH=this.loop(5,28);
     }
+    changeTHDV(value){
+        this.thoiHanDV=value;
+        jQuery("#ThoiHannum").val(1).change();
+        this.thoiHannum=1;
+    }
     ngAfterViewInit()
     {		
         // this._route.queryParams.forEach((params: Params) => {
         //     let id = +params["id"];
         //     this.getCountContact(id).then(result=>{console.log(this.countContact)});
         // })
-        // var count=this.countContact;
         jQuery(".js-data-example-ajaxTag").select2({
             placeholder:"Tag muốn gửi",
                 multiple: true,
                 allowClear: true, 
                 tokenSeparators: [","],
                 ajax: {
-                    url: "/api/Tag",
+                    url: "/api/TagA",
                     dataType: 'json',
                     delay: 500,
                     data: function (params) {
@@ -241,7 +303,7 @@ export class NotifiSendComponent implements OnInit{
                 allowClear: true, 
                 tokenSeparators: [","],
                 ajax: {
-                    url: "/api/Tag",
+                    url: "/api/TagA",
                     dataType: 'json',
                     delay: 500,
                     data: function (params) {

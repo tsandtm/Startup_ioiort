@@ -7,7 +7,7 @@ var SettingRouter = (function () {
     function SettingRouter() {
         var _this = this;
         this.getAllSetting = function (req, res) {
-            console.log('abc' + req.body.id);
+            console.log('abc' + req.body);
             _this.settingRepo.getList(req.body)
                 .then(function (result) {
                 res.status(200).json(result);
@@ -16,6 +16,7 @@ var SettingRouter = (function () {
                 console.error(error.message);
                 res.status(500).send(error.message);
             });
+<<<<<<< HEAD
         };
         this.getAllSettingPT = function (req, res) {
             console.log('abcs' + req.query.so);
@@ -71,6 +72,16 @@ var SettingRouter = (function () {
                 console.error(error.message);
                 res.status(500).send(error.message);
             });
+=======
+            // this.bookRepo.getList(null)
+            //     .then(result => {
+            //         res.status(200).json(result)
+            //     })
+            //     .catch(error => {
+            //         console.error(error.message);
+            //         res.status(500).send(error.message)
+            //     })
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd
         };
         this.Create = function (req, res) {
             _this.settingRepo.Create(req.body)
@@ -111,16 +122,17 @@ var SettingRouter = (function () {
         this.router.route('/setting')
             .get(this.getAllSetting)
             .post(this.Create);
-        this.router.route('/settingPT')
-            .get(this.getAllSettingPT);
         this.router.route("/settingedit")
             .post(this.Edit);
         this.router.route("/settingdelete")
             .post(this.Delete);
+<<<<<<< HEAD
         this.router.get('/settingcount', this.getcount);
         this.router.get('/settingAppName', this.getAppName);
         this.router.get('/settingAPI', this.getAPI);
         this.router.get('/settingAppID', this.getAppID);
+=======
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd
         return this.router;
     };
     return SettingRouter;

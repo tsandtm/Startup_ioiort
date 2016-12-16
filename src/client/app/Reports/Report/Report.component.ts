@@ -24,7 +24,6 @@ export class BarChartDemoComponent {
   flag: number;
   flagtr: number;
   flagnay: number;
-  isRunning = true;
 
   constructor(private reportService: ReportService) {
 
@@ -33,7 +32,7 @@ export class BarChartDemoComponent {
   loadGetAll() {
     this.reportService.getAllDeviceforDougnut().then((result) => {
       this.Reports = result;
-      this.devices = this.getlabeldonoughnut();    
+      this.devices = this.getlabeldonoughnut()
     });
     this.reportService.getDevice().then((result) => {
       this.listDevice = result;
@@ -43,7 +42,6 @@ export class BarChartDemoComponent {
     })
       .then((result) => {
         this.loadgetdougnut();
-        
       });
   }
   loadgetdougnut() {
@@ -54,7 +52,6 @@ export class BarChartDemoComponent {
       this.doughnutChartLabels = this.getlabeldonoughnut();
       this.gettotal();
       this.getpercent();
-      this.isRunning = false;
     });
   }
 

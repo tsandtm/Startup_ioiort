@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div id="page-heading">
     <ol class="breadcrumb">
         <li><a href="index.htm">Home</a></li>
@@ -5,6 +6,18 @@
     </ol>
     
 </div><br><br>
+=======
+<!--<div class="wrapper" style="width: 480px;
+      margin: 0 auto;
+      text-align: center;">
+
+
+    <h3>circle</h3>
+    <sk-circle></sk-circle>
+
+
+</div>-->
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd
 <div class='panel panel-primary'>
     <div class='panel-heading'>
         Notification
@@ -13,22 +26,38 @@
     <!-- Filter the Products   -->
     <div class='panel-body'>
         <div class='row'>
-            <div class='col-md-2'>Tìm kiếm:</div>
             <div class='col-md-4'>
+<<<<<<< HEAD
                 <input type='text' [(ngModel)]='listFilter' />
             </div>
             <input type="date" [(ngModel)]='dateValue'> <i class="fa fa-calendar" aria-hidden="true"></i>
             <button style="float:right; margin-right:10px" type="button" [routerLink]="['/notifi-send']">New Mesenger</button>
+=======
+                 <input type='text' class="form-control" [(ngModel)]='listFilter1' placeholder="Tìm kiếm theo tiêu đề" (keyup)="find()"/>
+            </div>
+            <div class='col-md-4'>
+                Thời gian gửi
+            <input style="margin-top:5px" type="date" [(ngModel)]='dateValue'> <i class="fa fa-calendar" aria-hidden="true" ></i>
+            </div>
+            <button class="btn btn-success"   style="float:right; margin-right:10px" type="button" [routerLink]="['/notifi-send']">New Mesenger</button>
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd
         </div>
         <div class='row' *ngIf='listFilter'>
             <div class='col-md-6'>
                 <h3>Filtered by: {{ listFilter }}</h3>
             </div>
         </div>
+<<<<<<< HEAD
+=======
+        <div class="row">
+            <h4 style="margin-left:20px"> Total rows: {{id}}</h4>
+        </div>
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd
         <div class='table-responsive'>
             <table class='table'>
                 <thead>
                     <tr>
+                        <th>STT</th>
                         <th>Tiêu Đề</th>
                         <th>Trạng thái</th>
                         <th>Thời gian gửi</th>
@@ -39,13 +68,29 @@
                     </tr>
                 </thead>
                 <tbody>
+<<<<<<< HEAD
                     <tr *ngFor='let notification of notifications | paginate: {itemsPerPage: 5, currentPage: p} | notificationFilter:listFilter | dateFilter:dateValue '>
                         <td>{{notification.TieuDe | lowercase}}</td>
                         <td>{{notification.TrangThaiGoi}}</td>
+=======
+                    <tr>
+                        <sk-fading-circle [isRunning]="isRequest" *ngIf='!notifications'></sk-fading-circle>
+					</tr>
+                    <tr *ngFor='let notification of notifications | paginate: {itemsPerPage: 25, currentPage: p} | notificationFilter:listFilter | dateFilter:dateValue '>
+                        <td>{{notification.id}}</td>
+                        <td>{{notification.TieuDe | lowercase}}</td>
+                        <td *ngIf='notification.TrangThaiGoi == 0'>
+                            Chờ gửi </td>
+                        <td *ngIf='notification.TrangThaiGoi == 1'>
+                            Đã gửi </td>
+                        <td *ngIf='notification.TrangThaiGoi == 2'>
+                            Lưu nháp </td>
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd
                         <td>{{notification.ThoiGianGui|date:"dd/MM/yyyy" }}</td>
                         <td>{{notification.SoLuong}}</td>
                         <td>{{notification.ThoiHanToiDa | date:"dd/MM/yyyy"}}</td>
                         <td *ngIf='notification.TrangThaiGoi == 1 || notification.TrangThaiGoi == 0'>
+<<<<<<< HEAD
                             <a [routerLink]="['/notification-detail',notification.id]"><button><i class="fa fa-eye" aria-hidden="true"></i></button></a></td>
                         <td *ngIf='notification.TrangThaiGoi == 2'>
                             <a [routerLink]="['/notification-detailedit',notification.id]"><button><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a></td>
@@ -73,6 +118,35 @@
                     </ul>
                 </nav>
             </pagination-template>
+=======
+                            <a [routerLink]="['/notification-detail',notification.id,pager.currentPage]"><button><i class="fa fa-eye" aria-hidden="true"></i></button></a></td>
+                        <td *ngIf='notification.TrangThaiGoi == 2'>
+                            <a [routerLink]="['/notification-detailedit',notification.id,pager.currentPage]"><button><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row" *ngIf="Total != undefined" style="margin-left: 10px;">
+            <div class="text-center" *ngIf="pager.pages">
+                <!-- pager -->
+                <ul class="pagination" *ngIf='pager.pages.length > 1'>
+                    <li [ngClass]="{disabled:pager.currentPage === 1}">
+                        <a (click)="setPage(listFilter1,1)">First</a>
+                    </li>
+                    <li [ngClass]="{disabled:pager.currentPage === 1}">
+                        <a (click)="setPage(listFilter1,pager.currentPage - 1)">Previous</a>
+                    </li>
+                    <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                        <a (click)="setPage(listFilter1,page)">{{page}}</a>
+                    </li>
+                    <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                        <a (click)="setPage(listFilter1,pager.currentPage + 1)">Next</a>
+                    </li>
+                    <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                        <a (click)="setPage(listFilter1,pager.totalPages)">Last</a>
+                    </li>
+                </ul>
+            </div>
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd
         </div>
     </div>
 </div>

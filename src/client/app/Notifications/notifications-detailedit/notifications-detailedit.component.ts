@@ -16,23 +16,7 @@ import { Notifications } from '../shared/notifications.model';
 })
 export class NotificationstDetailEditComponent implements OnInit{
     @Input() notifications: Notifications;
-    optionsTag = {
-        placeholder: "+ Tag",
-        secondaryPlaceholder: "Tag",
-    }
-    
-    optionsContact = {
-        placeholder: "+ Contact",
-        secondaryPlaceholder: "Contact",
-    }
-    optionsTagDenied = {
-        placeholder: "+ Tag Denied",
-        secondaryPlaceholder: "Tag Denied",
-    }
-    optionsContactDenied = {
-        placeholder: "+ Contact Denied",
-        secondaryPlaceholder: "Contact Denied",
-    }
+    id:number;
     //Tag
     ACTag = [];
     listIDTag=[];
@@ -52,6 +36,7 @@ export class NotificationstDetailEditComponent implements OnInit{
     listIDContactDenied=[];
     listNameContactDenied=[];
     //----//
+    today:Date;
     sendnow: boolean = true;
     sendlater: boolean = false;
     Apps: Appkey[];
@@ -72,6 +57,7 @@ export class NotificationstDetailEditComponent implements OnInit{
             //2=Draft
     Soluong:number;
     date:Date;
+    newdate:string;
     hour:number=12;
     minute:number=0;
     loophour:number[];
@@ -91,28 +77,6 @@ export class NotificationstDetailEditComponent implements OnInit{
     private _route: ActivatedRoute) {
 
     }
-    // public TagDeniedAdded(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.listIDTag.push(parseInt(num));
-    // }
-    // public TagDeniedRemoved(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.delPos(this.listIDTag,parseInt(num));
-    // }
-    // public ContactDeniedAdded(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.listIDContact.push(parseInt(num));
-    //     console.log(this.listIDContact.toString());
-    // }
-    // public ContactDeniedRemoved(item:string) {
-    //     var pos=item.indexOf('.');
-    //     var num=item.slice(0,pos);
-    //     this.delPos(this.listIDContact,parseInt(num));
-    //     console.log(this.listIDContact.toString());
-    // }
     delPos(ar:Array<number>,key:number){
         for(var i=0;i<=ar.length;i++){
             if(ar[i]==key){
@@ -156,73 +120,156 @@ export class NotificationstDetailEditComponent implements OnInit{
     ngOnInit(): void {
         this.loadGetAll();
         this.getNotifi();
+        this.today=new Date();
         this.loophour=this.loop(1,24);
         this.loopminute=this.loop(0,60);
         this.loophourTH=this.loop(5,24);
         this.loopminuteTH=this.loop(5,60);
         this.loopdayTH=this.loop(5,28);
         this._route.params.forEach((params: Params) => {
-            console.log(params["id"])
             let id = +params["id"];
+            this.id=id;
             this.getNotifications(id);
         })
     }
+
     getNotifications(id: number) {
         
-        this._notificationsService.getNotifications(id)
+        this._notificationsService.getNotificationsA(id)
             .then(notifications => {
                 this.notifications = notifications;
-                
-                this.listNameTag = notifications.Send_TagName,
-                this.listNameContact = notifications.Send_UserName,
-                this.listNameTagDenied = notifications.Send_TagDenieName
-                this.listNameContactDenied = notifications.Send_UserDenieName,     
+                this.listNameTag = notifications.Send_TagName;
+                this.listNameContact = notifications.Send_UserName;
+                this.listNameTagDenied = notifications.Send_TagDenieName;
+                this.listNameContactDenied = notifications.Send_UserDenieName;
                 this.listIDTag = notifications.Send_TagID;
                 this.listIDContact = notifications.Send_UserID;
                 this.listIDTagDenied = notifications.Send_TagDenieID;
                 this.listIDContactDenied=notifications.Send_UserDenieID;          
                 this.tieude = notifications.TieuDe;
                 this.Noidung = notifications.NoiDung;
+                this.sendnow=!notifications.SendLater;
+                this.sendlater=notifications.SendLater;
+                this.Thoigiangui=notifications.ThoiGianGui;
+                this.doUuTien=notifications.DoUuTien;
+                this.thoiHanDV=notifications.ThoiHanDV;
+                this.thoiHannum=notifications.ThoiHanNum;
+                this.date=new Date(notifications.ThoiGianGui);
+                this.date.setDate(this.date.getDate());
+                this.newdate=this.date.toISOString().substring(0,10);
+                this.hour=this.date.getHours();
+                this.minute=this.date.getMinutes();
+                this.ACTag=[];
+                this.ACContact=[];
+                this.ACTagDenied=[];
+                this.ACContactDenied=[];
                 for(var i=0;i<this.listIDTag.length;i++)
                 {
-                    this.ACTag.push(this.listIDTag[i]+'.'+this.listNameTag[i]);
+                    let obj={id:this.listIDTag[i],text:this.listNameTag[i]}
+                    var json=JSON.parse(JSON.stringify(obj));
+                    this.ACTag.push(json);
                 }
                   for(var i=0;i<this.listIDContact.length;i++)
                 {
-                    this.ACContact.push(this.listIDContact[i]+'.'+this.listNameContact[i]);
+                    let obj={id:this.listIDContact[i],text:this.listIDContact[i]+"."+this.listNameContact[i]}
+                    var json=JSON.parse(JSON.stringify(obj));
+                    this.ACContact.push(json);
                 }
                   for(var i=0;i<this.listIDTagDenied.length;i++)
                 {
-                    this.ACTagDenied.push(this.listIDTagDenied[i]+'.'+this.listNameTagDenied[i]);
+                    let obj={id:this.listIDTagDenied[i],text:this.listNameTagDenied[i]}
+                    var json=JSON.parse(JSON.stringify(obj));
+                    this.ACTagDenied.push(json);
                 }
                   for(var i=0;i<this.listIDContactDenied.length;i++)
                 {
-                    this.ACContactDenied.push(this.listIDContactDenied[i]+'.'+this.listNameContactDenied[i]);
-                }
-
-                console.log(this.ACTag)
-                console.log(this.ACContact)
-                console.log(this.ACTagDenied)
-                console.log(this.ACContactDenied)
-
-               
+                    let obj={id:this.listIDContactDenied[i],text:this.listIDContactDenied[i]+"."+this.listNameContactDenied[i]}
+                    var json=JSON.parse(JSON.stringify(obj));
+                    this.ACContactDenied.push(json);
+                }               
 
             })
     }
      getslsend(req):Promise<number>{
         return this.notifiservice.getslsend(req).then(result=>this.Soluong=result);
     }
-    getslsenddenied(req):Promise<number>{
-        return this.notifiservice.getsldenied(req).then(result=>this.Soluong=result);
-    }
-    Edit(): void{     
+    
+    Edit(){
+        this.listNameTag=[];
+        this.listNameContact=[];
+        this.listNameTagDenied=[];
+        this.listNameContactDenied=[];
+        if($(".js-data-example-ajaxTag").val()==null){
+            this.listIDTag=[];
+        }
+        else
+        {
+            this.listIDTag=$(".js-data-example-ajaxTag").val();
+            for(var i = 0;i<this.listIDTag.length;i++){
+                this.listNameTag.push(this.listIDTag[i])
+            }
+        }
+        if($(".js-data-example-ajaxContact").val()==null){
+            this.listIDContact=[];
+        }
+        else
+        {
+            this.listIDContact=$(".js-data-example-ajaxContact").val();
+            for(var i = 0;i<this.listIDContact.length;i++){
+                var item=this.listIDContact[i];
+                var pos=item.indexOf('.');
+                var name=item.slice(pos+1,item.length);
+                this.listNameContact.push(name);
+            }
+        }
+        if($(".js-data-example-ajaxTagDenied").val()==null){
+            this.listIDTagDenied=[];
+        }
+        else
+        {
+            this.listIDTagDenied=$(".js-data-example-ajaxTagDenied").val();
+            for(var i = 0;i<this.listIDTagDenied.length;i++){
+                this.listNameTagDenied.push(this.listIDTagDenied[i])
+            }
+        }
+        if($(".js-data-example-ajaxContactDenied").val()==null){
+            this.listIDContactDenied=[];
+        }
+        else
+        {
+            this.listIDContactDenied=$(".js-data-example-ajaxContactDenied").val();
+            for(var i = 0;i<this.listIDContactDenied.length;i++){
+                var item=this.listIDContactDenied[i];
+                var pos=item.indexOf('.');
+                var name=item.slice(pos+1,item.length);
+                this.listNameContactDenied.push(name);
+            }
+        }  
+
         this.date=new Date(this.date);
         if(this.sendnow){
             this.date=new Date();
-            this.Thoigiangui=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString();      
+            this.Thoigiangui=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString();
+            if(this.thoiHanDV=="Hour"){
+                this.date.setDate(this.date.getDate());
+                this.date.setHours(this.date.getHours()+parseInt(this.thoiHannum.toString()));
+            }
+            if(this.thoiHanDV=="Minute"){
+                this.date.setDate(this.date.getDate());
+                this.date.setMinutes(this.date.getMinutes()+parseInt(this.thoiHannum.toString()));
+            }
         }
         else if(this.sendlater){
             this.Thoigiangui=this.date.toLocaleDateString('en-US')+' '+this.hour+":"+this.minute+":00";
+            this.date=new Date(this.date);
+            this.date.setHours(this.hour);
+            this.date.setMinutes(this.minute);
+            if(this.thoiHanDV=="Hour"){
+                this.date.setHours(this.date.getHours()+parseInt(this.thoiHannum.toString()));
+            }
+            if(this.thoiHanDV=="Minute"){
+                this.date.setMinutes(this.date.getMinutes()+parseInt(this.thoiHannum.toString()));
+            }
         }
         if(this.thoiHanDV=="Week"){
             this.date.setDate(this.date.getDate()+(7*this.thoiHannum));
@@ -230,27 +277,14 @@ export class NotificationstDetailEditComponent implements OnInit{
         if(this.thoiHanDV=="Day"){
             this.date.setDate(this.date.getDate()+parseInt(this.thoiHannum.toString()));
         }
-        if(this.thoiHanDV=="Hour"){
-            this.date.setDate(this.date.getDate());
-            this.date.setHours(this.date.getHours()+parseInt(this.thoiHannum.toString()));
-        }
-        if(this.thoiHanDV=="Minute"){
-            this.date.setDate(this.date.getDate());
-            this.date.setMinutes(this.date.getMinutes()+parseInt(this.thoiHannum.toString()));
-        }   
-        if(this.sendlater){
-            this.ThoiHan=this.date.toLocaleDateString('en-US')+' '+this.hour+":"+this.minute+":00";
-        }
-        else{
-            this.ThoiHan=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString(); 
-        } 
-        if(this.listIDTag.length==0 && this.listIDContact.length==0)
+        this.ThoiHan=this.date.toLocaleDateString('en-US')+' '+this.date.toLocaleTimeString(); 
+        if(this.tieude == "" || this.Noidung == "" || (this.listIDTag.length==0 && this.listIDContact.length==0) || this.date==undefined)
         {
-
+            console.log(false);
+            return false;
         }
         else
         {
-            
         this.getslsend({contact:this.listIDContact,tag:this.listIDTag,contactdenied:this.listIDContactDenied,tagdenied:this.listIDTagDenied}).then(result=>{
         this.notifications.AppID = this.AppID;
         this.notifications.TieuDe = this.tieude;
@@ -267,23 +301,45 @@ export class NotificationstDetailEditComponent implements OnInit{
         this.notifications.Send_TagDenieID=this.listIDTagDenied;
         this.notifications.Send_UserDenieName=this.listNameContactDenied;
         this.notifications.Send_UserDenieID=this.listIDContactDenied;
+        this.notifications.ThoiHanNum=this.thoiHannum;
+        this.notifications.ThoiHanDV=this.thoiHanDV;
+        this.notifications.SendLater=this.sendlater;
         this._notificationsService.Edit(this.notifications).then(result=>this._router.navigate(['confirm',this.notifications.id]));
             })
     }}
+        Check(){            
+        // this.listIDTag=$(".js-data-example-ajaxTag").val();
+        //     for(var i = 0;i<this.listIDTag.length;i++){
+        //         this.listNameTag.push(this.listIDTag[i])
+        //     }
+
+        // this.listIDContact=$(".js-data-example-ajaxContact").val();
+        //     for(var i = 0;i<this.listIDContact.length;i++){
+        //         var item=$(".js-data-example-ajaxContact").select2('data')[i].text;
+        //         var pos=item.indexOf('.');
+        //         var name=item.slice(pos+1,item.length);
+        //         this.listNameContact.push(name);
+        //     }
+        //     console.log("Check Contact: "+this.listNameContact)
+    }
     ngAfterViewInit()
-    {		
+    {		   
         // this._route.queryParams.forEach((params: Params) => {
         //     let id = +params["id"];
         //     this.getCountContact(id).then(result=>{console.log(this.countContact)});
         // })
-        // var count=this.countContact;
+        // var count=this.countContact;        
+
+        this._route.queryParams.forEach((params: Params) => {
+            this.getNotifications(this.id);
+        })
         jQuery(".js-data-example-ajaxTag").select2({
             placeholder:"Tag muốn gửi",
                 multiple: true,
                 allowClear: true, 
                 tokenSeparators: [","],
                 ajax: {
-                    url: "/api/Tag",
+                    url: "/api/TagA",
                     dataType: 'json',
                     delay: 500,
                     data: function (params) {
@@ -292,7 +348,7 @@ export class NotificationstDetailEditComponent implements OnInit{
                             page: params.page,
                             };
                         },
-                    processResults: function (data, params) {
+                        processResults: function (data, params) {
                         // parse the results into the format expected by Select2
                         // since we are using custom formatting functions we do not need to
                         // alter the remote JSON data, except to indicate that infinite
@@ -322,7 +378,7 @@ export class NotificationstDetailEditComponent implements OnInit{
                 allowClear: true, 
                 tokenSeparators: [","],
                 ajax: {
-                    url: "/api/Tag",
+                    url: "/api/TagA",
                     dataType: 'json',
                     delay: 500,
                     data: function (params) {

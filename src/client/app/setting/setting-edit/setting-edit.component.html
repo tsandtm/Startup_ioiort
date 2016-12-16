@@ -15,22 +15,13 @@
         <div class="container">
             <form>
                 <div class="form-group">
-                    <label class="">App ID:</label>
-                    <div class="container">
-                        <div class="row">
-                            <div class='col-sm-6'>
-                                <input type="text" class="form-control" name="appid" [(ngModel)]="setting.AppID" placeholder="App ID" readonly>
-                            </div>  
-                        </div>
-                    </div>
-                </div>  
-                <div class="form-group">
                     <label class="">App Name:</label>
                     <div class="container">
                         <div class="row">
                             <div class='col-sm-6'>
-                                <input type="text" class="form-control" name="appname" [(ngModel)]="setting.AppName" placeholder="App name">
+                                <input type="text" class="form-control" name="setting.AppName" [(ngModel)]="setting.AppName" placeholder="App name">
                             </div>  
+                            <div style="color:red;line-height:33.99px">{{alertname}}</div>
                         </div>
                     </div>
                 </div>  
@@ -39,15 +30,16 @@
                     <div class="container">
                         <div class="row">
                             <div class='col-sm-6'>
-                                <input type="text" class="form-control" name="apikey" [(ngModel)]="setting.APIKey" placeholder="Api key">
+                                <input type="text" class="form-control" name="setting.APIKey" [(ngModel)]="setting.APIKey" placeholder="Api key">
                             </div>  
+                            <div style="color:red;line-height:33.99px">{{alertapi}}</div>                            
                         </div>
                     </div>
                 </div>          
                 <div class="form-group">
                     <label class="">Trạng thái:</label>
-                    <input type="checkbox" name="trangthai" [(ngModel)]="setting.IsActive" checked *ngIf='setting.IsActive==true'>
-                    <input type="checkbox" name="trangthai" [(ngModel)]="setting.IsActive" *ngIf='setting.IsActive==false'>
+                    <input type="checkbox" name="setting.IsActive" [(ngModel)]="setting.IsActive" checked *ngIf='setting.IsActive==true'>
+                    <input type="checkbox" name="setting.IsActive" [(ngModel)]="setting.IsActive" *ngIf='setting.IsActive==false'>
                 </div>               
             </form>
         </div>   

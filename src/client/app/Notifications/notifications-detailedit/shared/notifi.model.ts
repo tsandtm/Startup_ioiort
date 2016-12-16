@@ -10,13 +10,16 @@ export class Notifi {
     Trangthai:number;
     Soluong:number;
     SendUser:number[];
+    SendUserName:string;
     SendTag:number[];
+    SendTagName:string;
     DeniedUser:number[];
+    DeniedUserName:number[];
     DeniedTag:number[];
-}
-export class SLSend{
-    NotifiID:number;
-    count:number;
+    DeniedTagName:number[];
+    ThoiHanNum:number;
+    ThoiHanDV:string;
+    SendLater:boolean;
 }
 export class SentUser{
     NotifiID:number;
@@ -25,6 +28,7 @@ export class SentUser{
     Device: string;
     Email: string;
     FaceBook: string;
+    ContactTagName:string;
 }
 export class UpdateData{
     NotifiID:number;

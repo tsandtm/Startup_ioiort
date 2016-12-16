@@ -12,7 +12,11 @@ var SettingRepo = (function (_super) {
         _super.call(this);
     }
     SettingRepo.prototype.getList = function (option) {
+<<<<<<< HEAD
         var queryText = 'select * from test."n_App" ORDER BY "AppID" ASC ';
+=======
+        var queryText = 'select * from test."n_App" ORDER BY "AppID"ASC ';
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd
         console.info('Excute: ' + queryText);
         var pResult = this._pgPool.query(queryText);
         return pResult.then(function (result) {
@@ -32,6 +36,7 @@ var SettingRepo = (function (_super) {
             return null;
         });
     };
+<<<<<<< HEAD
     SettingRepo.prototype.getListPT = function (option) {
         var queryText = 'select * from test."n_App" ORDER BY "AppID"ASC limit 15 offset $1';
         console.info('Excute: ' + queryText + '' + option);
@@ -107,6 +112,8 @@ var SettingRepo = (function (_super) {
             return result.rows[0].abc + 1;
         });
     };
+=======
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd
     SettingRepo.prototype.Create = function (option) {
         var queryText = 'INSERT INTO test."n_App" values($1,$2,$3,$4,$5)';
         console.log('Excute: ' + option.isactive);

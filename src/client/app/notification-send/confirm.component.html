@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div id="page-heading">
 	<ol class="breadcrumb">
 		<li><a href="index.htm">Home</a></li>
@@ -34,6 +35,60 @@
 				<!-- Modal -->
 				<div id="myModal" class="modal fade" role="dialog">
 					<div class="modal-dialog">
+=======
+    <div class="container" *ngIf='notifi && sentUser'>
+		<h3>Confirm and Test</h3>
+		<hr/>
+		<div class="container">
+			<div class="col-md-8">
+					<img src="/assets/images/device.png" width="330px" height="600px">
+					<div style="position: absolute;top: 240px;left: 45px;width: 270px;border-top: 1px solid #585858;border-bottom: 1px solid #585858;color: white;">
+						<div style="width: 220px;margin-left: 32px;margin-top: 12px;margin-bottom: 7px;word-wrap: break-word;">
+						<span class="glyphicon glyphicon-envelope"></span>
+							<p style="color:white;display: inline;letter-spacing: 1px;font-size:12px">{{notifi.TieuDe}}</p>
+							<p style="opacity: 0.5;display: inline;letter-spacing: 1px;font-size:11px">now</p>
+							<div style="margin-left: 18px;">
+								<p style="color:white;margin: 0px;font-size:12px;letter-spacing: 1px;">{{notifi.Noidung}}</p>
+								<p style="opacity: 0.5;font-size:11px">slide to view</p>
+								</div>
+							</div>
+					</div>	
+			</div>
+			<div class="col-md-4">
+				<h4>Thông tin</h4>
+				<hr />
+				<div>
+					Số lượng user:{{sl}}
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+          				<span class="glyphicon glyphicon-list"></span></button>
+						<!-- Modal -->
+						
+					<p><br/>
+					Ngày gửi:{{notifi.Thoigiangui| date:'dd/MM/yyyy HH:mm:ss' }}<br/><br/>
+					Độ ưu tiên:{{Douutien}}<br/><br/>
+					Thời hạn:{{notifi.ThoiHan| date:'dd/MM/yyyy HH:mm:ss'}}<br/><br/>
+					</p>
+					<!--<form class="form-inline" style="margin-top:180px">-->
+						<div class="form-group" style="margin-top:180px">
+						<p>Test Recipients</p>
+						</div>
+						<button type="submit" class="btn btn-success" (click)='Push()'>Send</button>
+					<!--</form>-->
+					<hr />
+				</div>
+				<div style="float:right">
+				<button type="submit" class="btn btn-success" (click)='Check()'>Check</button>
+				<button type="submit" class="btn btn-success" (click)='SaveAsDraft()'>Save As Draft</button>
+				<button type="submit" class="btn btn-success" (click)='Finish()'>Finish</button>
+				</div>
+			</div>
+		</div>
+    </div>
+
+							<select class="js-data-example-ajax" style="width: 100%"></select>
+							<div id="myModal" class="modal fade" role="dialog">
+						<div class="modal-dialog">
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd
 
 						<!-- Modal content-->
 						<div class="modal-content">
@@ -41,7 +96,14 @@
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 								<h4 class="modal-title">List Sent User</h4>
 							</div>
+							
 							<div class="modal-body">
+								<div class='row'>
+									<div class='col-md-2 text-center' style="line-height:37px">Tìm kiếm:</div>
+									<div class='col-md-6'>
+										<input type='text' class="form-control" [(ngModel)]='listFilter'  (keyup)="find()"/>
+									</div>
+								</div>
 								<table class="table">
 									<thead>
 										<tr>
@@ -66,8 +128,28 @@
 								</table>
 							</div>
 							<div class="modal-footer">
+								<div class="text-center panel-footer" *ngIf="pager.pages">            <!-- pager -->
+									<ul  class="pagination" *ngIf="pager.pages.length>1">
+										<li [ngClass]="{disabled:pager.currentPage === 1}">
+											<a (click)="setPage(listFilter,1)">First</a>
+										</li>
+										<li [ngClass]="{disabled:pager.currentPage === 1}">
+											<a (click)="setPage(listFilter,pager.currentPage - 1)">Previous</a>
+										</li>
+										<li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+											<a (click)="setPage(listFilter,page)">{{page}}</a>
+										</li>
+										<li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+											<a (click)="setPage(listFilter,pager.currentPage + 1)">Next</a>
+										</li>
+										<li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+											<a (click)="setPage(listFilter,pager.totalPages)">Last</a>
+										</li>
+									</ul>
+								</div>
 								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 							</div>
+<<<<<<< HEAD
 						</div>
 
 					</div>
@@ -91,3 +173,9 @@
 		</div>
 	</div>
 </div>
+=======
+							</div>
+
+						</div>
+						</div>
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd

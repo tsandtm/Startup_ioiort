@@ -21,26 +21,36 @@ export class SettingListComponent {
     }
 
     ngOnInit(): void { 
-        this._SettingService.getCount().then(result=>this.id=result)
-        .then(result=>this.setPage(1));
+        this._SettingService.getCount(null).then(result=>this.id=result)
+        .then(result=>this.setPage(null,1));
     }
-    setPage(page: number): void {
+    setPage(find:string,page: number): void {
         if(this.id!=undefined)
         {
         console.log("abeeee"+this.id);
         if (page < 1 || page > this.pager.totalPages) {
             return;
         }
-        this.pager = this._SettingService.getPager(this.id, page);
+        this.pager = this._SettingService.getPager(this.id, page)
         // get current page of items
-        this._SettingService.getAllSettingPT(this.pager.startIndex).then(itempages => this.itempages = itempages);
+       
+        this._SettingService.getAllSettingPT(this.pager.startIndex,find).then(itempages => this.itempages = itempages);        
         //.slice(this.pager.startIndex, this.pager.endIndex + 1);
         }
 
     }
-    Delete(s: Setting): void {
-        // console.log(s.servername);
-        this._SettingService.Delete(s).then(result => this._router.navigate(['setting-list']));
+    find():void{
+        //console.log(this.listFilter+" aaabbb");
+        this.id=undefined;
+        console.log(this.listFilter);
+        this.itempages=undefined;
+        this._SettingService.getCount(this.listFilter).then(result=>
+        {
+            this.id=result;
+            this.pager = this._SettingService.getPager(this.id, 1);
+            this._SettingService.getAllSettingPT(this.pager.startIndex,this.listFilter).then(itempages => this.itempages = itempages);        
+            
+        });
     }
     // launchConfirm = (tgtName:string = 'selected Object'): ng.IPromise<any> => {
 

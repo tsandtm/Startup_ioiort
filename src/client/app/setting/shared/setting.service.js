@@ -24,12 +24,6 @@ var SettingService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    SettingService.prototype.getAllSettingPT = function (req) {
-        return this._http.get('/api/settingPT?so=' + req)
-            .toPromise()
-            .then(function (response) { return response.json(); })
-            .catch(this.handleError);
-    };
     SettingService.prototype.Create = function (req) {
         return this._http.post('/api/setting', req)
             .toPromise()
@@ -53,6 +47,7 @@ var SettingService = (function () {
             .then(function (setting) { return setting.find(function (p) { return p.AppID === id; }); })
             .catch(this.handleError);
     };
+<<<<<<< HEAD
     SettingService.prototype.getCount = function () {
         return this._http.get('/api/settingcount')
             .toPromise()
@@ -79,6 +74,11 @@ var SettingService = (function () {
     };
     SettingService.prototype.getPager = function (totalItems, currentPage, pageSize) {
         if (pageSize === void 0) { pageSize = 15; }
+=======
+    SettingService.prototype.getPager = function (totalItems, currentPage, pageSize) {
+        if (currentPage === void 0) { currentPage = 1; }
+        if (pageSize === void 0) { pageSize = 10; }
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd
         // calculate total pages
         var totalPages = Math.ceil(totalItems / pageSize);
         var startPage, endPage;
@@ -107,6 +107,7 @@ var SettingService = (function () {
         var endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
         // create an array of pages to ng-repeat in the pager control
         var pages;
+<<<<<<< HEAD
         if (currentPage <= 3) {
             if (totalPages < 5) {
                 for (var n = 1; n <= totalPages; n++) {
@@ -144,6 +145,14 @@ var SettingService = (function () {
                     pages.push(n);
             }
             ;
+=======
+        for (var n = 1; n < (totalPages + 1); n++) {
+            if (pages == undefined)
+                pages = [1];
+            else
+                pages.push(n);
+            console.log(totalPages + n);
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd
         }
         // return object with all pager properties required by the view
         return {

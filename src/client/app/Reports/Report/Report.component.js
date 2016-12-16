@@ -73,6 +73,7 @@ var BarChartDemoComponent = (function () {
         });
     };
     BarChartDemoComponent.prototype.createDataSets = function () {
+        // for (let i = 0; i < this.devices.length; i++) {
         var _this = this;
         this.listDevice.forEach(function (ld) {
             console.log("so thiet bi" + _this.devices.length + " so thiet bi moi thang " + ld.listdevice.length);
@@ -90,6 +91,12 @@ var BarChartDemoComponent = (function () {
             }
             console.log("load tat ca" + JSON.stringify(ld));
             ld.listdevice.forEach(function (d) {
+                // if(this.devices[i] != d.name)
+                // {
+                //   console.log("mang devices: " + this.devices[i]);
+                //     d.name=this.devices[i];
+                //     d.count=0;
+                // }
                 var index = _this.checkIfLabelExists(d.name);
                 if (index === -1) {
                     _this.datasets.push({ data: [d.count], label: d.name });
@@ -99,6 +106,7 @@ var BarChartDemoComponent = (function () {
                 }
             });
         });
+        // }
     };
     BarChartDemoComponent.prototype.createDataSetEach = function () {
         var _this = this;

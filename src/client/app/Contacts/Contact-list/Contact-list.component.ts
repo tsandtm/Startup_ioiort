@@ -10,10 +10,13 @@ import { ContactService } from '../Shared/Contact.service';
 // Tag
 import { Tag } from '../Shared/Tag.model';
 import { TagService } from '../Shared/Tag.service';
-// popup update
+// login
+import { LoginService } from '../../login/Shared/login.service';
+// popup update contact
 import { ModalContactUpdate } from '../Contact-update/Contact-update.component';
-// Filter
-import { ContactFilterPipe } from '../Contact-filter/Contact-filter.pipe'
+//popup create tag
+import { ModalTagCreate } from '../Tag-create/Tag-create.component';
+
 
 
 @Component({
@@ -24,55 +27,126 @@ import { ContactFilterPipe } from '../Contact-filter/Contact-filter.pipe'
     [
         ContactService,
         TagService,
+        LoginService,
         Modal
     ]
 })
 export class ContactListComponent {
     Contacts: Contact[];
-    filter: string = '';
+    AccountFilter = "";
     // ContactDetail: Contact;
     checkbox: boolean = false;
     Tags: Tag[];
     pager: any = {};
     itempages: Contact[];
+    isRequest: boolean = true;
+    isSearch: boolean = false;
+    isSearchAccount: boolean = false;
+    ValueSearch: string;
+    ValueSearchAccount: string;
+    Total: number = 0;
+    SessionAccountID: string;
 
-    constructor(private contactService: ContactService, private tagService: TagService, public modal: Modal, private _router: Router, private _route: ActivatedRoute) {
+    constructor(private contactService: ContactService, private tagService: TagService, private loginService: LoginService, public modal: Modal, private _router: Router, private _route: ActivatedRoute) {
     }
 
     loadGetAll() {
-        this.contactService.getContacts()
-            .then((result) => this.Contacts = result);
-    }
-
-    setPage(page: number): void {
-        if (this.Contacts != undefined) {
-            if (page < 1 || page > this.pager.totalPages) {
-                return;
-            }
-            
-            this.pager = this.contactService.getPager(this.Contacts.length, page);
-            // get current page of items
-            this.itempages = this.Contacts.slice(this.pager.startIndex, this.pager.endIndex + 1);
-            console.log(this.itempages);
-        }
-    }
-
-    runGetContacts() {
-        this.getContacts()
-            .then(() => {
-                this.getTag();
-                console.log(this.Contacts);
+        this.getTag()
+            .then((result) => {
+                this.Tags = result;
+                return this.Tags;
+            })
+            .catch((err) => {
+                console.log('error');
+            });
+        this.contactService.getContacts(0)
+            .then((result) => {
+                this.Contacts = result;
+                this.Total = this.Contacts[0].Total;
+                return this.Contacts;
             })
             .then((result) => {
                 this.setPage(1);
             })
-            .catch((error) => {
-                console.log('error: ');
-            });
+    }
+
+    setPage(page: number): void {
+        this.isRequest = true;
+        if (this.Contacts != undefined) {
+            if (page < 1 || page > this.pager.totalPages) {
+                this.isRequest = false;
+                return;
+            }
+            if (this.Contacts.length == 0) {
+                this.Contacts = [];
+                this.pager = [];
+                this.isRequest = false;
+                this.itempages = [];
+                return;
+            }
+            if (this.isSearch == false && this.isSearchAccount == false) {
+                this.contactService.getContacts(page - 1)
+                    .then((response) => {
+                        this.Contacts = response;
+                        this.Total = this.Contacts[0].Total;
+                        return this.Contacts;
+                    })
+                    .then(() => {
+                        this.pager = this.contactService.GetPager(this.Contacts[0].Total, page);
+                        // get current page of items
+                        this.itempages = this.Contacts.slice(0, 25);
+                        this.isRequest = false;
+                    })
+            }
+            else if (this.isSearchAccount == true) {
+                this.contactService.SearchByAccount(this.AccountFilter, page - 1)
+                    .then((response) => {
+                        this.Contacts = response;
+                        this.Total = this.Contacts[0].Total;
+                        return this.Contacts;
+                    })
+                    .then((response) => {
+                        this.pager = this.contactService.GetPager(this.Contacts[0].Total, page);
+                        // get current page of items
+                        this.itempages = this.Contacts.slice(0, 25);
+                        this.isRequest = false;
+                    })
+            }
+            else if (this.isSearch == true) {
+                this.contactService.SearchByTag(this.ValueSearch, page - 1)
+                    .then((response) => {
+                        this.Contacts = response;
+                        this.Total = this.Contacts[0].Total;
+                        return this.Contacts;
+                    })
+                    .then((response) => {
+                        this.pager = this.contactService.GetPager(this.Contacts[0].Total, page);
+                        // get current page of items
+                        this.itempages = this.Contacts.slice(0, 25);
+                        this.isRequest = false;
+                    })
+            }
+        }
     }
 
     ngOnInit() {
-        this.runGetContacts();
+        this.loginService.GetSession()
+            .then((response) => {
+                this.SessionAccountID = response._body;
+                return this.SessionAccountID;
+            })
+            .then((response) => {
+                console.log(this.SessionAccountID);
+                if (this.SessionAccountID == "error") {
+                    this._router.navigate(["login"]);
+                }
+                else {
+                    return this.SessionAccountID;
+                }
+            })
+            .then((response) => {
+                this.loadGetAll();
+            })
     }
 
     getView(ValueContactID: number) {
@@ -80,7 +154,16 @@ export class ContactListComponent {
             .then(d => d.result)
             .then((r) => {
                 if (r == "ok") {
-                    this.runGetContacts()
+                    this.contactService.getContacts(0)
+                        .then((result) => {
+                            this.Contacts = result;
+                            this.Total = this.Contacts[0].Total;
+                            return this.Contacts;
+                        })
+                        .then((result) => {
+                            this.setPage(1);
+                            return this.itempages;
+                        })
                 }
             });
     }
@@ -90,9 +173,11 @@ export class ContactListComponent {
     }
 
     getContacts(): Promise<Contact[]> {
-        return this.contactService.getContacts()
+        this.isRequest = true;
+        return this.contactService.getContacts(1)
             .then((response) => {
                 this.Contacts = response;
+                this.Total = this.Contacts[0].Total;
                 return response;
             })
             .catch((error) => {
@@ -101,7 +186,8 @@ export class ContactListComponent {
     }
 
     getTag(): Promise<Tag[]> {
-        return this.tagService.getTags()
+        this.isRequest = true;
+        return this.tagService.getTags(this.SessionAccountID)
             .then((response) => {
                 let TagAll = new Tag();
                 TagAll.TagNameDisplay = "All";
@@ -116,18 +202,65 @@ export class ContactListComponent {
     }
 
     SearchByTag(Contact_TagName: string) {
-        this.contactService.SearchByTag(Contact_TagName)
+        this.isSearchAccount = false;
+        this.isSearch = true;
+        this.isRequest = true;
+        this.contactService.SearchByTag(Contact_TagName, 0)
             .then((result) => {
                 this.Contacts = result;
-                console.log('search: '+this.Contacts);
+                if (this.Contacts.length != 0) {
+                    this.Total = this.Contacts[0].Total;
+                }
+                else {
+                    this.Total = 0;
+                }
                 return this.Contacts;
             })
             .then((result) => {
-                console.log("vao ");
+                this.ValueSearch = Contact_TagName;
                 this.setPage(1);
             })
             .catch((error) => {
                 console.error(error);
             });
     }
+
+    SearchByAccount() {
+        this.isSearch = false;
+        this.isSearchAccount = true;
+        this.isRequest = true;
+        this.contactService.SearchByAccount(this.AccountFilter, 0)
+            .then((result) => {
+                this.Contacts = result;
+                if (this.Contacts.length != 0) {
+                    this.Total = this.Contacts[0].Total;
+                }
+                else {
+                    this.Total = 0;
+                }
+                return this.Contacts;
+            })
+            .then((result) => {
+                this.setPage(1);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+
+    CreateTag() {
+        return this.modal.open(ModalTagCreate, overlayConfigFactory({ AccountID: 1 }, BSModalContext))
+            .then(d => d.result)
+            .then((r) => {
+                if (r == "ok") {
+                    this.getTag()
+                        .then((result) => {
+                            this.isRequest = false;
+                            this.Tags = result;
+                            return this.Tags;
+                        })
+                }
+            });
+    }
+ 
 }

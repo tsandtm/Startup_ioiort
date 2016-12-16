@@ -28,7 +28,7 @@ export class NotificationsRepo extends RepoBase {
                 notification.AppID = r.AppID;
                 notification.TieuDe = r.TieuDe;
                 notification.NoiDung = r.NoiDung;
-                notification.ThoiGianGui = new Date(r.ThoiGianGui).toLocaleDateString().replace(/T.*/,'').split('-').reverse().join('/');
+                notification.ThoiGianGui = r.ThoiGianGui;
                 notification.ThoiHanToiDa = r.ThoiHanToiDa;
                 notification.DoUuTien = r.DoUuTien;
                 notification.TrangThaiGoi = r.TrangThaiGoi;
@@ -41,6 +41,9 @@ export class NotificationsRepo extends RepoBase {
                 notification.Send_UserID=r.Send_UserID;
                 notification.Send_TagDenieID=r.Send_TagDenieID;
                 notification.Send_UserDenieID=r.Send_UserDenieID;
+                notification.ThoiHanNum=r.ThoiHanNum;
+                notification.ThoiHanDV=r.ThoiHanDV;
+                notification.SendLater=r.SendLater;
                 return notification;
             });
             return notifications;
@@ -49,6 +52,28 @@ export class NotificationsRepo extends RepoBase {
                 console.error(err.message);
                 return null;
             });
+    }
+    public getcount(option): Promise<number> {
+        let queryText;
+        let pResult;
+        if(option==undefined||option=='null'||option==null)
+        {
+            queryText = 'select count(*) as abc FROM test."n_Notifications"'; 
+            pResult = this._pgPool.query(queryText);
+        }
+        else
+        {
+            queryText = 'select count(*) as abc FROM test."n_Notifications" where "TieuDe" like $1 ';   
+            pResult = this._pgPool.query(queryText,['%'+option+'%']);
+            
+        }
+        console.log(queryText+' '+option)
+        return pResult
+            .then(result => {
+                console.log(result.rows[0].abc);
+                return result.rows[0].abc;
+            });
+
     }
     public getOne(option): Promise<Notifications> {
         //  let queryText = 'SELECT "NotifiID", "AppID", "TieuDe", "NoiDung", "ThoiGianGui", "ThoiHanToiDa", "DoUuTien", "TrangThaiGoi", "SoLuong"FROM public."n_Notifications"; where NotifiID=id';
@@ -98,10 +123,62 @@ export class NotificationsRepo extends RepoBase {
             });
 
     }    
+    public getListPT(option): Promise<Notifications[]> {
+        let queryText;
+        let pResult;
+        if(option.id==undefined||option.id=='null'||option.id==null||option.id=='undefined')
+        {
+            queryText = 'select *, (select count (*)  from test."n_Notifications") as total from test."n_Notifications" ORDER BY "NotifiID" ASC limit 25 offset $1';
+            pResult = this._pgPool.query(queryText,[option.so]);
+        }
+        else
+        {
+            queryText = 'select *, (select count (*)  from test."n_Notifications") as total from test."n_Notifications" WHERE "TieuDe" like $1 ORDER BY "NotifiID" ASC limit 25 offset $2';
+            pResult = this._pgPool.query(queryText,['%'+option.id+'%',option.so]);
+        }
+        console.log(queryText+''+option.so+option.id);
+
+
+        return pResult.then(result => {
+            let Nootifications: Notifications[] = result.rows.map(r => {
+                let notification = new Notifications();
+                notification.id = r.NotifiID;
+                notification.AppID = r.AppID;
+                notification.TieuDe = r.TieuDe;
+                notification.NoiDung = r.NoiDung;
+                notification.ThoiGianGui = r.ThoiGianGui;
+                notification.ThoiHanToiDa = r.ThoiHanToiDa;
+                notification.DoUuTien = r.DoUuTien;
+                notification.TrangThaiGoi = r.TrangThaiGoi;
+                notification.SoLuong = r.SoLuong;
+                notification.Send_TagName=r.Send_TagName;
+                notification.Send_UserName=r.Send_UserName;
+                notification.Send_TagDenieName=r.Send_TagDenieName;
+                notification.Send_UserDenieName=r.Send_UserDenieName;
+                notification.Send_TagID=r.Send_TagID;
+                notification.Send_UserID=r.Send_UserID;
+                notification.Send_TagDenieID=r.Send_TagDenieID;
+                notification.Send_UserDenieID=r.Send_UserDenieID;
+                notification.ThoiHanNum=r.ThoiHanNum;
+                notification.ThoiHanDV=r.ThoiHanDV;
+                notification.SendLater=r.SendLater;
+                return notification;
+            });
+            return Nootifications;
+        })
+            .catch(err => {
+                console.error(err.message);
+                return null;
+            });
+    }
     public Edit(option): Promise<Notifications> {
         // let queryText = 'UPDATE test."n_Notifications" SET "NotifiID" = $1, "AppID" = $2 , "TieuDe" =$3, "NoiDung" = $4,"ThoiGianGui" = $5,"ThoiHanToiDa" = $6,"DoUuTien" = $7,"TrangThaiGoi" = $8,"SoLuong" = $9';
         console.log(JSON.stringify(option));
+<<<<<<< HEAD
         let queryText = 'UPDATE public."n_Notifications" SET "AppID"=$1,"TieuDe" =$2, "NoiDung" = $3,"DoUuTien"=$4,"ThoiHanToiDa"=$5,"ThoiGianGui"=$6,"Send_TagID"=$7,"Send_TagName"=$8,"Send_UserName"=$9,"Send_UserID"=$10,"Send_TagDenieName"=$11,"Send_TagDenieID"=$12,"Send_UserDenieName"=$13,"Send_UserDenieID"=$14,"SoLuong"=$15 WHERE "NotifiID"=$16';
+=======
+        let queryText = 'UPDATE test."n_Notifications" SET "AppID"=$1,"TieuDe" =$2, "NoiDung" = $3,"DoUuTien"=$4,"ThoiHanToiDa"=$5,"ThoiGianGui"=$6,"Send_TagID"=$7,"Send_TagName"=$8,"Send_UserName"=$9,"Send_UserID"=$10,"Send_TagDenieName"=$11,"Send_TagDenieID"=$12,"Send_UserDenieName"=$13,"Send_UserDenieID"=$14,"SoLuong"=$15,"ThoiHanNum"=$16,"ThoiHanDV"=$17,"SendLater"=$18 WHERE "NotifiID"=$19';
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd
 
         console.info('Excute: ' + queryText);
 
@@ -121,6 +198,9 @@ export class NotificationsRepo extends RepoBase {
             option.Send_UserDenieName,
             option.Send_UserDenieID,
             option.SoLuong,
+            option.ThoiHanNum,
+            option.ThoiHanDV,
+            option.SendLater,
             option.id
         ]).then(result => null).catch(error => {
             console.error('Error: ', error);

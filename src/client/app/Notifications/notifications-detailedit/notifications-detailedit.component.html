@@ -20,18 +20,42 @@ input[type=date]::-webkit-inner-spin-button {
 					</div>
 					<p>(*) To:<p>
 						<div class="form-group">
-							<select class="js-data-example-ajaxTag" style="width: 100%">
-								  <!--<option value="3620194" selected="selected">select2/select2</option>-->
+							<select class="js-data-example-ajaxTag" style="width: 100%" multiple="multiple">   
+								<!--<option value="1" selected="selected">Phong1</option>
+								<option value="2" selected="selected">Phong2</option>-->							
+								<option *ngFor='let item of ACTag'
+								[value]="item.id"
+								[selected]='1==1'
+								>{{item.text}}
+								</option>
 							</select>
 						</div>
 						<div class="form-group">
-							<select class="js-data-example-ajaxContact" style="width: 100%"></select>
+							<select class="js-data-example-ajaxContact" style="width: 100%">
+								<option *ngFor='let item of ACContact'
+								[value]="item.id"
+								[selected]='1==1'
+								>{{item.text}}
+								</option>
+							</select>
 						</div>
 						<div class="form-group">
-							<select class="js-data-example-ajaxTagDenied" style="width: 100%"></select>
+							<select class="js-data-example-ajaxTagDenied" style="width: 100%">
+								<option *ngFor='let item of ACTagDenied'
+								[value]="item.id"
+								[selected]='1==1'
+								>{{item.text}}
+								</option>
+							</select>
 						</div>
 						<div class="form-group">
-							<select class="js-data-example-ajaxContactDenied" style="width: 100%"></select>
+							<select class="js-data-example-ajaxContactDenied" style="width: 100%">
+								<option *ngFor='let item of ACContactDenied'
+								[value]="item.id"
+								[selected]='1==1'
+								>{{item.text}}
+								</option>
+							</select>
 						</div>
 			</div>
 			<div class="col-md-4">
@@ -81,23 +105,24 @@ input[type=date]::-webkit-inner-spin-button {
 				</div>
 				<div class="form-inline" *ngIf='sendlater'>
 					<div class="form-group">
-						<input type="date" class="form-control" name="date" min="{{today | date:'yyyy-MM-dd'}}" [(ngModel)]="date">
+						<input type="date" class="form-control" name="date" min="{{today | date:'yyyy-MM-dd'}}" [(ngModel)]="newdate">
 						<h6><i>(*) Ngày</i></h6>
 					</div>
 					<div class="form-group">
 						<select #Hour class="form-control" (change)='hour = Hour.value'>
 							<option *ngFor='let item of loophour'
 							[value]="item"
-							[selected]="item==12"
+							[selected]="item==hour"
 							>{{item}}
 							</option>
 						</select>
 						<h6><i>(*) Giờ</i></h6>
 					</div>
 					<div class="form-group">
-						<select #Minute class="form-control" (change)='minute = Minute.value'>
+						<select #Minute class="form-control" (change)='minute = Minute.value' >
 							<option *ngFor='let item of loopminute'
-							[value]="item">
+							[value]="item"
+							[selected]="item==minute">
 							{{item}}
 							</option>
 						</select>
@@ -107,14 +132,14 @@ input[type=date]::-webkit-inner-spin-button {
 				<hr />
 				<div class="form-inline">
 					<div class="form-group">
-						<select #DoUuTien class="form-control" (change)='doUuTien = DoUuTien.value'>
-							<option value="1">Normal</option>
-							<option value="2">High</option>
+						<select #DoUuTien class="form-control" name='dut' (change)='doUuTien = DoUuTien.value' [(ngModel)]="doUuTien">
+							<option value="1" [selected]="doUuTien=='Normal'">Normal</option>
+							<option value="2" [selected]="doUuTien=='High'">High</option>
 						</select>
 						<h6><i>Độ ưu tiên</i></h6>
 					 </div>
 					<div class="form-group">
-						<select #ThoiHannum class="form-control" (change)='thoiHannum = ThoiHannum.value'>
+						<select #ThoiHannum class="form-control" name='thn' (change)='thoiHannum = ThoiHannum.value' [(ngModel)]="thoiHannum">
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -141,7 +166,7 @@ input[type=date]::-webkit-inner-spin-button {
 						<h6><i>Thời hạn tối đa</i></h6>
 					</div>
 					<div class="form-group">
-						<select #ThoiHanDV class="form-control" (change)='thoiHanDV = ThoiHanDV.value;'>
+						<select #ThoiHanDV class="form-control" name='thdv' (change)='thoiHanDV = ThoiHanDV.value;' [(ngModel)]="thoiHanDV">
 							<option value="Week">Week</option>
 							<option value="Day">Day</option>
 							<option value="Hour">Hour</option>
@@ -152,6 +177,7 @@ input[type=date]::-webkit-inner-spin-button {
 				</div>
 			</div>
 		</div>
-		<button type="button" style="float:right" class="btn btn-success btn-lg" (click)='Create()'>Next>></button>
+		<button type="button" style="float:right" class="btn btn-success btn-lg" (click)='Edit()'>Next>></button>
+		<button type="button" style="float:right" class="btn btn-success btn-lg" (click)='Check()'>Check>></button>
 	</form>       
 </div>

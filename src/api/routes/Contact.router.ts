@@ -20,26 +20,37 @@ export class ContactRouter {
     public getRouter(): Router {
 
         this.router.route('/Contactnotifi')
-            .get(this.getAllContact)
-        // .post(this.createAContact)
-        // .delete(this.deleteAContact);
+            .get(this.getAllContactA)
         this.router.route('/Contact')
             .get(this.getAllContact);
         this.router.route('/Contact/GetOne')
             .get(this.getOne);
-        this.router.route('/Contact/Create')
-            .post(this.create);
         this.router.route('/Contact/Update')
             .post(this.update);
         this.router.route('/Contact/SearchByTag')
             .get(this.SearchByTag);
+        this.router.route('/Contact/SearchByAccount')
+            .get(this.SearchByAccount)
         this.router.route('/ContactCount')
             .get(this.getCountContact);
         return this.router;
     }
 
     private getAllContact = (req: Request, res: Response) => {
-        this.contactRepo.getList(req.query)
+        let PageNum;
+        PageNum = req.query.PageNum;
+        this.contactRepo.getList(PageNum)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(error => {
+                console.error(error.message);
+                res.status(500).send(error.message)
+            })
+    }
+
+    private getAllContactA = (req: Request, res: Response) => {
+        this.contactRepo.getListA(req.query)
             .then(result => {
                 res.status(200).json(result)
             })
@@ -72,21 +83,21 @@ export class ContactRouter {
             })
     }
 
-    private create = (req: Request, res: Response) => {
-        let option = new Contact();
-        option = req.body;
+    // private create = (req: Request, res: Response) => {
+    //     let option = new Contact();
+    //     option = req.body;
 
-        console.log(option);
+    //     console.log(option);
 
-        this.contactRepo.create(option)
-            .then((result) => {
-                res.status(200).json(result);
-            })
-            .catch((error) => {
-                console.error(error.message);
-                res.status(500).send(error.message);
-            });
-    }
+    //     this.contactRepo.create(option)
+    //         .then((result) => {
+    //             res.status(200).json(result);
+    //         })
+    //         .catch((error) => {
+    //             console.error(error.message);
+    //             res.status(500).send(error.message);
+    //         });
+    // }
 
     private update = (req: Request, res: Response) => {
         let option = new Contact();
@@ -102,16 +113,31 @@ export class ContactRouter {
             });
     }
 
+    private SearchByAccount = (req: Request, res: Response) => {
+        console.log(req.query.Account +" - "+req.query.PageNum)
+        let TaiKhoan = req.query.Account;
+        let PageNum = req.query.PageNum;
+        this.contactRepo.SearchByAccount(TaiKhoan, PageNum)
+            .then((result) => {
+                res.status(200).json(result);
+            })
+            .catch((error) => {
+                console.error(error.message);
+                res.status(500).send(error.message);
+            })
+    }
+
     private SearchByTag = (req: Request, res: Response) => {
         let Contact_TagName = req.query.Contact_TagName;
-        this.contactRepo.SearchByTag(Contact_TagName)
-        .then((result) => {
-            res.status(200).json(result);
-        })
-        .catch((error) => {
-            console.error(error.message);
-            res.status(500).send(error.message);
-        })
+        let PageNum = req.query.PageNum;
+        this.contactRepo.SearchByTag(Contact_TagName, PageNum)
+            .then((result) => {
+                res.status(200).json(result);
+            })
+            .catch((error) => {
+                console.error(error.message);
+                res.status(500).send(error.message);
+            })
     }
 
 }

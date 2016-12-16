@@ -29,41 +29,50 @@ export class SettingCreateComponent {
     ngOnInit(): void { 
         this.settingservice.getAppID().then(result=>this.n=result);
     }
-    Create(){
-        this.setting=undefined;
-        this.settingservice.getAPI(this.apikey).then(result=>this.setting=result)
-        .then(result=>this.setAPI()).then(result=>this.setAPINull());
-    
-        this.setting=undefined;
-        this.settingservice.getAppName(this.appname).then(result=>this.setting=result) 
-        .then(result=>this.setAppName()).then(result=>this.setAppNameNull());       
-        if(this.i==0&&this.t==0)
-        {
-            if(this.trangthai==undefined)
-            this.trangthai=false;        
-            this.ngaytao = new Date().toLocaleDateString("en-US")+'';
-            this.setting={
-                AppID: this.n,
-                APIKey: this.apikey,
-                IsActive: this.trangthai,
-                NgayTao: this.ngaytao,
-                AppName: this.appname,
-            }
+    Create(){  
+        this.settingservice.getAPI(this.apikey,null).then(result=>{
+            this.setting=undefined;
+            this.setting=result;
+            this.i=0;
+        })
+        .then(result=>this.setAPI()).then(result=>this.setAPINull())
+        .then(result=>{
+        this.settingservice.getAppName(this.appname,null).then(result=>{
+            this.setting=undefined;
+            this.setting=result;
+            this.t=0;
+        }) 
+        .then(result=>this.setAppName()).then(result=>this.setAppNameNull())       
+        .then(result=>{
+            if(this.i==0&&this.t==0)
+            {
+                if(this.trangthai==undefined)
+                this.trangthai=false;        
+                this.ngaytao = new Date().toLocaleDateString("en-US")+'';
+                this.setting={
+                    AppID: this.n,
+                    APIKey: this.apikey,
+                    IsActive: this.trangthai,
+                    NgayTao: this.ngaytao,
+                    AppName: this.appname,
+                }
             this.settingservice.Create(this.setting).then(result=>this._router.navigate(['setting-list']));
-        }
+            }
+        });
+        });
     }
     setAppNameNull(){
         if(this.appname==undefined||this.appname=="")
         {
             this.alertname="Chưa nhập AppName!!!!!";
-            this.i=1;
+            this.t=1;
         }
     }
     setAPINull(){
         if(this.apikey==undefined||this.apikey=="")
         {
             this.alertapi="Chưa nhập API Key!!!!!";
-            this.t=1;
+            this.i=1;
         }          
  
     }

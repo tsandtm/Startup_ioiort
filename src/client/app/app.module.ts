@@ -21,8 +21,8 @@ import { BarChartDemoComponent } from './Reports/Report/Report.component';
 import { ProductFilterPipe } from './products/product-filter/product-filter.pipe';
 import { StarComponent } from './shared/star.component';
 import { MenuListComponent } from './menu/menu-list/menu-list.component';
-import { ContactsListComponent } from './contacts/contacts-list/contacts-list.component';
-import { ContactsService } from './contacts/shared/contacts.service';
+// import { ContactsListComponent } from './contacts/contacts-list/contacts-list.component';
+// import { ContactsService } from './contacts/shared/contacts.service';
 import { NotificationsListComponent } from './notifications/notifications-list/notifications-list.component';
 import { NotificationstDetailComponent } from './notifications/notifications-detail/notifications-detail.component';
 import { NotificationsService } from './notifications/shared/notifications.service';
@@ -30,15 +30,16 @@ import { YeucaubanListComponent } from './yeucauban/yeucauban-list/yeucauban-lis
 import { YeucaubanService } from './yeucauban/shared/yeucauban.service';
 import { NotifiSendComponent } from './notification-send/notification.component';
 import { ConfirmComponent } from './notification-send/confirm.component';
+//waitting
+import { CircleComponent } from './notifications/spinner/circle';
 //import {RlTagInputModule} from 'angular2-tag-input';
 import { TagInputModule } from 'ng2-tag-input';
 import * as io from 'socket.io-client';
 import { ContactListComponent } from './Contacts/Contact-list/Contact-list.component';
-import { ContactFilterPipe } from './Contacts/Contact-filter/Contact-filter.pipe';
-import { ContactDetailComponent } from './Contacts/Contact-detail/Contact-detail.component';
 // Trùng tên contactService  với thánh Võ
 import { ContactService } from './Contacts/shared/Contact.service';
 import { ModalContactUpdate } from './Contacts/Contact-update/Contact-update.component';
+import { ModalTagCreate } from './Contacts/Tag-create/Tag-create.component';
 import { NotificationFilterPipe } from './notifications/notifications-filter/notifications-filter.pipe';
 import { NotificationDateFilterPipe } from './notifications/notifications-filter/notificationsdate-filter.pipe';
 import { NotificationstDetailEditComponent } from './notifications/notifications-detailedit/notifications-detailedit.component';
@@ -48,10 +49,12 @@ import { SettingCreateComponent } from './setting/setting-create/setting-create.
 import { SettingEditComponent } from './setting/setting-edit/setting-edit.component';
 import { SettingDeleteComponent } from './setting/setting-delete/setting-delete.component';
 import { SettingDetailComponent } from './setting/setting-detail/setting-detail.component';
-import { SettingFilterPipe } from './setting/setting-filter/setting-filter.pipe';
 import { DateFilterPipe } from './notifications/notifications-filter/datefilter';
+import { LoginComponent } from './login/login.component';
+import { LoginService } from './login/Shared/login.service';
+//spinkit component
+import { FadingCircleComponent } from 'ng2-spin-kit/dist/spinners'
 import { RotatingPlaneComponent } from './spinner/rotating-plane.component';
-import { CircleComponent } from './spinner/circle';
 
 @NgModule({
     imports: [
@@ -65,7 +68,7 @@ import { CircleComponent } from './spinner/circle';
         ModalModule.forRoot(),
         BootstrapModalModule,
     ],
-    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, ProductService, ContactsService, ContactNotifiService, NotificationsService, YeucaubanService, ContactService, NotifiService, TagService, SettingService],
+    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, ProductService, ContactNotifiService, NotificationsService, YeucaubanService, ContactService, NotifiService, TagService, SettingService,LoginService],
     declarations: [
         AppComponent,
         NotifiSendComponent,
@@ -75,33 +78,33 @@ import { CircleComponent } from './spinner/circle';
         SettingEditComponent,
         SettingDeleteComponent,
         SettingDetailComponent,
-        SettingFilterPipe,
         WelcomeComponent,
-        NotificationsListComponent,
-        ProductDetailComponent,
-        ProductListComponent,
-        ProductFilterPipe,
         BarChartDemoComponent,
         MenuListComponent,
-        ContactsListComponent,
         NotificationsListComponent,
         NotificationstDetailComponent,
         YeucaubanListComponent,
         StarComponent,
         ConfirmComponent,
         ContactListComponent,
-        ContactDetailComponent,
-        ContactFilterPipe,
+        ProductListComponent,
+        ProductDetailComponent,
+        ProductFilterPipe,
+        // ContactDetailComponent,
+        // ContactFilterPipe,
         ModalContactUpdate,
+        ModalTagCreate,
         NotificationsListComponent,
         NotificationstDetailComponent,
         NotificationstDetailEditComponent,
         NotificationFilterPipe,
         DateFilterPipe,
-        RotatingPlaneComponent
+        RotatingPlaneComponent,
+        FadingCircleComponent,
+        LoginComponent
     ],
     bootstrap: [AppComponent],
-    entryComponents: [ModalContactUpdate]
+    entryComponents: [ModalContactUpdate, ModalTagCreate]
 
 })
 export class AppModule { }

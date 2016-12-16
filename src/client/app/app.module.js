@@ -57,8 +57,13 @@ var setting_delete_component_1 = require('./setting/setting-delete/setting-delet
 var setting_detail_component_1 = require('./setting/setting-detail/setting-detail.component');
 var setting_filter_pipe_1 = require('./setting/setting-filter/setting-filter.pipe');
 var datefilter_1 = require('./notifications/notifications-filter/datefilter');
+<<<<<<< HEAD
 var rotating_plane_component_1 = require('./spinner/rotating-plane.component');
 var circle_1 = require('./spinner/circle');
+=======
+//spinkit component
+var spinners_1 = require('ng2-spin-kit/dist/spinners');
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd
 var AppModule = (function () {
     function AppModule() {
     }
@@ -107,8 +112,17 @@ var AppModule = (function () {
                 notifications_detail_component_1.NotificationstDetailComponent,
                 notifications_detailedit_component_1.NotificationstDetailEditComponent,
                 notifications_filter_pipe_1.NotificationFilterPipe,
+<<<<<<< HEAD
                 datefilter_1.DateFilterPipe,
                 rotating_plane_component_1.RotatingPlaneComponent
+=======
+<<<<<<< HEAD
+                datefilter_1.DateFilterPipe,
+                spinners_1.FadingCircleComponent
+=======
+                datefilter_1.DateFilterPipe
+>>>>>>> 205dde2a92aa1d9124a7518d553d22fcfd90b6c5
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd
             ],
             bootstrap: [app_component_1.AppComponent],
             entryComponents: [Contact_update_component_1.ModalContactUpdate]

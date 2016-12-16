@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div id="page-heading">
     <ol class="breadcrumb">
         <li><a href="index.htm">Home</a></li>
@@ -21,9 +22,29 @@
         [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
 
     </div>
+=======
+<div *ngIf='Reports'>
+<!--<template ngFor #item [ngForOf]="Reports" #i="index" >-->
+<div>
+  
+  <input type="button" (click)='getdatabymonth(1)' value="Tháng trước">
+  <input type="button" (click)='getdatabymonth(2)' value="Tháng này">
+  <input type="button" (click)='getdatabymonth(3)' value="Năm này">
+  <div style="display: block">
+    <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd
   </div>
-  <!--</template>-->
+</div>
+<!--</template>-->
 
+<<<<<<< HEAD
   <div style="display: block;width:300px;height:300px">
     <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)"
       (chartClick)="chartClicked($event)"></canvas> 
@@ -32,3 +53,16 @@
 </div>
 <h2 *ngFor="let item of c">{{item}}</h2>
     <h2>{{testto}} Tổng thiết bị</h2>
+=======
+<div style="display: block;width:300px;height:300px">
+  <canvas baseChart
+              [data]="doughnutChartData"
+              [labels]="doughnutChartLabels"
+              [chartType]="doughnutChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+              <h2 *ngFor="let item of c">{{item}}</h2>
+              <h2>{{testto}} Tổng thiết bị</h2>
+</div>
+</div>
+>>>>>>> c673b48189d43e88582aceadb665102779e03bdd

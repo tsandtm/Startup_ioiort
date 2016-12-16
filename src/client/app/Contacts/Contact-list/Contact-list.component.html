@@ -7,9 +7,11 @@
     
 </div><br><br>
 <span defaultOverlayTarget></span>
+
 <script src="/scripts/jquery/dist/jquery.js"></script>
 
 <div class='panel panel-primary'>
+    
     <div class='panel-heading'>
         Contact
     </div>
@@ -17,32 +19,35 @@
     <!-- Filter the Products   -->
     <div class='panel-body'>
         <div class='row'>
-            <div class='col-md-1'>Filter by:</div>
-            <div class='col-md-4'>
-                <input type='text' [(ngModel)]='filter' />
+            <div class='col-sm-1'><p style="margin-top:5px;">Filter by:</p></div>
+            <div class='col-sm-2'>
+                <input type='text' [(ngModel)]='AccountFilter' placeholder="Tìm kiếm theo tài khoản" style="margin-top:5px;"/>
+            </div>
+            <div class="col-sm-2">
+                <button class="btn btn-success"  (click)="SearchByAccount()">Search</button>
             </div>
         </div>
-        <div class='row' *ngIf='filter'>
+        <!--<div class='row' *ngIf='filter'>
             <div class='col-md-6'>
                 <h3>Filtered by: {{ filter }}</h3>
             </div>
-        </div>
+        </div>-->
         <div class="row" *ngIf='Tags' style="margin-left: 10px;">
             Tag:
             <a style="cursor:pointer; text-decoration: underline; margin-left: 10px;" *ngFor='let itemTag of Tags' (click)='SearchByTag(itemTag.TagNameDisplay)'>
                 {{ itemTag.TagNameDisplay }}
             </a>
+            &nbsp;<i class="fa fa-plus-square" aria-hidden="true" style="cursor: pointer; color: blue" (click)='CreateTag()'></i>
         </div>
 
-
+        <div class="row" *ngIf="Total != undefined" style="margin-left: 10px;">
+            <p>Total rows: {{ Total }}</p>
+        </div>
 
         <div class='table-responsive'>
             <table class='table'>
                 <thead>
                     <tr>
-                        <th>
-                            <input type="checkbox" (click)='checkAlllist()' />
-                        </th>
                         <th>ContactID</th>
                         <th>Token</th>
                         <th>Email</th>
@@ -55,10 +60,11 @@
                     </tr>
                 </thead>
                 <tbody id='listcheckall'>
-                    <tr *ngFor='let item of itempages | ContactFilter: filter'>
-                        <td>
-                            <input type="checkbox" class="checkbox-item" [checked]="checkbox" />
-                        </td>
+                    <tr>
+                        <sk-fading-circle [isRunning]="isRequest"></sk-fading-circle>
+					</tr>
+                    <tr *ngFor='let item of itempages'>
+                        
                         <td>
                             <a (click)='getView(item.ContactID)' style="cursor:pointer">
                                 {{ item.ContactID }}
@@ -93,7 +99,7 @@
             </table>
             <div class="text-center">
                 <!-- pager -->
-                <ul class="pagination">
+                <ul class="pagination" *ngIf='pager.length != 0 && pager.totalPages > 1'>
                     <li [ngClass]="{disabled:pager.currentPage === 1}">
                         <a (click)="setPage(1)">First</a>
                     </li>

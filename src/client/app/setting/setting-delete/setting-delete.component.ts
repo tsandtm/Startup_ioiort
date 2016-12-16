@@ -20,11 +20,12 @@ export class SettingDeleteComponent {
         this._route.params.forEach((params: Params) => {
             console.log(params["id"]+'aaaa');
             let id = +params["id"];
-            this.getSetting(id);
+            let id2= +params["id2"]-1;
+            this.getSetting(id,id2);
         })
     }
-    getSetting(id: number) {
-        this.settingservice.getOne(id)
+    getSetting(id: number,id2:number) {
+        this.settingservice.getOne(id,id2)
             .then(setting => this.setting = setting)
         
     }

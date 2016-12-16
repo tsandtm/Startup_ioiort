@@ -32,6 +32,7 @@
       'angular2-tag-input': 'npm:angular2-tag-input/dist/angular2-tag-input.bundle.js',
       'ng2-tag-input': 'npm:ng2-tag-input/dist/ng2-tag-input.bundle.js',
       'socket.io-client': "npm:socket.io-client/socket.io.js",
+      'ng2-spin-kit':'npm:ng2-spin-kit',
       'ng2-spin-kit-new': 'npm:ng2-spin-kit-new'
     },
     // packages tells the System loader how to load when no filename and/or no extension
@@ -59,6 +60,9 @@
         defaultExtension: 'js'
       },
       'socket.io-client': {
+        defaultExtension: 'js'
+      },
+      'ng2-spin-kit': {
         defaultExtension: 'js'
       }
     }
