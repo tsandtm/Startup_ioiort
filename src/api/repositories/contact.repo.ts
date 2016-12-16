@@ -34,7 +34,7 @@ export class ContactRepo extends RepoBase {
                     return res.rows[0].IDUser;
                 }
                 else {
-                    return 0;
+                    return null;
                 }
             }).catch(err => { return 0 });
     }

@@ -30,9 +30,8 @@ import { BookRouter } from './routes/book.router';
 import { WebsRouter } from './routes/website.router';
 import { UserWebsRouter } from './routes/user_website.router'
 import { LoginRouter } from './routes/login.router'
-import { LogRouter } from './routes/log.router'
 
-import {FacebookRouter} from './routes/Facebook.router';
+import { FacebookRouter } from './routes/Facebook.router';
 // sử dụng các router được định nghĩa từ các modules
 
 // import router
@@ -41,8 +40,6 @@ import { TinTucRouter } from './routes/tintuc.router';
 app.use('/api', [(new TinTucRouter()).getRouter()]);
 app.use('/api', [(new BookRouter()).getRouter(), (new WebsRouter()).getRouter(), (new UserWebsRouter()).getRouter()]);
 app.use('/tintuc', [new LoginRouter().GetRouter()])
-app.use('/log',new LogRouter().GetRouter())
-
 //facebook login bebinh
-app.use('/Facebook',new FacebookRouter().GetRouter());
+app.use('/Facebook', new FacebookRouter().GetRouter());
 export default app;

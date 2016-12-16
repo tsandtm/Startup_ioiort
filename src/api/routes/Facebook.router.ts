@@ -29,7 +29,14 @@ export class FacebookRouter {
     }
     public GetUserFacebook=(req:Request,res:Response)=>{
             this.contactRe.GetUserFacebook(req.body.Facebook).then(result=>{
-                res.status(200).send(result);
+                if(result===null)
+                {
+                    res.status(200).send('-1');
+                }
+                else{
+                    res.status(200).send(result);
+                }
+                //res.status(200).send(result);
             }).catch(err=>{res.status(500).json(err)});
     }
 }
