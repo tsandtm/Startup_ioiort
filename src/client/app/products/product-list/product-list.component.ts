@@ -7,7 +7,7 @@ import {ProduceDetailModal,ProduceDetailModalContext} from '../product-detail-mo
 
 import { Product } from '../shared/product.model';
 import { ProductFilterPipe } from '../product-filter/product-filter.pipe';
-import { StarComponent } from '../../shared/star.component';
+import { StarComponent } from '../../shared/components/star.component';
 import { ProductService } from '../shared/product.service';
 
 @Component({

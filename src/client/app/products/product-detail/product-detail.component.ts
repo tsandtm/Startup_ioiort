@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 
 import { Product } from '../shared/product.model';
 import { ProductService } from '../shared/product.service';
-import { StarComponent } from '../../shared/star.component';
+import { StarComponent } from '../../shared/components/star.component';
 
 @Component({
     templateUrl: '/products/product-detail/product-detail.component.html'

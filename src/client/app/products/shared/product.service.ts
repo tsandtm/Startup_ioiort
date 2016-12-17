@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { LogService } from '../../shared';
+import { LogService } from '../../shared/log.service';
 
 import { Product } from './product.model';
 

@@ -1,7 +1,7 @@
 import { Http, URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
-import * as path from 'path';
-let api = require(path.join('src','config','api.json'));
+// import * as path from 'path';
+let api = require('src/config/api.json');
 
 @Injectable()
 export class LogService {
@@ -13,7 +13,7 @@ export class LogService {
     /**
      * log error den csdl
      */
-    public logError(error: Error, platform: string, ungdung: string) {
+    public logError(error: Error, platform: string, ungdung: string, coder:string) {
         let body = new URLSearchParams();
         body.set("TextLog", JSON.stringify(error || error.message));
         body.set('Platform', platform);

@@ -41,6 +41,13 @@ app.get('/', (req, res) => {
 
 app.get('*',(req,res) => {
     console.log(req.url);
+    if(req.url === '/src/config/api.json'){
+        // res.set({
+        //     'Content-Length': 100000
+        // })
+        res.sendFile(__dirname + '/config/api.json');
+        return;
+    }
     res.sendFile(path.join(__dirname,'client','index.html'));
 })
 

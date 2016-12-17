@@ -23,21 +23,32 @@ import { AppComponent } from './app.component';
 import { BookListComponent } from './books/book-list/book-list.component';
 import { BookDetailComponent } from './books/book-detail/book-detail.component';
 import { WelcomeComponent } from './home/welcome.component';
-import { StarComponent } from './shared/star.component'
 
 // service
-import { LogService } from './shared';
+// import { LogService,StarComponent } from './shared';
+
+import {LogService} from './shared/log.service';
+import {StarComponent} from './shared/components/star.component';
+
+import {ProductDetailComponent} from './products/product-detail/product-detail.component';
+import {ProduceDetailModal} from './products/product-detail-modal/product-detail-modal.component';
+import {ProductFilterPipe} from './products/product-filter/product-filter.pipe';
+import {ProductListComponent} from './products/product-list/product-list.component';
+import {ProductModalComponent} from './products/product-modal/product-modal.component';
+import {CustomModal} from './products/product-modal/custom-modal.component';
+import {Product} from './products/shared/product.model';
+import {ProductService} from './products/shared/product.service';
 
 // product things
-import {
-    CustomModal,
-    ProductFilterPipe,
-    ProductDetailComponent,
-    ProductListComponent,
-    ProductService,
-    ProduceDetailModal,
-    ProductModalComponent
-} from './products';
+// import {
+//     CustomModal,
+//     ProductFilterPipe,
+//     ProductDetailComponent,
+//     ProductListComponent,
+//     ProductService,
+//     ProduceDetailModal,
+//     ProductModalComponent
+// } from './products';
 
 
 
@@ -55,7 +66,7 @@ import {
         Ng2PaginationModule],
 
 
-    providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy },
+    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy },
         ProductService,
         LogService],
 
