@@ -23,6 +23,6 @@ export class AboutRouter {
 
 
     private Get(req: Request, res: Response) {
-        return res.send(200).json({ Message: "File Log to Server", About: "Bựa team" })
+        return res.status(200).json({ Message: "File Log to Server", About: "Bựa team" })
     }
 }
