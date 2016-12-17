@@ -1,9 +1,9 @@
 {
     "development": {
-        "database": "news",
-        "username": "duc",
+        "database": "Log",
+        "username": "postgres",
         "password": "123",
-        "host": "localhost",
+        "host": "118.69.219.50",
         "port": 5432,
         "ssl": false,
         "schema": "test",

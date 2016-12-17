@@ -17,7 +17,7 @@ import { Ng2PaginationModule } from 'ng2-pagination';
 import { routing } from './app.routing.module';
 
 //spinkit component
-import {CubeGridComponent} from 'ng2-spin-kit/app/spinners'
+import {CubeGridComponent} from 'ng2-spin-kit/dist/spinners'
 
 // component
 import { AppComponent } from './app.component';
