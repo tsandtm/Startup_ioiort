@@ -63,7 +63,7 @@ export class UserWebsRouter {
     }
 
     private GetUser = (req: Request, res: Response) => {
-        this.userwebsRepo.Delete({ idUser: req.query.idUser })
+        this.userwebsRepo.Get({ idUser: req.query.idUser })
             .then(lnw => {
                 if(lnw != -1)
                     return res.sendStatus(200)
