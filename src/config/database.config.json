@@ -1,45 +1,29 @@
 {
     "development": {
-        "database": "testdb",
-        "username": "duc",
-        "password": "123456",
-        "config": {
-            "dialect": "postgres",
-            "define": {
-                "timestamps": false,
-                "schema": "test"
-            }
-        },
-        "host": "localhost",
+        "database": "Log",
+        "username": "postgres",
+        "password": "123",
+        "host": "118.69.219.50",
         "port": 5432,
         "ssl": false,
-        "pool":{
-            "max": 20,
-            "min": 4
-        },
-        "idleTimeoutMillis": 2000,
-        "schema": "test"
+        "schema": "test",
+        "pool": {
+            "min": 1,
+            "max": 10
+        }
         
     },
     "test": {
-        "database": "travis_ci_test",
+        "database": "news_test",
         "username": "postgres",
         "password": null,
-        "config": {
-            "dialect": "postgres",
-            "define": {
-                "timestamps": false,
-                "schema": "test"
-            }
-        },
         "host": "localhost",
         "port": 5432,
         "ssl": false,
-        "pool":{
-            "max": 20,
-            "min": 4
-        },
-        "idleTimeoutMillis": 2000,
-        "schema": "test"
+        "schema": "test",
+        "pool": {
+            "min": 1,
+            "max": 10
+        }
     }
 }

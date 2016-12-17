@@ -7,12 +7,11 @@
   "scripts": {
     "test": "gulp compile && alsatian ./dist/test/book.router.spec.js",
     "start": "gulp",
-    "create-mock-data": "node ./dist/scripts/mock-data.js",
-    "drop-all": "node ./dist/scripts/drop-all.js",
-    "alsatian-version": "alsatian -v",
+    "create-model":"npm run create-database && npm run create-database-from-sqlfile",
+    "drop-all-table": "node ./dist/scripts/DropAllTable.js",
     "remove-database": "node ./dist/scripts/RemoveDatabase.js",
     "create-database": "node ./dist/scripts/CreateDatabase.js",
-    "create-schema": "node ./dist/scripts/CreateSchema.js"
+    "create-database-from-sqlfile": "node ./dist/scripts/CreateTableAndSchemaFromSQLFile.js"    
   },
   "keywords": [],
   "author": "",
@@ -63,6 +62,7 @@
     "@angular/platform-browser-dynamic": "~2.1.1",
     "@angular/router": "~3.1.1",
     "@angular/upgrade": "~2.1.1",
+    "angular2-modal": "^2.0.1",
     "bluebird": "^3.4.6",
     "body-parser": "^1.15.2",
     "bootstrap": "^3.3.7",
@@ -70,6 +70,8 @@
     "es6-promise": "^4.0.5",
     "express": "^4.14.0",
     "inversify": "^2.0.1",
+    "ng2-pagination": "^0.5.1",
+    "ng2-spin-kit": "^1.1.0",
     "pg": "^6.1.0",
     "pg-hstore": "^2.3.2",
     "pg-pool": "^1.5.0",

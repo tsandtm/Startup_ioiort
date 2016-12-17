@@ -8,5 +8,6 @@ export class Product {
     description: string;
     starRating: number;
     imageUrl: string;
+    isCheked: boolean;
 }
 

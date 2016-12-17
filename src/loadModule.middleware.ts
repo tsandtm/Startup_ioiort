@@ -3,14 +3,8 @@ import path  = require('path');
 
 
 const angularModule = [
-    express.static(path.join(__dirname,'..','node_modules','@angular','core','bundles')),
-    express.static(path.join(__dirname,'..','node_modules','@angular','common','bundles')),
-    express.static(path.join(__dirname,'..','node_modules','@angular','compiler','bundles')),
-    express.static(path.join(__dirname,'..','node_modules','@angular','platform-browser','bundles')),
-    express.static(path.join(__dirname,'..','node_modules','@angular','platform-browser-dynamic','bundles')),
-    express.static(path.join(__dirname,'..','node_modules','@angular','http','bundles')),
-    express.static(path.join(__dirname,'..','node_modules','@angular','router','bundles')),
-    express.static(path.join(__dirname,'..','node_modules','@angular','forms','bundles'))
+    express.static(path.join(__dirname,'..','node_modules')),
+    express.static(path.join(__dirname,'..','node_modules','@angular'))
 ]
 
 const javaScripts = [

@@ -20,7 +20,7 @@
         "imageUrl": "http://openclipart.org/image/300px/svg_to_png/58471/garden_cart.png"
     },
     {
-        "productId": 5,
+        "productId": 3,
         "productName": "Hammer",
         "productCode": "TBX-0048",
         "releaseDate": "May 21, 2016",
@@ -30,7 +30,7 @@
         "imageUrl": "http://openclipart.org/image/300px/svg_to_png/73/rejon_Hammer.png"
     },
     {
-        "productId": 8,
+        "productId": 4,
         "productName": "Saw",
         "productCode": "TBX-0022",
         "releaseDate": "May 15, 2016",
@@ -40,7 +40,7 @@
         "imageUrl": "http://openclipart.org/image/300px/svg_to_png/27070/egore911_saw.png"
     },
     {
-        "productId": 10,
+        "productId": 5,
         "productName": "Video Game Controller",
         "productCode": "GMG-0042",
         "releaseDate": "October 15, 2015",
@@ -48,5 +48,15 @@
         "price": 35.95,
         "starRating": 4.6,
         "imageUrl": "http://openclipart.org/image/300px/svg_to_png/120337/xbox-controller_01.png"
+    },
+    {
+        "productId": 6,
+        "productName": "Guitar",
+        "productCode": "DDA-0023",
+        "releaseDate": "October 15, 2015",
+        "description": "Standard two-button video game controller",
+        "price": 66.95,
+        "starRating": 4.6,
+        "imageUrl": "https://openclipart.org/image/300px/svg_to_png/265319/1477949088.png"
     }
 ]
