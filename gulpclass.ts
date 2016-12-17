@@ -33,7 +33,7 @@ export class Gulpfile {
     // thư mục sẽ chứa các file js đã được compile
     jsDest: string = 'dist';
     filesToMove: string[] = [
-        './src/config/**/*.*',
+        './src/config/**/*.json',
         './src/client/index.html',
         './src/systemjs.config.js',
         './src/client/app/**/*.html',
