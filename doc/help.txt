@@ -1,0 +1,24 @@
+# query get log de xem trong qua trinh bug
+select * from public."Log" a
+where a.coder = ''  --điền tên coder vào
+limit 10
+
+
+# an thu muc ko can xem trong project 
+vao menu file=>Preferency=>Workspace setting 
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/dist": true,
+        "**/node_modules": true
+    },
+    "typescript.tsdk": "node_modules/typescript/lib"
+}
+
+các nội dung chứa trong "files.exclude" sẽ bị ẩn đi
+
+# ko push cac noi dung ko can thiet len git
+Thêm các nội dung vào file ".gitignore". File này khi tạo git sẽ tự sinh ra sẵn
