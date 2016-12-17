@@ -8,7 +8,6 @@ import { HttpModule } from '@angular/http';
 // modal module
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
-import { CustomModal } from './products/product-modal/custom-modal.component';
 
 // paging module
 import { Ng2PaginationModule } from 'ng2-pagination';
@@ -17,24 +16,29 @@ import { Ng2PaginationModule } from 'ng2-pagination';
 import { routing } from './app.routing.module';
 
 //spinkit component
-import {CubeGridComponent} from 'ng2-spin-kit/dist/spinners'
+import { CubeGridComponent } from 'ng2-spin-kit/dist/spinners'
 
 // component
 import { AppComponent } from './app.component';
 import { BookListComponent } from './books/book-list/book-list.component';
 import { BookDetailComponent } from './books/book-detail/book-detail.component';
-import { ProductListComponent } from './products/product-list/product-list.component';
 import { WelcomeComponent } from './home/welcome.component';
-import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import { StarComponent } from './shared/star.component'
-import { ProductModalComponent } from './products/product-modal/product-modal.component';
-import { ProduceDetailModal } from './products/product-detail-modal/product-detail-modal.component';
 
 // service
-import { ProductService } from './products/shared/product.service';
+import { LogService } from './shared';
 
-// pipe
-import { ProductFilterPipe } from './products/product-filter/product-filter.pipe'
+// product things
+import {
+    CustomModal,
+    ProductFilterPipe,
+    ProductDetailComponent,
+    ProductListComponent,
+    ProductService,
+    ProduceDetailModal,
+    ProductModalComponent
+} from './products';
+
 
 
 
@@ -51,7 +55,9 @@ import { ProductFilterPipe } from './products/product-filter/product-filter.pipe
         Ng2PaginationModule],
 
 
-    providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, ProductService],
+    providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy },
+        ProductService,
+        LogService],
 
 
     declarations: [AppComponent,
