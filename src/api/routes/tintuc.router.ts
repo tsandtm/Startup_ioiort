@@ -37,6 +37,8 @@ export class TinTucRouter {
         this.router.route('/tinquantam/:id/:idtintuc?') /**api cua tin quan tam */
             .get(this.getallquantam)
 
+        this.router.route('/test')
+            .get(this.test)
         return this.router;
     }
     private lktindaxoa = (req: Request, res: Response) => {
@@ -106,7 +108,7 @@ export class TinTucRouter {
                 res.status(500).send(error.message)
             })
     }
-   
+
     private xoatin = (req: Request, res: Response) => {
         // let option = new TinTuc();
         // option = req.body;
@@ -161,52 +163,10 @@ export class TinTucRouter {
             });
     }
 
-    //xai d======================================================
-    // private deleteABook = (req: Request, res: Response) => {
-    //     console.log(req.body)
-    //     this.tintucRepo.delete(req.params.id)
-    //         .then(result => {
-    //             res.status(200).json(result)
-    //         })
-    //         .catch(error => {
-    //             console.error('Error: ' ,error)
-    //             res.status(500).send(error.message)
-    //         })
-    // }
-
-    //cat+============================================
-
-    // private editTinTuc=(req:Request,res:Response)=>{
-    //     this.tintucRepo.edit(req.params.id)
-    //         .then(result=>{
-    //             res.status(200).json(result)
-    //         })
-    //         .catch(error=>{
-    //             console.error('Error:',error)
-    //             res.status(500).send(error.message)
-    //         })
-    // }
-    // private createATinTuc
-    // }
-    // private create=(req:Request,res:Response)=>{
-    //     thí
-    // }
-    // private create=(req:Request,res:Response)=>{
-    //    this.tintucRepo.create((req, res) => {
-    //      let id = req.query.id;
-    //      TinTucModel.findById(id).then(tintuc => {
-    //         if (tintuc) {
-    //             let authorName = req.body.name;
-    //             tintuc.createAuthor({ name: authorName })
-    //             res.status(200).send('da tao them author vao book');
-    //         } else {
-    //             res.status(404).send('khong tim thay book voi id=' + id);
-    //         }
-    //     })
-    //         .catch(error => {
-    //             res.status(500).send(error.message);
-    //         })
-    // })
-    //    }
+    private test = (req: Request, res: Response) => {
+        this.tintucRepo.test()
+            .then(result => res.status(200).json(result))
+            .catch(err => res.sendStatus(404))
+    }
 
 }

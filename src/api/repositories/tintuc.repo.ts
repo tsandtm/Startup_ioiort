@@ -50,42 +50,6 @@ export class TinTucRepo extends RepoBase {
             });
     }
 
-    // public TinNoiBat(option, limit, offset): Promise<TinTuc[]> {
-    //     let queryText = `SELECT "IDTinTuc","TieuDe","MoTa","ThoiGianDangTin","URLNews","URLThumbImage" , "ArrayDaXem"
-    //     FROM public."TinTuc",public."User_DanhMucSite" 
-    //     WHERE ${option} = Any ("ArrayDaXoa"::bigint[]) is null
-    //     AND "TinTuc"."IDDanhMucSite"="User_DanhMucSite"."IDDanhMucSite" 
-    //     and "IDUser"=${option}
-    //     ORDER BY cardinality("ArrayDaXem") DESC NULLS LAST LIMIT ${limit} OFFSET ${offset}`;
-
-    //     console.info('Excute: ' + queryText);
-    //     let pResult;
-    //     pResult = this._pgPool.query(queryText)
-    //     return pResult.then(result => {
-    //         let TinTucs: TinTuc[] = result.rows.map(r => {
-    //             let tintuc = new TinTuc();
-    //             tintuc.IDTinTuc = r.IDTinTuc;
-    //             tintuc.IDDanhMucSite = r.IDDanhMucSite;
-    //             tintuc.TieuDe = r.TieuDe;
-    //             tintuc.MoTa = r.MoTa;
-    //             tintuc.NoiDung = r.NoiDung;
-    //             tintuc.ThoiGianDangTin = r.ThoiGianDangTin;
-    //             tintuc.URLNews = r.URLNews;
-    //             tintuc.URLThumbImage = r.URLThumbImage;
-    //             tintuc.URLImage = r.URLImage;
-    //             tintuc.ArrayDaXem = r.ArrayDaXem;
-    //             tintuc.ArrayDaXoa = r.ArrayDaXoa;
-    //             tintuc.ArrayQuanTam = r.ArrayQuanTam;
-    //             // console.log(r.idtintuc)
-    //             return tintuc;
-    //         });
-    //         return TinTucs;
-    //     })
-    //         .catch(err => {
-    //             console.error(err.message);
-    //             return null;
-    //         });
-    // }
 
     public lktindaxoa(option, limit, offset): Promise<TinTuc[]> {
         // 2 = Any ("ArrayDaXoa"::bigint[]) so sanh trong mảng có IDUser là 2 hay ko, có trả về true ko thì false
@@ -318,6 +282,33 @@ export class TinTucRepo extends RepoBase {
             .catch(error => {
                 console.error('Error: ', error);
                 return Promise.reject(error);
+            });
+    }
+
+
+    public test(): Promise<TinTuc[]> {
+        let query = `SELECT * 
+                FROM public."TinTuc"
+                WHERE "TieuDe" like '%Huy động mọi nguồn lực khắc phục hậu quả mưa lũ%'`
+        return this._pgPool.query(query)
+            .then(result => {
+                let TinTucs: TinTuc[] = result.rows.map(r => {
+                    let tintuc = new TinTuc();
+                    tintuc.IDTinTuc = r.IDTinTuc;
+                    tintuc.IDDanhMucSite = r.IDDanhMucSite;
+                    tintuc.TieuDe = r.TieuDe;
+                    tintuc.MoTa = r.MoTa;
+                    tintuc.NoiDung = r.NoiDung;
+                    tintuc.ThoiGianDangTin = r.ThoiGianDangTin;
+                    tintuc.URLNews = r.URLNews;
+                    tintuc.URLThumbImage = r.URLThumbImage;
+                    tintuc.URLImage = r.URLImage;
+                    return tintuc;
+                });
+                return TinTucs;
+            })
+            .catch(err => {
+                return console.error(err.message);
             });
     }
 }
