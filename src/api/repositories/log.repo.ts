@@ -1,4 +1,4 @@
-import { RepoBase } from '../repositories.base';
+import { RepoBase } from './repositories.base';
 import { Pool, QueryResult } from 'pg';
 
 export class LogRepo extends RepoBase {
@@ -40,7 +40,7 @@ export class LogRepo extends RepoBase {
         let TieuDeLog = option.TieuDeLog ? option.TieuDeLog : null
         let query = ` SELECT *
                         FROM public."Log"
-                        WHERE  "TieuDeLog" like '%${TieuDeLog}%' AND date_part('day', public."Log"."NgayTao") = ${date}
+                        WHERE  lower("TieuDeLog") like lower('%${TieuDeLog}%') AND date_part('day', public."Log"."NgayTao") = ${date}
                         Limit ${limit} offset ${offset}`
         return this._pgPool.query(query)
             .then(result => Promise.resolve(result.rows))

@@ -1,7 +1,7 @@
 import { Router, Response, Request } from 'express';
 
 // import các module tạo table
-import { LogRepo } from '../repositories/Log.repo/log.repo';
+import { LogRepo } from '../repositories/log.repo';
 
 
 
@@ -46,7 +46,7 @@ export class LogRouter {
      * Hàm xử lý lấy log theo Tiêu đề Limit max = 100 offset min = 0;
      * Ngày mặc định là new Date().GetDate()
      */
-    private GetLogByName(req: Request, res: Response) {
+    private GetLogByName = (req: Request, res: Response) => {
         this.logrepo.GetListbyName(req.query)
             .then(result => res.status(200).json(result))
             .catch(err => res.sendStatus(400))
