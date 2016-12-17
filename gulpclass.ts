@@ -69,46 +69,17 @@ export class Gulpfile {
             if (!callBackCalled) {
                 callBackCalled = true;
                 done();
-            }
+            }''
         });
     }
 
     @Task()
-    serve(done){
-        bs.init({
-            proxy: 'localhost:8080'
-        },(err,bs) => {
-            if(err){
-                console.error(err.message);
-            }
-        });
-
-        gulp.watch(['src/api/**/*.ts'], ['compile',bs.reload]);
-
+    watch(done){
+        gulp.watch(['src/**/*.ts'],['compile']);
         done();
     }
 
-    @Task('', ['compile'])
-    test(done) {
-        let stdout = '';
-        let stderr = '';
-        let child = childp.exec('npm test', { cwd: process.cwd() });
 
-        child.stdout.on('data', (data) => {
-            stdout += data;
-        });
-
-        child.stderr.on('data', (data) => {
-            stderr += data;
-        })
-
-        child.on('close', (code) => {
-            gutil.log('exit with code', code);
-            gutil.log(gutil.colors.blue(stdout));
-            gutil.log(gutil.colors.red(stderr));
-            done();
-        })
-    }
 
     /**
      * task này phụ thuộc vào 2 task clean và compile
@@ -129,6 +100,8 @@ export class Gulpfile {
             .pipe(gulp.dest('dist/production'));
     }
 
+
+
     @Task()
     delDist(){
         return del(this.jsDest);
@@ -140,6 +113,6 @@ export class Gulpfile {
      */
     @SequenceTask()
     default() {
-        return ['compile','nodemon'];
+        return ['compile','nodemon','watch'];
     }
 } 

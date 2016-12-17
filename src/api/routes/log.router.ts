@@ -39,7 +39,7 @@ export class LogRouter {
             }).catch(err => {
                 // console.log(err)
                 res.sendStatus(400)
-            })
+            }) 
     }
 
     /**
