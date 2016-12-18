@@ -13,5 +13,6 @@ export class TinTuc {
     ArrayDaXem: number;
     ArrayDaXoa: number;
     ArrayQuanTam: number;
+    ChuaXem: boolean;
 }
 
