@@ -12,8 +12,11 @@ Database		PostgreSQL 8.1
 
 /* Create Tables */
 
-
-
+/*
+chuong tv chinh sua o day
+chuong tv chinh sua o day
+chuong tv chinh sua o day
+*/
 Create table "Log"
 (
 	"IDLog" Serial NOT NULL,
