@@ -42,7 +42,8 @@ chuong tv chinh sua o day
 
 Create table "Log"
 (
-	"IDLog" Serial NOT NULL,
+	"IDLog aa" Serial NOT NULL,
+		"NgayTao" Timestamp,
 	"NgayTao" Timestamp,
 	"TextLog" Text,
 	"Platforfrfrm" Varchar(250),
