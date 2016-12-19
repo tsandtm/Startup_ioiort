@@ -18,6 +18,17 @@ chuong tv chinh sua o day
 chuong tv chinh sua o day
 chuong tv chinh sua o day
 */
+Create table "Log"
+(
+	"IDLog" Serial NOT NULL,
+	"NgayTao" Timestamp,
+	"TextLog" Text,
+	"Platforfrfrm" Varchar(250),
+	"UngDung" Varchar(250),
+	"TieuDeLog" Varchar(250),
+ primary key ("IDLog")
+) Without Oids;
+
 
 Create table "Log"
 (
