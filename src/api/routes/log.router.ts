@@ -16,7 +16,7 @@ export class LogRouter {
     }
 
     /**
-     * GetRouter
+     * Tạo router cho api
      */
     public GetRouter(): Router {
         this.router.route('/')
@@ -25,10 +25,11 @@ export class LogRouter {
         return this.router;
     }
 
-
     private Get(req: Request, res: Response) {
         return res.sendStatus(200)
     }
+
+    // Hàm này dùng để lưu log
     private Log = (req: Request, res: Response) => {
         console.log(req.body)
         this.logrepo.InsertOne(req.body)
