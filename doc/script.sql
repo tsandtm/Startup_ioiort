@@ -12,17 +12,19 @@ Database		PostgreSQL 8.1
 
 /* Create Tables */
 
+
 /*
 chuong tv chinh sua o day
 chuong tv chinh sua o day
 chuong tv chinh sua o day
 */
+
 Create table "Log"
 (
 	"IDLog" Serial NOT NULL,
 	"NgayTao" Timestamp,
 	"TextLog" Text,
-	"Platform" Varchar(250),
+	"Platforfrfrm" Varchar(250),
 	"UngDung" Varchar(250),
 	"TieuDeLog" Varchar(250),
  primary key ("IDLog")
