@@ -19,6 +19,18 @@ chuong tv chinh sua o day
 chuong tv chinh sua o day
 */
 
+/*
+chuong tv chinh sua o day
+chuong tv chinh sua o day
+chuong tv chinh sua o day
+*/
+
+/*
+chuong tv chinh sua o day
+chuong tv chinh sua o day
+chuong tv chinh sua o day
+*/
+
 Create table "Log"
 (
 	"IDLog" Serial NOT NULL,
