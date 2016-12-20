@@ -13,4 +13,5 @@ export class ListWeb{
     Icon:string;
     TenGoi_KoDau:string;
     GiaTri?:boolean;
+    DaChon?:number;
 }

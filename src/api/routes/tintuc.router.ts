@@ -28,15 +28,12 @@ export class TinTucRouter {
             .post(this.deleteABook);
         this.router.route('/boxoa')
             .post(this.boxoa);
-
         this.router.route('/xoatin')
             .post(this.xoatin);
         this.router.route('/daxem')
             .post(this.daxem);
-
         this.router.route('/tinquantam/:id/:idtintuc?') /**api cua tin quan tam */
             .get(this.getallquantam)
-
         this.router.route('/test')
             .get(this.test)
         return this.router;
