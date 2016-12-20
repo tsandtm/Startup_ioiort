@@ -37,7 +37,7 @@ export class LoginRouter {
                 if (result > 0)
                     return res.status(200).send({ Message: `OK`, IDUser: result })
                 else
-                    return res.status(400).send({ Message: `Fail`,IDUser: `undefined` })
+                    return res.status(200).send({ Message: `Fail`,IDUser: `undefined` })
             })
             .catch(err => res.status(400).send({ Message: err }))
     }

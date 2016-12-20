@@ -21,7 +21,7 @@ export class ContactRepo extends RepoBase {
                     return -1;
             })
 
-            .catch(err => { })
+            .catch(err => err)
     }
     //login facebook
     // kiem tra user facebook
