@@ -26,10 +26,14 @@ ON (BANG1."IDDanhMucSite" = BANG2."IDDanhMucSite")
     public GetList(option, limit, offset) {
         let query = `
 SELECT  BANG1."IDDanhMucSite" = BANG2."IDDanhMucSite" IS NULL = FALSE AS giatri, BANG1."IDDanhMucSite",
-            BANG1."TenGoi",BANG1."TenGoi_KoDau",BANG1."Icon",BANG1."DuongDan"
+            BANG1."TenGoi",BANG1."TenGoi_KoDau",BANG1."Icon",BANG1."DuongDan",( SELECT count("IDUser") AS DaChon
+        from "User_DanhMucSite"
+        where "IDUser" = ${option}) AS DaChon
+
 FROM 
         (       SELECT "IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan"
-                FROM public."DanhMucSite" 
+                FROM public."DanhMucSite"
+                WHERE "ParentID" = ${-1} 
                 ORDER BY "IDDanhMucSite" ASC LIMIT ${limit} OFFSET ${offset}    ) AS BANG1
 FULL OUTER JOIN 
         (       SELECT "User_DanhMucSite"."IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan","IDUser" 
@@ -53,20 +57,22 @@ ORDER BY BANG1."IDDanhMucSite" ASC
                     web.TenGoi_KoDau = r.TenGoi_KoDau;
                     web.LinkRSS = r.LinkRSS;
                     web.Icon = r.Icon;
-                    web.GiaTri = r.giatri
+                    web.GiaTri = r.giatri;
+                    web.DaChon = r.dachon;
                     return web;
                 });
                 return webs;
             })
     }
 
-    public getName(option,IDUser) {
+    public getName(option, IDUser) {
         let queryText = `
         SELECT  BANG1."IDDanhMucSite" = BANG2."IDDanhMucSite" IS NULL = FALSE AS giatri, BANG1."IDDanhMucSite",
             BANG1."TenGoi",BANG1."TenGoi_KoDau",BANG1."Icon",BANG1."DuongDan"
 FROM 
         (       SELECT "IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan"
                 FROM public."DanhMucSite" 
+                WHERE "ParentID" = ${-1}
                 ORDER BY "IDDanhMucSite" ASC) AS BANG1
 FULL OUTER JOIN 
         (       SELECT "User_DanhMucSite"."IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan","IDUser" = ${IDUser}
@@ -99,4 +105,5 @@ ORDER BY BANG1."IDDanhMucSite" ASC
                 return webs;
             })
     }
+
 }

@@ -96,6 +96,7 @@ export class Gulpfile {
 
    
 
+
     /**
      * task này phụ thuộc vào 2 task clean và compile
      * chỉ khi clean và compile chạy xong thì task này mới chạy

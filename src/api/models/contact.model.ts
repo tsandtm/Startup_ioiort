@@ -1,7 +1,7 @@
 import { ModelBase } from './model.base';
 
 export class contact extends ModelBase{
-    TaiKhoan?:string;
+    TaiKhoan?:string; 
     Facebook?:string;
     PhoneNumber?:string;
     Email?:string;
