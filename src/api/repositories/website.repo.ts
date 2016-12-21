@@ -47,7 +47,7 @@ WHERE
 ORDER BY BANG1."IDDanhMucSite" ASC
                     `
         console.log(`Excute: ${query}`);
-        return this._pgPool.query(query)
+        return this._query(query)
             .then(result => {
                 let webs: ListWeb[] = result.rows.map(r => {
                     let web = new ListWeb();
@@ -62,6 +62,10 @@ ORDER BY BANG1."IDDanhMucSite" ASC
                     return web;
                 });
                 return webs;
+            })
+            .catch(err => {
+                console.log(err)
+                return Promise.reject(err);
             })
     }
 
@@ -88,8 +92,7 @@ ORDER BY BANG1."IDDanhMucSite" ASC
 `;
 
         console.info('Excute: ' + queryText);
-
-        return this._pgPool.query(queryText)
+        return this._query(queryText)
             .then(result => {
                 let webs: ListWeb[] = result.rows.map(r => {
                     let web = new ListWeb();
@@ -103,6 +106,9 @@ ORDER BY BANG1."IDDanhMucSite" ASC
                     return web;
                 });
                 return webs;
+            })
+            .catch(err =>{
+                console.log(err);
             })
     }
 
