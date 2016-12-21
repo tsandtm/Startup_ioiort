@@ -27,21 +27,20 @@ export class LogRepo extends RepoBase {
                                 ,'${option.TieuDeLog}');`;
 
 
-        return this._pgPool.query(query)
+        return this._query(query)
             .then(result => {
-                // return console.log(`Đã Insert`)
-                return
+                return Promise.resolve('Đã Insert')
             })
             .catch(err => {
-                // return console.log(err)
-                return;
+                console.log(err)
+                return Promise.reject(err);
             })
     }
 
-/**
- * Thanh
- * Lấy lên toàn bộ log theo tiêu đề
- */
+    /**
+     * Thanh
+     * Lấy lên toàn bộ log theo tiêu đề
+     */
     public GetListbyName(option): Promise<any> {
         let limit = option.limit ? option.limit : 100;
         let offset = option.offset ? option.offset : 0;
@@ -53,7 +52,7 @@ export class LogRepo extends RepoBase {
                                 AND date_part('day', public."Log"."NgayTao") = ${date}
                         Limit ${limit} offset ${offset}`
 
-        return this._pgPool.query(query)
+        return this._query(query)
             .then(result => Promise.resolve(result.rows))
             .catch(err => Promise.reject(err))
     }
