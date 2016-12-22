@@ -34,22 +34,27 @@ export class WebsRouter {
      * req.params.IDUser
      */
     private GetList = (req: Request, res: Response) => {
-        let limit = req.query.limit;
-        let offset = req.query.offset;
+        let limit = req.query.limit ? req.query.limit : 12;
+        let offset = req.query.offset ? req.query.offset : 0;
         console.log(`${limit}_${offset}`)
-        this.websRepo.GetList(req.params.IDUser, limit, offset)
+        this.websRepo.GetList(req.params, limit, offset)
             .then(result => res.status(200).json(result))
-            .catch(err => Promise.reject(err))
+            .catch(err => {
+                res.status(404).json({Message: `Đừng manh động`})
+                console.error(err);
+                return Promise.reject(err);
+            })
     }
 
 
     private getName = (req: Request, res: Response) => {
         console.log("string " + req.query.string)
-        this.websRepo.getName(req.query.string, req.query.IDUser)
+        this.websRepo.getName(req.query)
             .then(result => {
                 res.status(200).json(result);
             })
             .catch(err => {
+                res.status(404).json({Message: `Đừng manh động`})
                 console.error(err);
                 return Promise.reject(err);
             })

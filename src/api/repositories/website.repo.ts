@@ -24,21 +24,22 @@ ON (BANG1."IDDanhMucSite" = BANG2."IDDanhMucSite")
      * GetList : Hàm trả về danh sách User nào đã chọn danh nào thì trả về giá trị là true còn lại false
      */
     public GetList(option, limit, offset) {
+
         let query = `
 SELECT  BANG1."IDDanhMucSite" = BANG2."IDDanhMucSite" IS NULL = FALSE AS giatri, BANG1."IDDanhMucSite",
             BANG1."TenGoi",BANG1."TenGoi_KoDau",BANG1."Icon",BANG1."DuongDan",( SELECT count("IDUser") AS DaChon
         from "User_DanhMucSite"
-        where "IDUser" = ${option}) AS DaChon
+        where "IDUser" = ${option.IDUser}) AS DaChon
 
 FROM 
         (       SELECT "IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan"
                 FROM public."DanhMucSite"
-                WHERE "ParentID" = ${-1} 
-                ORDER BY "IDDanhMucSite" ASC LIMIT ${limit} OFFSET ${offset}    ) AS BANG1
+                WHERE "ParentID" = ${-1}  AND (SELECT EXISTS (SELECT 1 FROM public."User" WHERE "IDUser" = ${option.IDUser} ) )
+                ORDER BY "IDDanhMucSite" ASC LIMIT ${limit ? limit : 12} OFFSET ${offset ? offset : 0}    ) AS BANG1
 FULL OUTER JOIN 
         (       SELECT "User_DanhMucSite"."IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan","IDUser" 
                 FROM public."DanhMucSite" , public."User_DanhMucSite" 
-                WHERE "DanhMucSite"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite" and "IDUser"= ${option}    ) AS BANG2
+                WHERE "DanhMucSite"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite" and "IDUser"= ${option.IDUser}    ) AS BANG2
 ON (BANG1."IDDanhMucSite" = BANG2."IDDanhMucSite")
 
 WHERE
@@ -69,25 +70,31 @@ ORDER BY BANG1."IDDanhMucSite" ASC
             })
     }
 
-    public getName(option, IDUser) {
+    public getName(option) {
+
+
+
+
         let queryText = `
         SELECT  BANG1."IDDanhMucSite" = BANG2."IDDanhMucSite" IS NULL = FALSE AS giatri, BANG1."IDDanhMucSite",
             BANG1."TenGoi",BANG1."TenGoi_KoDau",BANG1."Icon",BANG1."DuongDan"
 FROM 
         (       SELECT "IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan"
                 FROM public."DanhMucSite" 
-                WHERE "ParentID" = ${-1}
+                WHERE "ParentID" = ${-1} AND (SELECT EXISTS (SELECT 1 FROM public."User" WHERE "IDUser" = ${option.IDUser ? option.IDUser : -1} ) )
                 ORDER BY "IDDanhMucSite" ASC) AS BANG1
 FULL OUTER JOIN 
-        (       SELECT "User_DanhMucSite"."IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan","IDUser" = ${IDUser}
+        (       SELECT "User_DanhMucSite"."IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan","IDUser" = ${option.IDUser ? option.IDUser : -1}
                 FROM public."DanhMucSite" , public."User_DanhMucSite" 
-                WHERE "DanhMucSite"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite" and "IDUser"= ${IDUser}    ) AS BANG2
+                WHERE "DanhMucSite"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite" AND "IDUser"= ${option.IDUser ? option.IDUser : -1}    ) AS BANG2
 ON (BANG1."IDDanhMucSite" = BANG2."IDDanhMucSite")
 
 WHERE
         (           BANG1."IDDanhMucSite",
-                    BANG1."TenGoi",BANG1."TenGoi_KoDau",BANG1."Icon",BANG1."DuongDan") is not null and
-                    lower(BANG1."TenGoi") like lower('%${option}%') or lower(BANG1."TenGoi_KoDau") like lower('%${option}%')
+                    BANG1."TenGoi",BANG1."TenGoi_KoDau",BANG1."Icon",BANG1."DuongDan") IS NOT NULL AND
+                    LOWER(BANG1."TenGoi") LIKE LOWER('%${option.string ? option.string : ''}%') OR LOWER(BANG1."TenGoi_KoDau") LIKE LOWER('%${option.string ? option.string : ''}%')
+
+
 ORDER BY BANG1."IDDanhMucSite" ASC
 `;
 
@@ -107,7 +114,7 @@ ORDER BY BANG1."IDDanhMucSite" ASC
                 });
                 return webs;
             })
-            .catch(err =>{
+            .catch(err => {
                 console.log(err);
             })
     }
