@@ -35,9 +35,9 @@ export class LoginRouter {
         this.contactrepo.count(req.body)
             .then(result => {
                 if (result > 0)
-                    return res.status(200).send(result)
+                    return res.status(200).send({ Message: `OK`, IDUser: result })
                 else
-                    return res.status(400).send({ Message: result })
+                    return res.status(200).send({ Message: `Fail`,IDUser: `undefined` })
             })
             .catch(err => res.status(400).send({ Message: err }))
     }

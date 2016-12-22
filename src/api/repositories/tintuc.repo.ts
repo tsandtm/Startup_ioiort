@@ -25,7 +25,7 @@ export class TinTucRepo extends RepoBase {
 
         console.info('Excute: ' + queryText);
         let pResult;
-        pResult = this._pgPool.query(queryText)
+        pResult = this._query(queryText)
         return pResult.then(result => {
             let TinTucs: TinTuc[] = result.rows.map(r => {
                 let tintuc = new TinTuc();
@@ -46,7 +46,7 @@ export class TinTucRepo extends RepoBase {
         })
             .catch(err => {
                 console.error(err.message);
-                return null;
+                return err.message;
             });
     }
 
@@ -60,7 +60,7 @@ export class TinTucRepo extends RepoBase {
 
         console.info('Excute: ' + queryText);
         let pResult;
-        pResult = this._pgPool.query(queryText)
+        pResult = this._query(queryText)
         return pResult.then(result => {
             let TinTucs: TinTuc[] = result.rows.map(r => {
                 let tintuc = new TinTuc();
@@ -92,7 +92,7 @@ export class TinTucRepo extends RepoBase {
 
         console.info('Excute: ' + queryText);
         let pResult;
-        pResult = this._pgPool.query(queryText)
+        pResult = this._query(queryText)
         return pResult.then(result => {
             let TinTucs: TinTuc[] = result.rows.map(r => {
                 let tintuc = new TinTuc();
@@ -121,7 +121,7 @@ export class TinTucRepo extends RepoBase {
         let queryText = `UPDATE public."TinTuc"
         Set "ArrayDaXoa" = array_remove("ArrayDaXoa", ${IDUser}::bigint)
         WHERE "IDTinTuc"= ${id}`;
-        return this._pgPool.query(queryText)
+        return this._query(queryText)
             .then(result => {
                 return id;
             })
@@ -136,11 +136,13 @@ export class TinTucRepo extends RepoBase {
         let queryText = `UPDATE public."TinTuc" Set "ArrayDaXoa"= "ArrayDaXoa" || ARRAY[${IDUser}]::BIGINT[]
         WHERE "IDTinTuc"=${id}`;
 
-        return this._pgPool.query(queryText)
+        return this._query(queryText)
             .then(result => {
+
                 return id;
             })
             .catch(error => {
+                
                 console.error('Error: ', error);
                 return Promise.reject(error);
             });
@@ -151,7 +153,7 @@ export class TinTucRepo extends RepoBase {
 
         console.info('Excute: ' + queryText);
 
-        return this._pgPool.query(queryText, [option.id, option.name])
+        return this._query(queryText, [option.id, option.name])
             .then(result => {
                 let tintuc = new TinTuc();
                 tintuc.IDTinTuc = result.rows[0].IDTinTuc;
@@ -164,14 +166,18 @@ export class TinTucRepo extends RepoBase {
                 tintuc.URLImage = result.rows[0].URLImage;
                 tintuc.ThoiGianDangTin = result.rows[0].ThoiGianDangTin;
                 return tintuc;
-            });
+            })
+            .catch(err =>{
+                console.log(err)
+                return Promise.reject(err)
+            })
     }
     public update(id, IDUser): Promise<TinTuc> {
         console.log('id: ' + id);
         console.log('id user: ' + IDUser);
         let queryText = `UPDATE public."TinTuc" Set "ArrayQuanTam"= "ArrayQuanTam" || ARRAY[${IDUser}]::BIGINT[] 
         WHERE "IDTinTuc"=${id}`;
-        return this._pgPool.query(queryText)
+        return this._query(queryText)
             .then(result => {
                 return id;
             })
@@ -188,7 +194,7 @@ export class TinTucRepo extends RepoBase {
         let queryText = `UPDATE public."TinTuc"
         Set "ArrayQuanTam" = array_remove("ArrayQuanTam", ${IDUser}::bigint)
         WHERE "IDTinTuc"= ${id}`;
-        return this._pgPool.query(queryText)
+        return this._query(queryText)
             .then(result => {
                 return id;
             })
@@ -218,7 +224,7 @@ export class TinTucRepo extends RepoBase {
 
         console.info('Excute: ' + queryText);
         let pResult;
-        pResult = this._pgPool.query(queryText)
+        pResult = this._query(queryText)
         return pResult.then(result => {
             let TinTucs: TinTuc[] = result.rows.map(r => {
                 let tintuc = new TinTuc();
@@ -234,7 +240,7 @@ export class TinTucRepo extends RepoBase {
         })
             .catch(err => {
                 console.error(err.message);
-                return null;
+                return Promise.reject(err);
             });
     }
     public chuadoc(option): Promise<TinTuc[]> {
@@ -244,9 +250,9 @@ export class TinTucRepo extends RepoBase {
         let pResult;
 
         if (option) {
-            pResult = this._pgPool.query(queryText, [option.id, option.name])
+            pResult = this._query(queryText, [option.id, option.name])
         } else {
-            pResult = this._pgPool.query(queryText)
+            pResult = this._query(queryText)
         }
         return pResult.then(result => {
             let TinTucs: TinTuc[] = result.rows.map(r => {
@@ -266,7 +272,7 @@ export class TinTucRepo extends RepoBase {
         })
             .catch(err => {
                 console.error(err.message);
-                return null;
+                return Promise.reject(err.message);
             });
     }
 
@@ -275,7 +281,7 @@ export class TinTucRepo extends RepoBase {
         // console.log('id user: ' + IDUser);
         let queryText = `UPDATE public."TinTuc" Set "ArrayDaXem"= "ArrayDaXem" || ARRAY[${IDUser}]::BIGINT[]
         WHERE "IDTinTuc"=${id} and ${IDUser} = Any ("ArrayDaXem"::bigint[]) is not true `;
-        return this._pgPool.query(queryText)
+        return this._query(queryText)
             .then(result => {
                 return id;
             })
@@ -290,7 +296,7 @@ export class TinTucRepo extends RepoBase {
         let query = `SELECT * 
                 FROM public."TinTuc"
                 WHERE "TieuDe" like '%Huy động mọi nguồn lực khắc phục hậu quả mưa lũ%'`
-        return this._pgPool.query(query)
+        return this._query(query)
             .then(result => {
                 let TinTucs: TinTuc[] = result.rows.map(r => {
                     let tintuc = new TinTuc();
