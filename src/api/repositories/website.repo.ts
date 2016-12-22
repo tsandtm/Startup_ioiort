@@ -29,22 +29,21 @@ SELECT  BANG1."IDDanhMucSite" = BANG2."IDDanhMucSite" IS NULL = FALSE AS giatri,
             BANG1."TenGoi",BANG1."TenGoi_KoDau",BANG1."Icon",BANG1."DuongDan",( SELECT count("IDUser") AS DaChon
         from "User_DanhMucSite"
         where "IDUser" = ${option}) AS DaChon
-
 FROM 
         (       SELECT "IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan"
                 FROM public."DanhMucSite"
                 WHERE "ParentID" = ${-1} 
-                ORDER BY "IDDanhMucSite" ASC LIMIT ${limit} OFFSET ${offset}    ) AS BANG1
+                ORDER BY "IDDanhMucSite" ASC ) AS BANG1
 FULL OUTER JOIN 
         (       SELECT "User_DanhMucSite"."IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan","IDUser" 
                 FROM public."DanhMucSite" , public."User_DanhMucSite" 
                 WHERE "DanhMucSite"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite" and "IDUser"= ${option}    ) AS BANG2
 ON (BANG1."IDDanhMucSite" = BANG2."IDDanhMucSite")
-
 WHERE
         (           BANG1."IDDanhMucSite",
                     BANG1."TenGoi",BANG1."TenGoi_KoDau",BANG1."Icon",BANG1."DuongDan") is not null
 ORDER BY BANG1."IDDanhMucSite" ASC
+LIMIT ${limit} OFFSET ${offset}   
                     `
         console.log(`Excute: ${query}`);
         return this._pgPool.query(query)
