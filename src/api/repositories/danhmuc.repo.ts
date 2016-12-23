@@ -119,7 +119,7 @@ export class DanhMucRePo extends RepoBase {
                 web.LinkRSS = r.LinkRSS;
                 web.Icon = r.Icon;
                 web.TenGoi_KoDau = r.TenGoi_KoDau;
-                
+
                 return web;
             });
             return webs;
