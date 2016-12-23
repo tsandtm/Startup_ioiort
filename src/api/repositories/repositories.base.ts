@@ -10,7 +10,7 @@ export abstract class RepoBase {
     protected _pgPool: Promise<Client>;
 
     public constructor() {
-        //  this._pgPool = PgPool.getPool();
+        // this._pgPool = PgPool.getPool();
     }
 
     /**
@@ -18,41 +18,41 @@ export abstract class RepoBase {
      * @function sẽ tự đóng kết nối khi mỗi lần nhận kết quả
      */
     public _query = (query: any, option?: any): Promise<QueryResult> => {
-            this._pgPool = PgPool.getPool();
-        
-            if (option) {
-                return this._pgPool
-                    .then(client => {
-                        return client.query(query, option)
-                            .then(result => {
-                                client.end();
-                                return result;
-                            })
-                            .catch(err => {
-                                client.end();
-                                console.log(err)
-                            })
-                    })
+        this._pgPool = PgPool.getPool();
+        if (option) {
+            return this._pgPool
+                .then(client => {
+                    return client.query(query, option)
+                        .then(result => {
+                            client.release()
+                            return result;
+                        })
+                        .catch(err => {
+                            client.release()
+                            console.log(err)
+                        })
+                })
 
-                    .catch(err => console.log(err))
-            }
-            else {
-                return this._pgPool
-                    .then(client => {
-                        return client.query(query)
-                            .then(result => {
-                                client.end();
-                                return result;
-                            })
-                            .catch(err => {
-                                client.end()
-                                console.log(err)
-                                return (err)
-                            })
-                    })
-                    .catch(err => console.log(err))
-            }
-        } 
+                .catch(err => console.log(err))
+        }
+        else {
+            return this._pgPool
+                .then(client => {
+                    return client.query(query)
+                        .then(result => {
+                            client.release();
+                            return result;
+                        })
+                        .catch(err => {
+                            client.release()
+                            console.log(err)
+                            return (err)
+                        })
+                })
+                .catch(err => console.log(err))
+        }
+
+    }
 
     //public abstract getList(option);
     //public abstract getOne(option);

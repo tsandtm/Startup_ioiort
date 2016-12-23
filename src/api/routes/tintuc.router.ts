@@ -107,11 +107,6 @@ export class TinTucRouter {
     }
 
     private xoatin = (req: Request, res: Response) => {
-        // let option = new TinTuc();
-        // option = req.body;
-        console.log("id " + req.body.id);
-        console.log("IDUSER " + req.body.IDUser);
-
         this.tintucRepo.xoatin(req.body.id, req.body.IDUser)
             .then((result) => {
                 res.status(200).json(result);
@@ -123,9 +118,6 @@ export class TinTucRouter {
     }
 
     private update = (req: Request, res: Response) => {
-        // let option = new TinTuc();
-        // option = req.body;
-
         this.tintucRepo.update(req.body.id, req.body.IDUser)
             .then((result) => {
                 res.status(200).json(result);
@@ -136,9 +128,6 @@ export class TinTucRouter {
             });
     }
     private daxem = (req: Request, res: Response) => {
-        let option = new TinTuc();
-        option = req.body;
-
         this.tintucRepo.daxem(req.body.id, req.body.IDUser)
             .then((result) => {
                 res.status(200).json(result);

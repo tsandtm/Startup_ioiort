@@ -45,7 +45,7 @@ export class WebsRouter {
                 return Promise.reject(err);
             })
     }
-
+// S
 
     private getName = (req: Request, res: Response) => {
         console.log("string " + req.query.string)

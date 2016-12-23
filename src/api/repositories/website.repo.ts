@@ -7,22 +7,6 @@ export class ListWebRepo extends RepoBase {
     constructor() {
         super();
     }
-	/*
-	SELECT BANG1."IDDanhMucSite" = BANG2."IDDanhMucSite" IS NULL = FALSE AS GIATRI, BANG1."IDDanhMucSite", BANG2."IDDanhMucSite",
-BANG1."TenGoi",BANG1."TenGoi_KoDau",BANG1."Icon",BANG1."DuongDan",BANG1."LinkRSS",BANG2."IDUser" 
-FROM 
-(SELECT "IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan","LinkRSS" 
-        FROM public."DanhMucSite" ORDER BY "IDDanhMucSite" ASC LIMIT 12 OFFSET 0) AS BANG1
-FULL OUTER JOIN 
-(SELECT "User_DanhMucSite"."IDDanhMucSite","TenGoi","TenGoi_KoDau","Icon","DuongDan","LinkRSS","IDUser" 
-        FROM public."DanhMucSite" , public."User_DanhMucSite" 
-        where "DanhMucSite"."IDDanhMucSite" = "User_DanhMucSite"."IDDanhMucSite" and "IDUser"=1) AS BANG2
-ON (BANG1."IDDanhMucSite" = BANG2."IDDanhMucSite")
-	*/
-
-    /**
-     * GetList : Hàm trả về danh sách User nào đã chọn danh nào thì trả về giá trị là true còn lại false
-     */
     public GetList(option, limit, offset) {
 
         let query = `

@@ -25,7 +25,7 @@ export abstract class PgPool {
                 host: config.host
             });
            this.Listen()
-
+           return this._pgPool.connect();
         }
         return this._pgPool.connect()
     }
@@ -46,6 +46,11 @@ export abstract class PgPool {
             console.info(`User đã thoát`)
             this.count2++
             console.info(this.count)
+        })
+        this._pgPool.on('drain' , ()=>{
+            this._pgPool.end().then(()=>{
+                console.log('Đã đóng pool')
+            })
         })
     }
 }
